@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.20
-Status: APPROVED MASTER (001–110; detailed person-level execution evidence is private)
-Date: 2026-07-27
-Supersedes: v3.19 (2026-07-20) — adds Decision 110, The Ask-First Gate: problem-first input (rule 61) and a pre-work clarify-or-flag-assumption gate for substantive/decision-bearing work (rule 62).
+Version: v3.21
+Status: APPROVED MASTER (001–111; detailed person-level execution evidence is private)
+Date: 2026-07-30
+Supersedes: v3.20 (2026-07-27) — adds Decision 111, GitHub Backup + Content/Ads Automation Consolidation: single private GitHub repo for the AI OS brain, merged article+YouTube content routine (retiring the proposed separate third routine), and Cowork retired in favor of Claude Code scheduled tasks as the single scheduler.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -885,4 +885,28 @@ This does **NOT** override rule 33 (Proceed-vs-ask line) — reversible, low-sta
 - `00_AI_OPERATING_SYSTEM/CLAUDE.md` → v4.7 (§4 Ask-First Gate block + load-order rule count).
 - `00_COMMAND_CENTER/11_OPERATING_AGREEMENT.md` → v1.2 (rules 61-62 added).
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.20 (this decision).
+
+---
+
+## Decision 111 — GitHub Backup + Content/Ads Automation Consolidation
+
+**Status:** APPROVED — Edmund, 2026-07-30 (ruled in chat via Q&A).
+
+### Ruling
+
+Three linked rulings from the same working session:
+
+1. **GitHub backup, scoped.** A new **private** GitHub repo, `edmundtandotcom-sketch/ecos-ai-os`, holds a git-tracked copy of `00_AI_OPERATING_SYSTEM/` only (constitution, desks, positioning, knowledge vault, automations — pure markdown, no PII, no bulk media). `01_ASSET_LIBRARY`, `03_ACTIVE_CAMPAIGNS`, and `00_E.C.O.S_CLIENTS_PRIVATE` are explicitly **excluded** and continue to rely on Google Drive's own `_BACKUPS`/`_ARCHIVE` layer — they never enter this repo. Initial commit (765 files) pushed 2026-07-30. Google Docs shortcut files (`.gdoc`/`.gsheet`/`.gslides`/etc.) are excluded via `.gitignore` — they caused a hard filesystem read error under git and can't be meaningfully version-controlled anyway.
+2. **No third "video-only" routine.** A proposal to build a separate weekly YouTube-scanning routine (alongside the existing article-based weekly content brief and the ads-intelligence brief) was rejected. YouTube was already a shallow Tier-2 input in the existing content brief (format study only); a standalone routine would have duplicated the scan and produced a second, disconnected ranked-angle list for the same week. Instead, the existing weekly content-brief automation was rewritten (v2.1 → v2.2) to treat articles and YouTube as one merged signal pool — one scan, one ranking, fanned out into every output format (video scripts, social posts, WhatsApp segments, article outlines). Rationale: research (signal-in, any source) and content studio (script-out, any format) are the correct architectural boundary per the existing desk model (`06_RESEARCH_INTELLIGENCE_DESK.md` / `03_CONTENT_STUDIO.md`) — source type is not.
+3. **Cowork retired as a scheduler.** The prior content-brief automation (v2.1) targeted a scheduler called "Cowork" that does not appear in this machine's live Claude Code scheduled-tasks list and was very likely not actually firing (its documented output path also referenced a folder retired by the 2026-07-20 restructure). Going forward, **Claude Code scheduled tasks is the single scheduler** for both weekly routines — `singapore-property-ads-brief` (unchanged in scope, GitHub backup step added) and `rei-weekly-content-brief` (rewritten v2.2). Both are now inspectable via `list_scheduled_tasks`, closing a blind spot where automation state could not be verified.
+
+### Files touched
+
+- New: private GitHub repo `edmundtandotcom-sketch/ecos-ai-os`, initial commit + push (2026-07-30).
+- New: `.gitignore` in `00_AI_OPERATING_SYSTEM/` (OS junk files + Google Docs shortcut file types).
+- `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` → v2.2 (merged article+YouTube scan, Phase A/B/C restructure, corrected output path, GitHub backup step, Cowork retired).
+- Archived: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.1_ARCHIVED_2026-07-30.md` (verbatim, pre-replacement).
+- `08_OPERATIONS/03_AUTOMATIONS/singapore-property-ads-brief_SKILL.md` → GitHub backup step added (still v2.0 in substance, no scope change).
+- Claude Code scheduled tasks: `rei-weekly-content-brief` (new, Monday ~8:45 AM) and `ecos-ai-os-git-snapshot` (new, daily catch-all commit+push for manual/interactive edits) created; `singapore-property-ads-brief` prompt updated to include the GitHub backup step.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.21 (this decision).
 - Rollback: `99_ARCHIVE/GOVERNANCE_PRE_ASKFIRSTGATE_2026-07-27/` (pre-edit copies of all three). No file was deleted.

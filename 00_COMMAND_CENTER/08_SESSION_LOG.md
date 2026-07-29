@@ -1,8 +1,8 @@
 # 08_SESSION_LOG
-Version: v1.1
+Version: v1.2
 Status: APPROVED MASTER
-Date: 2026-07-18
-Supersedes: v1.0 — appends the 2026-07-18 governance and folder-audit session; prior copy archived before replacement.
+Date: 2026-07-30
+Supersedes: v1.1 (2026-07-18) — appends the 2026-07-30 GitHub backup + content/ads automation consolidation session.
 Sources: AI_OS_REBUILD_SPEC v1.0; root and AI OS governance audit; Asset Library rebuild; Command Center audit, 2026-07-18.
 
 > A running log of what happened each working session: what was built, what was decided, which files changed, and the next action. One entry per session. Newest at the top of the entry list. This is the memory that lets any future session pick up cleanly. Update it via the end-of-session checklist in `05_EVOLUTION_PROTOCOL.md`.
@@ -23,6 +23,30 @@ Risks or open questions:
 ---
 
 ## Entries
+
+### Entry — GitHub Backup + Content/Ads Automation Consolidation — 2026-07-30
+Objective: stand up automatic GitHub backup for the AI OS brain, resolve confusion between "Cowork" and Claude Code as the automation scheduler, and decide whether to build a third YouTube-only weekly routine alongside the existing article-based content brief and the ads-intelligence brief (this session ran from `C:\Users\Admin\Videos`, not this workspace, and found this system directly — see Risks below).
+
+Built / changed:
+- New private GitHub repo `edmundtandotcom-sketch/ecos-ai-os`; git-initialized `00_AI_OPERATING_SYSTEM/` only (no PII, no bulk media); initial commit (765 files) pushed.
+- New `.gitignore` in `00_AI_OPERATING_SYSTEM/` — OS junk files + Google Docs shortcut file types (`.gdoc`/`.gsheet`/`.gslides`/etc., which caused a hard git read error).
+- `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` rewritten v2.1 → v2.2: merged the previously shallow YouTube format-study pass into full transcript-based repurposing (one signal pool with articles, not a separate routine); restructured into Phase A (scan) / B (rank) / C (fan-out); corrected the documented output path (v2.1 pointed at a `01_PROPERTY_BUSINESS/...` folder retired by the 2026-07-20 restructure — verified live output already lands in `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/`); retired "Cowork" as the target scheduler; added a GitHub backup step and an attribution rule (reframe through REI's own data, don't rewrite a competitor's proprietary analysis uncredited); added an on-demand single-topic mode.
+- Previous v2.1 archived verbatim: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.1_ARCHIVED_2026-07-30.md`.
+- `08_OPERATIONS/03_AUTOMATIONS/singapore-property-ads-brief_SKILL.md` — added GitHub backup step + output-checklist/final-report lines; no scope change.
+- Claude Code scheduled tasks created: `rei-weekly-content-brief` (Monday ~8:45 AM SGT) and `ecos-ai-os-git-snapshot` (daily catch-all commit+push, ~11:51 PM). `singapore-property-ads-brief` scheduled-task prompt updated to match its skill-file change.
+
+Decisions: 111 (added to `04_DECISION_MEMORY.md`, v3.21).
+
+Pending / next action:
+- First live Monday run of `rei-weekly-content-brief` v2.2 has not happened yet (next run in ~4 days as of this entry) — verify it actually produces a Knowledge Vault brief before trusting it.
+- Consider whether `singapore-property-ads-brief`'s next run (not yet fired as of this entry) also needs a manual "Run now" to pre-approve Browser-pane tool permissions.
+- The Stackedhomes.com content-repurposing research that prompted this session (done in a separate `C:\Users\Admin\Videos` session) was not folded into the Knowledge Vault library directly — worth checking whether that research should be merged into the next `rei-weekly-content-brief` run's angle library.
+
+Risks or open questions:
+- This entire session ran outside this workspace (`C:\Users\Admin\Videos`), reading and editing `H:\Shared drives\00_E.C.O.S` cross-directory. A separate session titled "Singapore property video repurposing routine" was open in this exact workspace at the same time (started 2026-07-29) — possible overlapping edits; worth checking that session's own changes don't conflict with what's recorded here before treating this entry as complete.
+- The daily git-snapshot task intentionally does not read file contents before committing — if a bad edit lands in `00_AI_OPERATING_SYSTEM`, it will be backed up as-is, not caught. GitHub gives rollback via history, not protection against bad commits.
+
+---
 
 ### Entry — Root, AI OS and Command Center Governance Audit — 2026-07-18
 Objective: reconcile the live E.C.O.S structure after the Asset Library rebuild, remove the stale 90-day freeze language, clarify software-repository routing, and complete the first three stages of the folder-by-folder audit.

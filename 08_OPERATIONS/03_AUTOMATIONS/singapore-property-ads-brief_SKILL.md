@@ -157,6 +157,19 @@ CRITICAL EXECUTION RULES
   in one run, say exactly what was skipped and why.
 
 ═══════════════════════════════════════════════════════════════════════════════════
+GITHUB BACKUP (added 2026-07-30)
+═══════════════════════════════════════════════════════════════════════════════════
+
+At the end of the run, after the weekly brief and library updates are saved:
+```
+cd "H:\Shared drives\00_E.C.O.S\00_AI_OPERATING_SYSTEM"
+git add -A
+git commit -m "Ads brief: <date>"
+git push origin main
+```
+If git reports "nothing to commit," skip silently. If push fails (auth/network), report the failure plainly in the final report — do not retry silently or drop the brief. This is the only automated backup path for the AI OS brain (constitution, knowledge vault, automations) — Google Drive's own backup/archive layer covers everything else (bulk media, active campaigns, client data), which never goes to this git repo.
+
+═══════════════════════════════════════════════════════════════════════════════════
 OUTPUT CHECKLIST
 ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -169,9 +182,10 @@ EVERY MONDAY:
 ✓ Weekly brief written to Knowledge Vault
 ✓ 9 library sections + Source Registry updated
 ✓ Data-integrity note states real extraction timestamp, not "synthesis"
+✓ GitHub backup committed + pushed (or failure reported plainly)
 
 EVERY OTHER MONDAY (if 2+ briefs exist): bi-weekly rollup + team digest produced.
 
 FINAL REPORT: [Date/time SGT] | [# ads found: watchlist X / sweep Y] | [# new ads processed vs. skipped-as-duplicate]
 | [# video/transcript extractions: success/failed] | [Top 3 trends] | [Library sections updated: X/9]
-| [Rollup: YES/NO] | [Any step that failed and what was skipped]
+| [Rollup: YES/NO] | [GitHub backup: pushed/failed] | [Any step that failed and what was skipped]

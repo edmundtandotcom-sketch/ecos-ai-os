@@ -1,347 +1,149 @@
-﻿---
+---
 name: rei-weekly-content-brief
-description: REI Unified Weekly + Bi-weekly Intelligence Task — Monday 9 AM (combines brief + rollup)
+description: REI Unified Weekly Organic Content Intelligence — Monday 8:45 AM (articles + YouTube, one ranked output, fans out to scripts/posts/articles)
 ---
 
 <!--
 AI OS MIGRATION HEADER
-Version: v2.1 (re-scoped, matches LIVE source)
+Version: v2.2
 Status: APPROVED MASTER
-Date: 2026-07-11
-Supersedes: v2.0 (2026-07-10 copy, carried the pre-ruling SI-06/Mash-up classification model)
-Sources: `H:\Shared drives\00_E.C.O.S\Scheduled\rei-weekly-content-brief\SKILL.md`
-Note: YAML frontmatter above is functional (read by the Cowork scheduler) — left untouched.
-RE-SCOPED 2026-07-11 per Edmund's O14 ruling (total removal of Family Legacy/Mash-up) — Decision 067. This mirror is edited identically to the LIVE scheduled copy at `H:\Shared drives\00_E.C.O.S\Scheduled\rei-weekly-content-brief\SKILL.md` (both now read v2.1). SI-06 is also RETIRED outright as a Strategic Intent classification per Edmund's O15 ruling (Decision 067) — family/idle-capital situations classify under SI-05 or standard intents inside A0–A2 engagements.
+Date: 2026-07-30
+Supersedes: v2.1 (2026-07-11, archived at `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.1_ARCHIVED_2026-07-30.md`) — merges the previously-separate shallow YouTube format-study pass into full transcript-based repurposing (one signal pool, not a proposed separate third routine), restructures execution into Phase A (scan) / B (rank) / C (fan-out), corrects the output destination (v2.1/v1.0's documented path under the retired `01_PROPERTY_BUSINESS` folder no longer exists post the 2026-07-20 workspace restructure — verified live output already lands in `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/`, this version documents that as canonical), retires "Cowork" as the scheduler in favor of the Claude Code scheduled-tasks system (this file is now the spec a Claude Code scheduled task points to), and adds an automatic GitHub backup step.
+Sources: rei-weekly-content-brief_SKILL.md v2.1 (archived); rei-weekly-content-brief_PROMPT_v1.0.md (historical, already flagged retired); singapore-property-ads-brief_SKILL.md v2.0+ (sibling ads-intelligence routine, out of scope here); root/AI OS CLAUDE.md v4.6/v4.7; 2026-07-30 consolidation decision (see 04_DECISION_MEMORY.md).
 -->
 
-> **Re-scoped 2026-07-11 per Edmund's O14 ruling (total removal of Family Legacy/Mash-up) — Decision 067.** All Family Legacy, Mash-up, and SI-06 classification has been removed from this automation. Angles now classify under SI-05 (decouple / Legacy Launch) or Evergreen Authority. Family situations that surface in scans route into standard SI-05 / A1–A2 engagement content, not a separate family door.
+# REI WEEKLY ORGANIC CONTENT INTELLIGENCE — ARTICLES + YOUTUBE, ONE RANKED OUTPUT
+## Version: 2.2 (Monday 8:45 AM — merged article + YouTube scan, single scheduler)
 
-# REI UNIFIED WEEKLY + BI-WEEKLY INTELLIGENCE TASK
-## Version: 2.1 (Monday 9 AM Consolidated — SI-06/Mash-up removed, Decision 067)
-
-**Task ID:** rei-weekly-content-brief  
-**Schedule:** Every Monday, 9:00 AM  
-**Execution Type:** One unified task for weekly brief + conditional bi-weekly rollup
-
----
-
-## OVERVIEW
-
-Every Monday at 9 AM, execute BOTH:
-- **PART A (Always)**: Weekly Content Intelligence Brief — fresh 7-day market signals
-- **PART B (Conditional)**: Bi-weekly Rollup — IF 2+ weeks of library data exist
-
-Do NOT run separate tasks. One execution = both outputs (or just Part A if rollup condition not met).
+**Task ID:** rei-weekly-content-brief
+**Schedule:** Every Monday, 8:45 AM Singapore time
+**Scheduler:** Claude Code scheduled tasks (not Cowork — see 2026-07-30 decision below)
+**Execution Type:** One unified scan across articles + YouTube → one ranked angle list → fanned out into every output format
 
 ---
 
-## REAL DATA EXTRACTION — LIVE AUTOMATION
+## WHY THIS VERSION CHANGED
 
-**DO NOT use synthesis fallback. Extract actual live data:**
-
-### Chrome Extension Automation (Required)
-- Navigate directly to each source URL
-- Extract video transcripts, forum comments, ad creatives, article text
-- Pull meta-data: publish date, view count, engagement metrics
-- Save raw data → apply analysis second
-
-### Tier 1 Priority (Live Scrape)
-1. **URA (ura.gov.sg)** — latest condo transactions, price indices
-2. **EdgeProp** — new project launches, market commentary
-3. **StackedHomes** — articles, analysis, case studies
-4. **99.co** — condo listings, price trends, market pulse
-5. **MoneySmart** — mortgage rates, interest trends
-6. **PropNex news** — market releases, case studies
-
-### Tier 2 Priority (Content Creators)
-1. **Marcus Luah YouTube** — video scripts, thumbnails, engagement
-2. **JNA YouTube** — video format, narrative patterns
-3. **StackedHomes YouTube** — content structure, CTA placement
-4. **Cindior's archive** — previous successful angles, performance patterns
-
-### Tier 3 Priority (Signals)
-1. **Google Trends** — keyword velocity week-over-week
-2. **Reddit r/singapore** — sentiment, pain points, belief blocks
-3. **Hardwarezone forums** — property discussion threads
-4. **Facebook groups** — decoupling / next-move prospect conversations
-5. **Telegram channels** — investor networks, deal talk
-6. **LinkedIn Singapore property** — professional signals
-7. **YouTube comments** — audience objections, questions
-8. **Instagram/TikTok** — viral formats, creator styles
-9. **Google News alerts** — breaking property news
+v2.1 already scanned StackedHomes/EdgeProp/URA/99.co (Tier 1 articles) and glanced at Marcus Luah/JNA/StackedHomes YouTube channels (Tier 2) — but only for format/pacing study, not real repurposing. A proposal to build a third, YouTube-only routine was rejected: it would duplicate this scan and produce a second, disconnected ranked-angle list for the same week, splitting "what's this week's #1 topic" across two reports that could disagree. Instead, articles and YouTube are two input lanes into the *same* signal pool, ranked once, fanned out into every output format needed. v2.1 was also written against the "Cowork" scheduler, which does not appear anywhere in this machine's live Claude Code scheduled-tasks list — it was very likely not actually firing. This version is registered as a Claude Code scheduled task instead, alongside the sibling `singapore-property-ads-brief` routine, so both live on one scheduler that can actually be inspected (`list_scheduled_tasks`).
 
 ---
 
-## PART A: WEEKLY CONTENT INTELLIGENCE BRIEF (Always Run)
+## REAL DATA EXTRACTION — NO SYNTHESIS FALLBACK
 
-### STEP 1: Extract & Rank Weekly Signals (Mon-Sun data)
-- Pull 8-12 signals from Tier 1 sources (URA, EdgeProp, StackedHomes, 99.co)
-- Extract 4-6 creator insights (Marcus Luah, JNA, top performer formats)
-- Scan Tier 3 for emerging sentiment shifts, keyword spikes
-- **Minimum data required:** actual numbers, quotes, links, timestamps
+Most important rule in this spec, unchanged from v2.1: **never fabricate, estimate, or "research-based" substitute any data if a source is blocked or a tool is unavailable.** Stop that step and report the failure plainly in the final report instead.
 
-### STEP 2: Apply 6-Step Angle Filter
-For each signal, ask:
-1. **REI Method alignment?** (R → E → I applicable?)
-2. **Client belief shift?** (addresses a false belief?)
-3. **Content gap?** (do competitors cover this well?)
-4. **Emotional hook?** (triggers urgency or FOMO?)
-5. **SI-05/Evergreen relevance?** (decouple / first-portfolio-move angle, or evergreen authority?)
-6. **Proof/data available?** (can we cite sources?)
+---
 
-**Score:** 0-6 points. Keep only 6+ signals.
+## PHASE A: SIGNAL SCAN (articles + YouTube, one pass)
 
-### STEP 3: Rank & Segment by Strategic Intent
-- **SI-05 (Legacy Launch / Decouple)**: First portfolio move, decoupling mechanics, new investor psychology
-- **Evergreen Authority**: Market data, category-law, exit-before-entry angles not tied to a specific life-stage trigger
+### A1 — Article sources (Tier 1, must-scan weekly)
+- URA (ura.gov.sg) — official releases, GLS tenders, stats
+- EdgeProp — new launches, market commentary
+- StackedHomes (stackedhomes.com + stackedhomes.com/category/*) — analysis, buyer guides, case studies
+- 99.co blog — resale data, transaction analysis
+- PropNex news — market reports
+- MoneySmart property — mortgage/finance angle
 
-Rank each angle:
-- **Rank 1**: Highest urgency + strongest proof + clearest REI fit
-- **Rank 2-3**: Strong secondary angles
-- **Rank 4-5**: Evergreen/supporting angles
+### A2 — YouTube sources (Tier 2, now full repurposing input, not just format study)
+For each channel below, pull the last 7 days of uploads:
+- Marcus Luah ("Keep It Real Estate" series)
+- JNA Real Estate ("JNA News Dash")
+- StackedHomes YouTube
+- Any other channel already logged in `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/` as a tracked creator
 
-### STEP 4: Generate YouTube Scripts (3 Format Variations per Angle)
+For each new video: pull the transcript (captions, or the Browser pane), note publish date and view count if visible, and extract the hook (first 15 seconds), the core data point(s) cited, the structural format (data-dump / narrative / myth-bust), and CTA placement. Treat a strong video signal exactly like a strong article signal in Phase B scoring — this is a real content input now, not a stylistic footnote.
 
-**Format A — Fast-Paced Data-Driven**
-- Hook (0:00-0:15): Shocking statistic or gap identification
-- Data Dump (0:15-1:30): 3-4 key numbers, trends, comparisons
-- Implication (1:30-2:00): What this means for condo owners
-- CTA (2:00-2:15): "Watch next: [Related angle]" or "Book audit" (AUDIT code)
-- Length: ~2-3 minutes
+### A3 — Signal sources (Tier 3, exploratory)
+Google Trends (SG property keywords), Reddit r/singapore + r/singaporefi, HardwareZone property forums, relevant Telegram/FB groups, YouTube comments on Tier 2 videos, Google News alerts.
 
-**Format B — Narrative/Story-Led**
-- Hook (0:00-0:20): Real client scenario or market moment
-- Context (0:20-1:15): Why this happened, historical context
-- Opportunity (1:15-2:00): Three specific moves condo owners can make
-- Social Proof (2:00-2:15): Past results or case study hint
-- CTA (2:15-2:30): "Let's map your moves" (POSITION or LEGACY code)
-- Length: ~3-4 minutes
+### Data quality rules
+1. Only date-verified signals from the 7-day scan window (Monday–Sunday).
+2. All URLs on separate lines, tested live.
+3. No repeat of an angle already ranked in last week's brief — check Section 0 of the prior week's file in Knowledge Vault before finalizing.
 
-**Format C — Authority Breakdown / Myth-Bust**
-- Myth Hook (0:00-0:15): Common belief + why it's wrong
-- Evidence (0:15-1:45): Data, expert contradiction, real examples
-- Correct Framework (1:45-2:15): REI Method applied to this situation
-- Next Step (2:15-2:30): "Here's what you should do instead"
-- CTA (2:30): Knowledge gap identifier (UNLOCK code)
-- Length: ~2.5-3 minutes
+---
 
-**Modeling:** Research top creators (Marcus Luah, JNA, StackedHomes, etc.) — mirror their opening pace, data presentation, CTA timing, but keep REI framing.
+## PHASE B: SCORE & RANK (6-step filter, unchanged from v2.1)
 
-### STEP 5: Generate WhatsApp Broadcast Segments
+For every signal — article or video — score 0–6:
+1. REI Method alignment (R→E→I applicable)?
+2. Client belief shift (addresses a false belief)?
+3. Content gap (competitors covering this well already)?
+4. Emotional hook (urgency/FOMO)?
+5. SI-05 / Evergreen Authority relevance?
+6. Proof/data available (citable)?
 
-Create 3 separate WhatsApp messages (not one blast — segmented by intent level):
+Keep only 6+ scored signals. Rank 1 = highest urgency + strongest proof + clearest REI fit. Aim for 3 news-triggered + 2 evergreen across the top 5.
 
-**Segment 1 (High Intent)**: Existing clients, past enquiries, warm leads
-- Hook: Directly relevant to their stated goal
-- Data: 1-2 key numbers
-- Action: "Reply AUDIT for full analysis"
+---
 
-**Segment 2 (Medium Intent)**: Engaged followers, video watchers, engagement history
-- Hook: Market observation + opportunity framing
-- Data: Single compelling stat
-- Action: "Reply POSITION to learn your next move"
+## PHASE C: FAN OUT (one ranked angle → every format, not re-researched per format)
 
-**Segment 3 (Cold/Remainder)**: Broad audience, new followers
-- Hook: General market insight
-- Data: None (pure narrative)
-- Action: "Watch [Video Link] for details"
+For each of the top 5 ranked angles, produce all of the following from the *same* underlying angle/data:
 
-### STEP 6: Build Library Entries
+**YouTube scripts — 3 formats** (still production-ready, not outlines):
+- Format A — Fast-Paced Data-Driven (~2–3 min): shocking stat hook → data dump → implication → CTA
+- Format B — Narrative/Story-Led (~3–4 min): real scenario hook → context → 3 specific moves → social proof → CTA
+- Format C — Authority Breakdown / Myth-Bust (~2.5–3 min): myth hook → evidence → correct framework → next step → CTA
+- Model pacing/CTA-timing on the Tier 2 video that best matches the angle (Phase A2), keep REI framing — see Attribution Rule below.
 
-For each of the 5 ranked angles, add to **REI_Content_Research_Resources** (Google Drive):
+**Social/IG posts:** one carousel concept (slide-by-slide) + one single-image quote/stat post per angle, built on the same hook already validated in the video script.
 
-**Location**: `REI_Content_Research_Resources/[Angle Name]_YYYY-MM-DD.md`
+**WhatsApp broadcast — 3 segments** (unchanged from v2.1): Segment 1 (high intent, existing/warm leads, "Reply AUDIT"), Segment 2 (medium intent, "Reply POSITION"), Segment 3 (cold, narrative only, video link).
 
-**Content**:
-- Angle summary (1 paragraph)
-- Source links + timestamps
-- Competitor coverage (who else is covering this?)
-- Belief block addressed
-- Script format performance prediction
-- CTA recommendation
-- Follow-up angle suggestions
+**Article outline:** working title, 3–5 section headers, the one stat/data point the whole piece hangs on, internal link target.
 
-### STEP 7: Save Weekly Output
+### Attribution rule (new in v2.2)
+When an angle originates from a specific outlet's proprietary analysis (e.g. a StackedHomes unit-level yield breakdown), reframe it through REI's own data/REI Method rather than rewriting their write-up, and link/credit the source. Do not republish another outlet's original analysis in "our voice" with no reference back — this is a real copyright/reputational exposure, not a style preference.
 
-**File naming**: `[WEEK] REI Weekly Brief — 2026-06-20.md`  
-**Location**: `H:\Shared drives\00_E.C.O.S\01_PROPERTY_BUSINESS\03_SHARED_PROPERTY_ASSETS\03_SHARED_MARKET_RESEARCH\Weekly Contents\`
+### On-demand mode (new in v2.2)
+Edmund or Cindior can request a single-topic version any day of the week ("spin up an angle on X"): run Phase A scoped to that topic only (skip the full weekly scan) + Phase C fan-out. Same quality bar, same attribution rule — no need to wait for Monday.
 
-**Output structure**:
+---
+
+## LIBRARY & OUTPUT
+
+**Weekly dated brief** → `H:\Shared drives\00_E.C.O.S\00_AI_OPERATING_SYSTEM\06_KNOWLEDGE_VAULT\01_MARKET_INTELLIGENCE\[WEEK] REI Weekly Brief — YYYY-MM-DD.md` — verified live destination; v2.1/v1.0's `01_PROPERTY_BUSINESS/.../Weekly Contents/` path is stale and no longer exists.
+
+**Growing pattern/angle library** (evergreen, not recreated weekly) → same Knowledge Vault folder, one running registry file — append, don't duplicate.
+
+**Bi-weekly rollup** (unchanged condition: only if 2+ weekly briefs exist) → same folder, `[ROLLUP] REI Bi-weekly Insights — YYYY-MM-DD.md`.
+
+**Once Edmund picks a Rank-1 angle to actually shoot** → that becomes its own workbench in `03_ACTIVE_CAMPAIGNS`, per the Content Studio desk rule — it does not stay in the Knowledge Vault brief.
+
+---
+
+## GITHUB BACKUP (new in v2.2)
+
+At the end of every run (weekly or on-demand):
 ```
-# REI Weekly Content Intelligence Brief
-**Week of:** June 16-22, 2026
-
-## Executive Summary (for Edmund)
-- Top 3 signals and why
-- Recommend focus angle
-- Expected content velocity
-
-## Ranked Angles (1-5)
-For each angle:
-- Signal summary
-- REI Method fit (R/E/I application)
-- Belief block addressed
-- YouTube scripts (Format A, B, C)
-- WhatsApp segments (1, 2, 3)
-- Keyword opportunities
-- Competitor gaps
-- Next steps
-
-## Library Growth
-- 5 new angle entries created
-- Patterns observed
-- Creator format insights
-
-## Production Sprint (Rank 1 Angle)
-- 10-day content calendar
-- Scripts ready
-- Assets needed
-- Posting schedule
+cd "H:\Shared drives\00_E.C.O.S\00_AI_OPERATING_SYSTEM"
+git add -A
+git commit -m "Content brief: <date>"
+git push origin main
 ```
+If git reports "nothing to commit," skip silently. If push fails (auth/network), report the failure plainly in the final report — do not retry silently or drop the brief.
 
 ---
 
-## PART B: BI-WEEKLY ROLLUP (Conditional — Only if 2+ Weeks Data Exist)
+## CONSTRAINTS
 
-**Condition Check:**
-- Look at `REI_Content_Research_Resources/` folder
-- Count how many weekly brief outputs exist
-- If ≥ 2 weeks of data: **PROCEED**
-- If < 2 weeks: **SKIP and note in output**
-
-### STEP 1: Synthesize 2-Week Patterns
-
-Pull all angle entries from past 2 weeks. Identify:
-- **Dominant signals**: Which 2-3 topics recurred?
-- **Format winners**: Which script formats drove engagement?
-- **CTA ranking**: Which codes (POSITION, LEGACY, AUDIT, UNLOCK) converted?
-- **Segment performance**: Which WhatsApp segments had highest reply rate?
-- **Emerging keywords**: New search terms trending up week-over-week?
-- **Competitor moves**: New angles launched by competitors?
-- **Library growth**: Total new angles, patterns, creator insights added
-
-### STEP 2: Generate Part B Output (Internal Brief for Edmund)
-
-**File naming**: `[ROLLUP] REI Bi-weekly Insights — 2026-06-20.md`  
-**Location**: Same Weekly Contents folder  
-**Audience**: Edmund + internal strategy
-
-**Content**:
-```
-# REI Bi-Weekly Intelligence Rollup
-**Period:** June 8-22, 2026 (2 weeks)
-
-## Dominant Signals (What Stuck?)
-- Signal A: [recurring theme, proof, client relevance]
-- Signal B: [recurring theme, proof, client relevance]
-- Signal C: [emerging pattern]
-
-## Format Performance
-- Format A (Data-Driven): X engagements, Y conversion rate
-- Format B (Narrative): X engagements, Y conversion rate
-- Format C (Myth-Bust): X engagements, Y conversion rate
-→ **Recommendation**: Lock in [winner] for next week
-
-## CTA Conversion Ranking
-1. POSITION: X% reply rate (highest urgency)
-2. LEGACY: X% reply rate
-3. AUDIT: X% reply rate
-4. UNLOCK: X% reply rate
-
-## Segment Engagement
-- Segment 1 (High Intent): X% response
-- Segment 2 (Medium Intent): X% response
-- Segment 3 (Cold): X% response
-
-## Keyword Velocity (Week 1 → Week 2)
-- [Keyword 1]: +15% searches (rising)
-- [Keyword 2]: -5% searches (cooling)
-- [Keyword 3]: NEW (emerging)
-
-## Competitor Moves
-- [Competitor] launched [angle] — white-space opportunity in [gap]
-- [Creator] posted [format innovation] — consider adopting
-
-## Library Growth
-- 10 new angle entries (2 weeks × 5 angles/week)
-- 3 pattern discoveries added to Pattern Intelligence section
-- 2 new creator format insights
-- Belief block reframe playbook expanded by X entries
-
-## Strategic Insights
-- Market is shifting toward [observation]
-- Client inquiries cluster around [pain point]
-- Content opportunity: [white-space angle not yet covered]
-- Next week focus recommendation: [which angle to lead with]
-
-## Tactical Next Steps
-1. Double down on [highest-performing format]
-2. Test [emerging keyword] in next week's brief
-3. Add competitor insight to library: [note]
-4. Prepare [white-space angle] for Rank 1 next week
-```
-
----
-
-## EXECUTION CHECKLIST
-
-### Pre-Execution
-- [ ] Open Google Drive, navigate to `Weekly Contents` folder
-- [ ] Open `REI_Content_Research_Resources` folder (library)
-- [ ] Prepare Chrome automation for live scraping (URA, EdgeProp, 99.co, YouTube, etc.)
-
-### Part A Execution (Every Monday)
-- [ ] Extract 8-12 signals from Tier 1 (with links, timestamps, data)
-- [ ] Apply 6-step filter, keep 6+ signals
-- [ ] Rank and segment by SI-05/Evergreen Authority
-- [ ] Generate YouTube scripts (Format A, B, C for top 5 angles)
-- [ ] Generate WhatsApp segments (Seg 1, 2, 3 for each angle)
-- [ ] Create 5 library entries in Research folder
-- [ ] Save Part A output to Weekly Contents folder
-- [ ] Verify all links are live and data is recent
-
-### Part B Execution (Conditional)
-- [ ] Check if 2+ weeks of data exist (count weekly outputs)
-- [ ] If YES: synthesize patterns, generate rollup brief, save to Weekly Contents
-- [ ] If NO: note in Part A output "Rollup scheduled for next execution (data accumulation in progress)"
-
-### Post-Execution
-- [ ] Save all outputs to Google Drive
-- [ ] Notify Edmund of completion
-- [ ] Note any technical issues (Chrome automation failures, source access problems)
-
----
-
-## CONSTRAINTS & RULES
-
-1. **No synthesis fallback** — Real data only. If a source is unreachable, note it and move to next source.
-2. **Chrome automation required** — For video transcript extraction, live comment scraping, ad creative pulls. Do not rely on descriptions or summaries.
-3. **Bi-weekly condition is strict** — Only generate Part B if 2 full weeks of weekly outputs exist. Don't extrapolate.
-4. **CTA codes matter** — Every angle must have a mapped CTA (POSITION, LEGACY, AUDIT, UNLOCK). Track which codes drive responses.
-5. **Library is living** — Every angle entry becomes a pattern reference for future briefs. Build redundancy into library structure so future briefs can discover related angles.
-6. **Segmentation is non-negotiable** — Never mass-blast WhatsApp. Always create 3 segments with unique hooks and CTAs.
-7. **Competitor tracking is ongoing** — Library includes competitor move log. Update weekly.
+1. No synthesis fallback — real data only.
+2. WhatsApp must always be segmented — never mass-blast.
+3. No angle repeats from the prior week.
+4. All URLs on separate lines, date-verified.
+5. Ignore any folder outside the current live workspace map in root `CLAUDE.md` §2 — if a path referenced here looks stale, stop and flag it rather than guessing a replacement (this is the exact failure this version fixes).
 
 ---
 
 ## CHANGELOG
 
-**v2.1 (2026-07-11) — Decision 067 (O14 ruling)**
-- Removed all Family Legacy, Mash-up, and SI-06 classification from angle filtering and segmentation
-- Angle Filter Q5 and STEP 3 re-scoped to SI-05 (decouple) + Evergreen Authority
-- Tier 3 Facebook-groups scan target re-scoped from "Family Legacy prospect conversations" to "decoupling / next-move prospect conversations"
-- Execution checklist updated to match
+**v2.2 (2026-07-30)** — Merged YouTube from format-study-only into full repurposing input; restructured into Phase A/B/C; corrected output path to Knowledge Vault; retired Cowork as scheduler in favor of Claude Code scheduled tasks; added attribution rule; added on-demand single-topic mode; added GitHub backup step.
 
-**v2.0 (2026-06-20)**
-- Consolidated weekly brief + bi-weekly rollup into ONE Monday 9 AM task
-- Added live Chrome automation requirements (no synthesis fallback)
-- Made bi-weekly rollup conditional (only if 2+ weeks data exist)
-- Expanded Tier 1/2/3 source list with specific URLs
-- Added execution checklist
-- Streamlined file naming and storage locations
+**v2.1 (2026-07-11)** — Decision 067 (O14 ruling): removed Family Legacy/Mash-up/SI-06 classification.
 
-**v1.0 (2026-06-15)**
-- Initial weekly brief task created
-- 6-step angle filter defined
-- Three YouTube script formats established
-- WhatsApp segmentation defined
+**v2.0 (2026-06-20)** — Consolidated weekly brief + bi-weekly rollup, added live Chrome automation requirement, made rollup conditional.
+
+**v1.0 (2026-06-15)** — Initial weekly brief task created.
+
+## END REI WEEKLY ORGANIC CONTENT INTELLIGENCE v2.2
