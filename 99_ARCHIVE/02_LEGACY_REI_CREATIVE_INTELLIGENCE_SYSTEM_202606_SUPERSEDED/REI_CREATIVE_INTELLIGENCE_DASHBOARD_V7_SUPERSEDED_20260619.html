@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REI Creative Intelligence Dashboard v7</title>
+<style>
+/* ── CSS Variables ── */
+:root {
+  --bg:#F5F2EE; --bg-card:#FFFFFF; --bg-table:#FAFAF8; --bg-header:#1F2F3D;
+  --text:#1F2F3D; --text-muted:#6B7280; --text-header:#FFFFFF;
+  --border:#E5E0D8; --champagne:#D8C3A8; --navy:#1F2F3D; --gold:#BFA37A;
+  --gold-light:#F0E8D8; --kill:#DC2626; --kill-bg:#FEE2E2;
+  --scale:#16A34A; --scale-bg:#DCFCE7; --monitor:#D97706; --monitor-bg:#FEF3C7;
+  --shadow:0 1px 4px rgba(0,0,0,0.08); --radius:10px;
+  --font-base:17px; --font-sm:14px; --font-lg:19px; --font-xl:23px; --font-2xl:30px;
+}
+[data-theme="dark"] {
+  --bg:#111827; --bg-card:#1F2937; --bg-table:#1A2332; --bg-header:#0F1923;
+  --text:#F9FAFB; --text-muted:#9CA3AF; --text-header:#F9FAFB;
+  --border:#374151; --gold-light:#2A2010; --shadow:0 1px 4px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:var(--font-base);background:var(--bg);color:var(--text);transition:background .3s,color .3s;min-height:100vh}
+
+/* ── Header ── */
+.header{background:var(--bg-header);padding:0 24px;display:flex;align-items:center;height:64px;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.header-logo{font-size:var(--font-xl);font-weight:700;color:var(--champagne);letter-spacing:-.5px}
+.header-logo span{color:var(--gold)}
+.header-subtitle{font-size:var(--font-sm);color:rgba(255,255,255,.5);flex:1}
+.header-right{display:flex;align-items:center;gap:10px}
+.sync-badge{font-size:12px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12)}
+.sync-badge.live{background:rgba(22,163,74,.2);color:#4ade80;border-color:rgba(22,163,74,.3)}
+.btn{cursor:pointer;border:none;border-radius:8px;padding:8px 16px;font-size:var(--font-sm);font-weight:500;transition:all .15s}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)}
+.btn-ghost:hover{background:rgba(255,255,255,.15)}
+.btn-primary{background:var(--gold);color:#fff}
+.btn-primary:hover{opacity:.88}
+.btn-danger{background:var(--kill);color:#fff}
+.btn-success{background:var(--scale);color:#fff}
+
+/* ── Date Range Bar ── */
+.date-bar{background:var(--bg-card);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.date-bar label{font-size:var(--font-sm);color:var(--text-muted);font-weight:500}
+.date-bar input[type=date],.date-bar select{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:var(--font-sm);color:var(--text);cursor:pointer}
+.date-pill{padding:5px 14px;border-radius:20px;font-size:var(--font-sm);font-weight:500;background:var(--bg);border:1px solid var(--border);cursor:pointer;color:var(--text-muted);transition:all .15s}
+.date-pill.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* ── Nav Tabs ── */
+.tabs{display:flex;background:var(--bg-card);border-bottom:2px solid var(--border);padding:0 24px;gap:4px}
+.tab{padding:14px 20px;cursor:pointer;font-size:var(--font-sm);font-weight:600;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--navy);border-bottom-color:var(--gold)}
+[data-theme="dark"] .tab.active{color:var(--champagne)}
+
+/* ── Page ── */
+.page{display:none;padding:24px;max-width:1400px;margin:0 auto}
+.page.active{display:block}
+
+/* ── Action Alert Banner ── */
+.action-banner{border-radius:var(--radius);padding:18px 22px;margin-bottom:24px;display:flex;align-items:center;gap:16px}
+.action-banner.kill{background:var(--kill-bg);border:2px solid var(--kill)}
+.action-banner.scale{background:var(--scale-bg);border:2px solid var(--scale)}
+.action-banner.monitor{background:var(--monitor-bg);border:1px solid var(--monitor)}
+.action-banner-icon{font-size:28px}
+.action-banner-body{flex:1}
+.action-banner-title{font-size:var(--font-lg);font-weight:700;margin-bottom:4px}
+.action-banner-title.kill{color:var(--kill)}
+.action-banner-title.scale{color:var(--scale)}
+.action-banner-title.monitor{color:var(--monitor)}
+.action-banner-desc{font-size:var(--font-sm);color:var(--text-muted)}
+
+/* ── KPI Grid ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.kpi-label{font-size:var(--font-sm);color:var(--text-muted);font-weight:500;margin-bottom:6px}
+.kpi-value{font-size:var(--font-2xl);font-weight:700;color:var(--text)}
+.kpi-sub{font-size:12px;color:var(--text-muted);margin-top:4px}
+.kpi-trend-up{color:var(--scale)}
+.kpi-trend-down{color:var(--kill)}
+
+/* ── Charts Row ── */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:768px){.charts-row{grid-template-columns:1fr}}
+.chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.chart-title{font-size:var(--font-sm);font-weight:600;color:var(--text-muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px}
+canvas{width:100%!important}
+
+/* ── Action Required Panel ── */
+.action-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px;box-shadow:var(--shadow)}
+.action-panel-header{font-size:var(--font-lg);font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.action-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:8px;margin-bottom:10px;border:1px solid var(--border)}
+.action-item:last-child{margin-bottom:0}
+.action-item.kill-item{background:var(--kill-bg);border-color:#fca5a5}
+.action-item.scale-item{background:var(--scale-bg);border-color:#86efac}
+.action-badge{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge-kill{background:var(--kill);color:#fff}
+.badge-scale{background:var(--scale);color:#fff}
+.badge-monitor{background:var(--monitor);color:#fff}
+.action-item-name{font-weight:600;font-size:var(--font-base);flex:1}
+.action-item-reason{font-size:var(--font-sm);color:var(--text-muted)}
+.action-item-meta{font-size:var(--font-sm);color:var(--text-muted);text-align:right;white-space:nowrap}
+
+/* ── Section Headers ── */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.section-title{font-size:var(--font-lg);font-weight:700;color:var(--text)}
+.section-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ── Tables ── */
+.table-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px}
+table{width:100%;border-collapse:collapse;font-size:var(--font-sm)}
+thead th{background:var(--bg-header);color:var(--text-header);padding:12px 14px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
+tbody tr:hover{background:var(--gold-light)}
+tbody tr:last-child{border-bottom:none}
+td{padding:13px 14px;vertical-align:middle;color:var(--text)}
+.td-name{font-weight:600}
+.td-muted{color:var(--text-muted);font-size:13px}
+
+/* ── Signal Badges ── */
+.signal{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.3px}
+.signal-KILL{background:var(--kill-bg);color:var(--kill)}
+.signal-SCALE{background:var(--scale-bg);color:var(--scale)}
+.signal-MONITOR{background:var(--monitor-bg);color:var(--monitor)}
+
+/* ── Hierarchy Tags ── */
+.hier-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-right:4px}
+.hier-campaign{background:#EEF2FF;color:#4338CA}
+.hier-adset{background:#F0FDF4;color:#15803D}
+.hier-ad{background:#FFF7ED;color:#C2410C}
+[data-theme="dark"] .hier-campaign{background:#1E1B4B;color:#A5B4FC}
+[data-theme="dark"] .hier-adset{background:#052E16;color:#86EFAC}
+[data-theme="dark"] .hier-ad{background:#431407;color:#FDBA74}
+
+/* ── Budget Pacing Bar ── */
+.pacing-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:4px}
+.pacing-fill{height:100%;border-radius:3px;transition:width .4s}
+.pacing-ok{background:var(--scale)}
+.pacing-warn{background:var(--monitor)}
+.pacing-over{background:var(--kill)}
+
+/* ── Search / Filter ── */
+.search-bar{position:relative;flex:1;min-width:200px}
+.search-bar input{width:100%;padding:8px 12px 8px 36px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:var(--font-sm)}
+.search-bar::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px}
+.filter-select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:var(--font-sm);cursor:pointer}
+
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg-card);border-radius:14px;padding:28px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal-title{font-size:var(--font-xl);font-weight:700;color:var(--text);margin-bottom:20px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:var(--font-sm);font-weight:600;color:var(--text-muted);margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:var(--font-base);font-family:inherit}
+.form-group textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+
+/* ── Leads ── */
+.lead-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px}
+.lead-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);position:relative}
+.lead-card-name{font-size:var(--font-lg);font-weight:700;margin-bottom:4px}
+.lead-card-source{font-size:var(--font-sm);color:var(--text-muted);margin-bottom:12px}
+.lead-card-meta{display:flex;flex-direction:column;gap:6px}
+.lead-meta-row{display:flex;justify-content:space-between;font-size:var(--font-sm)}
+.lead-meta-label{color:var(--text-muted)}
+.lead-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.status-new{background:#EFF6FF;color:#1D4ED8}
+.status-contacted{background:#FFF7ED;color:#C2410C}
+.status-qualified{background:#DCFCE7;color:#15803D}
+.status-booked{background:#F3E8FF;color:#7E22CE}
+.status-closed{background:#F1F5F9;color:#475569}
+[data-theme="dark"] .status-new{background:#1E3A5F;color:#93C5FD}
+[data-theme="dark"] .status-qualified{background:#052E16;color:#86EFAC}
+[data-theme="dark"] .status-booked{background:#2E1065;color:#D8B4FE}
+
+/* ── Settings ── */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.settings-grid{grid-template-columns:1fr}}
+.settings-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.settings-card-title{font-size:var(--font-base);font-weight:700;color:var(--text);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:12px}
+.settings-row:last-child{border-bottom:none}
+.settings-label{font-size:var(--font-sm);font-weight:500;color:var(--text)}
+.settings-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+.toggle{position:relative;width:42px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#D1D5DB;border-radius:24px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle input:checked+.toggle-slider{background:var(--gold)}
+.toggle input:checked+.toggle-slider::before{transform:translateX(18px)}
+
+/* ── Empty State ── */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted)}
+.empty-state-icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:var(--font-base)}
+
+/* ── Sync Spinner ── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle}
+
+/* ── Row Actions ── */
+.row-actions{display:flex;gap:6px;opacity:0;transition:opacity .15s}
+tr:hover .row-actions{opacity:1}
+.btn-sm{padding:4px 10px;font-size:12px;border-radius:6px;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:var(--text)}
+.btn-sm:hover{background:var(--gold-light)}
+.btn-sm-danger:hover{background:var(--kill-bg);border-color:var(--kill);color:var(--kill)}
+
+/* ── Tooltips ── */
+[data-tip]{position:relative;cursor:help}
+[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);background:#1F2F3D;color:#fff;font-size:12px;padding:5px 10px;border-radius:6px;white-space:nowrap;z-index:999;pointer-events:none}
+
+/* ── Sortable Columns ── */
+thead th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+thead th.sortable:hover{background:#2a3f52}
+.sort-arrow{font-size:11px;margin-left:3px;opacity:.28;display:inline-block;transition:opacity .15s,color .15s}
+.sort-arrow.active{opacity:1;color:var(--gold)}
+
+/* ── Leads Table ── */
+.lead-status{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600}
+
+/* ── Responsive ── */
+@media(max-width:640px){
+  .page{padding:14px}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  table{font-size:12px}
+  td,thead th{padding:10px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="header">
+  <div class="header-logo">REI <span>CI</span></div>
+  <div class="header-subtitle">Creative Intelligence Dashboard v7</div>
+  <div class="header-right">
+    <span class="sync-badge" id="syncBadge">Manual</span>
+    <button class="btn btn-ghost" id="syncBtn" onclick="syncAll()">⟳ Sync</button>
+    <button class="btn btn-ghost" onclick="exportCSV()">↓ CSV</button>
+    <button class="btn btn-ghost" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<!-- ══ DATE RANGE BAR ══ -->
+<div class="date-bar">
+  <label>Period:</label>
+  <span class="date-pill active" onclick="setDateRange(7,this)">7D</span>
+  <span class="date-pill" onclick="setDateRange(14,this)">14D</span>
+  <span class="date-pill" onclick="setDateRange(30,this)">30D</span>
+  <span class="date-pill" onclick="setDateRange(0,this)">All</span>
+  <label>From:</label>
+  <input type="date" id="dateFrom" onchange="applyDateFilter()">
+  <label>To:</label>
+  <input type="date" id="dateTo" onchange="applyDateFilter()">
+  <span style="font-size:13px;color:var(--text-muted);margin-left:auto" id="dateLabel"></span>
+</div>
+
+<!-- ══ TABS ══ -->
+<nav class="tabs">
+  <div class="tab active" onclick="showTab('overview',this)">📊 Overview</div>
+  <div class="tab" onclick="showTab('campaigns',this)">🎯 Campaigns</div>
+  <div class="tab" onclick="showTab('adsets',this)">📁 Ad Sets</div>
+  <div class="tab" onclick="showTab('creatives',this)">🎨 Creatives</div>
+  <div class="tab" onclick="showTab('leads',this)">👥 Leads</div>
+  <div class="tab" onclick="showTab('settings',this)">⚙️ Settings</div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: OVERVIEW
+══════════════════════════════════════════════════ -->
+<div class="page active" id="page-overview">
+
+  <!-- Action Required Panel -->
+  <div class="action-panel" id="actionPanel">
+    <div class="action-panel-header">⚡ Action Required</div>
+    <div id="actionList"><div class="empty-state" style="padding:20px"><p>No actions — all good.</p></div></div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- Charts -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Hook Rate by Creative</div>
+      <canvas id="chartHook" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Spend vs Leads (7-Day)</div>
+      <canvas id="chartSpend" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Top Performers -->
+  <div class="section-header">
+    <div class="section-title">🏆 Top Performers</div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Creative / Ad</th><th>Ad Set</th><th>Campaign</th>
+        <th>Hook%</th><th>CPL</th><th>Leads</th><th>Spend</th><th>Signal</th>
+      </tr></thead>
+      <tbody id="topPerformersBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: CAMPAIGNS
+══════════════════════════════════════════════════ -->
+<div class="page" id="page-campaigns">
+  <div class="section-header">
+    <div class="section-title">🎯 Campaigns</div>
+    <div class="section-actions">
+      <div class="search-bar"><input type="text" id="campSearch" placeholder="Search campaigns…" oninput="renderCampaigns()"></div>
+      <button class="btn btn-primary" onclick="openCampaignModal()">+ Add Campaign</button>
+      <button class="btn btn-ghost" onclick="loadSampleData()" style="color:var(--gold)">📋 Load Sample Data</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th class="sortable" onclick="sortByCol('campaigns','name')">Campaign <span class="sort-arrow" id="sa-c-name">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('campaigns','objective')">Objective <span class="sort-arrow" id="sa-c-obj">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('campaigns','platform')">Platform <span class="sort-arrow" id="sa-c-plat">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('campaigns','_budget')">Budget/Day <span class="sort-arrow" id="sa-c-bud">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('campaigns','_spend')">Spend <span class="sort-arrow" id="sa-c-spd">⇅</span></th>
+        <th>Pacing</th>
+        <th class="sortable" onclick="sortByCol('campaigns','_leads')">Leads <span class="sort-arrow" id="sa-c-lds">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('campaigns','_cpl')">CPL <span class="sort-arrow" id="sa-c-cpl">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('campaigns','status')">Status <span class="sort-arrow" id="sa-c-sta">⇅</span></th>
+        <th>Actions</th>
+      </tr></thead>
+      <tbody id="campaignsBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: AD SETS
+══════════════════════════════════════════════════ -->
+<div class="page" id="page-adsets">
+  <div class="section-header">
+    <div class="section-title">📁 Ad Sets / Groups</div>
+    <div class="section-actions">
+      <div class="search-bar"><input type="text" id="adsetSearch" placeholder="Search ad sets…" oninput="renderAdSets()"></div>
+      <select class="filter-select" id="adsetCampFilter" onchange="renderAdSets()">
+        <option value="">All Campaigns</option>
+      </select>
+      <button class="btn btn-primary" onclick="openAdSetModal()">+ Add Ad Set</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th class="sortable" onclick="sortByCol('adsets','name')">Ad Set Name <span class="sort-arrow" id="sa-a-name">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('adsets','_campName')">Campaign <span class="sort-arrow" id="sa-a-camp">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('adsets','audience')">Audience <span class="sort-arrow" id="sa-a-aud">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('adsets','_budget')">Budget/Day <span class="sort-arrow" id="sa-a-bud">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('adsets','_spend')">Spend <span class="sort-arrow" id="sa-a-spd">⇅</span></th>
+        <th>Pacing</th>
+        <th class="sortable" onclick="sortByCol('adsets','_leads')">Leads <span class="sort-arrow" id="sa-a-lds">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('adsets','_cpl')">CPL <span class="sort-arrow" id="sa-a-cpl">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('adsets','_adsCount')"># Ads <span class="sort-arrow" id="sa-a-ads">⇅</span></th>
+        <th>Actions</th>
+      </tr></thead>
+      <tbody id="adsetsBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: CREATIVES / ADS
+══════════════════════════════════════════════════ -->
+<div class="page" id="page-creatives">
+  <div class="section-header">
+    <div class="section-title">🎨 Creatives / Ads</div>
+    <div class="section-actions">
+      <div class="search-bar"><input type="text" id="crSearch" placeholder="Search ads…" oninput="renderCreatives()"></div>
+      <select class="filter-select" id="crSignalFilter" onchange="renderCreatives()">
+        <option value="">All Signals</option>
+        <option value="KILL">KILL</option>
+        <option value="SCALE">SCALE</option>
+        <option value="MONITOR">MONITOR</option>
+      </select>
+      <select class="filter-select" id="crAdSetFilter" onchange="renderCreatives()">
+        <option value="">All Ad Sets</option>
+      </select>
+      <button class="btn btn-primary" onclick="openCreativeModal()">+ Add Creative</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th class="sortable" onclick="sortByCol('creatives','name')">Ad Name <span class="sort-arrow" id="sa-cr-name">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_asName')">Ad Set <span class="sort-arrow" id="sa-cr-as">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_campName')">Campaign <span class="sort-arrow" id="sa-cr-camp">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','format')">Format <span class="sort-arrow" id="sa-cr-fmt">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_hookrate')">Hook% <span class="sort-arrow" id="sa-cr-hook">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_ctr')">CTR% <span class="sort-arrow" id="sa-cr-ctr">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_cpl')">CPL <span class="sort-arrow" id="sa-cr-cpl">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_leads')">Leads <span class="sort-arrow" id="sa-cr-lds">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_bookings')">Bookings <span class="sort-arrow" id="sa-cr-bk">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_spend')">Spend <span class="sort-arrow" id="sa-cr-spd">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('creatives','_signal')">Signal <span class="sort-arrow" id="sa-cr-sig">⇅</span></th>
+        <th>Actions</th>
+      </tr></thead>
+      <tbody id="creativesBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: LEADS
+══════════════════════════════════════════════════ -->
+<div class="page" id="page-leads">
+  <div class="section-header">
+    <div class="section-title">👥 Leads</div>
+    <div class="section-actions">
+      <div class="search-bar"><input type="text" id="leadSearch" placeholder="Search leads…" oninput="renderLeads()"></div>
+      <select class="filter-select" id="leadStatusFilter" onchange="renderLeads()">
+        <option value="">All Status</option>
+        <option value="New">New</option>
+        <option value="Contacted">Contacted</option>
+        <option value="Qualified">Qualified</option>
+        <option value="Booked">Booked</option>
+        <option value="Closed">Closed</option>
+      </select>
+      <button class="btn btn-primary" onclick="openLeadModal()">+ Add Lead</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th class="sortable" onclick="sortByCol('leads','name')">Name <span class="sort-arrow" id="sa-l-name">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','contact')">Contact <span class="sort-arrow" id="sa-l-con">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','source')">Source Ad <span class="sort-arrow" id="sa-l-src">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','status')">Status <span class="sort-arrow" id="sa-l-sta">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','proptype')">Property Type <span class="sort-arrow" id="sa-l-prop">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','budget')">Budget <span class="sort-arrow" id="sa-l-bud">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','date')">Received <span class="sort-arrow" id="sa-l-date">⇅</span></th>
+        <th class="sortable" onclick="sortByCol('leads','appt')">Appointment <span class="sort-arrow" id="sa-l-appt">⇅</span></th>
+        <th>Actions</th>
+      </tr></thead>
+      <tbody id="leadsBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: SETTINGS
+══════════════════════════════════════════════════ -->
+<div class="page" id="page-settings">
+  <div class="settings-grid">
+
+    <div class="settings-card">
+      <div class="settings-card-title">🔗 Data Sources</div>
+      <div class="settings-row">
+        <div><div class="settings-label">Google Sheet ID</div><div class="settings-sub">Master backup sheet</div></div>
+        <input type="text" id="stSheetId" placeholder="Sheet ID…" style="width:180px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--text)" onchange="saveSetting('sheetId',this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">Apps Script Web App URL</div><div class="settings-sub">Serves live API data</div></div>
+        <input type="text" id="stWebApp" placeholder="https://script.google.com/…" style="width:180px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;background:var(--bg);color:var(--text)" onchange="saveSetting('webAppUrl',this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">Meta Ad Account</div><div class="settings-sub">act_1467621970951606</div></div>
+        <span style="font-size:12px;color:var(--text-muted)">Via Apps Script</span>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">Google Ads Account</div><div class="settings-sub">185-1788166</div></div>
+        <span style="font-size:12px;color:var(--text-muted)">Via Apps Script</span>
+      </div>
+      <div style="margin-top:14px">
+        <button class="btn btn-primary" onclick="syncAll()" style="width:100%">⟳ Sync Now from APIs</button>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <div class="settings-card-title">🎨 Appearance</div>
+      <div class="settings-row">
+        <div><div class="settings-label">Theme</div></div>
+        <select class="filter-select" id="stTheme" onchange="setThemeMode(this.value)">
+          <option value="auto">Auto (dark at night)</option>
+          <option value="light">Always Light</option>
+          <option value="dark">Always Dark</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">Night Start</div></div>
+        <input type="number" id="stNightStart" min="0" max="23" value="19" style="width:60px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('nightStart',+this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">Night End</div></div>
+        <input type="number" id="stNightEnd" min="0" max="23" value="7" style="width:60px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('nightEnd',+this.value)">
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <div class="settings-card-title">⚡ Kill / Scale Rules</div>
+      <div class="settings-row">
+        <div><div class="settings-label">KILL: Hook Rate below (%)</div><div class="settings-sub">after SGD 80 spend</div></div>
+        <input type="number" id="stKillHook" value="25" style="width:70px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('killHook',+this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">KILL: CPL above (×avg)</div><div class="settings-sub">after SGD 80 spend</div></div>
+        <input type="number" id="stKillCPL" value="2" step="0.1" style="width:70px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('killCPL',+this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">KILL: Zero leads after (SGD)</div></div>
+        <input type="number" id="stKillSpend" value="150" style="width:70px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('killSpend',+this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">SCALE: Hook Rate above (%)</div></div>
+        <input type="number" id="stScaleHook" value="35" style="width:70px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('scaleHook',+this.value)">
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-label">SCALE: Min Bookings</div></div>
+        <input type="number" id="stScaleBook" value="3" style="width:70px;padding:6px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text)" onchange="saveSetting('scaleBook',+this.value)">
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <div class="settings-card-title">💾 Data Management</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+        <button class="btn btn-ghost" onclick="loadSampleData()" style="color:var(--gold)">📋 Load Sample Data</button>
+        <button class="btn btn-ghost" onclick="exportCSV()">↓ Export CSV</button>
+        <button class="btn btn-ghost" onclick="exportJSON()">↓ Export JSON Backup</button>
+        <button class="btn btn-ghost" onclick="importJSON()">↑ Import JSON Backup</button>
+        <button class="btn btn-danger" onclick="confirmClearAll()">🗑 Clear All Data</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+
+<!-- Campaign Modal -->
+<div class="modal-overlay" id="campaignModal">
+  <div class="modal">
+    <div class="modal-title" id="campaignModalTitle">Add Campaign</div>
+    <div class="form-row">
+      <div class="form-group"><label>Campaign Name *</label><input id="cm_name" placeholder="e.g. LL_Legacy_Launch_2024"></div>
+      <div class="form-group"><label>Platform</label>
+        <select id="cm_platform"><option>Meta</option><option>Google</option><option>Both</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Objective / Group</label><input id="cm_objective" placeholder="e.g. Lead Generation"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="cm_status"><option>Active</option><option>Paused</option><option>Draft</option><option>Ended</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Daily Budget (SGD)</label><input type="number" id="cm_budget" placeholder="100"></div>
+      <div class="form-group"><label>Total Spend (SGD)</label><input type="number" id="cm_spend" placeholder="0"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Leads</label><input type="number" id="cm_leads" placeholder="0"></div>
+      <div class="form-group"><label>Start Date</label><input type="date" id="cm_startdate"></div>
+    </div>
+    <div class="form-group"><label>Notes</label><textarea id="cm_notes" placeholder="Any notes…"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('campaignModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCampaign()">Save Campaign</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ad Set Modal -->
+<div class="modal-overlay" id="adsetModal">
+  <div class="modal">
+    <div class="modal-title" id="adsetModalTitle">Add Ad Set</div>
+    <div class="form-row">
+      <div class="form-group"><label>Ad Set Name *</label><input id="as_name" placeholder="e.g. LL_Lookalike_1%"></div>
+      <div class="form-group"><label>Campaign *</label>
+        <select id="as_campaign"></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Audience</label><input id="as_audience" placeholder="e.g. Lookalike 1% buyers"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="as_status"><option>Active</option><option>Paused</option><option>Draft</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Daily Budget (SGD)</label><input type="number" id="as_budget" placeholder="50"></div>
+      <div class="form-group"><label>Total Spend (SGD)</label><input type="number" id="as_spend" placeholder="0"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Leads</label><input type="number" id="as_leads" placeholder="0"></div>
+      <div class="form-group"><label>CPL (SGD)</label><input type="number" id="as_cpl" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>Notes</label><textarea id="as_notes"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('adsetModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAdSet()">Save Ad Set</button>
+    </div>
+  </div>
+</div>
+
+<!-- Creative Modal -->
+<div class="modal-overlay" id="creativeModal">
+  <div class="modal">
+    <div class="modal-title" id="creativeModalTitle">Add Creative / Ad</div>
+    <div class="form-row">
+      <div class="form-group"><label>Ad Name *</label><input id="cr_name" placeholder="e.g. LL_Hook_Fear_v1"></div>
+      <div class="form-group"><label>Ad Set *</label><select id="cr_adset"></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Format</label>
+        <select id="cr_format"><option>Video</option><option>Image</option><option>Carousel</option><option>Story</option></select>
+      </div>
+      <div class="form-group"><label>Hook Type</label><input id="cr_hook" placeholder="e.g. Fear, Curiosity, Social Proof"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Hook Rate (%)</label><input type="number" id="cr_hookrate" placeholder="0"></div>
+      <div class="form-group"><label>CTR (%)</label><input type="number" id="cr_ctr" placeholder="0"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>CPL (SGD)</label><input type="number" id="cr_cpl" placeholder="0"></div>
+      <div class="form-group"><label>Spend (SGD)</label><input type="number" id="cr_spend" placeholder="0"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Leads</label><input type="number" id="cr_leads" placeholder="0"></div>
+      <div class="form-group"><label>Bookings</label><input type="number" id="cr_bookings" placeholder="0"></div>
+    </div>
+    <div class="form-group"><label>Ad Copy / Headline</label><textarea id="cr_copy" placeholder="Main hook or headline text…"></textarea></div>
+    <div class="form-group"><label>Notes</label><textarea id="cr_notes"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('creativeModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCreative()">Save Creative</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lead Modal -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal">
+    <div class="modal-title" id="leadModalTitle">Add Lead</div>
+    <div class="form-row">
+      <div class="form-group"><label>Name *</label><input id="ld_name" placeholder="Full name"></div>
+      <div class="form-group"><label>Phone / Email</label><input id="ld_contact" placeholder="+65 …"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Source (Ad Name)</label><input id="ld_source" placeholder="e.g. LL_Hook_Fear_v1"></div>
+      <div class="form-group"><label>Status</label>
+        <select id="ld_status"><option>New</option><option>Contacted</option><option>Qualified</option><option>Booked</option><option>Closed</option></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Property Type</label><input id="ld_proptype" placeholder="e.g. HDB, Condo, EC"></div>
+      <div class="form-group"><label>Budget Range</label><input id="ld_budget" placeholder="e.g. SGD 500K–700K"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Date Received</label><input type="date" id="ld_date"></div>
+      <div class="form-group"><label>Appointment Date</label><input type="date" id="ld_appt"></div>
+    </div>
+    <div class="form-group"><label>Notes</label><textarea id="ld_notes"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('leadModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:380px;text-align:center">
+    <div style="font-size:40px;margin-bottom:12px">🗑</div>
+    <div class="modal-title" style="justify-content:center">Delete?</div>
+    <p style="color:var(--text-muted);margin-bottom:20px" id="deleteConfirmText">This cannot be undone.</p>
+    <div class="modal-actions" style="justify-content:center">
+      <button class="btn btn-ghost" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn btn-danger" id="deleteConfirmBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import JSON hidden input -->
+<input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)">
+
+<script>
+/* ══════════════════════════════════════════════════
+   DATA STORE
+══════════════════════════════════════════════════ */
+const STORE_KEY = 'rei_dash_v6';
+
+const defaultDB = {
+  campaigns:[],
+  adsets:[],
+  creatives:[],
+  leads:[],
+  settings:{
+    sheetId:'1Wp3zxkQkB7WzlqOaAQENzwJIKjEqzJ42628Q6JCoU0Y',
+    webAppUrl:'',
+    themeMode:'auto',
+    nightStart:19,
+    nightEnd:7,
+    killHook:25,
+    killCPL:2,
+    killSpend:150,
+    scaleHook:35,
+    scaleBook:3
+  }
+};
+
+let db = JSON.parse(JSON.stringify(defaultDB));
+let editingId = {campaign:null,adset:null,creative:null,lead:null};
+let dateFilter = {days:7, from:null, to:null};
+const sortState = {}; // { tableId: { key, dir:'asc'|'desc' } }
+
+/* ══════════════════════════════════════════════════
+   SORT ENGINE
+══════════════════════════════════════════════════ */
+// Table IDs → arrow span IDs + their sort keys (parallel arrays)
+const SORT_META = {
+  campaigns : { spans:['sa-c-name','sa-c-obj','sa-c-plat','sa-c-bud','sa-c-spd','sa-c-lds','sa-c-cpl','sa-c-sta'],
+                keys :['name','objective','platform','_budget','_spend','_leads','_cpl','status'] },
+  adsets    : { spans:['sa-a-name','sa-a-camp','sa-a-aud','sa-a-bud','sa-a-spd','sa-a-lds','sa-a-cpl','sa-a-ads'],
+                keys :['name','_campName','audience','_budget','_spend','_leads','_cpl','_adsCount'] },
+  creatives : { spans:['sa-cr-name','sa-cr-as','sa-cr-camp','sa-cr-fmt','sa-cr-hook','sa-cr-ctr','sa-cr-cpl','sa-cr-lds','sa-cr-bk','sa-cr-spd','sa-cr-sig'],
+                keys :['name','_asName','_campName','format','_hookrate','_ctr','_cpl','_leads','_bookings','_spend','_signal'] },
+  leads     : { spans:['sa-l-name','sa-l-con','sa-l-src','sa-l-sta','sa-l-prop','sa-l-bud','sa-l-date','sa-l-appt'],
+                keys :['name','contact','source','status','proptype','budget','date','appt'] }
+};
+const NUMERIC_KEYS = ['_budget','_spend','_leads','_cpl','_adsCount','_hookrate','_ctr','_bookings'];
+
+function sortByCol(tableId, key) {
+  if (!sortState[tableId] || sortState[tableId].key !== key) {
+    sortState[tableId] = { key, dir: 'desc' }; // first click → desc (highest first)
+  } else {
+    sortState[tableId].dir = sortState[tableId].dir === 'desc' ? 'asc' : 'desc';
+  }
+  if (tableId === 'campaigns') renderCampaigns();
+  else if (tableId === 'adsets') renderAdSets();
+  else if (tableId === 'creatives') renderCreatives();
+  else if (tableId === 'leads') renderLeads();
+}
+
+function updateSortIcons(tableId) {
+  const meta = SORT_META[tableId];
+  if (!meta) return;
+  const state = sortState[tableId];
+  meta.spans.forEach((spanId, i) => {
+    const el = document.getElementById(spanId);
+    if (!el) return;
+    if (state && state.key === meta.keys[i]) {
+      el.textContent = state.dir === 'asc' ? '▲' : '▼';
+      el.classList.add('active');
+    } else {
+      el.textContent = '⇅';
+      el.classList.remove('active');
+    }
+  });
+}
+
+function applySortToRows(rows, tableId) {
+  const state = sortState[tableId];
+  if (!state) return rows;
+  return [...rows].sort((a, b) => {
+    let va = a[state.key], vb = b[state.key];
+    if (NUMERIC_KEYS.includes(state.key)) {
+      va = parseFloat(va) || 0; vb = parseFloat(vb) || 0;
+    } else {
+      va = String(va == null ? '' : va).toLowerCase();
+      vb = String(vb == null ? '' : vb).toLowerCase();
+    }
+    if (va < vb) return state.dir === 'asc' ? -1 : 1;
+    if (va > vb) return state.dir === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+function loadDB(){
+  try{
+    const saved = localStorage.getItem(STORE_KEY);
+    if(saved){
+      const parsed = JSON.parse(saved);
+      db = Object.assign({},defaultDB, parsed);
+      db.settings = Object.assign({},defaultDB.settings, parsed.settings||{});
+    }
+  }catch(e){console.warn('Load DB error',e)}
+}
+function saveDB(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(db)); }
+  catch(e){ console.warn('Save DB error',e); }
+}
+function saveSetting(key, val){
+  db.settings[key] = val;
+  saveDB();
+  applyAutoTheme();
+}
+
+/* ══════════════════════════════════════════════════
+   ID GENERATOR
+══════════════════════════════════════════════════ */
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+/* ══════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════ */
+function setTheme(mode, auto=false){
+  document.documentElement.setAttribute('data-theme', mode);
+  document.querySelector('.header-right .btn-ghost:nth-child(3)').textContent = mode==='dark'?'☀️':'🌙';
+}
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur==='dark'?'light':'dark';
+  db.settings.themeMode = next;
+  saveDB();
+  setTheme(next);
+}
+function setThemeMode(mode){
+  db.settings.themeMode = mode;
+  saveDB();
+  applyAutoTheme();
+}
+function applyAutoTheme(){
+  const {themeMode,nightStart:s,nightEnd:e} = db.settings;
+  if(themeMode==='light'){setTheme('light');return;}
+  if(themeMode==='dark'){setTheme('dark');return;}
+  const h = new Date().getHours();
+  const isNight = (s<e)?(h>=s&&h<e):(h>=s||h<e);
+  setTheme(isNight?'dark':'light', true);
+}
+setInterval(applyAutoTheme, 60000);
+
+/* ══════════════════════════════════════════════════
+   TABS
+══════════════════════════════════════════════════ */
+function showTab(name, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('page-'+name).classList.add('active');
+  if(name==='overview') renderOverview();
+  if(name==='campaigns') renderCampaigns();
+  if(name==='adsets') renderAdSets();
+  if(name==='creatives') renderCreatives();
+  if(name==='leads') renderLeads();
+  if(name==='settings') loadSettings();
+}
+
+/* ══════════════════════════════════════════════════
+   DATE RANGE
+══════════════════════════════════════════════════ */
+function setDateRange(days, el){
+  document.querySelectorAll('.date-pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  const today = new Date();
+  if(days===0){
+    dateFilter = {days:0, from:null, to:null};
+    document.getElementById('dateLabel').textContent='All time';
+    document.getElementById('dateFrom').value='';
+    document.getElementById('dateTo').value='';
+  } else {
+    const from = new Date(today); from.setDate(today.getDate()-days);
+    dateFilter = {days, from, to:today};
+    document.getElementById('dateFrom').value = from.toISOString().split('T')[0];
+    document.getElementById('dateTo').value = today.toISOString().split('T')[0];
+    document.getElementById('dateLabel').textContent = `Last ${days} days`;
+  }
+  renderOverview();
+}
+function applyDateFilter(){
+  const f=document.getElementById('dateFrom').value, t=document.getElementById('dateTo').value;
+  if(f) dateFilter.from=new Date(f);
+  if(t) dateFilter.to=new Date(t);
+  document.querySelectorAll('.date-pill').forEach(p=>p.classList.remove('active'));
+  renderOverview();
+}
+function inDateRange(dateStr){
+  if(!dateFilter.from&&!dateFilter.to) return true;
+  if(!dateStr) return true;
+  const d=new Date(dateStr);
+  if(dateFilter.from&&d<dateFilter.from) return false;
+  if(dateFilter.to&&d>dateFilter.to) return false;
+  return true;
+}
+
+/* ══════════════════════════════════════════════════
+   SIGNAL LOGIC
+══════════════════════════════════════════════════ */
+function getSignal(cr){
+  const spend=parseFloat(cr.spend)||0, hookRate=parseFloat(cr.hookrate)||0,
+        cpl=parseFloat(cr.cpl)||0, bookings=parseInt(cr.bookings)||0, leads=parseInt(cr.leads)||0;
+  const {killHook,killCPL,killSpend,scaleHook,scaleBook} = db.settings;
+  const validCPLs = db.creatives.filter(c=>c.id!==cr.id&&parseFloat(c.cpl)>0).map(c=>parseFloat(c.cpl));
+  const avgCPL = validCPLs.length ? validCPLs.reduce((a,b)=>a+b,0)/validCPLs.length : 0;
+  if(spend>=killSpend && leads===0) return 'KILL';
+  if(spend>=80 && hookRate>0 && hookRate<killHook) return 'KILL';
+  if(spend>=80 && avgCPL>0 && cpl>avgCPL*killCPL) return 'KILL';
+  if(hookRate>scaleHook && bookings>=scaleBook) return 'SCALE';
+  return 'MONITOR';
+}
+function signalHtml(sig){
+  return `<span class="signal signal-${sig}">${sig}</span>`;
+}
+function getSignalReason(cr){
+  const sig = getSignal(cr);
+  const spend=parseFloat(cr.spend)||0, hookRate=parseFloat(cr.hookrate)||0,
+        cpl=parseFloat(cr.cpl)||0, leads=parseInt(cr.leads)||0, bookings=parseInt(cr.bookings)||0;
+  const validCPLs = db.creatives.filter(c=>c.id!==cr.id&&parseFloat(c.cpl)>0).map(c=>parseFloat(c.cpl));
+  const avgCPL = validCPLs.length ? validCPLs.reduce((a,b)=>a+b,0)/validCPLs.length : 0;
+  const {killHook,killCPL,killSpend,scaleHook,scaleBook} = db.settings;
+  if(sig==='KILL'){
+    if(spend>=killSpend&&leads===0) return `SGD ${spend} spent — 0 leads`;
+    if(hookRate>0&&hookRate<killHook) return `Hook ${hookRate}% < ${killHook}% threshold`;
+    if(avgCPL>0&&cpl>avgCPL*killCPL) return `CPL SGD ${cpl} > ${killCPL}×avg (SGD ${avgCPL.toFixed(0)})`;
+  }
+  if(sig==='SCALE') return `Hook ${hookRate}% > ${scaleHook}% + ${bookings} bookings`;
+  return `Spend SGD ${spend} — monitor performance`;
+}
+
+/* ══════════════════════════════════════════════════
+   PACING BAR
+══════════════════════════════════════════════════ */
+function pacingHtml(spend, budget){
+  const b=parseFloat(budget)||0, s=parseFloat(spend)||0;
+  if(!b) return '<span class="td-muted">—</span>';
+  const pct = Math.min(Math.round(s/b*100),150);
+  const cls = pct>110?'pacing-over':pct>90?'pacing-warn':'pacing-ok';
+  return `<div style="font-size:12px;color:var(--text-muted)">${pct}% of SGD${b}/day</div>
+          <div class="pacing-bar"><div class="pacing-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>`;
+}
+
+/* ══════════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════════ */
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmt(n,d=0){ return (parseFloat(n)||0).toFixed(d); }
+function fmtSGD(n){ return 'SGD '+fmt(n,0); }
+function getCampaignName(campId){ const c=db.campaigns.find(x=>x.id===campId); return c?c.name:'—'; }
+function getAdSetName(asId){ const a=db.adsets.find(x=>x.id===asId); return a?a.name:'—'; }
+function getAdSetCampaignId(asId){ const a=db.adsets.find(x=>x.id===asId); return a?a.campaignId:null; }
+
+/* ══════════════════════════════════════════════════
+   OVERVIEW
+══════════════════════════════════════════════════ */
+function renderOverview(){
+  // KPIs
+  const totalSpend = db.creatives.reduce((s,c)=>s+(parseFloat(c.spend)||0),0);
+  const totalLeads = db.creatives.reduce((s,c)=>s+(parseInt(c.leads)||0),0);
+  const totalBookings = db.creatives.reduce((s,c)=>s+(parseInt(c.bookings)||0),0);
+  const avgCPL = totalLeads>0?totalSpend/totalLeads:0;
+  const hookRates = db.creatives.filter(c=>parseFloat(c.hookrate)>0).map(c=>parseFloat(c.hookrate));
+  const avgHook = hookRates.length?hookRates.reduce((a,b)=>a+b,0)/hookRates.length:0;
+  const activeCamps = db.campaigns.filter(c=>c.status==='Active').length;
+  const activeAdSets = db.adsets.filter(a=>a.status==='Active').length;
+  const kills = db.creatives.filter(c=>getSignal(c)==='KILL').length;
+  const scales = db.creatives.filter(c=>getSignal(c)==='SCALE').length;
+
+  document.getElementById('kpiGrid').innerHTML = [
+    {label:'Total Spend',value:`SGD ${fmt(totalSpend,0)}`,sub:`${activeCamps} active campaigns`},
+    {label:'Total Leads',value:totalLeads,sub:`${totalBookings} bookings`},
+    {label:'Avg CPL',value:avgCPL>0?`SGD ${fmt(avgCPL,0)}`:'—',sub:'cost per lead'},
+    {label:'Avg Hook Rate',value:avgHook>0?`${fmt(avgHook,1)}%`:'—',sub:'video engagement'},
+    {label:'Active Ad Sets',value:activeAdSets,sub:`${db.adsets.length} total`},
+    {label:'Total Creatives',value:db.creatives.length,sub:`${kills} kill • ${scales} scale`},
+  ].map(k=>`
+    <div class="kpi-card">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  // Action Panel
+  const actions = db.creatives.map(cr=>{
+    const sig=getSignal(cr);
+    if(sig==='MONITOR') return null;
+    const asName=getAdSetName(cr.adsetId);
+    const campName=getCampaignName(getAdSetCampaignId(cr.adsetId));
+    return {sig,cr,asName,campName,reason:getSignalReason(cr)};
+  }).filter(Boolean).sort((a,b)=>a.sig==='KILL'?-1:1);
+
+  if(!actions.length){
+    document.getElementById('actionList').innerHTML='<div style="padding:14px;color:var(--text-muted);font-size:var(--font-sm)">✅ No immediate actions — all creatives are within normal range.</div>';
+  } else {
+    document.getElementById('actionList').innerHTML = actions.map(a=>`
+      <div class="action-item ${a.sig.toLowerCase()}-item">
+        <span class="action-badge badge-${a.sig.toLowerCase()}">${a.sig}</span>
+        <div style="flex:1">
+          <div class="action-item-name">${esc(a.cr.name)}</div>
+          <div class="action-item-reason">${esc(a.asName)} → ${esc(a.campName)}</div>
+          <div class="action-item-reason" style="margin-top:2px">📌 ${esc(a.reason)}</div>
+        </div>
+        <div class="action-item-meta">SGD ${fmt(a.cr.spend,0)} spent</div>
+      </div>`).join('');
+  }
+
+  // Top Performers Table
+  const sorted = [...db.creatives].sort((a,b)=>(parseFloat(b.leads)||0)-(parseFloat(a.leads)||0)).slice(0,8);
+  if(!sorted.length){
+    document.getElementById('topPerformersBody').innerHTML='<tr><td colspan="8" class="empty-state"><div class="empty-state-icon">📊</div><p>No creative data yet</p></td></tr>';
+  } else {
+    document.getElementById('topPerformersBody').innerHTML = sorted.map(cr=>{
+      const sig=getSignal(cr);
+      const asName=getAdSetName(cr.adsetId);
+      const campName=getCampaignName(getAdSetCampaignId(cr.adsetId));
+      return `<tr>
+        <td class="td-name">${esc(cr.name)}<div class="td-muted">${esc(cr.format||'')} • ${esc(cr.hook||'')}</div></td>
+        <td><span class="hier-tag hier-adset">${esc(asName)}</span></td>
+        <td><span class="hier-tag hier-campaign">${esc(campName)}</span></td>
+        <td>${cr.hookrate?fmt(cr.hookrate,1)+'%':'—'}</td>
+        <td>${cr.cpl?'SGD '+fmt(cr.cpl,0):'—'}</td>
+        <td>${cr.leads||0}</td>
+        <td>${cr.spend?'SGD '+fmt(cr.spend,0):'—'}</td>
+        <td>${signalHtml(sig)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  renderCharts();
+}
+
+/* ══════════════════════════════════════════════════
+   CHARTS (inline canvas — no library needed)
+══════════════════════════════════════════════════ */
+function renderCharts(){
+  renderBarChart('chartHook',
+    db.creatives.slice(0,8).map(c=>c.name||'?'),
+    db.creatives.slice(0,8).map(c=>parseFloat(c.hookrate)||0),
+    db.creatives.slice(0,8).map(c=>{
+      const s=getSignal(c);
+      return s==='KILL'?'rgba(220,38,38,.7)':s==='SCALE'?'rgba(22,163,74,.7)':'rgba(191,163,122,.7)';
+    }),
+    '%', 100
+  );
+
+  // Spend vs Leads — group by day (last 7 from data)
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const spendVals = db.creatives.map(c=>parseFloat(c.spend)||0);
+  const leadVals = db.creatives.map(c=>parseInt(c.leads)||0);
+  renderLineChart('chartSpend',
+    db.creatives.slice(0,7).map(c=>c.name?c.name.slice(0,10):'?'),
+    spendVals.slice(0,7),
+    leadVals.slice(0,7)
+  );
+}
+
+function renderBarChart(id, labels, data, colors, unit, maxY){
+  const canvas=document.getElementById(id);
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.offsetWidth||460, H=200;
+  canvas.width=W; canvas.height=H;
+  ctx.clearRect(0,0,W,H);
+  if(!data.length||data.every(v=>!v)){
+    ctx.fillStyle='#9CA3AF'; ctx.font='14px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('No data yet',W/2,H/2); return;
+  }
+  const pad={t:20,r:10,b:40,l:40};
+  const cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+  const max=Math.max(...data, maxY||10)*1.1;
+  const barW=Math.max((cW/data.length)-8, 10);
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const textColor=isDark?'#9CA3AF':'#6B7280';
+  const gridColor=isDark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)';
+
+  // Grid lines
+  for(let i=0;i<=4;i++){
+    const y=pad.t+cH*(1-i/4);
+    ctx.strokeStyle=gridColor; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+    ctx.fillStyle=textColor; ctx.font='11px sans-serif'; ctx.textAlign='right';
+    ctx.fillText(((max*i/4)|0)+unit, pad.l-4, y+4);
+  }
+  // Bars
+  data.forEach((v,i)=>{
+    const x=pad.l+i*(cW/data.length)+(cW/data.length-barW)/2;
+    const bH=Math.max((v/max)*cH,2);
+    const y=pad.t+cH-bH;
+    ctx.fillStyle=colors[i]||'rgba(191,163,122,.7)';
+    roundRect(ctx,x,y,barW,bH,4);
+    ctx.fillStyle=textColor; ctx.font='10px sans-serif'; ctx.textAlign='center';
+    const lbl=labels[i]||'';
+    ctx.fillText(lbl.length>8?lbl.slice(0,8)+'…':lbl, x+barW/2, H-pad.b+14);
+  });
+}
+
+function renderLineChart(id, labels, data1, data2){
+  const canvas=document.getElementById(id);
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.offsetWidth||460, H=200;
+  canvas.width=W; canvas.height=H;
+  ctx.clearRect(0,0,W,H);
+  if(!labels.length){
+    ctx.fillStyle='#9CA3AF'; ctx.font='14px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('No data yet',W/2,H/2); return;
+  }
+  const pad={t:20,r:40,b:40,l:40};
+  const cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+  const max1=Math.max(...data1,1)*1.15, max2=Math.max(...data2,1)*1.15;
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const tc=isDark?'#9CA3AF':'#6B7280';
+  const gc=isDark?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)';
+
+  // Grid
+  for(let i=0;i<=4;i++){
+    const y=pad.t+cH*(1-i/4);
+    ctx.strokeStyle=gc; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+  }
+  // Lines
+  function drawLine(data, max, color){
+    ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.beginPath();
+    data.forEach((v,i)=>{
+      const x=pad.l+i*(cW/(data.length-1||1));
+      const y=pad.t+cH*(1-v/max);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    data.forEach((v,i)=>{
+      const x=pad.l+i*(cW/(data.length-1||1));
+      const y=pad.t+cH*(1-v/max);
+      ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle=color; ctx.fill();
+    });
+  }
+  drawLine(data1,max1,'rgba(191,163,122,.9)');
+  drawLine(data2,max2,'rgba(22,163,74,.8)');
+  // Labels
+  labels.forEach((l,i)=>{
+    const x=pad.l+i*(cW/(labels.length-1||1));
+    ctx.fillStyle=tc; ctx.font='10px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(l.length>8?l.slice(0,8)+'…':l, x, H-pad.b+14);
+  });
+  // Legend
+  ctx.fillStyle='rgba(191,163,122,.9)'; ctx.fillRect(W-pad.r-80, pad.t, 10, 10);
+  ctx.fillStyle=tc; ctx.font='11px sans-serif'; ctx.textAlign='left';
+  ctx.fillText('Spend',W-pad.r-68, pad.t+9);
+  ctx.fillStyle='rgba(22,163,74,.8)'; ctx.fillRect(W-pad.r-80, pad.t+18, 10, 10);
+  ctx.fillStyle=tc; ctx.fillText('Leads',W-pad.r-68, pad.t+27);
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h); ctx.lineTo(x,y+h); ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath(); ctx.fill();
+}
+
+/* ══════════════════════════════════════════════════
+   CAMPAIGNS
+══════════════════════════════════════════════════ */
+function renderCampaigns(){
+  const q=(document.getElementById('campSearch')?.value||'').toLowerCase();
+  const body = document.getElementById('campaignsBody');
+  if(!body) return;
+
+  // Enrich rows with computed sort fields
+  let rows = db.campaigns
+    .filter(c=>!q||c.name.toLowerCase().includes(q))
+    .map(c=>{
+      const _leads=db.adsets.filter(a=>a.campaignId===c.id).reduce((s,a)=>s+(parseInt(a.leads)||0),0)||(parseInt(c.leads)||0);
+      const _spend=parseFloat(c.spend)||0;
+      const _cpl=_leads>0?_spend/_leads:0;
+      const _budget=parseFloat(c.budget)||0;
+      return {...c, _leads, _spend, _cpl, _budget};
+    });
+
+  rows = applySortToRows(rows, 'campaigns');
+  updateSortIcons('campaigns');
+
+  if(!rows.length){
+    body.innerHTML=`<tr><td colspan="10"><div class="empty-state"><div class="empty-state-icon">🎯</div><p>No campaigns yet. <a href="#" onclick="openCampaignModal();return false" style="color:var(--gold)">Add one</a> or load sample data.</p></div></td></tr>`;
+    return;
+  }
+  body.innerHTML = rows.map(c=>{
+    const statColor=c.status==='Active'?'var(--scale)':c.status==='Paused'?'var(--monitor)':'var(--text-muted)';
+    return `<tr>
+      <td class="td-name">${esc(c.name)}<div class="td-muted">${esc(c.platform||'Meta')} • ${esc(c.objective||'')}</div></td>
+      <td>${esc(c.objective||'—')}</td>
+      <td>${esc(c.platform||'Meta')}</td>
+      <td>${c._budget?'SGD '+fmt(c._budget,0):'—'}</td>
+      <td>SGD ${fmt(c._spend,0)}</td>
+      <td>${pacingHtml(c._spend, c._budget)}</td>
+      <td>${c._leads}</td>
+      <td>${c._cpl>0?'SGD '+fmt(c._cpl,0):'—'}</td>
+      <td><span style="color:${statColor};font-weight:600">${esc(c.status||'Active')}</span></td>
+      <td><div class="row-actions">
+        <button class="btn-sm" onclick="openCampaignModal('${c.id}')">Edit</button>
+        <button class="btn-sm btn-sm-danger" onclick="confirmDelete('campaign','${c.id}','${esc(c.name)}')">Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function openCampaignModal(id=null){
+  editingId.campaign=id;
+  document.getElementById('campaignModalTitle').textContent=id?'Edit Campaign':'Add Campaign';
+  const c=id?db.campaigns.find(x=>x.id===id):{};
+  document.getElementById('cm_name').value=c.name||'';
+  document.getElementById('cm_platform').value=c.platform||'Meta';
+  document.getElementById('cm_objective').value=c.objective||'';
+  document.getElementById('cm_status').value=c.status||'Active';
+  document.getElementById('cm_budget').value=c.budget||'';
+  document.getElementById('cm_spend').value=c.spend||'';
+  document.getElementById('cm_leads').value=c.leads||'';
+  document.getElementById('cm_startdate').value=c.startdate||'';
+  document.getElementById('cm_notes').value=c.notes||'';
+  document.getElementById('campaignModal').classList.add('open');
+}
+function saveCampaign(){
+  const name=document.getElementById('cm_name').value.trim();
+  if(!name){alert('Campaign name is required');return;}
+  const obj={
+    id:editingId.campaign||uid(), name,
+    platform:document.getElementById('cm_platform').value,
+    objective:document.getElementById('cm_objective').value,
+    status:document.getElementById('cm_status').value,
+    budget:document.getElementById('cm_budget').value,
+    spend:document.getElementById('cm_spend').value,
+    leads:document.getElementById('cm_leads').value,
+    startdate:document.getElementById('cm_startdate').value,
+    notes:document.getElementById('cm_notes').value,
+    updatedAt:new Date().toISOString()
+  };
+  if(editingId.campaign){ const i=db.campaigns.findIndex(x=>x.id===editingId.campaign); if(i>=0) db.campaigns[i]=obj; }
+  else db.campaigns.push(obj);
+  saveDB(); closeModal('campaignModal'); renderCampaigns(); renderOverview();
+  updateAdSetCampaignFilter(); updateCreativeAdSetFilter();
+}
+
+/* ══════════════════════════════════════════════════
+   AD SETS
+══════════════════════════════════════════════════ */
+function renderAdSets(){
+  const q=(document.getElementById('adsetSearch')?.value||'').toLowerCase();
+  const cf=document.getElementById('adsetCampFilter')?.value||'';
+  const body=document.getElementById('adsetsBody');
+  if(!body) return;
+
+  // Enrich rows with computed sort fields
+  let rows = db.adsets
+    .filter(a=>(!q||a.name.toLowerCase().includes(q))&&(!cf||a.campaignId===cf))
+    .map(a=>{
+      const campName=getCampaignName(a.campaignId);
+      const _adsCount=db.creatives.filter(c=>c.adsetId===a.id).length;
+      const _spend=parseFloat(a.spend)||0;
+      const _leads=parseInt(a.leads)||0;
+      const _budget=parseFloat(a.budget)||0;
+      const _cpl=_leads>0?_spend/_leads:(parseFloat(a.cpl)||0);
+      return {...a, _campName:campName, _spend, _leads, _budget, _cpl, _adsCount};
+    });
+
+  rows = applySortToRows(rows, 'adsets');
+  updateSortIcons('adsets');
+
+  if(!rows.length){
+    body.innerHTML=`<tr><td colspan="10"><div class="empty-state"><div class="empty-state-icon">📁</div><p>No ad sets yet. <a href="#" onclick="openAdSetModal();return false" style="color:var(--gold)">Add one</a>.</p></div></td></tr>`;
+    return;
+  }
+  body.innerHTML=rows.map(a=>{
+    return `<tr>
+      <td class="td-name">${esc(a.name)}</td>
+      <td><span class="hier-tag hier-campaign">${esc(a._campName)}</span></td>
+      <td>${esc(a.audience||'—')}</td>
+      <td>${a._budget?'SGD '+fmt(a._budget,0):'—'}</td>
+      <td>SGD ${fmt(a._spend,0)}</td>
+      <td>${pacingHtml(a._spend,a._budget)}</td>
+      <td>${a._leads}</td>
+      <td>${a._cpl>0?'SGD '+fmt(a._cpl,0):'—'}</td>
+      <td>${a._adsCount}</td>
+      <td><div class="row-actions">
+        <button class="btn-sm" onclick="openAdSetModal('${a.id}')">Edit</button>
+        <button class="btn-sm btn-sm-danger" onclick="confirmDelete('adset','${a.id}','${esc(a.name)}')">Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function updateAdSetCampaignFilter(){
+  const sel=document.getElementById('adsetCampFilter');
+  if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">All Campaigns</option>'+
+    db.campaigns.map(c=>`<option value="${c.id}"${c.id===cur?' selected':''}>${esc(c.name)}</option>`).join('');
+}
+
+function openAdSetModal(id=null){
+  editingId.adset=id;
+  document.getElementById('adsetModalTitle').textContent=id?'Edit Ad Set':'Add Ad Set';
+  const a=id?db.adsets.find(x=>x.id===id):{};
+  document.getElementById('as_name').value=a.name||'';
+  document.getElementById('as_audience').value=a.audience||'';
+  document.getElementById('as_status').value=a.status||'Active';
+  document.getElementById('as_budget').value=a.budget||'';
+  document.getElementById('as_spend').value=a.spend||'';
+  document.getElementById('as_leads').value=a.leads||'';
+  document.getElementById('as_cpl').value=a.cpl||'';
+  document.getElementById('as_notes').value=a.notes||'';
+  const sel=document.getElementById('as_campaign');
+  sel.innerHTML=db.campaigns.map(c=>`<option value="${c.id}"${c.id===a.campaignId?' selected':''}>${esc(c.name)}</option>`).join('');
+  document.getElementById('adsetModal').classList.add('open');
+}
+function saveAdSet(){
+  const name=document.getElementById('as_name').value.trim();
+  if(!name){alert('Ad set name required');return;}
+  const obj={
+    id:editingId.adset||uid(), name,
+    campaignId:document.getElementById('as_campaign').value,
+    audience:document.getElementById('as_audience').value,
+    status:document.getElementById('as_status').value,
+    budget:document.getElementById('as_budget').value,
+    spend:document.getElementById('as_spend').value,
+    leads:document.getElementById('as_leads').value,
+    cpl:document.getElementById('as_cpl').value,
+    notes:document.getElementById('as_notes').value,
+    updatedAt:new Date().toISOString()
+  };
+  if(editingId.adset){ const i=db.adsets.findIndex(x=>x.id===editingId.adset); if(i>=0) db.adsets[i]=obj; }
+  else db.adsets.push(obj);
+  saveDB(); closeModal('adsetModal'); renderAdSets();
+  updateAdSetCampaignFilter(); updateCreativeAdSetFilter();
+}
+
+/* ══════════════════════════════════════════════════
+   CREATIVES / ADS
+══════════════════════════════════════════════════ */
+function updateCreativeAdSetFilter(){
+  const sel=document.getElementById('crAdSetFilter');
+  if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">All Ad Sets</option>'+
+    db.adsets.map(a=>`<option value="${a.id}"${a.id===cur?' selected':''}>${esc(a.name)}</option>`).join('');
+}
+function renderCreatives(){
+  const q=(document.getElementById('crSearch')?.value||'').toLowerCase();
+  const sf=document.getElementById('crSignalFilter')?.value||'';
+  const af=document.getElementById('crAdSetFilter')?.value||'';
+  const body=document.getElementById('creativesBody');
+  if(!body) return;
+
+  // Enrich rows with computed sort fields
+  let rows = db.creatives
+    .filter(c=>(!q||c.name.toLowerCase().includes(q))&&(!sf||getSignal(c)===sf)&&(!af||c.adsetId===af))
+    .map(cr=>{
+      const sig=getSignal(cr);
+      const _asName=getAdSetName(cr.adsetId);
+      const _campName=getCampaignName(getAdSetCampaignId(cr.adsetId));
+      const _hookrate=parseFloat(cr.hookrate)||0;
+      const _ctr=parseFloat(cr.ctr)||0;
+      const _cpl=parseFloat(cr.cpl)||0;
+      const _leads=parseInt(cr.leads)||0;
+      const _bookings=parseInt(cr.bookings)||0;
+      const _spend=parseFloat(cr.spend)||0;
+      const _signal=sig==='Scale'?4:sig==='Monitor'?3:sig==='Test'?2:sig==='Pause'?1:0;
+      return {...cr, _asName, _campName, _hookrate, _ctr, _cpl, _leads, _bookings, _spend, _signal, _sig:sig};
+    });
+
+  rows = applySortToRows(rows, 'creatives');
+  updateSortIcons('creatives');
+
+  if(!rows.length){
+    body.innerHTML=`<tr><td colspan="12"><div class="empty-state"><div class="empty-state-icon">🎨</div><p>No creatives yet.</p></div></td></tr>`;
+    return;
+  }
+  body.innerHTML=rows.map(cr=>{
+    return `<tr>
+      <td class="td-name">${esc(cr.name)}<div class="td-muted">${esc(cr.hook||'')}</div></td>
+      <td><span class="hier-tag hier-adset">${esc(cr._asName)}</span></td>
+      <td><span class="hier-tag hier-campaign">${esc(cr._campName)}</span></td>
+      <td>${esc(cr.format||'Video')}</td>
+      <td>${cr._hookrate?fmt(cr._hookrate,1)+'%':'—'}</td>
+      <td>${cr._ctr?fmt(cr._ctr,2)+'%':'—'}</td>
+      <td>${cr._cpl?'SGD '+fmt(cr._cpl,0):'—'}</td>
+      <td>${cr._leads}</td>
+      <td>${cr._bookings}</td>
+      <td>${cr._spend?'SGD '+fmt(cr._spend,0):'—'}</td>
+      <td>${signalHtml(cr._sig)}</td>
+      <td><div class="row-actions">
+        <button class="btn-sm" onclick="openCreativeModal('${cr.id}')">Edit</button>
+        <button class="btn-sm btn-sm-danger" onclick="confirmDelete('creative','${cr.id}','${esc(cr.name)}')">Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function openCreativeModal(id=null){
+  editingId.creative=id;
+  document.getElementById('creativeModalTitle').textContent=id?'Edit Creative':'Add Creative';
+  const cr=id?db.creatives.find(x=>x.id===id):{};
+  document.getElementById('cr_name').value=cr.name||'';
+  document.getElementById('cr_format').value=cr.format||'Video';
+  document.getElementById('cr_hook').value=cr.hook||'';
+  document.getElementById('cr_hookrate').value=cr.hookrate||'';
+  document.getElementById('cr_ctr').value=cr.ctr||'';
+  document.getElementById('cr_cpl').value=cr.cpl||'';
+  document.getElementById('cr_spend').value=cr.spend||'';
+  document.getElementById('cr_leads').value=cr.leads||'';
+  document.getElementById('cr_bookings').value=cr.bookings||'';
+  document.getElementById('cr_copy').value=cr.copy||'';
+  document.getElementById('cr_notes').value=cr.notes||'';
+  const sel=document.getElementById('cr_adset');
+  sel.innerHTML=db.adsets.map(a=>`<option value="${a.id}"${a.id===cr.adsetId?' selected':''}>${esc(a.name)}</option>`).join('');
+  document.getElementById('creativeModal').classList.add('open');
+}
+function saveCreative(){
+  const name=document.getElementById('cr_name').value.trim();
+  if(!name){alert('Ad name required');return;}
+  const obj={
+    id:editingId.creative||uid(), name,
+    adsetId:document.getElementById('cr_adset').value,
+    format:document.getElementById('cr_format').value,
+    hook:document.getElementById('cr_hook').value,
+    hookrate:document.getElementById('cr_hookrate').value,
+    ctr:document.getElementById('cr_ctr').value,
+    cpl:document.getElementById('cr_cpl').value,
+    spend:document.getElementById('cr_spend').value,
+    leads:document.getElementById('cr_leads').value,
+    bookings:document.getElementById('cr_bookings').value,
+    copy:document.getElementById('cr_copy').value,
+    notes:document.getElementById('cr_notes').value,
+    updatedAt:new Date().toISOString()
+  };
+  if(editingId.creative){ const i=db.creatives.findIndex(x=>x.id===editingId.creative); if(i>=0) db.creatives[i]=obj; }
+  else db.creatives.push(obj);
+  saveDB(); closeModal('creativeModal'); renderCreatives(); renderOverview();
+}
+
+/* ══════════════════════════════════════════════════
+   LEADS
+══════════════════════════════════════════════════ */
+function renderLeads(){
+  const q=(document.getElementById('leadSearch')?.value||'').toLowerCase();
+  const sf=document.getElementById('leadStatusFilter')?.value||'';
+  const body=document.getElementById('leadsBody');
+  if(!body) return;
+
+  // Enrich rows with sortable fields
+  let rows = db.leads
+    .filter(l=>(!q||(l.name||'').toLowerCase().includes(q)||(l.source||'').toLowerCase().includes(q))&&(!sf||l.status===sf))
+    .map(l=>({...l}));
+
+  rows = applySortToRows(rows, 'leads');
+  updateSortIcons('leads');
+
+  if(!rows.length){
+    body.innerHTML=`<tr><td colspan="9"><div class="empty-state"><div class="empty-state-icon">👥</div><p>No leads yet.</p></div></td></tr>`;
+    return;
+  }
+  body.innerHTML=rows.map(l=>{
+    const statCls='status-'+(l.status||'new').toLowerCase();
+    return `<tr>
+      <td class="td-name">${esc(l.name||'Unknown')}</td>
+      <td>${esc(l.contact||'—')}</td>
+      <td>${esc(l.source||'—')}</td>
+      <td><span class="lead-status ${statCls}">${esc(l.status||'New')}</span></td>
+      <td>${esc(l.proptype||'—')}</td>
+      <td>${esc(l.budget||'—')}</td>
+      <td>${esc(l.date||'—')}</td>
+      <td>${esc(l.appt||'—')}</td>
+      <td><div class="row-actions">
+        <button class="btn-sm" onclick="openLeadModal('${l.id}')">Edit</button>
+        <button class="btn-sm btn-sm-danger" onclick="confirmDelete('lead','${l.id}','${esc(l.name||'Lead')}')">Del</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function openLeadModal(id=null){
+  editingId.lead=id;
+  document.getElementById('leadModalTitle').textContent=id?'Edit Lead':'Add Lead';
+  const l=id?db.leads.find(x=>x.id===id):{};
+  document.getElementById('ld_name').value=l.name||'';
+  document.getElementById('ld_contact').value=l.contact||'';
+  document.getElementById('ld_source').value=l.source||'';
+  document.getElementById('ld_status').value=l.status||'New';
+  document.getElementById('ld_proptype').value=l.proptype||'';
+  document.getElementById('ld_budget').value=l.budget||'';
+  document.getElementById('ld_date').value=l.date||'';
+  document.getElementById('ld_appt').value=l.appt||'';
+  document.getElementById('ld_notes').value=l.notes||'';
+  document.getElementById('leadModal').classList.add('open');
+}
+function saveLead(){
+  const name=document.getElementById('ld_name').value.trim();
+  if(!name){alert('Name required');return;}
+  const obj={
+    id:editingId.lead||uid(), name,
+    contact:document.getElementById('ld_contact').value,
+    source:document.getElementById('ld_source').value,
+    status:document.getElementById('ld_status').value,
+    proptype:document.getElementById('ld_proptype').value,
+    budget:document.getElementById('ld_budget').value,
+    date:document.getElementById('ld_date').value,
+    appt:document.getElementById('ld_appt').value,
+    notes:document.getElementById('ld_notes').value,
+    updatedAt:new Date().toISOString()
+  };
+  if(editingId.lead){ const i=db.leads.findIndex(x=>x.id===editingId.lead); if(i>=0) db.leads[i]=obj; }
+  else db.leads.push(obj);
+  saveDB(); closeModal('leadModal'); renderLeads();
+}
+
+/* ══════════════════════════════════════════════════
+   SETTINGS LOAD
+══════════════════════════════════════════════════ */
+function loadSettings(){
+  const s=db.settings;
+  document.getElementById('stSheetId').value=s.sheetId||'';
+  document.getElementById('stWebApp').value=s.webAppUrl||'';
+  document.getElementById('stTheme').value=s.themeMode||'auto';
+  document.getElementById('stNightStart').value=s.nightStart||19;
+  document.getElementById('stNightEnd').value=s.nightEnd||7;
+  document.getElementById('stKillHook').value=s.killHook||25;
+  document.getElementById('stKillCPL').value=s.killCPL||2;
+  document.getElementById('stKillSpend').value=s.killSpend||150;
+  document.getElementById('stScaleHook').value=s.scaleHook||35;
+  document.getElementById('stScaleBook').value=s.scaleBook||3;
+}
+
+/* ══════════════════════════════════════════════════
+   DELETE
+══════════════════════════════════════════════════ */
+function confirmDelete(type, id, name){
+  document.getElementById('deleteConfirmText').textContent=`Delete "${name}"? This cannot be undone.`;
+  document.getElementById('deleteConfirmBtn').onclick=()=>{ doDelete(type,id); closeModal('deleteModal'); };
+  document.getElementById('deleteModal').classList.add('open');
+}
+function doDelete(type,id){
+  if(type==='campaign'){
+    db.campaigns=db.campaigns.filter(x=>x.id!==id);
+    db.adsets=db.adsets.filter(x=>x.campaignId!==id);
+    const orphanAdSets=db.adsets.filter(x=>x.campaignId===id).map(x=>x.id);
+    db.creatives=db.creatives.filter(x=>!orphanAdSets.includes(x.adsetId));
+  }
+  if(type==='adset'){
+    db.adsets=db.adsets.filter(x=>x.id!==id);
+    db.creatives=db.creatives.filter(x=>x.adsetId!==id);
+  }
+  if(type==='creative') db.creatives=db.creatives.filter(x=>x.id!==id);
+  if(type==='lead') db.leads=db.leads.filter(x=>x.id!==id);
+  saveDB(); renderCampaigns(); renderAdSets(); renderCreatives(); renderLeads(); renderOverview();
+}
+function confirmClearAll(){
+  if(!confirm('Clear ALL data? This cannot be undone.')) return;
+  db.campaigns=[]; db.adsets=[]; db.creatives=[]; db.leads=[];
+  saveDB(); renderAll();
+}
+
+/* ══════════════════════════════════════════════════
+   MODAL HELPERS
+══════════════════════════════════════════════════ */
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
+});
+
+/* ══════════════════════════════════════════════════
+   SAMPLE DATA
+══════════════════════════════════════════════════ */
+function loadSampleData(){
+  if(db.campaigns.length&&!confirm('This will add sample data to existing records. Continue?')) return;
+
+  const c1=uid(), c2=uid();
+  const a1=uid(), a2=uid(), a3=uid();
+  const cr1=uid(), cr2=uid(), cr3=uid(), cr4=uid(), cr5=uid();
+
+  db.campaigns.push(
+    {id:c1,name:'LL_Legacy_Launch_2024',platform:'Meta',objective:'Lead Generation',status:'Active',budget:'120',spend:'2840',leads:'34',startdate:'2024-06-01',notes:'Main funnel campaign'},
+    {id:c2,name:'LL_Google_Search_Q3',platform:'Google',objective:'Search — Qualified Buyers',status:'Active',budget:'80',spend:'1210',leads:'18',startdate:'2024-06-10',notes:'Search + Discovery mix'}
+  );
+  db.adsets.push(
+    {id:a1,name:'LL_Lookalike_1pct_Buyers',campaignId:c1,audience:'Lookalike 1% — past buyers',status:'Active',budget:'60',spend:'1520',leads:'22',cpl:'69',notes:'Best performing audience'},
+    {id:a2,name:'LL_Interest_PropertyInvestors',campaignId:c1,audience:'Interest: Property Investment, REITs',status:'Active',budget:'40',spend:'890',leads:'10',cpl:'89',notes:'Broad interest'},
+    {id:a3,name:'LL_Google_InMarket_HomeBuyers',campaignId:c2,audience:'In-market: Real Estate',status:'Active',budget:'80',spend:'1210',leads:'18',cpl:'67',notes:'Google in-market segment'}
+  );
+  db.creatives.push(
+    {id:cr1,name:'LL_Hook_Fear_Downgrade_v1',adsetId:a1,format:'Video',hook:'Fear',hookrate:'38',ctr:'2.1',cpl:'62',spend:'820',leads:'13',bookings:'4',copy:'Are you one missed payment away from being forced to downgrade your home?',notes:'Strongest hook so far'},
+    {id:cr2,name:'LL_Hook_Curiosity_Secret_v1',adsetId:a1,format:'Video',hook:'Curiosity',hookrate:'29',ctr:'1.4',cpl:'91',spend:'460',leads:'5',bookings:'1',copy:'The one strategy Singapore property agents don\'t want you to know',notes:'Decent hook, weak conversion'},
+    {id:cr3,name:'LL_Image_SocialProof_Testimonial',adsetId:a2,format:'Image',hook:'Social Proof',hookrate:'18',ctr:'0.9',cpl:'148',spend:'310',leads:'2',bookings:'0',copy:'"I upgraded my HDB to a condo with zero cash outlay" — Client, 2024',notes:'Hook rate below threshold'},
+    {id:cr4,name:'LL_Video_FOMO_LimitedSlots_v2',adsetId:a2,format:'Video',hook:'FOMO',hookrate:'42',ctr:'2.8',cpl:'55',spend:'580',leads:'7',bookings:'3',copy:'Only 12 seats left for the June workshop — secure yours now',notes:'Top performer — scale this'},
+    {id:cr5,name:'LL_Google_Search_BuyHDB_v1',adsetId:a3,format:'Image',hook:'Direct Search',hookrate:'',ctr:'3.2',cpl:'67',spend:'1210',leads:'18',bookings:'5',copy:'Upgrade Your HDB Without Touching Savings | Free Strategy Session',notes:'Google search ad'}
+  );
+  db.leads.push(
+    {id:uid(),name:'Tan Wei Ming',contact:'+65 9123 4567',source:'LL_Hook_Fear_Downgrade_v1',status:'Booked',proptype:'HDB 5-Room',budget:'SGD 900K–1.2M',date:'2024-06-12',appt:'2024-06-18',notes:'Motivated — wants to upgrade before EC launch'},
+    {id:uid(),name:'Sarah Lim',contact:'+65 8234 5678',source:'LL_Video_FOMO_LimitedSlots_v2',status:'Qualified',proptype:'EC / Condo',budget:'SGD 1.1M–1.4M',date:'2024-06-14',appt:'',notes:'Dual income, pre-approved loan'},
+    {id:uid(),name:'David Koh',contact:'+65 9345 6789',source:'LL_Google_Search_BuyHDB_v1',status:'New',proptype:'HDB 4-Room',budget:'SGD 550K–700K',date:'2024-06-16',appt:'',notes:''},
+    {id:uid(),name:'Priya Nair',contact:'+65 8456 7890',source:'LL_Hook_Fear_Downgrade_v1',status:'Booked',proptype:'Condo',budget:'SGD 1.2M–1.6M',date:'2024-06-15',appt:'2024-06-19',notes:'Investor mindset — looking for rental yield + capital gain'}
+  );
+
+  saveDB(); renderAll();
+  alert('✅ Sample data loaded! Check the Overview tab for action signals.');
+}
+
+/* ══════════════════════════════════════════════════
+   API SYNC
+══════════════════════════════════════════════════ */
+async function syncAll(){
+  const btn=document.getElementById('syncBtn');
+  const badge=document.getElementById('syncBadge');
+  btn.innerHTML='<span class="spinner"></span> Syncing…';
+  btn.disabled=true;
+
+  const webAppUrl=db.settings.webAppUrl;
+  const sheetId=db.settings.sheetId;
+
+  if(!webAppUrl&&!sheetId){
+    badge.textContent='No Source';
+    badge.className='sync-badge';
+    btn.innerHTML='⟳ Sync';
+    btn.disabled=false;
+    alert('Add your Apps Script Web App URL or Sheet ID in Settings to enable live sync.');
+    return;
+  }
+
+  let synced=false;
+
+  // Try Apps Script web app (Meta + Google Ads)
+  if(webAppUrl){
+    try{
+      const r=await fetch(webAppUrl+'?action=getData&t='+Date.now());
+      if(r.ok){
+        const data=await r.json();
+        if(data.campaigns) mergeApiData(data);
+        badge.textContent='Live API';
+        badge.className='sync-badge live';
+        synced=true;
+      }
+    }catch(e){ console.warn('Web app sync failed',e); }
+  }
+
+  // Fallback: Google Sheet gviz
+  if(!synced&&sheetId){
+    try{
+      const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Campaign_Data`;
+      const r=await fetch(url);
+      if(r.ok){
+        const text=await r.text();
+        const json=JSON.parse(text.replace(/^.*?({)/,'$1').replace(/\);?\s*$/,''));
+        parseSheetData(json);
+        badge.textContent='Sheet Sync';
+        badge.className='sync-badge live';
+        synced=true;
+      }
+    }catch(e){ console.warn('Sheet sync failed',e); }
+  }
+
+  if(!synced){
+    badge.textContent='Offline';
+    badge.className='sync-badge';
+  }
+
+  saveDB(); renderAll();
+  btn.innerHTML='⟳ Sync';
+  btn.disabled=false;
+}
+
+function mergeApiData(data){
+  // Merge API campaigns — match by name, update metrics, add new
+  (data.campaigns||[]).forEach(apiC=>{
+    const ex=db.campaigns.find(c=>c.name===apiC.name);
+    if(ex){ Object.assign(ex,{spend:apiC.spend,leads:apiC.leads,status:apiC.status,updatedAt:new Date().toISOString()}); }
+    else db.campaigns.push({id:uid(),...apiC,updatedAt:new Date().toISOString()});
+  });
+  (data.adsets||[]).forEach(apiA=>{
+    const ex=db.adsets.find(a=>a.name===apiA.name);
+    if(ex){ Object.assign(ex,{spend:apiA.spend,leads:apiA.leads,cpl:apiA.cpl,updatedAt:new Date().toISOString()}); }
+    else {
+      const camp=db.campaigns.find(c=>c.name===apiA.campaignName);
+      db.adsets.push({id:uid(),...apiA,campaignId:camp?camp.id:'',updatedAt:new Date().toISOString()});
+    }
+  });
+  (data.ads||[]).forEach(apiAd=>{
+    const ex=db.creatives.find(c=>c.name===apiAd.name);
+    if(ex){ Object.assign(ex,{spend:apiAd.spend,leads:apiAd.leads,hookrate:apiAd.hookrate,ctr:apiAd.ctr,cpl:apiAd.cpl,updatedAt:new Date().toISOString()}); }
+    else {
+      const adset=db.adsets.find(a=>a.name===apiAd.adsetName);
+      db.creatives.push({id:uid(),...apiAd,adsetId:adset?adset.id:'',updatedAt:new Date().toISOString()});
+    }
+  });
+}
+
+function parseSheetData(gvizJson){
+  // Parse gviz response — expects columns: CampaignName, AdSetName, AdName, Spend, Leads, CPL, HookRate, CTR, Bookings
+  const rows=(gvizJson.table?.rows||[]);
+  const cols=(gvizJson.table?.cols||[]).map(c=>c.label.toLowerCase().replace(/\s+/g,''));
+  rows.forEach(row=>{
+    const get=(label)=>{ const i=cols.indexOf(label); return i>=0?(row.c[i]?.v||''):''; };
+    const campName=get('campaignname')||get('campaign');
+    const asName=get('adsetname')||get('adset');
+    const adName=get('adname')||get('ad');
+    if(!adName) return;
+    let camp=db.campaigns.find(c=>c.name===campName);
+    if(!camp&&campName){ camp={id:uid(),name:campName,platform:'Meta',status:'Active',updatedAt:new Date().toISOString()}; db.campaigns.push(camp); }
+    let adset=db.adsets.find(a=>a.name===asName);
+    if(!adset&&asName){ adset={id:uid(),name:asName,campaignId:camp?camp.id:'',status:'Active',updatedAt:new Date().toISOString()}; db.adsets.push(adset); }
+    let cr=db.creatives.find(c=>c.name===adName);
+    const upd={spend:get('spend'),leads:get('leads'),cpl:get('cpl'),hookrate:get('hookrate'),ctr:get('ctr'),bookings:get('bookings'),adsetId:adset?adset.id:'',updatedAt:new Date().toISOString()};
+    if(cr) Object.assign(cr,upd);
+    else db.creatives.push({id:uid(),name:adName,format:'Video',...upd});
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   EXPORT / IMPORT
+══════════════════════════════════════════════════ */
+function exportCSV(){
+  const rows=[['Campaign','Ad Set','Ad Name','Format','Hook Type','Hook%','CTR%','CPL','Leads','Bookings','Spend','Signal']];
+  db.creatives.forEach(cr=>{
+    const asName=getAdSetName(cr.adsetId);
+    const campName=getCampaignName(getAdSetCampaignId(cr.adsetId));
+    rows.push([campName,asName,cr.name,cr.format,cr.hook,cr.hookrate,cr.ctr,cr.cpl,cr.leads,cr.bookings,cr.spend,getSignal(cr)]);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`REI_Creatives_${new Date().toISOString().split('T')[0]}.csv`; a.click();
+}
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`REI_Backup_${new Date().toISOString().split('T')[0]}.json`; a.click();
+}
+function importJSON(){ document.getElementById('importFileInput').click(); }
+function handleImportFile(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(!confirm('Import will replace current data. Continue?')) return;
+      db=Object.assign({},defaultDB,data);
+      db.settings=Object.assign({},defaultDB.settings,data.settings||{});
+      saveDB(); renderAll(); loadSettings();
+      alert('✅ Import successful!');
+    }catch(err){ alert('Invalid JSON file'); }
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+/* ══════════════════════════════════════════════════
+   RENDER ALL
+══════════════════════════════════════════════════ */
+function renderAll(){
+  renderOverview();
+  updateAdSetCampaignFilter();
+  updateCreativeAdSetFilter();
+}
+
+/* ══════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════ */
+(function init(){
+  loadDB();
+  applyAutoTheme();
+
+  // Set initial date range
+  const today=new Date(), from=new Date(today);
+  from.setDate(today.getDate()-7);
+  dateFilter={days:7,from,to:today};
+  document.getElementById('dateFrom').value=from.toISOString().split('T')[0];
+  document.getElementById('dateTo').value=today.toISOString().split('T')[0];
+  document.getElementById('dateLabel').textContent='Last 7 days';
+
+  renderAll();
+  loadSettings();
+
+  // Resize redraws charts
+  window.addEventListener('resize',()=>{ if(document.getElementById('page-overview').classList.contains('active')) renderCharts(); });
+})();
+</script>
+</body>
+</html>

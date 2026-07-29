@@ -1,0 +1,1 @@
+ExperimentID,CampaignID,Variable,Hypothesis,Control,Variant,KPI,MinData,DecisionRule,Status,Result,Learning,SourcePath

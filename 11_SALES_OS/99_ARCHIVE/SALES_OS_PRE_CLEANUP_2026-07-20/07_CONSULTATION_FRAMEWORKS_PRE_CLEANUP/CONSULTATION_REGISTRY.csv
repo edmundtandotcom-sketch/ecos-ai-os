@@ -1,0 +1,11 @@
+framework_id,framework_name,master_file_path,flow_phase,lifecycle_status,evidence_tier,owner,last_reviewed,notes
+CF-01,Diagnosis Call System v2.0,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\03_CONVERSATION_CONVERSION\01_DIAGNOSIS_CALL_SYSTEM_v2.0.md,P1,Active,T5,Advisory Desk,2026-07-11,6-phase diagnosis + tiering
+CF-02,Strategy Session Conversation System v2.0,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\03_CONVERSATION_CONVERSION\02_STRATEGY_SESSION_CONVERSATION_SYSTEM_v2.0.md,P3,Active,T5,Advisory Desk,2026-07-11,REI spine + 4 sanctioned closes
+CF-03,ProDeck Consult Delivery v2.0,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\05_PRODECK\01_PRODECK_CONSULT_DELIVERY_SYSTEM_v2.0.md,P3,Active,T5,Advisory Desk,2026-07-11,5 anchors + 60-min flow
+CF-04,Decision Psychology & Belief Resolution v2.1,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\03_CONVERSATION_CONVERSION\03_DECISION_PSYCHOLOGY_AND_BELIEF_RESOLUTION_v2.1.md,P3-P4,Validated,T3,Advisory Desk,2026-07-11,RB-01..RB-18 grounded in 376 objections
+CF-05,Risk Assurance & Next Action v2.0,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\03_CONVERSATION_CONVERSION\04_RISK_ASSURANCE_AND_NEXT_ACTION_SYSTEM_v2.0.md,P4-P6,Active,T5,Advisory Desk,2026-07-11,Go/Prepare/Not-Yet/No-Fit gate
+CF-06,Advisory Trigger Question Bank v2.0,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\04_TRIGGER_QUESTIONS\01_ADVISORY_TRIGGER_QUESTION_BANK_v2.0.md,P1-P4,Active,T5,Advisory Desk,2026-07-11,Reusable diagnosis questions
+CF-07,Belief-Shift Question Sequences v2.0,00_AI_OPERATING_SYSTEM\03_CLIENT_ADVISORY_OS\04_TRIGGER_QUESTIONS\02_BELIEF_SHIFT_QUESTION_SEQUENCES_v2.0.md,P3-P4,Active,T5,Advisory Desk,2026-07-11,Objection-to-realisation sequences
+CF-08,RAM Risk Assessment Module v1.0,X-Singapore Real Estate Insider - MAS HQ\01_MAS_OS\02_CONVERSATION_CONVERSION_SYSTEM\MAS_RAM_RISK_ASSESSMENT_MODULE_v1.0.md,P3-Anchor3,Supported-promotion-proposed,T4,Advisory Desk,2026-07-11,Legacy read-only; promotion to financial-objection master pending Edmund
+CF-09,PWS legacy consult system,,-,Retired-absorbed,T5,Advisory Desk,2026-07-11,Absorbed into MAS/REI/RAM; do not resurrect (see PWS_DISPOSITION.md)
+CF-10,Historical Stage-4 closing tactics,00_COACH_EDMUND_BUSINESS_BRAIN_V1.0\07_CONSULT_SALES_LOGIC.md,-,Deprecated-pending-ruling,T5,Strategy Office,2026-07-11,Scarcity/takeaway close contradict doctrine (SC-02)

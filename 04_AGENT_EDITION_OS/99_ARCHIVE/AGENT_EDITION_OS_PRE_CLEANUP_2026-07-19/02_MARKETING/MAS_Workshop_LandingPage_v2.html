@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1-Day Advisor Command Bootcamp — For Singapore Property Agents</title>
+<meta name="description" content="Stop being a salesperson. One day in Singapore to build the business behind the agent. Market Command. Advisory Conversion. Business Engine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#C9952A;--g2:#E8B84B;--g3:rgba(201,149,42,.14);--g4:rgba(201,149,42,.06);--g5:rgba(201,149,42,.03);
+  --bg:#06060E;--bg2:#0C0C18;--bg3:#111120;--card:#101020;--card2:#141428;
+  --border:rgba(255,255,255,.06);--border2:rgba(201,149,42,.2);--border3:rgba(201,149,42,.08);
+  --text:#EEEEF5;--muted:#8888A8;--dim:#4A4A6A;--faint:#2E2E48;
+  --green:#10B981;--green2:rgba(16,185,129,.1);--green3:rgba(16,185,129,.2);
+  --red:#EF4444;--red2:rgba(239,68,68,.08);--red3:rgba(239,68,68,.2);
+  --amber:#F59E0B;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.5}
+/* LAYOUT */
+.container{max-width:860px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+.container-wide{max-width:1020px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+.gold{color:var(--g)}
+.section{padding:80px 0}
+.section-sm{padding:56px 0}
+.section-xs{padding:36px 0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(201,149,42,.5)}70%{box-shadow:0 0 0 10px rgba(201,149,42,0)}}
+/* URGENCY BAR */
+.ubar{background:linear-gradient(90deg,rgba(201,149,42,.06),rgba(201,149,42,.12),rgba(201,149,42,.06));border-bottom:1px solid var(--border2);padding:10px 0;text-align:center;font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--g)}
+.ubar span{color:var(--text)}
+.ubar-dot{display:inline-block;width:5px;height:5px;background:var(--g);border-radius:50%;margin:0 7px;vertical-align:middle;animation:blink 2s infinite}
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(6,6,14,.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:13px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.nav-logo{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--g)}
+.nav-live{display:flex;align-items:center;gap:6px;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.nav-live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+.nav-btn{background:var(--g);color:#000;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:6px;transition:all .15s;white-space:nowrap;border:none;cursor:pointer}
+.nav-btn:hover{background:var(--g2);transform:translateY(-1px)}
+/* HERO */
+.hero{padding:68px 0 60px;text-align:center;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:1000px;height:600px;background:radial-gradient(ellipse at center top,rgba(201,149,42,.06) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border2);background:var(--g4);border-radius:30px;padding:6px 16px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:26px}
+.hero-eyebrow-dot{width:5px;height:5px;background:var(--g);border-radius:50%;animation:blink 2s infinite}
+/* HERO H1 */
+h1.hero-h{font-size:clamp(26px,5.5vw,52px);font-weight:900;line-height:1.06;letter-spacing:-.03em;margin-bottom:6px}
+.hero-h .line-dim{color:var(--muted);font-weight:700;font-size:clamp(18px,3.5vw,34px);display:block;margin-bottom:6px;letter-spacing:-.02em}
+.hero-h .line-main{display:block;background:linear-gradient(135deg,#F0F0F5 0%,var(--g) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-kicker{font-size:clamp(13px,1.8vw,17px);color:var(--muted);line-height:1.7;max-width:560px;margin:16px auto 28px;font-weight:400}
+.hero-kicker strong{color:var(--text);font-weight:700}
+/* HERO PROOF ROW */
+.hero-proof{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:32px}
+.hp{font-size:10px;color:var(--dim);display:flex;align-items:center;gap:5px}
+.hp::before{content:'';width:3px;height:3px;background:var(--g);border-radius:50%;flex-shrink:0}
+/* HERO CTA */
+.hero-cta-stack{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:36px}
+.btn-hero{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(135deg,#C9952A,#E8B84B);color:#000;font-size:13px;font-weight:800;letter-spacing:.05em;padding:17px 38px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;animation:pulse 3s infinite;text-transform:uppercase;text-decoration:none}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(201,149,42,.4)}
+.hero-sub-cta{font-size:10px;color:var(--dim);cursor:pointer;transition:color .15s}
+.hero-sub-cta:hover{color:var(--g)}
+.hero-trust{font-size:10px;color:var(--dim);letter-spacing:.03em}
+/* HERO STAT ROW */
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:44px}
+.hs{background:var(--card);padding:18px 12px;text-align:center}
+.hs-n{font-size:24px;font-weight:900;color:var(--g);line-height:1;margin-bottom:4px}
+.hs-l{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);line-height:1.5}
+/* DIVIDER */
+.div{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+/* SECTION HEADER */
+.sec-h{text-align:center;margin-bottom:40px}
+.sec-eye{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--g);margin-bottom:12px;background:var(--g4);border:1px solid var(--border2);border-radius:20px;padding:4px 14px}
+h2.sec-t{font-size:clamp(20px,4vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.025em}
+h2.sec-t .g{color:var(--g)}
+h2.sec-t .dim{color:var(--muted)}
+p.sec-s{font-size:12px;line-height:1.85;color:var(--muted);max-width:500px;margin:12px auto 0}
+/* TRUTH STRIP — confrontational stats */
+.truth-strip{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:36px 0;margin:0}
+.ts-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.ts-block{background:var(--bg2);padding:24px 20px;text-align:center}
+.ts-num{font-size:32px;font-weight:900;line-height:1;margin-bottom:6px}
+.ts-label{font-size:10px;color:var(--muted);line-height:1.65;letter-spacing:.01em}
+.ts-label strong{color:var(--text);display:block;font-size:11px;margin-bottom:3px}
+/* PROBLEM SECTION */
+.problem-strip{background:var(--red2);border:1px solid var(--red3);border-radius:12px;padding:22px;margin-bottom:14px}
+.ps-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.ps-text{font-size:clamp(14px,2.5vw,18px);font-weight:700;line-height:1.45;color:var(--text)}
+.ps-text em{color:var(--g);font-style:normal}
+.problem-items{display:flex;flex-direction:column;gap:0;margin-top:24px}
+.pi{display:grid;grid-template-columns:48px 1fr;gap:0;padding:18px 0;border-bottom:1px solid var(--border)}
+.pi:first-child{padding-top:0}
+.pi:last-child{border-bottom:none}
+.pi-num{font-size:30px;font-weight:900;color:var(--faint);line-height:1;padding-top:3px}
+.pi-content h3{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text);line-height:1.35}
+.pi-content p{font-size:11px;line-height:1.8;color:var(--muted)}
+.pi-content p strong{color:var(--g);font-weight:700}
+.pi-content .pi-quote{font-size:11px;color:var(--dim);font-style:italic;margin-top:7px;padding:8px 12px;background:var(--bg2);border-left:2px solid var(--border2);border-radius:0 5px 5px 0;line-height:1.65}
+/* THE 3 THINGS */
+.three-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
+@media(max-width:640px){.three-grid{grid-template-columns:1fr}}
+.tcard{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;overflow:hidden;transition:border-color .2s}
+.tcard:hover{border-color:var(--border2)}
+.tcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--g),var(--g2))}
+.tcard-num{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--g);opacity:.5;margin-bottom:14px}
+.tcard-icon{font-size:24px;margin-bottom:13px}
+.tcard-name{font-size:15px;font-weight:800;margin-bottom:8px;color:var(--text);line-height:1.2;letter-spacing:-.01em}
+.tcard-deck{font-size:11px;line-height:1.8;color:var(--muted)}
+.tcard-bottom{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:10px;font-weight:700;color:var(--g);display:flex;align-items:center;gap:6px}
+/* WHAT AGENTS SAY — quote block */
+.market-quote{background:linear-gradient(135deg,rgba(201,149,42,.06),rgba(201,149,42,.02));border:1px solid var(--border2);border-radius:14px;padding:28px;text-align:center;margin-top:20px}
+.mq-mark{font-size:36px;color:var(--g);opacity:.3;line-height:.5;margin-bottom:14px}
+.mq-text{font-size:clamp(15px,2.8vw,22px);font-weight:700;line-height:1.45;color:var(--text);margin-bottom:12px;max-width:640px;margin-left:auto;margin-right:auto}
+.mq-text em{color:var(--g);font-style:normal}
+.mq-src{font-size:10px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+/* CASE STUDIES */
+.cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px}
+@media(max-width:560px){.cases-grid{grid-template-columns:1fr}}
+.case{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:22px;position:relative}
+.case-badge{position:absolute;top:16px;right:16px;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--green2);color:var(--green);border:1px solid var(--green3);border-radius:20px;padding:3px 9px}
+.case-result{margin-bottom:13px}
+.case-from{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:2px}
+.case-to{font-size:26px;font-weight:900;color:var(--green);line-height:1;letter-spacing:-.02em}
+.case-time{font-size:10px;color:var(--dim);margin-top:2px}
+.case-quote{font-size:11px;line-height:1.85;color:var(--muted);margin-bottom:14px;font-style:italic}
+.case-quote strong{color:var(--text);font-style:normal;font-weight:700}
+.case-meta{display:flex;align-items:center;gap:9px}
+.case-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--g),#6B3F0A);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.case-name{font-size:10px;font-weight:700;color:var(--text)}
+.case-role{font-size:9px;color:var(--dim);margin-top:1px}
+/* WHO */
+.who-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+@media(max-width:520px){.who-cols{grid-template-columns:1fr}}
+.who-box{border-radius:12px;padding:20px}
+.who-yes{background:var(--green2);border:1px solid var(--green3)}
+.who-no{background:var(--red2);border:1px solid var(--red3)}
+.who-head{font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:13px;display:flex;align-items:center;gap:7px}
+.who-yes .who-head{color:var(--green)}
+.who-no .who-head{color:var(--red)}
+.who-items{display:flex;flex-direction:column;gap:8px}
+.wi{font-size:11px;line-height:1.65;color:var(--muted);display:flex;align-items:flex-start;gap:8px}
+.wi::before{content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;margin-top:6px}
+.who-yes .wi::before{background:var(--green)}
+.who-no .wi::before{background:var(--red)}
+/* AGENDA */
+.agenda{display:flex;flex-direction:column;margin-top:26px}
+.ag{display:grid;grid-template-columns:80px 1fr;gap:14px;padding:20px 0;border-bottom:1px solid var(--border)}
+.ag:first-child{padding-top:0}
+.ag:last-child{border-bottom:none;padding-bottom:0}
+.ag-t{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g);line-height:1.5;padding-top:3px}
+.ag-h{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text)}
+.ag-d{font-size:11px;line-height:1.8;color:var(--muted)}
+.ag-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.ag-chip{font-size:9px;font-weight:600;color:var(--g);background:var(--g4);border:1px solid var(--border3);border-radius:20px;padding:3px 9px}
+/* OFFER */
+.offer-box{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;overflow:hidden;margin-top:26px}
+.ob-top{padding:22px 22px 18px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(201,149,42,.08),transparent)}
+.ob-tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:8px}
+.ob-title{font-size:clamp(16px,2.5vw,22px);font-weight:800;line-height:1.2;margin-bottom:5px}
+.ob-sub{font-size:11px;color:var(--muted);line-height:1.7}
+.ob-list{padding:18px 22px;display:flex;flex-direction:column;gap:0}
+.ob-item{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-bottom:1px solid var(--border)}
+.ob-item:last-child{border-bottom:none}
+.ob-check{width:18px;height:18px;border-radius:50%;background:var(--green2);border:1px solid var(--green3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ob-check svg{width:8px;height:8px}
+.ob-it{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.ob-id{font-size:10px;color:var(--muted);line-height:1.65}
+.ob-price{padding:18px 22px;border-top:1px solid var(--border);background:var(--bg3)}
+.op-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.op-left .op-was{font-size:11px;color:var(--dim);text-decoration:line-through;margin-bottom:3px}
+.op-left .op-now{display:flex;align-items:baseline;gap:5px}
+.op-cur{font-size:16px;font-weight:700;color:var(--g)}
+.op-amt{font-size:42px;font-weight:900;color:var(--g);line-height:1;letter-spacing:-.03em}
+.op-note{font-size:9px;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+/* GUARANTEE */
+.guarantee{background:rgba(16,185,129,.04);border:1px solid var(--green3);border-radius:12px;padding:22px;margin-top:14px;display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start}
+@media(max-width:400px){.guarantee{grid-template-columns:1fr}}
+.g-icon{font-size:32px}
+.g-head{font-size:12px;font-weight:800;color:var(--green);margin-bottom:5px}
+.g-body{font-size:11px;line-height:1.8;color:var(--muted)}
+/* INCOME GAP */
+.gap-table{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:26px}
+.gt-head{background:var(--bg2);padding:14px 18px;border-bottom:1px solid var(--border)}
+.gt-label{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.gt-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.gt-row{display:grid;grid-template-columns:110px 1fr 64px;align-items:center;gap:10px}
+.gt-lbl{font-size:9px;color:var(--muted);text-align:right;line-height:1.5}
+.gt-track{height:24px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.gt-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:10px;font-size:9px;font-weight:700}
+.gt-val{font-size:11px;font-weight:800}
+.gt-foot{padding:14px 18px;border-top:1px solid var(--border);background:var(--bg2)}
+.gt-foot-text{font-size:11px;color:var(--muted);line-height:1.8}
+.gt-foot-text strong{color:var(--g);font-weight:700}
+/* SCARCITY */
+.scarcity{background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.14);border-radius:10px;padding:16px 20px;margin-top:14px}
+.sc-h{font-size:11px;font-weight:700;color:var(--red);margin-bottom:4px}
+.sc-b{font-size:11px;color:var(--muted);line-height:1.7}
+/* FAQ */
+.faq{display:flex;flex-direction:column;margin-top:26px}
+.fq{border-bottom:1px solid var(--border)}
+.fq:first-child{border-top:1px solid var(--border)}
+.fq-q{display:flex;align-items:center;justify-content:space-between;padding:17px 0;cursor:pointer;gap:12px}
+.fq-qt{font-size:12px;font-weight:700;color:var(--text);flex:1;line-height:1.4}
+.fq-arr{width:20px;height:20px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s;color:var(--dim)}
+.fq.open .fq-arr{background:var(--g);border-color:var(--g);color:#000;transform:rotate(45deg)}
+.fq-a{font-size:11px;line-height:1.85;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s}
+.fq.open .fq-a{max-height:500px;padding-bottom:16px}
+/* FINAL CTA */
+.final{text-align:center;padding:76px 0;position:relative;overflow:hidden}
+.final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(201,149,42,.07) 0%,transparent 70%);pointer-events:none}
+.final-eye{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g);background:var(--g4);border:1px solid var(--border2);border-radius:20px;padding:5px 14px;margin-bottom:18px}
+.final-eye-dot{width:5px;height:5px;background:var(--g);border-radius:50%;animation:blink 1.5s infinite}
+.final-h{font-size:clamp(22px,5vw,42px);font-weight:900;line-height:1.1;letter-spacing:-.03em;margin-bottom:12px}
+.final-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:480px;margin:0 auto 28px}
+.final-urg{display:inline-flex;align-items:center;gap:7px;background:var(--g4);border:1px solid var(--border2);border-radius:8px;padding:12px 18px;font-size:11px;font-weight:600;color:var(--g);margin-bottom:24px}
+.final-urg-dot{width:6px;height:6px;background:var(--g);border-radius:50%;animation:blink 1.5s infinite}
+.price-big{font-size:clamp(36px,7vw,60px);font-weight:900;color:var(--g);letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.price-note{font-size:10px;color:var(--dim);margin-bottom:26px;letter-spacing:.03em}
+/* BUTTONS */
+.btn-gold{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#C9952A,#E8B84B);color:#000;font-size:13px;font-weight:800;letter-spacing:.04em;padding:16px 36px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;text-transform:uppercase;width:100%}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 10px 36px rgba(201,149,42,.4)}
+.btn-outline{display:flex;align-items:center;justify-content:center;border:1px solid var(--border2);color:var(--muted);font-size:12px;font-weight:600;padding:13px 32px;border-radius:9px;cursor:pointer;transition:all .2s;background:transparent;width:100%}
+.btn-outline:hover{border-color:var(--g);color:var(--g)}
+/* STICKY */
+.sticky{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(6,6,14,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border2);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;transform:translateY(100%);transition:transform .3s}
+.sticky.show{transform:translateY(0)}
+.sticky-left .sl-price{font-size:20px;font-weight:900;color:var(--g)}
+.sticky-left .sl-tag{font-size:9px;color:var(--dim);margin-top:1px;text-transform:uppercase;letter-spacing:.05em}
+.sticky-btn{background:var(--g);color:#000;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:11px 22px;border-radius:7px;border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.sticky-btn:hover{background:var(--g2)}
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:28px 0;text-align:center}
+.foot-logo{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:7px}
+.foot-line{font-size:9px;color:var(--dim);line-height:1.8}
+/* RESPONSIVE */
+@media(max-width:640px){
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .ts-inner{grid-template-columns:1fr}
+  .three-grid{grid-template-columns:1fr}
+  .cases-grid{grid-template-columns:1fr}
+  .who-cols{grid-template-columns:1fr}
+  .ag{grid-template-columns:1fr}
+  .gt-row{grid-template-columns:80px 1fr 52px}
+  .sticky{flex-direction:column;text-align:center}
+  .op-row{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- URGENCY -->
+<div class="ubar">
+  <span class="ubar-dot"></span>
+  <span id="seat-n">47</span> agents pre-registered &nbsp;·&nbsp; <span>Seats limited to 40 per cohort — priority window only</span>
+  <span class="ubar-dot"></span>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container-wide">
+    <div class="nav-inner">
+      <div class="nav-logo">MAS · Agent Edition</div>
+      <div class="nav-live"><div class="nav-live-dot"></div>Singapore · Live Bootcamp</div>
+      <a href="#register" class="nav-btn">Reserve Seat →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>1-Day Advisor Command Bootcamp · Singapore</div>
+    <h1 class="hero-h">
+      <span class="line-dim">Stop being a salesperson.</span>
+      <span class="line-main">Build the business<br>behind the agent.</span>
+    </h1>
+    <p class="hero-kicker">
+      There are <strong>30,000 licensed agents</strong> in Singapore. Most of them are working harder every year for the same income ceiling. The ones breaking through aren't better agents. <strong>They built something different underneath.</strong>
+    </p>
+    <div class="hero-proof">
+      <span class="hp">Live in Singapore</span>
+      <span class="hp">Full day intensive</span>
+      <span class="hp">16 years · 500+ agents coached</span>
+      <span class="hp">Everything built before you leave</span>
+    </div>
+    <div class="hero-cta-stack">
+      <a href="#register" class="btn-hero">Claim my seat — S$287 →</a>
+      <span class="hero-sub-cta" onclick="document.getElementById('what-you-build').scrollIntoView({behavior:'smooth'})">See what you build in one day ↓</span>
+    </div>
+    <p class="hero-trust">No inspiration. No notes to "implement later." Three systems built, ready to run on Monday.</p>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">30K</div><div class="hs-l">Licensed agents competing for the same clients</div></div>
+      <div class="hs"><div class="hs-n">73%</div><div class="hs-l">Never break S$200K — not market. Structure.</div></div>
+      <div class="hs"><div class="hs-n">1 day</div><div class="hs-l">To build all three systems that change that</div></div>
+      <div class="hs"><div class="hs-n">S$287</div><div class="hs-l">One investment · Zero upsells on the day</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- TRUTH STRIP -->
+<div class="truth-strip">
+  <div class="container-wide">
+    <div class="ts-inner">
+      <div class="ts-block">
+        <div class="ts-num" style="color:var(--red)">370</div>
+        <div class="ts-label"><strong>Consumer complaints to CEA</strong> in FY2025 alone. Agents who look the same to clients get judged the same way.</div>
+      </div>
+      <div class="ts-block">
+        <div class="ts-num" style="color:var(--amber)">47</div>
+        <div class="ts-label"><strong>Agencies closed in 2025.</strong> The market is not forgiving the unpositioned agent anymore.</div>
+      </div>
+      <div class="ts-block">
+        <div class="ts-num" style="color:var(--green)">S$350K</div>
+        <div class="ts-label"><strong>Average annual income gap</strong> between a plateau agent and a command-level advisor. Same market. Different structure.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">What's actually happening</div>
+      <h2 class="sec-t">Your income ceiling isn't<br><span class="g">a market problem.</span></h2>
+      <p class="sec-s">The market didn't cap you. Your structure did. And the agents breaking through right now aren't more talented — they built something you haven't yet.</p>
+    </div>
+    <div class="problem-strip">
+      <div class="ps-label">The pattern behind every agent plateau</div>
+      <p class="ps-text">"I close a deal and feel great. Then I look at my pipeline and <em>it's empty again</em>. Every month is a cold start. I'm not building anything — I'm just surviving."</p>
+    </div>
+    <div class="problem-items">
+      <div class="pi">
+        <div class="pi-num">01</div>
+        <div class="pi-content">
+          <h3>You're one of 30,000 agents who all look the same to the client browsing listings right now.</h3>
+          <p>The client doesn't know what makes you different. You know you're better — but you can't prove it before the first conversation. <strong>Without a defined market position, every deal starts as a competition on commission rate.</strong></p>
+          <div class="pi-quote">"The danger of blending in — if nobody remembers you, nobody contacts you." — Stuart Chng, Huttons, 2026</div>
+        </div>
+      </div>
+      <div class="pi">
+        <div class="pi-num">02</div>
+        <div class="pi-content">
+          <h3>You lose deals you should win — and you don't know exactly why.</h3>
+          <p>The rapport was great. The client seemed ready. Then they went quiet. Or they went with someone else. <strong>Without a structured advisory conversation, every deal depends on how good you're feeling that day.</strong> That's not a system. That's hope.</p>
+          <div class="pi-quote">"I had a great meeting. Two days later they told me they signed with another agent. I couldn't figure out what I missed."</div>
+        </div>
+      </div>
+      <div class="pi">
+        <div class="pi-num">03</div>
+        <div class="pi-content">
+          <h3>If you stop working, the income stops. The business is you — not a business.</h3>
+          <p>Burnout doesn't announce itself. It builds when everything runs through your personal effort — every lead, every follow-up, every deal. <strong>Without a business machine running underneath, you can't take a week off without losing ground.</strong> That's not freedom. That's a commission job with extra steps.</p>
+          <div class="pi-quote">"Working constantly and giving everything — but nothing seems to be moving." — Stuart Chng, Navis Living Group, 2026</div>
+        </div>
+      </div>
+    </div>
+    <div class="market-quote">
+      <div class="mq-mark">"</div>
+      <p class="mq-text">Most agents don't have a lead problem.<br>They have a <em>command problem.</em><br>They don't command their market, their conversation, or their pipeline.</p>
+      <div class="mq-src">Coach Edmund Tan · 16 years in Singapore property · 500+ agents coached</div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- THE 3 THINGS -->
+<section class="section" id="what-you-build">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">What you build in one day</div>
+      <h2 class="sec-t">Three systems. <span class="g">All built before 5pm.</span></h2>
+      <p class="sec-s">Not frameworks to take home. Not notes to review. Three complete business systems — installed, named, and ready to run Monday morning.</p>
+    </div>
+    <div class="three-grid">
+      <div class="tcard">
+        <div class="tcard-num">Build 01</div>
+        <div class="tcard-icon">🎯</div>
+        <div class="tcard-name">Market Command</div>
+        <div class="tcard-deck">You define the specific corner of Singapore's market you want to own — and no other agent can claim. Not "private property agent." Not "HDB specialist." The precise advisory category that makes clients think of you before they think of anyone else.<br><br>By the end of this session, clients in your niche will have a specific reason to call you that has nothing to do with your commission rate.</div>
+        <div class="tcard-bottom">→ Category owned. Market corner claimed.</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-num">Build 02</div>
+        <div class="tcard-icon">⚡</div>
+        <div class="tcard-name">Advisory Conversion</div>
+        <div class="tcard-deck">You build the advisory conversation that consistently moves clients from curious to committed — without pressure, without chasing, without losing deals you should win.<br><br>A named, 3-stage process clients can describe to friends. Referral rate lifts because clients now have the exact language to recommend you. Fee negotiations drop within 5 conversations.</div>
+        <div class="tcard-bottom">→ Closes without chasing. Refers without asking.</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-num">Build 03</div>
+        <div class="tcard-icon">🏛️</div>
+        <div class="tcard-name">Business Engine</div>
+        <div class="tcard-deck">You install the GHL + AI operating system that runs your pipeline, follow-up, and referral loops without you manually driving every action.<br><br>A 90-day activation sequence for your niche. Automated nurture for every contact. A business that generates income while you sleep — not one that stops when you stop.</div>
+        <div class="tcard-bottom">→ Earns when you're not earning.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- PROOF -->
+<section class="section-sm">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">It works. Here's the evidence.</div>
+      <h2 class="sec-t">Same market.<br><span class="g">Different structure. Different result.</span></h2>
+      <p class="sec-s">These agents didn't get lucky. They built the three systems. The numbers followed.</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case">
+        <div class="case-badge">Verified</div>
+        <div class="case-result">
+          <div class="case-from">S$182K GCI →</div>
+          <div class="case-to">S$411K</div>
+          <div class="case-time">14 months · PropNex · Private Resale</div>
+        </div>
+        <p class="case-quote">"I stopped chasing everything and defined who I actually serve. <strong>Within 14 months: S$229K more. Same market. Same hours. Completely different structure underneath.</strong>"</p>
+        <div class="case-meta">
+          <div class="case-av">TL</div>
+          <div><div class="case-name">T. Lim</div><div class="case-role">PropNex · Private Resale · 6 years</div></div>
+        </div>
+      </div>
+      <div class="case">
+        <div class="case-badge">Verified</div>
+        <div class="case-result">
+          <div class="case-from">S$240K GCI →</div>
+          <div class="case-to">S$520K</div>
+          <div class="case-time">11 months · ERA · HDB</div>
+        </div>
+        <p class="case-quote">"3 years stuck at S$200–240K. I thought it was the market. <strong>It wasn't. It was that nobody outside my referral network knew who I was or why to call me specifically.</strong> That's what changed."</p>
+        <div class="case-meta">
+          <div class="case-av">SR</div>
+          <div><div class="case-name">S. Raj</div><div class="case-role">ERA · HDB Specialist · 8 years</div></div>
+        </div>
+      </div>
+      <div class="case">
+        <div class="case-badge">Verified</div>
+        <div class="case-result">
+          <div class="case-from">S$310K GCI →</div>
+          <div class="case-to">S$680K</div>
+          <div class="case-time">16 months · OrangeTee · Landed</div>
+        </div>
+        <p class="case-quote">"Fee negotiations in 8 out of 10 conversations before. After I built my advisory system and gave the process a name: <strong>almost never. The rate didn't change. What I showed clients changed.</strong>"</p>
+        <div class="case-meta">
+          <div class="case-av">MW</div>
+          <div><div class="case-name">M. Wong</div><div class="case-role">OrangeTee · Landed · 11 years</div></div>
+        </div>
+      </div>
+      <div class="case">
+        <div class="case-badge">Verified</div>
+        <div class="case-result">
+          <div class="case-from">S$120K GCI →</div>
+          <div class="case-to">S$290K</div>
+          <div class="case-time">9 months · Huttons · HDB</div>
+        </div>
+        <p class="case-quote">"I built one 90-day outreach sequence for HDB upgraders in my area. Within 3 months I had more appointments than I could handle. <strong>I had never experienced that in 4 years. Ever.</strong>"</p>
+        <div class="case-meta">
+          <div class="case-av">JC</div>
+          <div><div class="case-name">J. Chua</div><div class="case-role">Huttons · HDB Upgrader Specialist · 4 years</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- WHO -->
+<section class="section-sm">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">Is this for you</div>
+      <h2 class="sec-t">The right agent <span class="g">in the right room</span> changes everything.<br><span class="dim" style="font-size:70%;font-weight:600">The wrong fit wastes everyone's time.</span></h2>
+    </div>
+    <div class="who-cols">
+      <div class="who-box who-yes">
+        <div class="who-head">✓ You belong in this room if</div>
+        <div class="who-items">
+          <div class="wi">You're earning but the ceiling feels artificial — not market-driven</div>
+          <div class="wi">2–10 years in property and the income isn't compounding the way it should</div>
+          <div class="wi">Your business stops when you stop — and you know that's the problem</div>
+          <div class="wi">Fee negotiations happen in more than half your conversations</div>
+          <div class="wi">You want to be known for something specific, not just "available"</div>
+          <div class="wi">You'll commit one full day to building something that runs for years</div>
+        </div>
+      </div>
+      <div class="who-box who-no">
+        <div class="who-head">✗ Not the right room if</div>
+        <div class="who-items">
+          <div class="wi">You want closing scripts and prospecting tactics, not business architecture</div>
+          <div class="wi">You're not willing to define and commit to a specific market niche</div>
+          <div class="wi">You believe your income ceiling is the market's fault, not your structure</div>
+          <div class="wi">You want to keep doing what you're doing and just do more of it</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- AGENDA -->
+<section class="section" id="agenda">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">The day</div>
+      <h2 class="sec-t">Every hour builds something.<br><span class="g">Nothing to implement later.</span></h2>
+    </div>
+    <div class="agenda">
+      <div class="ag">
+        <div class="ag-t">9:00 AM<br>Registration</div>
+        <div>
+          <div class="ag-h">The Command Diagnostic — your income ceiling mapped live</div>
+          <div class="ag-d">Before we build anything, you'll see exactly where your ceiling is being created. Live scoring across all three pillars. By 9:30am you know your specific gaps — and the order to close them.</div>
+          <div class="ag-chips"><span class="ag-chip">Live diagnostic</span><span class="ag-chip">Gap mapping</span><span class="ag-chip">Personalised sequence</span></div>
+        </div>
+      </div>
+      <div class="ag">
+        <div class="ag-t">10:00 AM<br>Build 01</div>
+        <div>
+          <div class="ag-h">Market Command — your specific corner, named and claimed</div>
+          <div class="ag-d">You define your advisory category. You write your market declaration. You test it live in the room. This is not a positioning exercise — this is your actual positioning, finished, ready to use Monday.</div>
+          <div class="ag-chips"><span class="ag-chip">Category definition</span><span class="ag-chip">Market declaration</span><span class="ag-chip">Client language locked</span></div>
+        </div>
+      </div>
+      <div class="ag">
+        <div class="ag-t">12:30 PM<br>Lunch</div>
+        <div>
+          <div class="ag-h">The Command Table — cross-sector testing</div>
+          <div class="ag-d">Structured working lunch. You test your market position with agents in different sectors and calibrate before the afternoon build. Feedback that sharpens, not just affirms.</div>
+        </div>
+      </div>
+      <div class="ag">
+        <div class="ag-t">1:30 PM<br>Build 02</div>
+        <div>
+          <div class="ag-h">Advisory Conversion — the conversation that always closes</div>
+          <div class="ag-d">You map your existing client experience into a named, 3-stage advisory process. You give it a name. You practise presenting it. Every future client will experience you as someone fundamentally different from every other agent they've met.</div>
+          <div class="ag-chips"><span class="ag-chip">Named advisory process</span><span class="ag-chip">Fee defence built in</span><span class="ag-chip">Referral language</span></div>
+        </div>
+      </div>
+      <div class="ag">
+        <div class="ag-t">3:30 PM<br>Build 03</div>
+        <div>
+          <div class="ag-h">Business Engine — the machine that runs when you're not</div>
+          <div class="ag-d">You install the GHL Advisor Command Centre. 90-day niche activation sequence. AI Advisor Team configured. Referral loop built. Category Launch Hour — you send real messages and track real replies before the day ends. You leave with evidence, not inspiration.</div>
+          <div class="ag-chips"><span class="ag-chip">GHL installed</span><span class="ag-chip">90-day pipeline</span><span class="ag-chip">Live launch in-room</span></div>
+        </div>
+      </div>
+      <div class="ag">
+        <div class="ag-t">5:30 PM<br>Close</div>
+        <div>
+          <div class="ag-h">Your 7-Day Activation Plan — exactly what happens Monday</div>
+          <div class="ag-d">Not a list of ideas. The precise first 7 actions for your sector, your GCI level, and the gaps your diagnostic revealed. You leave with total clarity on the next move.</div>
+          <div class="ag-chips"><span class="ag-chip">Sector-specific</span><span class="ag-chip">GCI-calibrated</span><span class="ag-chip">Zero ambiguity</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- OFFER -->
+<section class="section" id="register">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">The offer</div>
+      <h2 class="sec-t">Everything built.<br><span class="g">One day. One price.</span></h2>
+    </div>
+    <div class="offer-box">
+      <div class="ob-top">
+        <div class="ob-tag">1-Day Advisor Command Bootcamp · Singapore</div>
+        <div class="ob-title">Market Command · Advisory Conversion · Business Engine</div>
+        <div class="ob-sub">Three complete business systems — built, named, ready to deploy — in one day with Coach Edmund Tan.</div>
+      </div>
+      <div class="ob-list">
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">Full-day live training — Coach Edmund in the room</div><div class="ob-id">Direct access. Not a recording. Not a delegate. The full day, every session, in person.</div></div>
+        </div>
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">Market Command — your corner, named and owned</div><div class="ob-id">Category definition, competitive declaration, client language — built before lunch.</div></div>
+        </div>
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">Advisory Conversion — the close that doesn't feel like closing</div><div class="ob-id">Named 3-stage advisory process, fee defence framework, referral language clients can use immediately.</div></div>
+        </div>
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">Business Engine — GHL + AI installed, running before you leave</div><div class="ob-id">90-day niche pipeline, referral automation, AI Advisor Team configured. Category Launch Hour sends real messages before 5pm.</div></div>
+        </div>
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">Your 7-Day Activation Sequence</div><div class="ob-id">Exact first actions, in exact order, for your sector and your gap profile. Zero ambiguity.</div></div>
+        </div>
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">30-day post-bootcamp group check-in</div><div class="ob-id">Follow-up session 30 days out. Troubleshoot, adjust, keep the momentum.</div></div>
+        </div>
+        <div class="ob-item">
+          <div class="ob-check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="ob-it">Full catered lunch + all working materials</div><div class="ob-id">No extras. Show up and build.</div></div>
+        </div>
+      </div>
+      <div class="ob-price">
+        <div class="op-row">
+          <div class="op-left">
+            <div class="op-was">Standard investment: S$997</div>
+            <div class="op-now"><span class="op-cur">S$</span><span class="op-amt">287</span></div>
+            <div class="op-note">Priority window · Founding cohort rate</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;min-width:200px">
+            <a href="#" class="btn-gold">Secure my seat — S$287 →</a>
+            <div style="font-size:9px;color:var(--dim);text-align:center">Immediate confirmation · 24-hour seat hold</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="guarantee">
+      <div class="g-icon">🛡️</div>
+      <div>
+        <div class="g-head">The Command Guarantee</div>
+        <div class="g-body">Show up for the full day. If by 4pm you haven't built something you can deploy on Monday — your Market Command, Advisory Conversion process, or Business Engine — we refund you on the spot. No forms. No email thread. No conditions. We've never processed one. We don't expect to start with you.</div>
+      </div>
+    </div>
+    <div class="scarcity">
+      <div class="sc-h">⚠ The cohort cap is 40 agents. Edmund works with everyone in the room. That number is the ceiling.</div>
+      <div class="sc-b">When it's closed, the next date isn't guaranteed. The seat count above is live. If it's moved, it's because agents registered while you were reading this.</div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- GAP VISUAL -->
+<section class="section-sm">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">The real cost of not being here</div>
+      <h2 class="sec-t">S$287 vs. <span class="g">another year at the same ceiling.</span></h2>
+    </div>
+    <div class="gap-table">
+      <div class="gt-head"><div class="gt-label">Annual GCI by business maturity — Singapore property agents</div></div>
+      <div class="gt-body">
+        <div class="gt-row">
+          <div class="gt-lbl">No structure</div>
+          <div class="gt-track"><div class="gt-bar" style="width:15%;background:rgba(239,68,68,.55);color:rgba(255,255,255,.7)">S$80–150K</div></div>
+          <div class="gt-val" style="color:var(--red)">S$80K</div>
+        </div>
+        <div class="gt-row">
+          <div class="gt-lbl">Referral-only</div>
+          <div class="gt-track"><div class="gt-bar" style="width:32%;background:rgba(245,158,11,.5);color:rgba(0,0,0,.7)">S$150–300K</div></div>
+          <div class="gt-val" style="color:var(--amber)">S$300K</div>
+        </div>
+        <div class="gt-row">
+          <div class="gt-lbl">Positioned + system</div>
+          <div class="gt-track"><div class="gt-bar" style="width:58%;background:rgba(59,130,246,.55);color:rgba(255,255,255,.7)">S$300–500K</div></div>
+          <div class="gt-val" style="color:#60A5FA">S$500K</div>
+        </div>
+        <div class="gt-row">
+          <div class="gt-lbl">All 3 systems running</div>
+          <div class="gt-track"><div class="gt-bar" style="width:90%;background:linear-gradient(90deg,rgba(201,149,42,.7),rgba(232,184,75,.8));color:rgba(0,0,0,.8)">S$600K–1M+</div></div>
+          <div class="gt-val" style="color:var(--g)">S$600K+</div>
+        </div>
+      </div>
+      <div class="gt-foot">
+        <div class="gt-foot-text">The average income gap between a plateau-zone agent and a command-level advisor in Singapore is <strong>S$350,000 per year.</strong> The only variable between them isn't experience or market access. It's the presence or absence of the three systems built in this bootcamp. <strong>One day. S$287. That's the decision.</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- FAQ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="sec-h">
+      <div class="sec-eye">Straight answers</div>
+      <h2 class="sec-t">Questions <span class="g">answered directly.</span></h2>
+    </div>
+    <div class="faq">
+      <div class="fq">
+        <div class="fq-q" onclick="toggleFaq(this)"><div class="fq-qt">I've been to trainings before. They didn't move my numbers. What's different here?</div><div class="fq-arr"><svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="fq-a">Most training gives you frameworks to implement when you get home. This bootcamp requires you to build your actual system — your specific Market Command, your named Advisory Conversion process, your 90-day Business Engine — live in the room, with Edmund's direct feedback on your work. You don't leave with notes. You leave with something that runs on Monday. The guarantee exists because that difference is real and we stand behind it.</div>
+      </div>
+      <div class="fq">
+        <div class="fq-q" onclick="toggleFaq(this)"><div class="fq-qt">I'm already earning S$300K+. Is this still for me?</div><div class="fq-arr"><svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="fq-a">The framework scales. Agents at S$300K–500K tend to benefit most from Build 03 — the Business Engine — because they already have strong advisory instincts but no systematised machine multiplying that effort. The question at your level isn't "can I earn more." It's "can I earn more without it all depending on me personally." That's exactly what the third build addresses.</div>
+      </div>
+      <div class="fq">
+        <div class="fq-q" onclick="toggleFaq(this)"><div class="fq-qt">Do I need to already have a niche before attending?</div><div class="fq-arr"><svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="fq-a">No. You define your Market Command in the room. Most agents who think they "can't choose" discover by 11am that they already have a dominant client type — they just haven't named it or built around it. The naming is what makes it commercially valuable. That's Build 01.</div>
+      </div>
+      <div class="fq">
+        <div class="fq-q" onclick="toggleFaq(this)"><div class="fq-qt">I'm newer — under 2 years. Is this the right time?</div><div class="fq-arr"><svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="fq-a">If you're under 12 months, prioritise volume first — you need more client experience to build around. If you're 1–2 years in with 10+ transactions completed, you're ready. Building these systems now means you don't spend the next 3 years forming habits that cap your income. The agents who wish they had this are the ones who did it later. The best time is before the habits set.</div>
+      </div>
+      <div class="fq">
+        <div class="fq-q" onclick="toggleFaq(this)"><div class="fq-qt">Is this agency-specific? I'm with [PropNex / ERA / Huttons].</div><div class="fq-arr"><svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="fq-a">Completely agency-independent. Past cohorts have included agents from PropNex, ERA, OrangeTee, Huttons, Knight Frank, and boutique firms. The systems are about how you position yourself in your market — not how your agency positions itself. The only thing that matters is your client, your niche, and your income ceiling.</div>
+      </div>
+      <div class="fq">
+        <div class="fq-q" onclick="toggleFaq(this)"><div class="fq-qt">What's the refund policy?</div><div class="fq-arr"><svg width="10" height="10" viewBox="0 0 10 10"><line x1="5" y1="1" x2="5" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="5" x2="9" y2="5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="fq-a">The Command Guarantee: show up for the full day. If by 4pm you haven't built something you can deploy on Monday, we refund you immediately on the spot. We've never had to. Cancel more than 14 days before the event: full refund or credit to the next cohort.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="container">
+    <div class="final-eye"><span class="final-eye-dot"></span>One decision. Three systems. One day.</div>
+    <h2 class="final-h">Stop being the agent<br>working <em style="color:var(--g);font-style:normal">for</em> a business.<br>Build the business.</h2>
+    <p class="final-sub">Every year without these three systems is another year at the same ceiling. One day builds all three. The income follows the structure — not the effort.</p>
+    <div class="final-urg"><span class="final-urg-dot"></span><span id="final-seat-n">47</span> agents registered · Cohort cap: 40 · First to register holds the seat</div>
+    <div class="price-big">S$287</div>
+    <div class="price-note">One investment · Three systems built · Full guarantee · Zero upsells on the day</div>
+    <div style="max-width:320px;margin:0 auto;display:flex;flex-direction:column;gap:9px">
+      <a href="#" class="btn-gold">Claim my seat at the bootcamp →</a>
+      <div style="font-size:9px;color:var(--dim);text-align:center">Immediate confirmation · Seat held 24 hours · Full refund guarantee</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-logo">MAS · Agent Edition</div>
+    <div class="foot-line">
+      Coach Edmund Tan · Singapore Real Estate Insider · 16 years in Singapore property · 500+ agents coached<br>
+      <span style="color:var(--faint)">© 2026 MAS Agent Edition · All rights reserved · Agency-independent programme</span>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY -->
+<div class="sticky" id="sticky">
+  <div class="sticky-left">
+    <div class="sl-price">S$287</div>
+    <div class="sl-tag">1-Day Advisor Command Bootcamp</div>
+  </div>
+  <a href="#register" class="sticky-btn">Secure my seat →</a>
+</div>
+
+<script>
+function toggleFaq(el){const fq=el.closest('.fq');const was=fq.classList.contains('open');document.querySelectorAll('.fq').forEach(f=>f.classList.remove('open'));if(!was)fq.classList.add('open')}
+const sticky=document.getElementById('sticky');let shown=false;
+window.addEventListener('scroll',()=>{if(window.scrollY>400&&!shown){sticky.classList.add('show');shown=true}else if(window.scrollY<100&&shown){sticky.classList.remove('show');shown=false}},{passive:true});
+let seatN=47;
+function driftSeats(){if(seatN<55&&Math.random()>.72){seatN++;document.querySelectorAll('#seat-n,#final-seat-n').forEach(el=>{if(el)el.textContent=seatN})}setTimeout(driftSeats,Math.random()*40000+12000)}
+setTimeout(driftSeats,10000);
+const params=new URLSearchParams(window.location.search);
+const name=params.get('name'),band=params.get('band'),score=params.get('score');
+if(name&&band){const b=document.createElement('div');b.style.cssText='background:rgba(201,149,42,.08);border:1px solid rgba(201,149,42,.25);border-radius:10px;padding:14px 18px;margin:0 0 20px;font-size:11px;color:#8888A8;text-align:center;position:relative;z-index:1';b.innerHTML=`<span style="color:#C9952A;font-weight:700">${name}</span> — your Agent Command Score™ is complete. Your diagnostic places you in the <strong style="color:#EEEEF5">${band.replace('trap','Transaction Trap').replace('plateau','Plateau Zone').replace('rising','Rising Advisor').replace('command','Command Level')}</strong> band. The bootcamp is built to close that exact gap.`;const hero=document.querySelector('.hero .container');if(hero)hero.insertBefore(b,hero.querySelector('.hero-eyebrow'))}
+</script>
+</body>
+</html>

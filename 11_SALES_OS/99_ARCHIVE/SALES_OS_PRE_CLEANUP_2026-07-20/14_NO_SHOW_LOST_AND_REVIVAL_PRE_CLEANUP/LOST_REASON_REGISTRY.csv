@@ -1,0 +1,16 @@
+lost_reason_code,definition,maps_to_outcome_code,revival_eligible,evidence_tier,notes
+price-too-high,Client felt the quantum/price was unaffordable or overpriced and disengaged,chose-no-action,yes,T3,Often RB-06/RB-11; may revive on budget/market shift
+lost-to-competitor-advisor,Went with a competing property advisor/coach,lost-to-competitor,yes,T2,Trust or value-perception loss; RB-10
+lost-to-other-agent,Transacted via a conventional agent (project-first),lost-to-competitor,yes,T2,Showflat/project-first pull; RB-10
+bought-direct-elsewhere,Bought without advisory involvement,lost-to-competitor,limited,T2,Missed-window risk; case type 6 learning
+chose-no-action,Client decided to do nothing,chose-no-action,yes,T3,Comfort/timing; RB-01/RB-03; strong revival candidate
+spouse-vetoed,Decision blocked by an unaligned decision-maker,chose-no-action,yes,T3,RB-07; revive via joint session
+financing-fell-through,Bank/IPA/financing did not materialise,chose-no-action,yes,T2,Was PREPARE subject-to-financing; revive on capacity change
+timing-deferred,Client deliberately postponed to a future window,chose-no-action,yes,T3,Revive at named trigger (MOP/TOP/SSD)
+went-cold-no-response,Stopped responding after recovery ladder exhausted,chose-no-action,yes,T2,Distinct from no-show; revive on future trigger
+not-qualified-disqualified,No advisory fit / poor values fit,not-qualified,no,T5,Do not over-serve; low-touch only
+not-suitable-advised-against,Advisor judged no feasible/safe path,not-suitable,limited,T5,Advisory outcome not a loss; revive only if position changes
+trust-not-established,Never built enough trust to proceed,lost-to-competitor,yes,T3,RB-10; #1 objection type; content pre-emption learning
+wanted-transaction-only,Sought a transaction/discount not advisory,not-qualified,no,T5,Values mismatch; exclude
+life-event-disruption,External life event ended the process,chose-no-action,yes,T4,Job loss/health/family; revive with empathy at recovery
+duplicate-or-invalid,Duplicate record or no valid contact method,not-qualified,no,T5,Data hygiene; archive per CRM SOP 01

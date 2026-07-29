@@ -1,0 +1,34 @@
+COMMAND CENTER REPLACEMENT INSTRUCTIONS — 2026-07-18
+
+Target folder:
+H:\Shared drives\00_E.C.O.S\00_AI_OPERATING_SYSTEM\00_COMMAND_CENTER
+
+The previous approved versions of all seven files have already been copied into:
+H:\Shared drives\00_E.C.O.S\00_AI_OPERATING_SYSTEM\99_ARCHIVE
+
+Overwrite these live files with the matching files in this pack:
+- _INDEX.md
+- 00_MASTER_INDEX.md
+- 02_OPERATING_RULES.md
+- 05_EVOLUTION_PROTOCOL.md
+- 06_PARKING_LOT.md
+- 09_AUDIT_AND_MAINTENANCE.md
+- 10_PENDING_APPROVALS.md
+
+Do not rename the files.
+
+Leave these live files unchanged:
+- 01_BUSINESS_POSITIONING.md
+- 03_CURRENT_PRIORITIES.md
+- 04_DECISION_MEMORY.md
+- 07_LESSONS_LEARNED.md
+- 08_SESSION_LOG.md
+- 11_OPERATING_AGREEMENT.md
+- 12_ECOS_INBOX (folder)
+
+Already completed in Drive:
+- Cleanup sign-off manifest archived
+- Cleanup execution log archived
+- Architecture decision report archived
+- ECOS capture test archived
+- 12_ECOS_INBOX verified empty

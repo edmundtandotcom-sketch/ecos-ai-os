@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Zoom Summary Generator",
+  "schemaVersion": 1,
+  "description": "Auto-generates coaching summaries from Zoom recordings (past 30 days). Fetches transcripts, extracts participant names, and uses Claude AI to identify specific blind spots, time-bound actions, and strategic implications. Displays as clickable cards with copy-to-WhatsApp functionality.",
+  "mcpTools": [
+    "mcp__f1d7c476-dbb1-4eb8-a86e-7b974e878e19__recordings_list",
+    "mcp__f1d7c476-dbb1-4eb8-a86e-7b974e878e19__get_recording_resource",
+    "mcp__f1d7c476-dbb1-4eb8-a86e-7b974e878e19__get_meeting_assets"
+  ],
+  "mcpServerNames": [
+    "Zoom for Claude",
+    "Zoom for Claude",
+    "Zoom for Claude"
+  ]
+}
+</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom Summary Generator</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --primary: #2563eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --border: #e5e7eb;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: white;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-light);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fbbf24;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .status-indicator.ready {
+            background: var(--success);
+            animation: none;
+        }
+
+        .status-indicator.error {
+            background: var(--error);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .cards-container {
+            display: grid;
+            gap: 16px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .card-date {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .badge {
+            background: var(--bg-light);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .blindspot {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .blindspot-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--error);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .blindspot-text {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .actions-section {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .actions-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .action-item {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .action-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .why-matters {
+            background: var(--bg-light);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .why-matters-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .why-matters-text {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: white;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--bg-light);
+        }
+
+        .btn-copy {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-copy:hover {
+            background: #1d4ed8;
+        }
+
+        .btn.copied {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .error-state {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 16px;
+            color: var(--error);
+            margin-bottom: 20px;
+        }
+
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--bg-light) 0%, white 50%, var(--bg-light) 100%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 6px;
+            height: 200px;
+            margin-bottom: 16px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Zoom Summary Generator</h1>
+            <p>Auto-generating coaching summaries from your last 30 days of recordings</p>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText">Loading recordings...</span>
+        </div>
+
+        <div id="errorContainer"></div>
+        <div id="cardsContainer" class="cards-container"></div>
+    </div>
+
+    <script>
+        const STATUS = {
+            LOADING: 'loading',
+            GENERATING: 'generating',
+            READY: 'ready',
+            ERROR: 'error'
+        };
+
+        let currentStatus = STATUS.LOADING;
+
+        function updateStatus(status, message) {
+            currentStatus = status;
+            const indicator = document.getElementById('statusIndicator');
+            const text = document.getElementById('statusText');
+
+            indicator.className = 'status-indicator';
+            if (status === STATUS.READY) {
+                indicator.classList.add('ready');
+            } else if (status === STATUS.ERROR) {
+                indicator.classList.add('error');
+            }
+
+            text.textContent = message;
+        }
+
+        function showError(message) {
+            updateStatus(STATUS.ERROR, 'Error loading data');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-state';
+            errorDiv.textContent = message;
+            document.getElementById('errorContainer').appendChild(errorDiv);
+        }
+
+        async function fetchRecordings() {
+            try {
+                updateStatus(STATUS.LOADING, 'Fetching recordings from past 30 days...');
+
+                const response = await window.cowork.callMcpTool(
+                    'mcp__f1d7c476-dbb1-4eb8-a86e-7b974e878e19__recordings_list',
+                    {
+                        from: '2026-05-27',
+                        to: '2026-06-27',
+                        page_size: 300
+                    }
+                );
+
+                const recordings = JSON.parse(response.content[0].text);
+                return recordings.meetings || [];
+            } catch (error) {
+                showError(`Failed to fetch recordings: ${error.message}`);
+                return [];
+            }
+        }
+
+        async function getTranscript(recordingId) {
+            try {
+                const response = await window.cowork.callMcpTool(
+                    'mcp__f1d7c476-dbb1-4eb8-a86e-7b974e878e19__get_recording_resource',
+                    {
+                        meetingId: recordingId,
+                        types: 'transcript'
+                    }
+                );
+
+                const data = JSON.parse(response.content[0].text);
+                if (data.transcripts && data.transcripts[0]) {
+                    return data.transcripts[0].timeline
+                        .map(item => `${item.display_name}: ${item.text}`)
+                        .join('\n');
+                }
+                return '';
+            } catch (error) {
+                console.error('Failed to get transcript:', error);
+                return '';
+            }
+        }
+
+        async function getMeetingAssets(meetingId) {
+            try {
+                const response = await window.cowork.callMcpTool(
+                    'mcp__f1d7c476-dbb1-4eb8-a86e-7b974e878e19__get_meeting_assets',
+                    {
+                        meetingId: meetingId
+                    }
+                );
+
+                const assets = JSON.parse(response.content[0].text);
+                const participants = assets.participants || [];
+                return participants.map(p => p.name || p.user_name).filter(Boolean);
+            } catch (error) {
+                console.error('Failed to get meeting assets:', error);
+                return [];
+            }
+        }
+
+        async function generateSummary(topic, transcript, participants) {
+            try {
+                const prompt = `You are a direct, no-BS coaching advisor. Analyze this Zoom meeting transcript and generate a SPECIFIC coaching summary (not generic).
+
+Meeting: ${topic}
+Participants: ${participants.join(', ')}
+
+Transcript excerpt:
+${transcript.substring(0, 2000)}...
+
+Generate ONLY valid JSON (no markdown, no code blocks):
+{
+  "blindspot": "One specific, actionable blind spot this person/team has based on the discussion",
+  "actions": ["This week: specific action", "By weekend: another action", "Before next session: third action"],
+  "whyMatters": "Why this specifically matters for their business/growth"
+}`;
+
+                const result = await window.cowork.askClaude(prompt, []);
+
+                try {
+                    return JSON.parse(result);
+                } catch {
+                    // If Claude's response isn't valid JSON, parse it manually
+                    return {
+                        blindspot: "Missing context from transcript analysis",
+                        actions: ["Review meeting recording for details"],
+                        whyMatters: "Transcript analysis incomplete"
+                    };
+                }
+            } catch (error) {
+                console.error('Failed to generate summary:', error);
+                return {
+                    blindspot: "Unable to generate summary",
+                    actions: ["Review recording manually"],
+                    whyMatters: "AI analysis unavailable"
+                };
+            }
+        }
+
+        function formatDate(isoDate) {
+            const date = new Date(isoDate);
+            return date.toLocaleDateString('en-SG', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatDuration(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+        }
+
+        function createSummaryCard(recording, summary) {
+            const card = document.createElement('div');
+            card.className = 'card';
+
+            const durationStr = recording.duration ? formatDuration(recording.duration) : 'N/A';
+            const dateStr = formatDate(recording.start_time);
+
+            const whatsAppText = `📊 *${recording.topic}*\n\n💡 Blind Spot:\n${summary.blindspot}\n\n✅ Actions:\n${summary.actions.join('\n')}\n\n🎯 Why It Matters:\n${summary.whyMatters}`;
+
+            card.innerHTML = `
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">${escapeHtml(recording.topic)}</div>
+                        <div class="card-date">${dateStr}</div>
+                    </div>
+                </div>
+
+                <div class="card-meta">
+                    <span class="badge">Duration: ${durationStr}</span>
+                    <span class="badge">Participants: ${recording.participant_count || '?'}</span>
+                </div>
+
+                <div class="blindspot">
+                    <div class="blindspot-label">💡 Blind Spot</div>
+                    <div class="blindspot-text">${escapeHtml(summary.blindspot)}</div>
+                </div>
+
+                <div class="actions-section">
+                    <div class="actions-label">✅ Action Items</div>
+                    ${summary.actions.map(action => `<div class="action-item">${escapeHtml(action)}</div>`).join('')}
+                </div>
+
+                <div class="why-matters">
+                    <div class="why-matters-label">🎯 Why This Matters</div>
+                    <div class="why-matters-text">${escapeHtml(summary.whyMatters)}</div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn btn-copy" onclick="copyToClipboard('${escapeHtml(whatsAppText).replace(/'/g, "\\'")}', this)">
+                        📋 Copy for WhatsApp
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = '📋 Copy for WhatsApp';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        async function init() {
+            const recordings = await fetchRecordings();
+
+            if (recordings.length === 0) {
+                const container = document.getElementById('cardsContainer');
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>No recordings found</h3>
+                        <p>No recordings in the past 30 days</p>
+                    </div>
+                `;
+                updateStatus(STATUS.READY, 'No recordings to process');
+                return;
+            }
+
+            updateStatus(STATUS.GENERATING, `Generating summaries for ${recordings.length} recording(s)...`);
+
+            const container = document.getElementById('cardsContainer');
+
+            for (let i = 0; i < recordings.length; i++) {
+                const recording = recordings[i];
+
+                // Show skeleton while processing
+                const skeleton = document.createElement('div');
+                skeleton.className = 'loading-skeleton';
+                container.appendChild(skeleton);
+
+                // Fetch transcript and participants in parallel
+                const [transcript, participants] = await Promise.all([
+                    getTranscript(recording.id),
+                    getMeetingAssets(recording.id)
+                ]);
+
+                // Generate summary
+                const summary = await generateSummary(
+                    recording.topic,
+                    transcript || 'Transcript not available',
+                    participants.length > 0 ? participants : ['Meeting participants']
+                );
+
+                // Remove skeleton and add card
+                skeleton.remove();
+                const card = createSummaryCard(recording, summary);
+                container.appendChild(card);
+            }
+
+            updateStatus(STATUS.READY, `✓ Generated summaries for ${recordings.length} recording(s)`);
+        }
+
+        // Start on load
+        init();
+    </script>
+</body>
+</html>
