@@ -3,13 +3,15 @@ name: rei-weekly-content-brief
 description: REI Weekly Content Engine — Monday 8:45 AM (articles + YouTube, full production-ready output for all 5 ranked angles — not outlines)
 ---
 
+> **RETIRED 2026-07-30 — Claude Code scheduled task disabled, not the active spec.** The Cloud routine "Weekly Content Intelligence" (claude.ai/code/routines, repo `Property-Business`) is now the single scheduled content-engine system — real YouTube Data API, auto-PR/merge, already running weekly. This file's requirements (merged article+YouTube scan, Format 3B long-form, full word-for-word production for all 5 angles, image-gen prompts, inline citations, Second Property Ladder synthesis) still need to be folded into that Cloud routine's prompt — that rebuild has not happened yet as of Decision 114. Keep this file as the requirements reference until that rebuild is done; do not treat it as something that runs.
+
 <!--
 AI OS MIGRATION HEADER
 Version: v2.4
-Status: APPROVED MASTER
+Status: APPROVED MASTER (superseded as an active schedule — see retirement note above; content requirements still valid)
 Date: 2026-07-30
 Supersedes: v2.3 (2026-07-30, archived at `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.3_ARCHIVED_2026-07-30.md`, same-day supersession). v2.3 scoped full word-for-word production to the Rank 1 angle only (Ranks 2-5 as briefs) — a Claude-proposed default, flagged for confirmation rather than assumed. Edmund confirmed the opposite: **all 5 ranked angles get full production every week.** This version removes the Rank-1/Ranks-2-5 split; every Phase C asset type is produced for every one of the top 5 angles.
-Sources: rei-weekly-content-brief_SKILL.md v2.3 (archived); REI_Video_Production_Foundation_v1.2.md (Format 3B + clip-extraction guide); CONTENT_SOURCE_WATCHLIST.md v1.0; 02_POSITIONING_AND_IP (Second Property Ladder spine); 2026-07-30 decision (see 04_DECISION_MEMORY.md, Decision 113).
+Sources: rei-weekly-content-brief_SKILL.md v2.3 (archived); REI_Video_Production_Foundation_v1.3.md (Format 3B, rewritten to retention-based structure 2026-07-30, was v1.2 ad-spine version when this file was written); CONTENT_SOURCE_WATCHLIST.md v1.1 (now includes the merged competitor YouTube roster); 02_POSITIONING_AND_IP (Second Property Ladder spine); 2026-07-30 decisions (see 04_DECISION_MEMORY.md, Decisions 113-114).
 -->
 
 # REI WEEKLY CONTENT ENGINE — ARTICLES + YOUTUBE, ONE RANKED OUTPUT, FULL PRODUCTION FOR ALL 5

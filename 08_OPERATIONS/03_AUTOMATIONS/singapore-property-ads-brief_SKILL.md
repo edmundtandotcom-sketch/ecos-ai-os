@@ -3,6 +3,8 @@ name: singapore-property-ads-brief
 description: Singapore property + adjacent-vertical ads intelligence. Pulls real active ads from Meta Ad Library via the in-app Browser pane (not the Chrome extension), downloads video/copy/thumbnail for ranked ads, transcribes locally, builds a weekly brief + bi-weekly rollup + advertiser swipe library.
 ---
 
+> **RETIRED 2026-07-30 — Claude Code scheduled task disabled, not the active spec.** The Cloud routine "Weekly Ads Intelligence" (claude.ai/code/routines, repo `weekly_ads_intelligence_os`) is now the single scheduled ads-intelligence system — real Meta Ads Library API + internal ad account access, already running weekly. This file's real, valuable output (14 advertisers fully processed, ~70 video/transcript swipe files in `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/`, the dedupe registry in `Master_Ad_Database.md`) is NOT retired — that data stays live and useful. What's retired is this file as the thing that runs weekly going forward. Kept here (not archived) as a reference for the proven Browser-pane extraction method, in case the Cloud sandbox can't replicate video download/transcription (open question, not yet resolved as of Decision 114).
+
 <!--
 AI OS MIGRATION HEADER — v2.0
 Version: v2.0

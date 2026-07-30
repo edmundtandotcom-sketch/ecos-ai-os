@@ -432,12 +432,14 @@ Example: `LL_RT_ONEPROPERTYTRAP_FIRSTWINSTUCK_HARDTRUTH_60_V01`
 
 #### Production Sequence — Correct Order
 
+**This flywheel and its clip guide below are Format 3 only (the evergreen Problem Group ad-testing pipeline) — they do not apply to Format 3B.** Format 3B has its own, separate short-form extraction guide (see Format 3B section above); do not use the timestamps below on a Format 3B script, they're built for Format 3's ad-spine blocks (Hard Truth, Reframe) which Format 3B doesn't have.
+
 | STAGE | FORMAT | PRODUCES | DECISION GATE |
 |-------|--------|----------|---------------|
 | Stage 1 | Reel 120s | Validates which problem groups resonate | Run all 10 groups. Data decides who goes to Stage 2. |
 | Stage 2 | VSL 6-min | Deepens conversion for winning groups | Build VSL only for groups with 50% watch >20% AND consult-quality leads. |
-| Stage 3 | YouTube 45-min | Establishes authority on proven topics | Build YouTube only for groups with consistent consult-quality leads for 4+ weeks. |
-| Stage 4 | Reel clips from YouTube | Refreshes Reel testing pool with proven content | Extract 3–5 clips per YouTube episode at the Hard Truth, Reframe, and Method moments. |
+| Stage 3 | YouTube 45-min (Format 3) | Establishes authority on proven topics | Build YouTube only for groups with consistent consult-quality leads for 4+ weeks. |
+| Stage 4 | Reel clips from YouTube (Format 3) | Refreshes Reel testing pool with proven content | Extract 3–5 clips per YouTube episode at the Hard Truth, Reframe, and Method moments. |
 
 #### Upgrade Decision Rules
 
@@ -448,9 +450,9 @@ Example: `LL_RT_ONEPROPERTYTRAP_FIRSTWINSTUCK_HARDTRUTH_60_V01`
 | YouTube → Clip Reels | YouTube episode published | Extract clips at 0:30 (hook), 8:00 (Hard Truth), 20:00 (Reframe), 30:00 (proof) |
 | Reel → 180s version | 120s winner confirmed on retention AND lead quality | Do not upgrade to 180s on watch rate alone |
 
-#### YouTube Clip Extraction Guide
+#### YouTube Clip Extraction Guide (Format 3, 45-min, only)
 
-When a YouTube episode is published, extract clips at these four moments for Reel repurposing:
+When a Format 3 YouTube episode is published, extract clips at these four moments for Reel repurposing:
 
 | TIMESTAMP | BLOCK | WHY IT WORKS AS A REEL HOOK |
 |-----------|-------|------------------------------|
