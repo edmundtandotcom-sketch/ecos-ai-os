@@ -67,11 +67,15 @@ Step 1C — Per-ad video/image extraction (for every NEW ad ID not already in `S
 - `javascript_tool`: read `document.querySelectorAll('[role="dialog"]')`, find the dialog whose
   `innerText` contains "Library ID:", grab its `<video>` element's `currentSrc`. (Static-image-only ads:
   grab the `<img>` inside that same dialog instead.)
-- Folder name is **date-prefixed by first-seen date**: `<Advertiser>/<YYYY-MM-DD>_<library_id>/` — the date
-  is when WE first captured it, set once, never changed on later runs (folder is never renamed). This is
-  what makes "what's newest in this advertiser's swipe file" visible at a glance without opening any file.
-- Download via `Bash: curl -sL -o video.mp4 "<src>"` — no auth/referer headers needed, confirmed working.
-- Extract poster frame: `ffmpeg -y -i video.mp4 -ss 00:00:01 -frames:v 1 thumbnail.jpg`
+- **Folder structure — reorganized 2026-07-30 into media-type folders (NOT one-folder-per-ad).** Under
+  `<Advertiser>/`, save each creative into its type folder, filename `<YYYY-MM-DD>_<library_id>.<ext>`:
+  video → `01_VIDEOS/`, static image → `02_IMAGES/`, thumbnail → `03_THUMBNAILS/`, transcript → `04_TRANSCRIPTS/`.
+  The date prefix (first-seen, set once, never changed) makes newest sort to the top by filename, and the
+  type folders let creatives be browsed as a thumbnail contact-sheet instead of opening every ad folder.
+  Do NOT recreate the old `<date>_<id>/` per-ad subfolders. See `03_EXTERNAL_REFERENCE_SWIPES/_MASTER_INDEX.md`.
+- Download via `Bash: curl -sL -o 01_VIDEOS/<date>_<id>.mp4 "<src>"` — no auth/referer headers needed.
+- Extract poster frame: `ffmpeg -y -i 01_VIDEOS/<date>_<id>.mp4 -ss 00:00:01 -frames:v 1 03_THUMBNAILS/<date>_<id>.jpg`
+- After the run, regenerate the index: `python 03_EXTERNAL_REFERENCE_SWIPES/build_index.py`. Do not keep `audio.wav` intermediates (regenerable from the retained `.mp4`).
 
 Step 1D — Transcription (local, real, not estimated):
 - `ffmpeg -i video.mp4 -ar 16000 -ac 1 -vn audio.wav`
@@ -123,12 +127,15 @@ ad ever processed, by library ID, with date first/last seen — this is the dedu
 Step 2A's recurrence score). Never delete entries; archive >6mo old into the section's own archive.
 
 Raw creative (video/image/thumbnail/transcript) does NOT live in Knowledge Vault (no bulk media in the
-AI OS — rule 9.7). It lives in `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/<Advertiser>/<YYYY-MM-DD>_<library_id>/`
-(date = first-seen, set once), one folder per advertiser, new dated subfolders appended each week — an
-existing dated `<library_id>` folder is NEVER re-downloaded, renamed, or overwritten once captured. The
+AI OS — rule 9.7). It lives in `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/<Advertiser>/`
+in media-type folders (`01_VIDEOS/`, `02_IMAGES/`, `03_THUMBNAILS/`, `04_TRANSCRIPTS/`), each file named
+`<YYYY-MM-DD>_<library_id>.<ext>` (date = first-seen, set once) — reorganized 2026-07-30 from the old
+one-folder-per-ad layout so creatives browse as a contact-sheet; see `_MASTER_INDEX.md` at the swipe root.
+A library ID already present in `Master_Ad_Database.md` is NEVER re-downloaded, renamed, or overwritten. The
 library sections above only ever *link* to these files, never duplicate them.
 
-**Advertiser-level `ad_breakdown.md`** (one per advertiser, at `<Advertiser>/ad_breakdown.md`): this is a
+**Advertiser-level `_ad_breakdown.md`** (one per advertiser, at `<Advertiser>/_ad_breakdown.md` — the `_`
+prefix floats it to the top of the folder above the media-type folders): this is a
 living document, not a per-run artifact. On a later scan that finds new ad IDs for an advertiser already
 on file — APPEND, do not regenerate: add new rows to the per-ad table, add a dated note if the script/hook
 pattern changed, and update the "known but not yet pulled" list if applicable. Never rewrite the existing

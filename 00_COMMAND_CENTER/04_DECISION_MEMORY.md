@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.27
-Status: APPROVED MASTER (001–117; detailed person-level execution evidence is private)
+Version: v3.28
+Status: APPROVED MASTER (001–118; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.26 (2026-07-30) — adds Decision 117: split ads-extraction responsibility between the scheduled Cloud routine (Meta Ads API, needs its connector attached) and a new on-demand local skill `/rei-ads-scan` (Browser-pane method, real video download + transcription) — the Cloud sandbox's tool list has no browser-control capability, so it structurally cannot do what the on-demand skill does.
+Supersedes: v3.27 (2026-07-30) — adds Decision 118: reorganized the ad swipe library from one-folder-per-ad into media-type folders per advertiser (`01_VIDEOS`/`02_IMAGES`/`03_THUMBNAILS`/`04_TRANSCRIPTS`), so ~187 creatives across 16 advertisers browse as thumbnail contact-sheets instead of requiring 127 folder-opens; added a root `_MASTER_INDEX.md` + regenerator script; updated both ad skills to write the new layout.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -1009,6 +1009,35 @@ Resolution — split by what each surface can actually do:
 
 - New: `.claude/skills/rei-ads-scan/SKILL.md`.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.27 (this decision).
+
+---
+
+## Decision 118 — Swipe Library Reorganized by Media Type (Browsability)
+
+**Status:** APPROVED — Edmund, 2026-07-30 ("its very troublesome to open each folder 1 by 1... work out the best folder management... organize everything in [the swipe folder]").
+
+### Ruling
+
+The ad swipe library had grown to 16 advertisers × one-folder-per-ad (~127 ad folders holding 75 videos + 52 images + 75 thumbnails, 312 MB). Reviewing creatives meant opening every folder individually — the friction Edmund flagged. Reorganized so each advertiser folder holds media-type subfolders instead:
+
+```
+<Advertiser>/
+  _ad_breakdown.md      (analysis + library-ID→angle index; "_" floats it to top)
+  01_VIDEOS/            <YYYY-MM-DD>_<library_id>.mp4
+  02_IMAGES/            <YYYY-MM-DD>_<library_id>.jpg
+  03_THUMBNAILS/        <YYYY-MM-DD>_<library_id>.jpg
+  04_TRANSCRIPTS/       <YYYY-MM-DD>_<library_id>.txt
+```
+
+Creatives now browse as a thumbnail contact-sheet in Explorer; date-prefixed filenames sort newest-to-top by Name. Added `03_EXTERNAL_REFERENCE_SWIPES/_MASTER_INDEX.md` (root table of all advertisers, counts, latest-scan date, links to each breakdown) and `build_index.py` (regenerates the index after each scan). Migration was integrity-verified: 75 videos / 52 images / 75 thumbnails all accounted for, zero unexpected file types, nothing lost. Two `audio.wav` intermediates deleted (regenerable from retained `.mp4`). The library ID in every filename remains the stable dedupe/trace key; historical `Master_Ad_Database.md` rows with old nested paths resolve to the new type-folder path (noted in that file's header).
+
+### Files touched
+
+- `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/` — 187 creatives reorganized into media-type folders across 16 advertisers; `ad_breakdown.md` → `_ad_breakdown.md` in each; new `_MASTER_INDEX.md` + `build_index.py` at root. (Media itself is not in git — Asset Library is excluded from the `ecos-ai-os` repo per Decision 111; Drive is its store.)
+- `.claude/skills/rei-ads-scan/SKILL.md` — folder-structure policy updated to media-type folders + index regeneration.
+- `08_OPERATIONS/03_AUTOMATIONS/singapore-property-ads-brief_SKILL.md` — same folder-routing update.
+- `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/ADS_LIBRARY/SOURCE_REGISTRY/Master_Ad_Database.md` → v1.1 (reorg header note; old paths resolve to new).
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.28 (this decision).
 
 ---
 

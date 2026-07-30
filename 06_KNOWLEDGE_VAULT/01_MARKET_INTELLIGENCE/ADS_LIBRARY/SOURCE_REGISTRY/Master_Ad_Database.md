@@ -1,8 +1,15 @@
 Title: Master Ad Database — Source Registry
-Version: v1.0
+Version: v1.1
 Status: REGISTRY
-Date: 2026-07-29
-Sources: singapore-property-ads-brief_SKILL.md v2.0
+Date: 2026-07-30
+Sources: singapore-property-ads-brief_SKILL.md v2.0; /rei-ads-scan skill
+
+> **Swipe-library reorganized 2026-07-30 (Decision 118).** Creatives moved from one-folder-per-ad
+> (`<Advertiser>/<date>_<id>/{video.mp4,thumbnail.jpg,...}`) into media-type folders per advertiser
+> (`<Advertiser>/01_VIDEOS|02_IMAGES|03_THUMBNAILS|04_TRANSCRIPTS/<date>_<id>.<ext>`), so creatives browse
+> as a thumbnail contact-sheet. **Any path in the rows below written as `.../<Advertiser>/<date>_<id>/` now
+> resolves to `.../<Advertiser>/01_VIDEOS/<date>_<id>.mp4` (or 02_IMAGES/…jpg).** The library ID is the
+> stable key — trace by ID, not by the old folder path. Root index: `03_EXTERNAL_REFERENCE_SWIPES/_MASTER_INDEX.md`.
 
 Every ad ever processed. This is the dedupe key for incremental weekly runs (Phase 1D/2A): a library ID
 already listed here is NOT re-downloaded or re-transcribed — only re-checked for still-active status and
