@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.28
-Status: APPROVED MASTER (001–118; detailed person-level execution evidence is private)
-Date: 2026-07-30
-Supersedes: v3.27 (2026-07-30) — adds Decision 118: reorganized the ad swipe library from one-folder-per-ad into media-type folders per advertiser (`01_VIDEOS`/`02_IMAGES`/`03_THUMBNAILS`/`04_TRANSCRIPTS`), so ~187 creatives across 16 advertisers browse as thumbnail contact-sheets instead of requiring 127 folder-opens; added a root `_MASTER_INDEX.md` + regenerator script; updated both ad skills to write the new layout.
+Version: v3.29
+Status: APPROVED MASTER (001–119; detailed person-level execution evidence is private)
+Date: 2026-07-31
+Supersedes: v3.28 (2026-07-30) — adds Decision 119: added a human review gate to both Cloud routines (finished brand-voice creative opens a PR and waits for review, no auto-merge). Also records two verified facts from inspecting the live routines/repo: the Meta-Ads connector is now attached to the ads routine (blocker cleared), and the content routine's NEW full-production output has NOT yet actually been produced (latest repo output is still the old research-report-only run) — flagged as the key open item to verify.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -1009,6 +1009,34 @@ Resolution — split by what each surface can actually do:
 
 - New: `.claude/skills/rei-ads-scan/SKILL.md`.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.27 (this decision).
+
+---
+
+## Decision 119 — Human Review Gate on Both Cloud Routines; Connector Cleared; Production-Not-Yet-Verified Flag
+
+**Status:** APPROVED — Edmund, 2026-07-31 ("yes" to adding the review gate).
+
+### Ruling
+
+Both Cloud routines were set to auto-merge/auto-publish output with no human review — fine for research reports, wrong now that they produce finished ad scripts, articles, and social copy in REI's brand voice. Added a **review gate** to both (via RemoteTrigger prompt update): research/scoring/dashboard stay automatic, but finished creative is committed to a branch, opened as a PR, and **left OPEN for Edmund/Cindior to review and merge — the routine does not merge it itself.** Each run's reply must surface the PR link marked AWAITING REVIEW.
+
+### Two facts verified while doing this (both material)
+
+1. **Meta-Ads connector is now attached to the ads routine** (`connector_uuid ec28a669-…, name "Meta-Ads", url mcp.facebook.com/ads`). It was empty (`mcp_connections: []`) earlier in the session; Edmund attached it between checks. The "ads can't reach Meta" blocker is cleared, pending the next run's connector-status line (the ads prompt now forces "Meta API: connected" or "META CONNECTOR UNAVAILABLE" at the top of its report).
+2. **The NEW full-production output has NOT actually been produced yet — open item.** Inspected the live `edmundtandotcom-sketch/Property-Business` repo: newest content output is still the **2026-07-27 research report** (old research-only behavior — good quality, real signals/URLs, Stacked Homes cited). No `content_outputs/produced/` folder, no Format 3B scripts, no 5-idea × 6-asset creative anywhere. The 2026-07-30 test run committed only housekeeping (branch head: "content already in main via #5"). The rebuilt prompts *ask* for full production but the routine has not yet delivered it — UNVERIFIED and, on current evidence, did not run. The ads OS is not on `main` either (only draft PR #1's branch).
+3. **`Property-Business` repo is PUBLIC** — all content strategy, competitor intel, positioning, and produced brand-voice scripts would be publicly visible. Flagged to make private. (`YOUTUBE_API_KEY` is gitignored, so the key isn't exposed — the strategy/IP is.)
+
+### Files touched
+
+- Cloud routine `trig_01GySosBGNzK4ruNkhnbNzdy` ("Weekly Content Intelligence") — review gate added to step 6.
+- Cloud routine `trig_01AKcrpuiXZmbjqhXsrsKsGt` ("Weekly Ads Intelligence") — review gate added to step 7 + connector-status reporting in step 1.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.29 (this decision).
+
+### Open items
+
+- Verify the full-production step actually runs (re-run + watch, or read the run's session log) — the pipeline may need code, not just prompt instructions, to write the 6 assets per idea.
+- Confirm the ads run's connector-status line reads "connected."
+- Make `Property-Business` private.
 
 ---
 
