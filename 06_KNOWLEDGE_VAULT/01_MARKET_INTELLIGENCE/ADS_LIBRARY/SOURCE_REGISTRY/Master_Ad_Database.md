@@ -188,3 +188,19 @@ keyword search ("Thomas Yap - Cars & Life with H&L Park Lane" and an Aglow Hair 
 Abc Sales AI: COMPLETE — 5 of 5 distinct video scripts found (keyword search also surfaced 2 unrelated
 advertisers, excluded — Resume Coach, Ubaidullah Jaafar/Kidzy). Chinese-language creative, transcribed with
 auto-detected language (not forced English). See ad_breakdown.md.
+
+| Library ID | Advertiser | Project/Offer | First seen | Last seen active | Duration | Video/copy path |
+|---|---|---|---|---|---|---|
+| 1061827746195503 | KS TAN - Real Estate Strategist | URA Masterplan masterclass funnel — origin story, long edit | 2026-07-30 | 2026-07-30 | 1:18 | `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/KS Tan/2026-07-30_1061827746195503/` |
+| 837174999331033 | KS TAN - Real Estate Strategist | URA Masterplan masterclass funnel — origin story, tight edit | 2026-07-30 | 2026-07-30 | 1:07 | `.../2026-07-30_837174999331033/` |
+
+KS Tan text/static ads logged (copy verbatim in ad_breakdown.md, no video to download): 2249400439213987,
+1989551975023948 (Meta: "2 ads use this creative"), 1058207063325262 ("2 ads"), 1680201843242729 ("2 ads"),
+2816676932040169, 4469453973299588, 2279044422926159, 919815174501565, 1024806670321552 (low impressions),
+4129952470475386 (low impressions).
+
+KS Tan: COMPLETE for 2026-07-30 scan — 12 active ads (11-18 Jul launch burst), 2 distinct videos downloaded/
+transcribed (both under length cap), 10 static logged. First scan done via /rei-ads-scan (on-demand skill
+live test), not a weekly run. Keyword noise excluded: BestBooking Travel, JnE Florist. See ad_breakdown.md.
+Transcription note: 837174999331033 misdetected as Malay by auto-detect and produced garbage on first pass —
+re-transcribed with language='en' (creative is English; auto-detect rule is for genuinely non-English ads).
