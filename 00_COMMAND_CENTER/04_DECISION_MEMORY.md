@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.26
-Status: APPROVED MASTER (001–116; detailed person-level execution evidence is private)
+Version: v3.27
+Status: APPROVED MASTER (001–117; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.25 (2026-07-30) — adds Decision 116: strengthened the Weekly Content Intelligence routine with a mandatory "open scan" lane (broad WebSearch/YouTube-search beyond the named source list, every run, not optional) and a stricter citation format naming source type + outlet/channel, not a bare URL.
+Supersedes: v3.26 (2026-07-30) — adds Decision 117: split ads-extraction responsibility between the scheduled Cloud routine (Meta Ads API, needs its connector attached) and a new on-demand local skill `/rei-ads-scan` (Browser-pane method, real video download + transcription) — the Cloud sandbox's tool list has no browser-control capability, so it structurally cannot do what the on-demand skill does.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -990,6 +990,25 @@ Edmund confirmed StackedHomes is correctly in the named-source list, then requir
 
 - Cloud routine `trig_01GySosBGNzK4ruNkhnbNzdy` ("Weekly Content Intelligence") — prompt updated: mandatory open-scan lane added to COLLECT, citation format tightened, QA step checks both lanes ran.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.26 (this decision).
+
+---
+
+## Decision 117 — On-Demand Ads Extraction Skill, Split From the Scheduled Cloud Routine
+
+**Status:** APPROVED — Edmund, 2026-07-30 ("run automatically weekly and whenever I call for a name advertiser, it will be able to pull the data out too... whichever the best accurate process, do it").
+
+### Ruling
+
+Checked the Cloud routine's actual configuration rather than assuming: `session_context.allowed_tools` on both Cloud routines is `Task, Bash, Glob, Grep, Read, Edit, MultiEdit, Write, NotebookEdit, WebFetch, WebSearch, BashOutput, KillBash, Skill, Tmux, Monitor, SendUserFile, REPL` — no browser-control tool of any kind. The Cloud sandbox cannot render Facebook's Ad Library page, click into an ad's dialog, or read a `<video>` element's `currentSrc` the way this session's Browser pane can. So the proven local extraction method (real video download + local faster-whisper transcription, the method that produced 70 swipe-file videos across 14 advertisers) is not portable into the scheduled Cloud routine as currently built.
+
+Resolution — split by what each surface can actually do:
+1. **Scheduled weekly** stays the Cloud routine "Weekly Ads Intelligence," using the real Meta Ads Library API (`mcp__Meta_Ads__ads_library_search`) — accurate for ad copy/headline/CTA/dates/page data, but requires its Meta connector to actually be attached, which it currently is not (`mcp_connections: []`, confirmed in Decision 115). That connector can only be attached by Edmund via claude.ai's connector settings — not something achievable via this session's API access.
+2. **On-demand, named-advertiser lookups** get a new local skill, `.claude/skills/rei-ads-scan/SKILL.md`, mirroring `/rei-video-routine`'s relationship to the content Cloud routine. It reuses the exact proven Browser-pane method (URL construction from just an advertiser name, dialog inspection, curl download, ffmpeg thumbnail, local faster-whisper transcription) and all of the local system's standing policies (dated folders, length cap, dedupe, append-only breakdowns, no synthesis fallback) — writing to the same registries (`Master_Ad_Database.md`, `COMPETITOR_WATCHLIST.md`) the weekly system uses, so there's one source of truth regardless of which path found an ad.
+
+### Files touched
+
+- New: `.claude/skills/rei-ads-scan/SKILL.md`.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.27 (this decision).
 
 ---
 
