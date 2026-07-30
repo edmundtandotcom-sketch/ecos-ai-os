@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.25
-Status: APPROVED MASTER (001–115; detailed person-level execution evidence is private)
+Version: v3.26
+Status: APPROVED MASTER (001–116; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.24 (2026-07-30) — adds Decision 115: the two Cloud routines rebuilt directly via the RemoteTrigger API to carry today's requirements (Format 3B, all-5-full-production, image-gen prompts, Second Property Ladder blueprint alignment, ads mirrors content's output shape). Also confirms Family Legacy stays retired/dormant (not revived) and flags that the Ads Intelligence routine has no Meta Ads MCP connector attached, so it may be running its documented fallback path rather than the live API.
+Supersedes: v3.25 (2026-07-30) — adds Decision 116: strengthened the Weekly Content Intelligence routine with a mandatory "open scan" lane (broad WebSearch/YouTube-search beyond the named source list, every run, not optional) and a stricter citation format naming source type + outlet/channel, not a bare URL.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -975,6 +975,21 @@ Decision 112 scoped full word-for-word production to the Rank 1 angle only, with
 - Cloud routine `trig_01GySosBGNzK4ruNkhnbNzdy` ("Weekly Content Intelligence") — prompt replaced via API.
 - Cloud routine `trig_01AKcrpuiXZmbjqhXsrsKsGt` ("Weekly Ads Intelligence") — prompt replaced via API.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.25 (this decision).
+
+---
+
+## Decision 116 — Mandatory Open-Scan Lane + Stricter Citation Format
+
+**Status:** APPROVED — Edmund, 2026-07-30 (follow-up in chat after Decision 115).
+
+### Ruling
+
+Edmund confirmed StackedHomes is correctly in the named-source list, then required two tightenings to "Weekly Content Intelligence": (1) scanning cannot stop at the named-source list — the routine must run a mandatory "open scan" lane every run (at least 4 varied WebSearch queries + 3 varied YouTube searches, not limited to the named sources) so it actually catches what a fixed list misses; (2) every citation in both the script and the article must name the source type (Article/YouTube) and the outlet or channel name, not just a bare URL — "[Source: Article, StackedHomes, <url>, accessed <date>]" style, checkable at a glance.
+
+### Files touched
+
+- Cloud routine `trig_01GySosBGNzK4ruNkhnbNzdy` ("Weekly Content Intelligence") — prompt updated: mandatory open-scan lane added to COLLECT, citation format tightened, QA step checks both lanes ran.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.26 (this decision).
 
 ---
 
