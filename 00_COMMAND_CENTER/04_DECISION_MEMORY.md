@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.23
-Status: APPROVED MASTER (001–113; detailed person-level execution evidence is private)
+Version: v3.24
+Status: APPROVED MASTER (001–114; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.22 (2026-07-30) — adds Decision 113: all 5 ranked angles in the weekly content brief get full production every week (not just Rank 1). Confirms and closes the open question Decision 112 flagged.
+Supersedes: v3.23 (2026-07-30) — adds Decision 114: cross-session reconciliation. Cloud routines (claude.ai/code/routines) confirmed as the single content-engine scheduler, the local `rei-weekly-content-brief`/`singapore-property-ads-brief` scheduled tasks retired (disabled, not deleted); Format 3B rewritten from an ad-conversion spine to a retention-based structure; the YouTube script framework and competitor roster each reduced from two competing copies to one home.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -953,4 +953,30 @@ Decision 112 scoped full word-for-word production to the Rank 1 angle only, with
 - `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` → v2.4 (Rank-1/Ranks-2-5 split removed; all 5 angles get full Phase C production; no-silent-caps rule added). Archived verbatim: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.3_ARCHIVED_2026-07-30.md`.
 - Claude Code scheduled task `rei-weekly-content-brief` prompt updated to match v2.4.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.23 (this decision).
+
+---
+
+## Decision 114 — Cross-Session Reconciliation: Cloud Routines Confirmed, Format 3B Corrected, One Home for Two Duplicated Lists
+
+**Status:** APPROVED — Edmund, 2026-07-30 (confirmed across two sessions in chat; this session owns the write-up per the other session's handover).
+
+### Ruling
+
+A second session (title: "Singapore property video repurposing routine," working the same workspace in parallel) surfaced three things this session didn't know about, and one direct instruction from Edmund that resolved an emerging conflict between the two sessions' assumptions:
+
+1. **Cloud routines confirmed as the single scheduler, no local fallback.** Two mature, already-running Cloud routines exist at claude.ai/code/routines — "Weekly Content Intelligence" (repo `Property-Business`, real YouTube Data API, own pipeline, auto-PR/auto-merge, ran successfully 27 Jul) and "Weekly Ads Intelligence" (repo `weekly_ads_intelligence_os`, real Meta Ads Library API + internal ad account access, ran 30 Jul). Neither was built by either session working this workspace — they predate today's work entirely and were only discovered by logging into the claude.ai UI directly. Edmund confirmed: these are "the one," no local scheduled-task fallback. "We are using routines now instead of scheduled" (told to the other session) meant this Cloud-routines system, not local `.claude/skills/` on-demand skills — an initial cross-session misunderstanding, now resolved directly by Edmund.
+2. **Format 3B corrected — retention structure, not ad structure.** The other session, building on Edmund's own earlier ruling (the "-->Youtube Video Reset" session, 2026-07-28/29), correctly identified that Format 3B (built earlier the same day in this session) wrongly reused Format 3's ad-conversion spine for long-form YouTube — wrong specifically for YouTube, which is retention/watch-time-ranked, not persuasion-ranked. Format 3B is rewritten (Foundation v1.3) using the retention-based skeleton that session live-tested (promise match → hook+open loop → context bridge → freshly-derived teaching modules → pattern interrupts → midpoint re-hook → worked example → recap → soft CTA), replacing the 100-point ad rubric with a 5-criteria self-grade, and remapping the 3-clip short-form extraction guide to the new block boundaries.
+3. **Two "one home, not two" fixes.** The YouTube script framework existed as reusable doctrine sitting in an active-campaign folder (`03_ACTIVE_CAMPAIGNS/.../04_YOUTUBE_CONTENT_ENGINE/YouTube_LongForm_Script_Framework_and_Checklist_v1.0.md`) — absorbed into the Foundation as Format 3B; campaign copy retired to a pointer. The competitor YouTube channel roster existed as a second list alongside the content-source watchlist — merged into `CONTENT_SOURCE_WATCHLIST.md`; campaign copy retired to a pointer. Both retirements followed the archive-before-replace rule; nothing was deleted.
+
+**Also confirmed, not yet executed (belongs to whichever session does the Cloud-routine rebuild):** the local `rei-weekly-content-brief`/`singapore-property-ads-brief` scheduled tasks are disabled (not deleted) as of 2026-07-30 — reversible, but not the active spec going forward. The genuinely useful requirements they accumulated today (merged article+YouTube scan, full word-for-word production for all 5 angles, image-generation prompts in place of rendering, inline source citations, Second Property Ladder synthesis, Browser-first/vidiq-optional discovery, "mine everything confirmed, no silent subset-picking") still need to be folded into the Cloud "Weekly Content Intelligence" routine's rebuilt prompt — that rebuild has not started as of this decision, pending answers on auto-publish scope (does full creative output still auto-merge with no review gate?) and whether the Cloud sandbox can actually replicate video download/transcription the way the local Browser-pane method did.
+
+### Files touched
+
+- `05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/REI_Video_Production_Foundation_v1.2.md` → renamed/replaced by `_v1.3.md` (Format 3B structure replaced). Archived: `99_ARCHIVE/REI_Video_Production_Foundation_v1.2_ARCHIVED_2026-07-30.md`.
+- `05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/_INDEX.md` → v2.2.
+- `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_SecondPropertyLadder_AdProduction/04_YOUTUBE_CONTENT_ENGINE/YouTube_LongForm_Script_Framework_and_Checklist_v1.0.md` → retired to pointer. Archived: `../99_ARCHIVE/YouTube_LongForm_Script_Framework_and_Checklist_v1.1_ARCHIVED_2026-07-30.md`.
+- `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_SecondPropertyLadder_AdProduction/04_YOUTUBE_CONTENT_ENGINE/Competitor_Channel_Roster_v1.0.md` → retired to pointer. Archived: `../99_ARCHIVE/Competitor_Channel_Roster_v1.0_ARCHIVED_2026-07-30.md`.
+- `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/CONTENT_SOURCE_WATCHLIST.md` → v1.1 (roster merged in; source-of-truth note updated to reflect the retired local automation).
+- `.claude/skills/rei-video-routine/SKILL.md` → path references updated to the new Foundation and watchlist locations; no behavior change.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.24 (this decision).
 - Rollback: `99_ARCHIVE/GOVERNANCE_PRE_ASKFIRSTGATE_2026-07-27/` (pre-edit copies of all three). No file was deleted.

@@ -1,3 +1,7 @@
+> **ARCHIVED 2026-07-30 (same day) — superseded by `00_PRODUCTION_FOUNDATIONS/REI_Video_Production_Foundation_v1.3.md`.** Kept verbatim as rollback/history. v1.2's Format 3B used the ad-conversion spine (Hook→Mirror→Lie→Hard Truth→Reframe→Method→Proof) for long-form YouTube. A separate session, building on Edmund's own earlier ruling (the "-->Youtube Video Reset" session, 2026-07-28/29), correctly identified this as wrong specifically for YouTube: the platform rewards watch-time/retention, not persuasion, so ad-structure belongs on landing pages, not long-form video. v1.3 replaces Format 3B's structure with the retention-based framework built and live-tested in that session (`YouTube_LongForm_Script_Framework_and_Checklist_v1.1.md`), keeping only the short-form clip-extraction concept, remapped to the new block boundaries.
+
+---
+
 # REI Method — Video Production Foundation
 **Approved Master v1.2 | Singapore Real Estate Insider | Coach Edmund Tan | July 2026**
 
