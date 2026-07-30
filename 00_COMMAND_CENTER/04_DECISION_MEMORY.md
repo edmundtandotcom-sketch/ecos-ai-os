@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.24
-Status: APPROVED MASTER (001–114; detailed person-level execution evidence is private)
+Version: v3.25
+Status: APPROVED MASTER (001–115; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.23 (2026-07-30) — adds Decision 114: cross-session reconciliation. Cloud routines (claude.ai/code/routines) confirmed as the single content-engine scheduler, the local `rei-weekly-content-brief`/`singapore-property-ads-brief` scheduled tasks retired (disabled, not deleted); Format 3B rewritten from an ad-conversion spine to a retention-based structure; the YouTube script framework and competitor roster each reduced from two competing copies to one home.
+Supersedes: v3.24 (2026-07-30) — adds Decision 115: the two Cloud routines rebuilt directly via the RemoteTrigger API to carry today's requirements (Format 3B, all-5-full-production, image-gen prompts, Second Property Ladder blueprint alignment, ads mirrors content's output shape). Also confirms Family Legacy stays retired/dormant (not revived) and flags that the Ads Intelligence routine has no Meta Ads MCP connector attached, so it may be running its documented fallback path rather than the live API.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -953,6 +953,28 @@ Decision 112 scoped full word-for-word production to the Rank 1 angle only, with
 - `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` → v2.4 (Rank-1/Ranks-2-5 split removed; all 5 angles get full Phase C production; no-silent-caps rule added). Archived verbatim: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.3_ARCHIVED_2026-07-30.md`.
 - Claude Code scheduled task `rei-weekly-content-brief` prompt updated to match v2.4.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.23 (this decision).
+
+---
+
+## Decision 115 — Cloud Routines Rebuilt; Family Legacy Confirmed Dormant; Ads MCP Connector Gap Found
+
+**Status:** APPROVED — Edmund, 2026-07-30 ("yes, start the rebuild").
+
+### Ruling
+
+1. **Family Legacy stays retired, not active, revivable only by a new decision.** A separate bootstrap document (prepared for a different future session) incorrectly listed it as one of three currently active campaigns. Corrected: per Decisions 058 and 067, it has been retired since 2026-07-11; the actual `03_ACTIVE_CAMPAIGNS/01_ACTIVE/` folder confirms only three real active campaigns exist — Legacy Launch, Second Property Ladder, and Agent Edition/Market Maker. Edmund confirmed the framing: dormant and revivable later, not currently active, and not to be listed as live until a new decision explicitly reactivates it.
+2. **Both Cloud routines rebuilt directly via the RemoteTrigger API** (`action: update`, full `job_config` replacement to avoid dropping `environment_id`/`allowed_tools`), not just documented as a plan:
+   - **"Weekly Content Intelligence"** (`trig_01GySosBGNzK4ruNkhnbNzdy`): added full production for all 5 ranked ideas per run (Format 3B script, full article, 5-slide carousel + image-gen prompts, single-image post + prompt, 4 platform-specific social captions, 3 WhatsApp segments), the attribution rule, the no-silent-caps rule, and the Second Property Ladder campaign's locked doctrine (villain, mechanism, audience, CTA) embedded directly in the prompt — explicitly distinguished from the AI OS's broader same-named business positioning, and explicitly excluding Family Legacy/Mash-up.
+   - **"Weekly Ads Intelligence"** (`trig_01AKcrpuiXZmbjqhXsrsKsGt`): added a new step 6 mirroring the content routine's output shape — for the top 1-3 winning competitor ad patterns, produce an original REI-voice ad script (Format 1 Reel or Format 2 VSL, whichever fits), a 5-slide carousel + image-gen prompts, and inline attribution to the source ad. Tags to a Problem Group, or to Second Property Ladder specifically when the pattern's audience genuinely matches that campaign.
+   - Full auto-merge standing instruction preserved as-is for both (not narrowed to a review gate — that would be a separate decision, not made here); the format-specific self-grading rubrics (Format 3B's 5-criteria grade; the existing 100-point ad rubric for Format 1/2) serve as the quality gate before publish.
+   - Did not touch `sources`/git-repository bindings on either routine — the existing config didn't expose enough of that structure to edit safely without risking the live Property-Business/weekly_ads_intelligence_os repo bindings, so the Second Property Ladder doctrine and Format 3B structure were embedded directly in the prompt text instead (self-contained, per the routine system's own design — cloud agents start with zero conversation context).
+3. **Found, not yet resolved: the Ads Intelligence routine has `mcp_connections: []`** — no Meta Ads MCP connector is actually attached, despite the routine's instructions calling `mcp__Meta_Ads__ads_library_search` directly. Its own fallback clause ("if unavailable, run the manual-checklist fallback") means it may have been running on the fallback path every week, not the real Meta Ads Library API, since it was created. Not fixed as part of this decision — attaching an OAuth-based MCP connector needs to happen through Edmund's claude.ai connector settings, not this API. The updated prompt now requires the routine to say plainly which path it actually used, so this stops being invisible.
+
+### Files touched
+
+- Cloud routine `trig_01GySosBGNzK4ruNkhnbNzdy` ("Weekly Content Intelligence") — prompt replaced via API.
+- Cloud routine `trig_01AKcrpuiXZmbjqhXsrsKsGt` ("Weekly Ads Intelligence") — prompt replaced via API.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.25 (this decision).
 
 ---
 
