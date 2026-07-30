@@ -204,3 +204,14 @@ transcribed (both under length cap), 10 static logged. First scan done via /rei-
 live test), not a weekly run. Keyword noise excluded: BestBooking Travel, JnE Florist. See ad_breakdown.md.
 Transcription note: 837174999331033 misdetected as Malay by auto-detect and produced garbage on first pass —
 re-transcribed with language='en' (creative is English; auto-detect rule is for genuinely non-English ads).
+
+## Miles Stutz - 4-Hour Consultant (cross-vertical reference, NOT property) — scanned 2026-07-30 via /rei-ads-scan
+30 ad cards loaded (page reported ~36; extra count = collapsed near-dup variants). All static image/text, no video.
+25 distinct creatives downloaded (image.jpg each) in `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/Miles Stutz/2026-07-30_<id>/`.
+Dup pairs (exact creative+text re-runs, second ID not re-downloaded): 3518879601622043=1313115123711123;
+1067485965949987=1074371518349650; 1401635598483246=1013804488114911; 1026178233598119=1009672612058150;
+2270228087081820=869716105939576; 2263307607750831=1359525495725427; 2505715636577039=1017512174541570;
+1703523604212977≈965041946554606 (community-testimonials variant).
+US/international coaching-business info-product advertiser ($17 low-ticket → high-ticket ascension: "Rapid
+Ascension System" / "No-Phone Offer Method" / AI-prompt product). Zero SG-property relevance — value is
+funnel-mechanics + hook-craft swipe reference only. Same family as Caleb Sim / Marc Chan / Dan Lok. See ad_breakdown.md.
