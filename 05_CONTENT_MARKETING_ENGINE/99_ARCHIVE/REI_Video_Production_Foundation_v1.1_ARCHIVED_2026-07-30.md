@@ -1,3 +1,7 @@
+> **ARCHIVED 2026-07-30 — superseded by `00_PRODUCTION_FOUNDATIONS/REI_Video_Production_Foundation_v1.2.md`.** Kept verbatim as rollback/history per AI OS file rule. v1.2 adds Format 3B (20–30 min long-form variant + short-form clip-extraction guide) for the `rei-weekly-content-brief` weekly automation; Format 3 (45 min, evergreen Problem Group ad production) is unchanged.
+
+---
+
 # REI Method — Video Production Foundation
 **Approved Master v1.1 | Singapore Real Estate Insider | Coach Edmund Tan | July 2026**
 

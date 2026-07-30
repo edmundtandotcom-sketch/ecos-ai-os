@@ -46,3 +46,21 @@ Phase 2 (identified, not downloaded): 978127671926509, 870985709072180, 13772867
 1045678718152877, 1704545180770297, 1057037523635748, 1703251367628457, 2845864002434657 (+ duplicate IDs
 of Phase-1 scripts, listed in ad_breakdown.md).
 Phase 3 (never loaded — pagination blocked this session): ~70 additional ads, unknown content.
+
+| Library ID | Advertiser | Project/Offer | First seen | Last seen active | Duration | Video/copy path |
+|---|---|---|---|---|---|---|
+| 1929058147754203 | Colin Ee | Free strategy session — Kelvin story | 2026-07-30 | 2026-07-30 | 2:43 | `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/Colin Ee/2026-07-30_1929058147754203/` |
+| 1264606710067087 | Colin Ee | Free strategy session — origin story | 2026-07-30 | 2026-07-30 | 1:52 | `.../2026-07-30_1264606710067087/` |
+| 4970374966539735 | Colin Ee | Free strategy session — kept HDB | 2026-07-30 | 2026-07-30 | 1:05 | `.../2026-07-30_4970374966539735/` |
+| 816317544803673 | Colin Ee | Free strategy session — retired at 49 (persquarefoot.com.sg landing page) | 2026-07-30 | 2026-07-30 | 1:17 | `.../2026-07-30_816317544803673/` |
+| 1576499820652773 | Colin Ee | Free strategy session — 2021 couple | 2026-07-30 | 2026-07-30 | 1:17 | `.../2026-07-30_1576499820652773/` |
+| 1281996340587956 | Colin Ee | Free strategy session — conservative 45yo | 2026-07-30 | 2026-07-30 | 1:22 | `.../2026-07-30_1281996340587956/` |
+| 1321589769957766 | Colin Ee | Duplicate text of Script 5 (link-preview, no video) | 2026-07-30 | 2026-07-30 | n/a | not downloaded |
+| 4508823046067028 | Colin Ee | Duplicate text of Script 1 (link-preview, no video) | 2026-07-30 | 2026-07-30 | n/a | not downloaded |
+| 1766498841029842 | Colin Ee | Duplicate text of Script 2 (link-preview, no video) | 2026-07-30 | 2026-07-30 | n/a | not downloaded |
+| 1577830803739437 | Colin Ee | Duplicate text of Script 6 (link-preview, no video) | 2026-07-30 | 2026-07-30 | n/a | not downloaded |
+| 1708117113570605 | Colin Ee | Duplicate text of Script 3 (link-preview, no video, low impressions) | 2026-07-30 | 2026-07-30 | n/a | not downloaded |
+
+## Colin Ee — Phase 2 not yet pulled
+~10 additional ads exist beyond the 11 loaded this session (Meta's own count ~21 total) — same pagination
+limitation as Marc Chan. Revisit for full coverage.

@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.21
-Status: APPROVED MASTER (001–111; detailed person-level execution evidence is private)
+Version: v3.22
+Status: APPROVED MASTER (001–112; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.20 (2026-07-27) — adds Decision 111, GitHub Backup + Content/Ads Automation Consolidation: single private GitHub repo for the AI OS brain, merged article+YouTube content routine (retiring the proposed separate third routine), and Cowork retired in favor of Claude Code scheduled tasks as the single scheduler.
+Supersedes: v3.21 (2026-07-30) — adds Decision 112, Content Engine Full-Production Standard: weekly content-brief output moves from outlines/concepts to full word-for-word production for the Rank 1 angle (Ranks 2-5 stay brief-only), adopts the existing Video Production Foundation's new Format 3B (20-30 min long-form + clip-extraction) instead of an invented short-form structure, requires inline source citations throughout, and standardizes AI image-generation prompts in place of images this automation cannot render.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -909,4 +909,30 @@ Three linked rulings from the same working session:
 - `08_OPERATIONS/03_AUTOMATIONS/singapore-property-ads-brief_SKILL.md` → GitHub backup step added (still v2.0 in substance, no scope change).
 - Claude Code scheduled tasks: `rei-weekly-content-brief` (new, Monday ~8:45 AM) and `ecos-ai-os-git-snapshot` (new, daily catch-all commit+push for manual/interactive edits) created; `singapore-property-ads-brief` prompt updated to include the GitHub backup step.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.21 (this decision).
+
+---
+
+## Decision 112 — Content Engine Full-Production Standard
+
+**Status:** APPROVED — Edmund, 2026-07-30 (ruled in chat via Q&A, same working session as Decision 111).
+
+### Ruling
+
+Immediately after Decision 111 shipped, Edmund reviewed the actual output shape of `rei-weekly-content-brief` v2.2 and ruled it insufficient on four points:
+
+1. **Sources were examples, not a ceiling.** The Tier 1/2/3 lists in the spec must be treated as a seed to expand from, not a fixed scope. A new registry file, `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/CONTENT_SOURCE_WATCHLIST.md`, holds the seed list and an additions log — mirrors the ads-brief's `COMPETITOR_WATCHLIST.md` pattern.
+2. **Long-form video, not three separate short scripts.** Rather than writing three independent ~2-4 min scripts (the invented Format A/B/C), produce one 20-30 minute long-form script, record once, and cut the 3 short-form pieces from it. This reuses `REI_Video_Production_Foundation_v1.2.md`'s new Format 3B (added the same session — see below) instead of inventing a parallel structure.
+3. **Full production, not outlines.** Every asset — video script, article, carousel, single-image post, social captions per platform, WhatsApp segments — must be the actual finished, word-for-word / ready-to-use version, synthesized across every source gathered that week into the single highest-converting, attention-grabbing, scroll-stopping version of the angle. Not a draft, not a concept, not an outline for someone else to finish. Scoped to the Rank 1 angle only (Ranks 2-5 stay as strong escalation-ready briefs) to keep weekly output volume realistic — this scoping was proposed by Claude and not objected to; if Edmund wants full production across all 5 angles instead, that supersedes this note.
+4. **Images this automation can't render become full generation prompts.** No image-rendering tool is wired into this routine. Every image need (carousel slides — minimum 5 per carousel — and single-image posts) gets a complete, ready-to-paste AI image-generation prompt (subject, composition, exact text overlay, style, aspect ratio, referencing the approved brand kit for consistency) instead of a vague creative brief.
+
+Additionally, `REI_Video_Production_Foundation_v1.1.md` was updated to v1.2 in the same session: added **Format 3B** (20–30 min long-form, weekly news-jacking variant of the existing 45-min Format 3) plus its own short-form clip-extraction guide, explicitly scoped to the weekly content-brief automation — Format 3 (45 min) is unchanged and remains the standard for evergreen Problem Group ad production. Every full-production asset must also thread through the Second Property Ladder frame (this week's signal is the trigger/proof, not the subject) and carry inline source citations for cross-reference — both were implicit in v2.2 but are now explicit requirements.
+
+### Files touched
+
+- `05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/REI_Video_Production_Foundation_v1.1.md` → renamed/replaced by `REI_Video_Production_Foundation_v1.2.md` (Format 3B + clip-extraction guide added; Formats 1-3 unchanged). Archived verbatim: `05_CONTENT_MARKETING_ENGINE/99_ARCHIVE/REI_Video_Production_Foundation_v1.1_ARCHIVED_2026-07-30.md`.
+- `05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/_INDEX.md` → v2.1 (points to v1.2, notes Format 3B).
+- New: `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/CONTENT_SOURCE_WATCHLIST.md` (expandable source registry).
+- `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` → v2.3 (full production for Rank 1, Format 3B adoption, inline citations, image-gen prompts, Rank-1/Ranks-2-5 split). Archived verbatim: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.2_ARCHIVED_2026-07-30.md`.
+- Claude Code scheduled task `rei-weekly-content-brief` prompt updated to match v2.3.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.22 (this decision).
 - Rollback: `99_ARCHIVE/GOVERNANCE_PRE_ASKFIRSTGATE_2026-07-27/` (pre-edit copies of all three). No file was deleted.
