@@ -1,9 +1,9 @@
 # REI Method — Video Production Foundation
 **Approved Master v1.3 | Singapore Real Estate Insider | Coach Edmund Tan | July 2026**
 
-Fixed structural foundation for all video ad creation: Reels (120s–180s), VSL (4–6 min), YouTube Long Form — two variants: 45 min (Format 3, evergreen Problem Group authority series, ad-conversion spine) and 10–30 min flexible (Format 3B, **rewritten 2026-07-30**, retention-based structure — not ad-structure). Every future session builds on this. Do not deviate without updating this master.
+Fixed structural foundation for all video ad creation: Reels (120s–180s), VSL (4–6 min), and two YouTube long-form roles that are NOT interchangeable — 45 min (**Format 3 — YouTube Authority Reinforcement, Proven-Winner Only**, ad-conversion spine, narrow use) and 10–30 min flexible (**Format 3B**, retention-based structure, the actual organic-discovery/growth workhorse). Every future session builds on this. Do not deviate without updating this master.
 
-**Format 3 vs Format 3B — when each applies, and why they're not the same spine:** Format 3 (45 min) is for the evergreen 10-Problem-Group ad-testing pipeline (Sections 4/10) — deliberately persuasion-structured (Hook→Mirror→Lie→Hard-Truth→Reframe→Method→Proof) because its job is conversion, tested like an ad. Format 3B is for reactive, news/topic-driven long-form YouTube uploads — deliberately retention-structured, because YouTube's algorithm rewards watch-time, not persuasion, and a video that tries to "close" the viewer like an ad loses to one that teaches and holds attention. **Correction, same day (2026-07-30):** Format 3B originally shipped reusing Format 3's ad-spine, compressed to 20-30 min. That was wrong specifically for YouTube — caught and fixed the same day it was written, building on Edmund's own earlier ruling in the "-->Youtube Video Reset" session that ad-structure belongs on landing pages, not YouTube. Do not use Format 3B's structure for Problem Group ad production, and do not use Format 3's structure for a reactive YouTube upload.
+**Format 3 vs Format 3B — when each applies, and why they're not the same spine:** Format 3 is deliberately persuasion-structured (Hook→Mirror→Lie→Hard-Truth→Reframe→Method→Proof) because its actual job is narrow: reinforce a Problem Group angle *already proven to convert* via Reel/VSL testing, for an audience that's often already seen the ad version (see §12C — it's only built after 4+ weeks of consistent lead quality). It is not a coequal long-form alternative, and the name is scoped to make that explicit after a same-day naming review (2026-07-30) — treat it as a narrow reinforcement tool, not the default choice for YouTube. Format 3B is for reactive, news/topic-driven long-form uploads and cold organic discovery — deliberately retention-structured, because YouTube's algorithm rewards watch-time and repeat recommendation, not one-shot persuasion, and a video that tries to "close" the viewer like an ad loses to one that teaches and holds attention. **This is where the large majority of long-form output should sit.** **Correction, same day (2026-07-30):** Format 3B originally shipped reusing Format 3's ad-spine, compressed to 20-30 min. That was wrong specifically for YouTube — caught and fixed the same day it was written, building on Edmund's own earlier ruling in the "-->Youtube Video Reset" session that ad-structure belongs on landing pages, not YouTube. Do not use Format 3B's structure for Problem Group ad production, and do not use Format 3's structure for a reactive YouTube upload.
 
 ---
 
@@ -124,9 +124,11 @@ MUST-HAVES appear in every video. The Lie is optional but highest conversion lif
 
 ---
 
-## Format 3 — YouTube 45-Minute Long Form Series
+## Format 3 — YouTube Authority Reinforcement (Proven-Winner Only), 45 Minutes
 
-**PURPOSE:** Authority positioning, YouTube SEO, pipeline warmup. Not direct conversion.
+**Renamed 2026-07-30** from "YouTube 45-Minute Long Form Series" — the old name implied a coequal choice with Format 3B. It isn't: this format only gets built for a Problem Group after 4+ weeks of consistent lead quality from Reel/VSL testing (§12C). Reserve it for reinforcing an already-proven angle to a warmer audience; use Format 3B for everything else on YouTube.
+
+**PURPOSE:** Authority reinforcement of a proven-winning Problem Group angle, YouTube SEO, pipeline warmup for an audience that's often already seen the Reel/VSL version. Not direct conversion, and not the default/primary YouTube long-form choice — that's Format 3B.
 **PLATFORM:** YouTube search and browse. Horizontal 16:9. Thumbnail carries 50% of the hook.
 
 ### Fixed Structure — 45-Minute YouTube Episode
@@ -466,6 +468,8 @@ When a Format 3 YouTube episode is published, extract clips at these four moment
 ---
 
 ## Changelog
+
+**v1.3, later same-day additions (2026-07-30):** (1) labeled §12C's clip-extraction guide "(Format 3 only)" explicitly — it used Format 3's ad-spine block names (Hard Truth, Reframe) with nothing marking it as inapplicable to Format 3B, a real ambiguity risk caught in review. (2) Renamed Format 3 to "YouTube Authority Reinforcement (Proven-Winner Only)" — the old name ("YouTube 45-Minute Long Form Series") read as a coequal alternative to Format 3B; it isn't, it's a narrow reinforcement tool gated behind proven Reel/VSL performance (§12C). Format 3B is now explicit as the default/primary YouTube long-form choice.
 
 **v1.3 (2026-07-30, same day as v1.2)** — Replaced Format 3B's structure entirely: it originally reused Format 3's ad-conversion spine, compressed to 20-30 min — wrong specifically for YouTube (retention-ranked, not persuasion-ranked). New Format 3B is a retention-based skeleton (promise match → hook+open loop → context bridge → freshly-derived teaching modules → pattern interrupts → midpoint re-hook → worked example → recap → soft CTA), flexible 10-30 min by earned depth not assumed length, with its own 5-criteria self-grade replacing the 100-point ad rubric, and a remapped 3-clip extraction guide. Absorbed from `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_SecondPropertyLadder_AdProduction/04_YOUTUBE_CONTENT_ENGINE/YouTube_LongForm_Script_Framework_and_Checklist_v1.1.md`, which is now retired to a pointer at that path — this is the one home for the framework going forward.
 
