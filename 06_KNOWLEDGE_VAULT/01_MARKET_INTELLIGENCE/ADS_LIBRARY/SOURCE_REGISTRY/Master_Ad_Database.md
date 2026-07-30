@@ -194,7 +194,7 @@ auto-detected language (not forced English). See ad_breakdown.md.
 | 1061827746195503 | KS TAN - Real Estate Strategist | URA Masterplan masterclass funnel — origin story, long edit | 2026-07-30 | 2026-07-30 | 1:18 | `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/KS Tan/2026-07-30_1061827746195503/` |
 | 837174999331033 | KS TAN - Real Estate Strategist | URA Masterplan masterclass funnel — origin story, tight edit | 2026-07-30 | 2026-07-30 | 1:07 | `.../2026-07-30_837174999331033/` |
 
-KS Tan text/static ads logged (copy verbatim in ad_breakdown.md, no video to download): 2249400439213987,
+KS Tan static/image ads — copy logged verbatim AND image.jpg downloaded per ad (2026-07-30 correction: images were initially skipped, caught by Edmund via folder-count mismatch, all 10 since downloaded): 2249400439213987,
 1989551975023948 (Meta: "2 ads use this creative"), 1058207063325262 ("2 ads"), 1680201843242729 ("2 ads"),
 2816676932040169, 4469453973299588, 2279044422926159, 919815174501565, 1024806670321552 (low impressions),
 4129952470475386 (low impressions).
