@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.22
-Status: APPROVED MASTER (001–112; detailed person-level execution evidence is private)
+Version: v3.23
+Status: APPROVED MASTER (001–113; detailed person-level execution evidence is private)
 Date: 2026-07-30
-Supersedes: v3.21 (2026-07-30) — adds Decision 112, Content Engine Full-Production Standard: weekly content-brief output moves from outlines/concepts to full word-for-word production for the Rank 1 angle (Ranks 2-5 stay brief-only), adopts the existing Video Production Foundation's new Format 3B (20-30 min long-form + clip-extraction) instead of an invented short-form structure, requires inline source citations throughout, and standardizes AI image-generation prompts in place of images this automation cannot render.
+Supersedes: v3.22 (2026-07-30) — adds Decision 113: all 5 ranked angles in the weekly content brief get full production every week (not just Rank 1). Confirms and closes the open question Decision 112 flagged.
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -935,4 +935,22 @@ Additionally, `REI_Video_Production_Foundation_v1.1.md` was updated to v1.2 in t
 - `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` → v2.3 (full production for Rank 1, Format 3B adoption, inline citations, image-gen prompts, Rank-1/Ranks-2-5 split). Archived verbatim: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.2_ARCHIVED_2026-07-30.md`.
 - Claude Code scheduled task `rei-weekly-content-brief` prompt updated to match v2.3.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.22 (this decision).
+
+---
+
+## Decision 113 — All 5 Ranked Angles Get Full Production
+
+**Status:** APPROVED — Edmund, 2026-07-30 (ruled in chat, closing the question Decision 112 left open).
+
+### Ruling
+
+Decision 112 scoped full word-for-word production to the Rank 1 angle only, with Ranks 2-5 left as strong briefs — flagged explicitly as Claude's proposed default, not Edmund's instruction. Edmund's answer: **all 5 ranked angles get full production every week**, not just one. The Rank-1/Ranks-2-5 split is removed.
+
+**Operational note carried into the spec, not just this record:** producing 5 full long-form scripts (20-30 min each) plus 5 full articles, 5 carousels, 5 single-image posts, 5×4 social posts, and 5×3 WhatsApp segments in one weekly run is a large amount of finished content. The spec now requires that if a run cannot complete all 5 to full quality in one pass, it says so plainly — how many finished, what's pending, why — rather than silently thinning quality or dropping asset types to force-fit all 5. This is a "no silent caps" rule, not a permission to under-deliver quietly.
+
+### Files touched
+
+- `08_OPERATIONS/03_AUTOMATIONS/rei-weekly-content-brief_SKILL.md` → v2.4 (Rank-1/Ranks-2-5 split removed; all 5 angles get full Phase C production; no-silent-caps rule added). Archived verbatim: `08_OPERATIONS/99_ARCHIVE/rei-weekly-content-brief_SKILL_v2.3_ARCHIVED_2026-07-30.md`.
+- Claude Code scheduled task `rei-weekly-content-brief` prompt updated to match v2.4.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.23 (this decision).
 - Rollback: `99_ARCHIVE/GOVERNANCE_PRE_ASKFIRSTGATE_2026-07-27/` (pre-edit copies of all three). No file was deleted.
