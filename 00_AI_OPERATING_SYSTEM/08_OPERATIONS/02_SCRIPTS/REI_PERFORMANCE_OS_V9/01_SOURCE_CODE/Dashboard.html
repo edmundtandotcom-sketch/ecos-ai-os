@@ -2,21 +2,11 @@
 <html><head><base target="_top"><meta charset="utf-8"><meta name="theme-color" content="#0b1220"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="REI OS"><?!= include_('Styles'); ?></head>
 <body>
 
-<!-- Access gate. This markup was missing in v9.0 — the CSS and the client JS both
-     expected it, so anyone without a cached key hit a blank error screen. -->
-<div id="login" class="login-shell">
-  <div class="login-card">
-    <div class="brand-mark">REI</div>
-    <h1>Performance OS</h1>
-    <p>Enter your access key to continue.</p>
-    <label><span>Access key</span><input id="accessKey" type="password" autocomplete="current-password" placeholder="Access key" onkeydown="if(event.key==='Enter')app.login()"></label>
-    <label class="remember"><input id="remember" type="checkbox" checked>&nbsp;Keep me signed in on this device</label>
-    <button class="primary full" onclick="app.login()">Open dashboard</button>
-    <div id="loginError" class="error-text"></div>
-  </div>
-</div>
+<!-- No login screen by design. assertAccess_ runs in direct-link mode (v9.0.1), so the
+     server requires no key — a gate here would be friction with nothing behind it.
+     The URL itself is the only protection: treat the link as the password. -->
 
-<div id="app" class="app-shell hidden">
+<div id="app" class="app-shell">
 <header class="topbar">
   <div><div class="eyebrow">REI METHOD</div><h1 id="viewTitle">Today</h1></div>
   <div class="top-actions"><span id="syncStatus" class="status-dot">Ready</span><button class="icon-btn" onclick="app.sync()" aria-label="Sync">↻</button></div>

@@ -5,12 +5,16 @@ const SIGNAL_META={SCALE:{cls:'green',icon:'🔥',label:'SCALE'},KILL:{cls:'red'
 const app={
   state:{key:'',rangeKey:'30d',data:null,view:'today',adFilter:'ALL',adSort:'spend'},
 
+  /* Safe DOM write. If an element is missing — which happens when Apps Script serves a
+     cached mix of old JS and new HTML — skip it instead of throwing, so one stale
+     reference can never blank the whole dashboard. */
+  set(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;return !!el;},
+
   init(){
     document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>this.setRange(b.dataset.range));
     document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>this.showView(b.dataset.view));
     document.querySelectorAll('[data-adfilter]').forEach(b=>b.onclick=()=>this.setAdFilter(b.dataset.adfilter));
-    const saved=localStorage.getItem('rei_v9_key')||sessionStorage.getItem('rei_v9_key');
-    if(saved){document.getElementById('accessKey').value=saved;this.login(true);}
+    this.load(true);   // no login screen — assertAccess_ runs in direct-link mode
   },
 
   server(name,arg){
@@ -25,23 +29,6 @@ const app={
         default:reject(new Error('Unsupported server action: '+name));
       }
     });
-  },
-
-  async login(silent){
-    const key=document.getElementById('accessKey').value.trim();
-    if(!key){document.getElementById('loginError').textContent='Enter your access key.';return;}
-    this.loading(true);
-    try{
-      await this.server('login',key);
-      this.state.key=key;
-      (document.getElementById('remember').checked?localStorage:sessionStorage).setItem('rei_v9_key',key);
-      document.getElementById('login').classList.add('hidden');
-      document.getElementById('app').classList.remove('hidden');
-      await this.load(true);
-    }catch(e){
-      document.getElementById('loginError').textContent=e.message;
-      if(silent){localStorage.removeItem('rei_v9_key');sessionStorage.removeItem('rei_v9_key');}
-    }finally{this.loading(false);}
   },
 
   async load(force){
@@ -68,15 +55,23 @@ const app={
 
   render(){
     const d=this.state.data;
-    document.getElementById('rangeLabel').textContent=d.range.label;
+    const label=document.getElementById('rangeLabel'); if(label)label.textContent=d.range.label;
     this.setStatus('Updated '+new Date(d.generatedAt).toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'}));
-    this.renderToday(d);
-    this.renderStages(d);
-    this.renderAds(d);
-    this.renderAdSets(d.adSets);
-    this.renderPipeline(d);
-    this.renderForecast(d.forecast);
-    this.renderHealth(d.health);
+    // Each section renders independently. If one throws (missing data, or Apps Script
+    // serving cached JS against newer HTML), the rest of the dashboard still draws
+    // and the failure is named in the console instead of blanking the page.
+    const sections=[
+      ['Today',()=>this.renderToday(d)],
+      ['Funnel',()=>this.renderStages(d)],
+      ['Ads',()=>this.renderAds(d)],
+      ['Ad sets',()=>this.renderAdSets(d.adSets)],
+      ['Follow-up',()=>this.renderPipeline(d)],
+      ['Forecast',()=>this.renderForecast(d.forecast)],
+      ['Health',()=>this.renderHealth(d.health)]
+    ];
+    const failed=[];
+    sections.forEach(([name,fn])=>{try{fn();}catch(e){failed.push(name);console.error('[REI OS] '+name+' failed to render:',e);}});
+    if(failed.length)this.toast(failed.join(', ')+' failed to load — try a hard refresh',true);
   },
 
   /* ══════════════ CEO — Today ══════════════ */
