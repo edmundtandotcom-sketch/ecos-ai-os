@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REI Creative Intelligence Dashboard v2</title>
+<style>
+:root{--bg:#0f1419;--panel:#1a212b;--panel2:#222b38;--line:#2e3a4a;--txt:#e6edf3;--mut:#8b9bb0;--acc:#4ea1ff;--good:#2ecc71;--amber:#f1c40f;--bad:#e74c3c;--gold:#d4af37;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.45}
+header{background:linear-gradient(90deg,#11202f,#1a212b);padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:18px;font-weight:700}
+header .sub{color:var(--mut);font-size:12px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,input,button,textarea{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:7px 9px;font-size:13px}
+button{cursor:pointer}
+button.primary{background:var(--acc);color:#04121f;border-color:var(--acc);font-weight:600}
+button.ghost{background:transparent}
+nav{display:flex;gap:4px;padding:8px 14px;background:var(--panel);border-bottom:1px solid var(--line);overflow-x:auto}
+nav button{border:none;background:transparent;color:var(--mut);padding:8px 12px;border-radius:6px;white-space:nowrap}
+nav button.active{background:var(--panel2);color:var(--acc)}
+main{padding:18px;max-width:1200px;margin:0 auto}
+.tab{display:none}.tab.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card .k{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.card .v{font-size:22px;font-weight:700;margin-top:4px}
+.card .v small{font-size:12px;color:var(--mut);font-weight:400}
+h2{font-size:15px;margin:18px 0 10px;border-left:3px solid var(--acc);padding-left:9px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:12.5px}
+th,td{padding:8px 9px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--panel2);color:var(--mut);font-weight:600;font-size:11px;text-transform:uppercase}
+tr:last-child td{border-bottom:none}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.pill.good{background:rgba(46,204,113,.15);color:var(--good)}
+.pill.amber{background:rgba(241,196,15,.15);color:var(--amber)}
+.pill.bad{background:rgba(231,76,60,.15);color:var(--bad)}
+.pill.mut{background:rgba(139,155,176,.15);color:var(--mut)}
+.note{color:var(--mut);font-size:12px;margin:6px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:10px}
+.row .f{display:flex;flex-direction:column;gap:3px}
+.row .f label{font-size:11px;color:var(--mut)}
+.matrix{overflow-x:auto}
+.matrix table td{text-align:center;cursor:pointer;font-weight:600;font-size:11px}
+.cell-built{background:rgba(78,161,255,.18);color:var(--acc)}
+.cell-try{background:rgba(212,175,55,.18);color:var(--gold)}
+.cell-valid{background:rgba(46,204,113,.22);color:var(--good)}
+.cell-kill{background:rgba(231,76,60,.18);color:var(--bad)}
+.cell-none{color:#3a4658}
+.rec{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:8px;padding:12px;margin-bottom:10px}
+.rec.kill{border-left-color:var(--bad)}.rec.scale{border-left-color:var(--good)}.rec.iterate{border-left-color:var(--amber)}
+.rec .a{font-weight:700;margin-bottom:3px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.sw{width:13px;height:13px;border-radius:3px;display:inline-block}
+code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+pre{background:#0a0e13;border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;color:#cfe3ff;white-space:pre-wrap}
+.del{color:var(--bad);cursor:pointer;font-weight:700}
+.muted{color:var(--mut)}
+.flex{display:flex;gap:10px;flex-wrap:wrap}
+.tag{font-size:10px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--mut)}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>REI Creative Intelligence — v2</h1>
+    <div class="sub">One platform · all campaigns · advisory recommendations · data persists in this browser</div>
+  </div>
+  <div class="filters">
+    <select id="fCampaign"><option value="">All campaigns</option></select>
+    <select id="fFormat"><option value="">All formats</option><option>image</option><option>video 9:16</option><option>video 16:9</option><option>carousel</option></select>
+    <button class="ghost" onclick="exportData()">Export JSON</button>
+    <button class="ghost" onclick="seedDemo()">Load sample row</button>
+  </div>
+</header>
+<nav id="nav"></nav>
+<main>
+  <section class="tab active" id="t_overview"></section>
+  <section class="tab" id="t_inventory"></section>
+  <section class="tab" id="t_performance"></section>
+  <section class="tab" id="t_leads"></section>
+  <section class="tab" id="t_leaderboards"></section>
+  <section class="tab" id="t_matrix"></section>
+  <section class="tab" id="t_recs"></section>
+  <section class="tab" id="t_targets"></section>
+  <section class="tab" id="t_setup"></section>
+</main>
+
+<script>
+/* ---------- DATA MODEL (localStorage) ---------- */
+const DB_KEY='rei_ci_v2';
+const ANGLES=[
+ {n:'01',l:'EXIT_FIRST'},{n:'02',l:'FOREVER_HOME_TRAP'},{n:'03',l:'WRONG_UNIT'},
+ {n:'04',l:'SUPPLY_RISK'},{n:'05',l:'PORTFOLIO_SEQUENCE'},{n:'06',l:'BALLOT_CULTURE'},
+ {n:'07',l:'ADVISOR_VS_AGENT'},{n:'08',l:'HOLDING_COST_PSF_TRAP'},{n:'09',l:'FINANCIAL_ARCHITECTURE'},{n:'10',l:'MARKET_TIMING'}];
+const SYSTEMS=[
+ {n:'1',l:'Pure Typography'},{n:'2',l:'Strategic Contrast'},{n:'3',l:'Notes App'},{n:'4',l:'Property Audit / Markup'},
+ {n:'5',l:'Self-Audit / Checklist'},{n:'6',l:'Practitioner Journey'},{n:'7',l:'Client Transformation'},
+ {n:'8',l:'Data / Stat Visual'},{n:'9',l:'Screenshot / Conversation'},{n:'10',l:'Strategic Advisor POV'}];
+const HOOKS=['Disqualification','Strategic Superiority','Future Regret','Buyer Blindspots','Hidden Insider Advantage','Hidden Market Truth','Practitioner Reality','Transformation / Escape','Self-Realization'];
+/* seed TRY recommendations (angle -> systems) from master doc */
+const TRY={'01':['1','5'],'02':['2','5'],'03':['4'],'04':['3'],'05':['7'],'06':['2'],'07':['3','9'],'08':['4'],'09':['6'],'10':['10']};
+/* seed BUILT cells from existing creative groups */
+const BUILT={'01':['1','2'],'02':['2','5'],'03':['4','3'],'04':['3'],'05':['6','7','9'],'06':['2','1'],'07':['10','3','9'],'08':['4'],'09':['6'],'10':['10']};
+
+function defaultDB(){
+ const matrix={};
+ ANGLES.forEach(a=>{matrix[a.n]={};SYSTEMS.forEach(s=>{
+   let st='none';
+   if((BUILT[a.n]||[]).includes(s.n))st='built';
+   else if((TRY[a.n]||[]).includes(s.n))st='try';
+   matrix[a.n][s.n]=st;});});
+ return {creatives:[],performance:[],leads:[],
+   targets:{cpl:25,cpql:60,cpqa:250,maxFreq:2.5,hookMin:25},matrix};
+}
+let DB=load();
+function load(){try{const d=JSON.parse(localStorage.getItem(DB_KEY));return d&&d.matrix?d:defaultDB();}catch(e){return defaultDB();}}
+function save(){localStorage.setItem(DB_KEY,JSON.stringify(DB));}
+
+/* ---------- HELPERS ---------- */
+const $=s=>document.querySelector(s);
+const money=n=>isFinite(n)?'$'+(Math.round(n*100)/100).toLocaleString():'—';
+const pct=n=>isFinite(n)?(Math.round(n*10)/10)+'%':'—';
+function curFilter(){return {c:$('#fCampaign').value,f:$('#fFormat').value};}
+function matchF(o){const {c,f}=curFilter();return (!c||o.campaign===c)&&(!f||o.format===f);}
+function campaigns(){return [...new Set([...DB.creatives.map(c=>c.campaign),...DB.leads.map(l=>l.campaign)].filter(Boolean))];}
+
+/* aggregate spend by creative id from performance */
+function spendByCreative(){const m={};DB.performance.forEach(p=>{m[p.creative]=(m[p.creative]||0)+(+p.spend||0);});return m;}
+function leadsAgg(filterFn){const L=DB.leads.filter(filterFn||(()=>true));
+ const total=L.length, qual=L.filter(l=>l.qualified==='Y').length,
+ appt=L.filter(l=>l.apptBooked==='Y').length, qappt=L.filter(l=>l.apptQualified==='Y').length;
+ return {total,qual,appt,qappt};}
+function spendTotal(filterFn){return DB.performance.filter(p=>{const cr=DB.creatives.find(c=>c.id===p.creative);return filterFn?(cr&&filterFn(cr)):true;}).reduce((s,p)=>s+(+p.spend||0),0);}
+
+/* ---------- NAV ---------- */
+const TABS=[['overview','Overview'],['inventory','Creative Inventory'],['performance','Performance'],['leads','Lead Log'],['leaderboards','Leaderboards'],['matrix','Angle × System'],['recs','Recommendations'],['targets','Targets'],['setup','Setup / Automation']];
+function buildNav(){$('#nav').innerHTML=TABS.map((t,i)=>`<button class="${i==0?'active':''}" data-t="${t[0]}" onclick="go('${t[0]}',this)">${t[1]}</button>`).join('');}
+function go(t,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));$('#t_'+t).classList.add('active');
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+
+/* ---------- RENDER ---------- */
+function render(){renderOverview();renderInventory();renderPerformance();renderLeads();renderLeaderboards();renderMatrix();renderRecs();renderTargets();renderSetup();
+ // refresh campaign filter options
+ const sel=$('#fCampaign');const cur=sel.value;sel.innerHTML='<option value="">All campaigns</option>'+campaigns().map(c=>`<option ${c===cur?'selected':''}>${c}</option>`).join('');}
+
+function renderOverview(){
+ const spend=spendTotal(matchF);
+ const ag=leadsAgg(matchF);
+ const t=DB.targets;
+ const cpl=spend/ag.total, cpql=spend/ag.qual, cpqa=spend/ag.qappt;
+ const flag=(v,tgt)=>!isFinite(v)?'mut':v<=tgt?'good':v<=tgt*1.5?'amber':'bad';
+ $('#t_overview').innerHTML=`
+ <div class="cards">
+  <div class="card"><div class="k">Spend</div><div class="v">${money(spend)}</div></div>
+  <div class="card"><div class="k">Leads</div><div class="v">${ag.total}</div></div>
+  <div class="card"><div class="k">Qualified Leads</div><div class="v">${ag.qual} <small>${ag.total?pct(ag.qual/ag.total*100):''}</small></div></div>
+  <div class="card"><div class="k">Appointments</div><div class="v">${ag.appt}</div></div>
+  <div class="card"><div class="k">Qualified Appts</div><div class="v">${ag.qappt}</div></div>
+ </div>
+ <div class="cards">
+  <div class="card"><div class="k">Cost / Lead</div><div class="v"><span class="pill ${flag(cpl,t.cpl)}">${money(cpl)}</span></div><div class="note">target ${money(t.cpl)}</div></div>
+  <div class="card"><div class="k">Cost / Qualified Lead</div><div class="v"><span class="pill ${flag(cpql,t.cpql)}">${money(cpql)}</span></div><div class="note">target ${money(t.cpql)}</div></div>
+  <div class="card"><div class="k">Cost / Qualified Appt</div><div class="v"><span class="pill ${flag(cpqa,t.cpqa)}">${money(cpqa)}</span></div><div class="note">target ${money(t.cpqa)}</div></div>
+  <div class="card"><div class="k">Creatives</div><div class="v">${DB.creatives.filter(matchF).length}</div></div>
+  <div class="card"><div class="k">Open Recommendations</div><div class="v">${genRecs().length}</div></div>
+ </div>
+ <h2>Funnel Tracks</h2>
+ <p class="note">Track A (video→LP→session) · Track B (checklist→lead form→nurture) · Retargeting. Checklist 2-version test live: compare Retarget vs Cold on cost/qualified lead.</p>
+ <p class="note">This dashboard reads what you enter (or what the Google Sheet feed writes). It recommends — you decide and activate. Nothing is auto-killed or auto-scaled.</p>`;
+}
+
+function renderInventory(){
+ const rows=DB.creatives.filter(matchF).map((c,i)=>`<tr>
+  <td>${c.id}</td><td>${c.campaign||''}</td><td>${c.angle||''}</td><td>${c.system||''}</td>
+  <td>${c.hook||''}</td><td>${c.format||''}</td><td>${c.offer||''}</td><td>${c.track||''}</td>
+  <td><span class="pill ${c.status==='Validated'?'good':c.status==='Kill'?'bad':c.status==='Scaling'?'good':'mut'}">${c.status||'Built'}</span></td>
+  <td><span class="del" onclick="delItem('creatives',${DB.creatives.indexOf(c)})">✕</span></td></tr>`).join('');
+ $('#t_inventory').innerHTML=`<h2>Add Creative</h2>
+ <div class="row">
+  <div class="f"><label>Creative ID (naming convention)</label><input id="ci_id" placeholder="A02_SYS02_IMG_v1"></div>
+  <div class="f"><label>Campaign</label><input id="ci_campaign" placeholder="LL_LGR_COLD_VIDEO"></div>
+  <div class="f"><label>Angle</label><select id="ci_angle">${ANGLES.map(a=>`<option>${a.n} ${a.l}</option>`).join('')}</select></div>
+  <div class="f"><label>System</label><select id="ci_system">${SYSTEMS.map(s=>`<option>${s.n} ${s.l}</option>`).join('')}</select></div>
+  <div class="f"><label>Hook</label><select id="ci_hook">${HOOKS.map(h=>`<option>${h}</option>`).join('')}</select></div>
+  <div class="f"><label>Format</label><select id="ci_format"><option>image</option><option>video 9:16</option><option>video 16:9</option><option>carousel</option></select></div>
+  <div class="f"><label>Offer</label><select id="ci_offer"><option>Strategy Session</option><option>Checklist</option><option>Ebook</option><option>Report</option></select></div>
+  <div class="f"><label>Track</label><select id="ci_track"><option>A Quality</option><option>B Volume</option><option>Retarget</option></select></div>
+  <div class="f"><label>Status</label><select id="ci_status"><option>Built</option><option>Testing</option><option>Validated</option><option>Scaling</option><option>Kill</option></select></div>
+  <button class="primary" onclick="addCreative()">Add</button>
+ </div>
+ <table><thead><tr><th>ID</th><th>Campaign</th><th>Angle</th><th>System</th><th>Hook</th><th>Format</th><th>Offer</th><th>Track</th><th>Status</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="10" class="muted">No creatives yet.</td></tr>'}</tbody></table>`;
+}
+function addCreative(){DB.creatives.push({id:$('#ci_id').value||('creative_'+Date.now()),campaign:$('#ci_campaign').value,angle:$('#ci_angle').value,system:$('#ci_system').value,hook:$('#ci_hook').value,format:$('#ci_format').value,offer:$('#ci_offer').value,track:$('#ci_track').value,status:$('#ci_status').value});save();render();}
+
+function renderPerformance(){
+ const opts=DB.creatives.map(c=>`<option>${c.id}</option>`).join('');
+ const rows=DB.performance.map(p=>{const imp=+p.imp||0,v3=+p.v3||0,tp=+p.tp||0,cl=+p.clicks||0,ld=+p.leads||0,sp=+p.spend||0;
+  const hook=imp?v3/imp*100:NaN,hold=v3?tp/v3*100:NaN,ctr=imp?cl/imp*100:NaN,cpl=ld?sp/ld:NaN;
+  return `<tr><td>${p.date||''}</td><td>${p.creative}</td><td>${money(sp)}</td><td>${imp}</td>
+   <td><span class="pill ${isFinite(hook)?(hook>=DB.targets.hookMin?'good':'bad'):'mut'}">${pct(hook)}</span></td>
+   <td>${pct(hold)}</td><td>${pct(ctr)}</td><td>${ld}</td>
+   <td><span class="pill ${isFinite(cpl)?(cpl<=DB.targets.cpl?'good':cpl<=DB.targets.cpl*2?'amber':'bad'):'mut'}">${money(cpl)}</span></td>
+   <td><span class="del" onclick="delItem('performance',${DB.performance.indexOf(p)})">✕</span></td></tr>`;}).join('');
+ $('#t_performance').innerHTML=`<h2>Log Performance (per creative)</h2>
+ <p class="note">Manual entry now; once the Apps Script / connector feed is live this table auto-fills from Meta + Google daily.</p>
+ <div class="row">
+  <div class="f"><label>Date</label><input type="date" id="pf_date"></div>
+  <div class="f"><label>Creative</label><select id="pf_creative">${opts||'<option></option>'}</select></div>
+  <div class="f"><label>Spend (SGD)</label><input id="pf_spend" type="number"></div>
+  <div class="f"><label>Impressions</label><input id="pf_imp" type="number"></div>
+  <div class="f"><label>3-sec views</label><input id="pf_v3" type="number"></div>
+  <div class="f"><label>ThruPlay</label><input id="pf_tp" type="number"></div>
+  <div class="f"><label>Link clicks</label><input id="pf_clicks" type="number"></div>
+  <div class="f"><label>Leads</label><input id="pf_leads" type="number"></div>
+  <button class="primary" onclick="addPerf()">Add</button>
+ </div>
+ <table><thead><tr><th>Date</th><th>Creative</th><th>Spend</th><th>Impr</th><th>Hook%</th><th>Hold%</th><th>CTR%</th><th>Leads</th><th>CPL</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="10" class="muted">No data yet.</td></tr>'}</tbody></table>`;
+}
+function addPerf(){DB.performance.push({date:$('#pf_date').value,creative:$('#pf_creative').value,spend:$('#pf_spend').value,imp:$('#pf_imp').value,v3:$('#pf_v3').value,tp:$('#pf_tp').value,clicks:$('#pf_clicks').value,leads:$('#pf_leads').value});save();render();}
+
+function renderLeads(){
+ const opts=DB.creatives.map(c=>`<option>${c.id}</option>`).join('');
+ const rows=DB.leads.filter(matchF).map(l=>`<tr>
+  <td>${l.name||''}</td><td>${l.email||''}</td><td>${l.mobile||''}</td><td>${l.campaign||''}</td>
+  <td>${l.group||''}</td><td>${l.source||''}</td><td>${l.platform||''}</td>
+  <td><span class="pill ${l.qualified==='Y'?'good':'mut'}">${l.qualified||'?'}</span></td>
+  <td><span class="pill ${l.apptBooked==='Y'?'good':'mut'}">${l.apptBooked||'?'}</span></td>
+  <td><span class="pill ${l.apptQualified==='Y'?'good':'mut'}">${l.apptQualified||'?'}</span></td>
+  <td>${l.score||''}</td>
+  <td><span class="del" onclick="delItem('leads',${DB.leads.indexOf(l)})">✕</span></td></tr>`).join('');
+ // cost per qualified lead/appt for current filter
+ const spend=spendTotal(matchF);const ag=leadsAgg(matchF);
+ $('#t_leads').innerHTML=`<h2>Lead Log</h2>
+ <p class="note">Fields match your operation. Pull these from GHL automatically via the GHL connector, or enter manually. De-dup on email + mobile (keep first touch).</p>
+ <div class="cards">
+  <div class="card"><div class="k">Cost / Qualified Lead</div><div class="v">${money(spend/ag.qual)}</div></div>
+  <div class="card"><div class="k">Cost / Qualified Appt</div><div class="v">${money(spend/ag.qappt)}</div></div>
+  <div class="card"><div class="k">Lead→Qual %</div><div class="v">${ag.total?pct(ag.qual/ag.total*100):'—'}</div></div>
+  <div class="card"><div class="k">Qual→Appt %</div><div class="v">${ag.qual?pct(ag.appt/ag.qual*100):'—'}</div></div>
+ </div>
+ <div class="row">
+  <div class="f"><label>Name</label><input id="ld_name"></div>
+  <div class="f"><label>Email</label><input id="ld_email"></div>
+  <div class="f"><label>Mobile</label><input id="ld_mobile"></div>
+  <div class="f"><label>Campaign</label><input id="ld_campaign"></div>
+  <div class="f"><label>Group</label><input id="ld_group" placeholder="G1 / G6 / Video"></div>
+  <div class="f"><label>Ad Source</label><select id="ld_source">${opts||'<option></option>'}</select></div>
+  <div class="f"><label>Platform</label><select id="ld_platform"><option>Meta</option><option>Google</option></select></div>
+  <div class="f"><label>Qualified?</label><select id="ld_qualified"><option>?</option><option>Y</option><option>N</option></select></div>
+  <div class="f"><label>Appt booked?</label><select id="ld_appt"><option>?</option><option>Y</option><option>N</option></select></div>
+  <div class="f"><label>Appt qualified?</label><select id="ld_apptq"><option>?</option><option>Y</option><option>N</option></select></div>
+  <div class="f"><label>Score 1-5</label><input id="ld_score" type="number" min="1" max="5"></div>
+  <button class="primary" onclick="addLead()">Add</button>
+ </div>
+ <div style="overflow-x:auto"><table><thead><tr><th>Name</th><th>Email</th><th>Mobile</th><th>Campaign</th><th>Group</th><th>Ad Source</th><th>Platform</th><th>Qual</th><th>Appt</th><th>Q-Appt</th><th>Score</th><th></th></tr></thead><tbody>${rows||'<tr><td colspan="12" class="muted">No leads yet.</td></tr>'}</tbody></table></div>`;
+}
+function addLead(){DB.leads.push({name:$('#ld_name').value,email:$('#ld_email').value,mobile:$('#ld_mobile').value,campaign:$('#ld_campaign').value,group:$('#ld_group').value,source:$('#ld_source').value,platform:$('#ld_platform').value,qualified:$('#ld_qualified').value,apptBooked:$('#ld_appt').value,apptQualified:$('#ld_apptq').value,score:$('#ld_score').value});save();render();}
+
+function renderLeaderboards(){
+ // build per-dimension aggregates using creatives + spend + leads(by source)
+ const sp=spendByCreative();
+ function agg(dim){const m={};
+  DB.creatives.forEach(c=>{const key=c[dim];if(!key)return;m[key]=m[key]||{spend:0,qual:0,leads:0};m[key].spend+=sp[c.id]||0;});
+  DB.leads.forEach(l=>{const c=DB.creatives.find(x=>x.id===l.source);if(!c)return;const key=c[dim];if(!key||!m[key])return;m[key].leads++;if(l.qualified==='Y')m[key].qual++;});
+  return Object.entries(m).map(([k,v])=>({k,...v,cpql:v.qual?v.spend/v.qual:Infinity})).sort((a,b)=>a.cpql-b.cpql);}
+ const tbl=(title,arr)=>`<h2>${title}</h2><table><thead><tr><th>${title.split(' ')[0]}</th><th>Spend</th><th>Qual Leads</th><th>Cost/Qual Lead</th></tr></thead><tbody>${arr.length?arr.map(r=>`<tr><td>${r.k}</td><td>${money(r.spend)}</td><td>${r.qual}</td><td><span class="pill ${isFinite(r.cpql)?(r.cpql<=DB.targets.cpql?'good':'amber'):'mut'}">${money(r.cpql)}</span></td></tr>`).join(''):'<tr><td colspan="4" class="muted">Need creatives + leads + spend.</td></tr>'}</tbody></table>`;
+ $('#t_leaderboards').innerHTML=`<p class="note">Ranked by cost per qualified lead — your "make more of this" signal. Drives the next production decisions.</p>
+ ${tbl('Angle leaderboard',agg('angle'))}${tbl('System leaderboard',agg('system'))}${tbl('Hook leaderboard',agg('hook'))}`;
+}
+
+function renderMatrix(){
+ let h=`<h2>Angle × System Matrix</h2>
+ <div class="legend">
+  <span><i class="sw cell-try" style="background:rgba(212,175,55,.5)"></i> Try (recommended)</span>
+  <span><i class="sw cell-built" style="background:rgba(78,161,255,.5)"></i> Built (exists, unproven)</span>
+  <span><i class="sw cell-valid" style="background:rgba(46,204,113,.6)"></i> Validated (live data wins)</span>
+  <span><i class="sw cell-kill" style="background:rgba(231,76,60,.5)"></i> Killed</span>
+ </div>
+ <p class="note">Click a cell to cycle its state: none → try → built → validated → kill → none. Reasoning behind "try" = each angle's Hook Psychology matched to the system that amplifies it.</p>
+ <div class="matrix"><table><thead><tr><th>Angle ↓ / System →</th>${SYSTEMS.map(s=>`<th title="${s.l}">${s.n}</th>`).join('')}</tr></thead><tbody>`;
+ ANGLES.forEach(a=>{h+=`<tr><td style="text-align:left">${a.n} ${a.l}</td>`;
+  SYSTEMS.forEach(s=>{const st=DB.matrix[a.n][s.n];const cls={none:'cell-none',try:'cell-try',built:'cell-built',validated:'cell-valid',kill:'cell-kill'}[st];
+   const lab={none:'·',try:'TRY',built:'BUILT',validated:'✓',kill:'✕'}[st];
+   h+=`<td class="${cls}" onclick="cycle('${a.n}','${s.n}')">${lab}</td>`;});h+='</tr>';});
+ h+='</tbody></table></div>';$('#t_matrix').innerHTML=h;
+}
+function cycle(a,s){const order=['none','try','built','validated','kill'];const cur=DB.matrix[a][s];DB.matrix[a][s]=order[(order.indexOf(cur)+1)%order.length];save();renderMatrix();}
+
+function genRecs(){
+ const t=DB.targets;const recs=[];
+ // group performance by creative
+ const byC={};DB.performance.forEach(p=>{byC[p.creative]=byC[p.creative]||{spend:0,imp:0,v3:0,leads:0};const o=byC[p.creative];o.spend+=+p.spend||0;o.imp+=+p.imp||0;o.v3+=+p.v3||0;o.leads+=+p.leads||0;});
+ // qualified leads per creative
+ const qByC={};DB.leads.forEach(l=>{if(l.qualified==='Y')qByC[l.source]=(qByC[l.source]||0)+1;});
+ Object.entries(byC).forEach(([id,o])=>{
+  const hook=o.imp?o.v3/o.imp*100:NaN;const cpl=o.leads?o.spend/o.leads:NaN;const cpql=qByC[id]?o.spend/qByC[id]:NaN;
+  const enough=o.imp>=1000;
+  if(!enough){recs.push({t:'iterate',a:id+' — still learning',d:`Only ${o.imp} impressions. Wait for ~1–2k before judging (significance over calendar).`});return;}
+  if(isFinite(hook)&&hook<t.hookMin){recs.push({t:'kill',a:id+' — Recommend KILL',d:`Hook rate ${pct(hook)} below ${t.hookMin}% minimum. Weak scroll-stop.`});}
+  else if(isFinite(cpl)&&cpl>t.cpl*2){recs.push({t:'kill',a:id+' — Recommend KILL',d:`CPL ${money(cpl)} > 2× target (${money(t.cpl)}).`});}
+  else if(isFinite(cpql)&&cpql<=t.cpql*0.7){recs.push({t:'scale',a:id+' — Recommend SCALE +20%/day',d:`Cost/qualified lead ${money(cpql)} well under target ${money(t.cpql)}. Duplicate to scale set.`});}
+  else if(isFinite(cpl)&&cpl>t.cpl&&isFinite(hook)&&hook>=t.hookMin){recs.push({t:'iterate',a:id+' — Recommend ITERATE',d:`Hook is fine (${pct(hook)}) but CPL ${money(cpl)} above target. Test new headline/thumbnail or swap image↔video.`});}
+ });
+ return recs;
+}
+function renderRecs(){
+ const recs=genRecs();
+ $('#t_recs').innerHTML=`<h2>Recommendations <span class="tag">advisory — you activate</span></h2>
+ <p class="note">Checkpoint cadence: Day 0–3 learn · Day 3 kill check · Day 5 iterate · Day 7 scale. The system never auto-acts — it tells you the best move; you approve it in Meta/Google.</p>
+ ${recs.length?recs.map(r=>`<div class="rec ${r.t}"><div class="a">${r.a}</div><div class="note">${r.d}</div></div>`).join(''):'<p class="muted">No recommendations yet — add performance + lead data.</p>'}`;
+}
+
+function renderTargets(){
+ const t=DB.targets;
+ $('#t_targets').innerHTML=`<h2>Targets / Benchmarks</h2>
+ <p class="note">The dashboard flags actuals against these. Set your real numbers.</p>
+ <div class="row">
+  <div class="f"><label>Target CPL (SGD)</label><input id="tg_cpl" type="number" value="${t.cpl}"></div>
+  <div class="f"><label>Target Cost/Qualified Lead</label><input id="tg_cpql" type="number" value="${t.cpql}"></div>
+  <div class="f"><label>Target Cost/Qualified Appt</label><input id="tg_cpqa" type="number" value="${t.cpqa}"></div>
+  <div class="f"><label>Max Frequency</label><input id="tg_freq" type="number" step="0.1" value="${t.maxFreq}"></div>
+  <div class="f"><label>Min Hook rate %</label><input id="tg_hook" type="number" value="${t.hookMin}"></div>
+  <button class="primary" onclick="saveTargets()">Save</button>
+ </div>`;
+}
+function saveTargets(){DB.targets={cpl:+$('#tg_cpl').value,cpql:+$('#tg_cpql').value,cpqa:+$('#tg_cpqa').value,maxFreq:+$('#tg_freq').value,hookMin:+$('#tg_hook').value};save();render();}
+
+function renderSetup(){
+ $('#t_setup').innerHTML=`<h2>Setup / Automation</h2>
+ <p class="note"><b>Accounts:</b> Google Ads 185-178-8166 · Meta act_1467621970951606 · CRM: GoHighLevel (connected)</p>
+ <p class="note"><b>Data flow:</b> Apps Script (free) pulls Meta + Google Ads daily → Google Sheet → this dashboard. GHL connector feeds the Lead Log. No paid app (no Supermetrics).</p>
+ <h2>Apps Script — Meta pull (template, paste in Extensions → Apps Script)</h2>
+ <pre>function pullMeta(){
+  var TOKEN = PropertiesService.getScriptProperties().getProperty('META_TOKEN'); // store secret here, never in code
+  var ACCT  = 'act_1467621970951606';
+  var fields = 'ad_name,spend,impressions,actions,clicks';
+  var url = 'https://graph.facebook.com/v19.0/'+ACCT+'/insights?level=ad&date_preset=yesterday'
+          + '&fields='+fields+'&access_token='+TOKEN;
+  var data = JSON.parse(UrlFetchApp.fetch(url).getContentText()).data;
+  var sh = SpreadsheetApp.getActive().getSheetByName('Ad Performance');
+  data.forEach(function(r){
+    sh.appendRow([new Date(), r.ad_name, r.spend, r.impressions, r.clicks]);
+  });
+}
+// Triggers menu → add daily time-driven trigger for pullMeta</pre>
+ <h2>Google Ads — free offline conversion import (OCI from Sheet)</h2>
+ <p class="note">Google Ads → Goals → Conversions → create actions (AppointmentBooked, AppointmentQualified) → Uploads → schedule from a Google Sheet keyed on GCLID. Requires capturing GCLID on the landing page and storing it with each lead. Pull campaign/ad names from the Google Ads API (don't rely on UTMs for Google).</p>
+ <h2>Meta offline conversion (optimize toward qualified)</h2>
+ <p class="note">Events Manager → Offline Event Set (CSV upload, manual) for measurement; Conversions API custom event "QualifiedAppointment" (automated from this data) for delivery optimization. Push booked + qualified appointments back so Meta finds more qualified buyers.</p>
+ <h2>Connector alternative</h2>
+ <p class="note">If you prefer no-code over Apps Script: the adspirer plugin (already installed) pulls Google Ads + Meta Ads performance after a one-time auth. GHL connector already available for leads/appointments.</p>
+ <p class="note"><b>Reminder:</b> Chrome extension is desktop-only. All credential/automation setup happens on desktop.</p>`;
+}
+
+/* ---------- ACTIONS ---------- */
+function delItem(k,i){DB[k].splice(i,1);save();render();}
+function exportData(){const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rei_ci_data.json';a.click();}
+function seedDemo(){DB.creatives.push({id:'A02_SYS02_IMG_v1',campaign:'LL_LGR_COLD_VIDEO',angle:'02 FOREVER_HOME_TRAP',system:'2 Strategic Contrast',hook:'Future Regret',format:'image',offer:'Strategy Session',track:'A Quality',status:'Testing'});
+ DB.performance.push({date:'2026-06-13',creative:'A02_SYS02_IMG_v1',spend:'80',imp:'5200',v3:'1600',tp:'600',clicks:'95',leads:'6'});
+ DB.leads.push({name:'Sample Lead',email:'s@x.com',mobile:'9000',campaign:'LL_LGR_COLD_VIDEO',group:'G2',source:'A02_SYS02_IMG_v1',platform:'Meta',qualified:'Y',apptBooked:'Y',apptQualified:'N',score:'4'});
+ save();render();}
+
+document.getElementById('fCampaign').addEventListener('change',render);
+document.getElementById('fFormat').addEventListener('change',render);
+buildNav();render();
+</script>
+</body>
+</html>

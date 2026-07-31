@@ -1,0 +1,78 @@
+/* ============================================================
+   LEGACY LAUNCH V2 — PAGE 2 (BOOKING) CUSTOM CSS
+   Paste into: GHL Step 2 Page Settings -> Custom CSS
+   Scoped under .llv2. Fonts via @import (or use the <link> in header
+   as noted in page1-custom-css.css — do it once per page).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+.llv2{
+  --navy:#0A1C30;--navy-2:#0C2036;--ivory:#F7F4EE;--white:#FFFFFF;
+  --gold:#C2A15C;--gold-dk:#A9873F;--ink:#16202C;--ink-soft:#3C4A57;
+  --paper-ink:#EDE8DD;--paper-ink-soft:#B9C2CC;
+  --line-dark:rgba(194,161,92,0.34);--line-light:rgba(22,32,44,0.14);
+  --shadow:0 24px 60px -30px rgba(10,28,48,0.35);--maxw:1000px;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);line-height:1.62;font-size:17px;-webkit-font-smoothing:antialiased;
+}
+.llv2 *{box-sizing:border-box;}
+.llv2 p{margin:0 0 1.05em;}
+.llv2 p:last-child{margin-bottom:0;}
+
+.llv2-navy{background:var(--navy);color:var(--paper-ink);}
+.llv2-ivory{background:var(--ivory);color:var(--ink);}
+.llv2-section{position:relative;padding:88px 22px;overflow:hidden;}
+.llv2-wrap{max-width:var(--maxw);margin:0 auto;position:relative;z-index:2;}
+.llv2-narrow{max-width:760px;}
+.llv2-center{text-align:center;}
+
+.llv2-eyebrow{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 20px;display:inline-flex;align-items:center;gap:12px;}
+.llv2-eyebrow::before,.llv2-center .llv2-eyebrow::after{content:"";width:26px;height:1px;background:var(--gold);opacity:.7;display:inline-block;}
+.llv2-center .llv2-eyebrow{justify-content:center;}
+
+.llv2-h1{font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2rem,1.2rem + 3.4vw,3.1rem);line-height:1.1;letter-spacing:-.01em;margin:0 0 20px;color:#FBF9F4;}
+.llv2-h2{font-family:'Playfair Display',Georgia,serif;font-weight:600;
+  font-size:clamp(1.5rem,1.1rem + 1.8vw,2rem);line-height:1.16;margin:0 0 18px;}
+.llv2-lead{font-size:clamp(1.02rem,.98rem + .35vw,1.2rem);line-height:1.6;color:var(--paper-ink);}
+.llv2-ivory .llv2-lead{color:var(--ink-soft);}
+.llv2-tick{width:56px;height:2px;background:var(--gold);margin:0 0 28px;border-radius:2px;}
+.llv2-center .llv2-tick{margin-left:auto;margin-right:auto;}
+
+/* Confirmation recap list with gold checks */
+.llv2-recap-list{list-style:none;margin:34px auto 0;padding:0;max-width:660px;text-align:left;}
+.llv2-recap-list li{position:relative;padding:18px 0 18px 44px;border-top:1px solid var(--line-dark);
+  color:var(--paper-ink);font-size:15.5px;line-height:1.55;}
+.llv2-recap-list li:last-child{border-bottom:1px solid var(--line-dark);}
+.llv2-recap-list li svg{position:absolute;left:0;top:18px;width:24px;height:24px;}
+.llv2-recap-list li strong{color:#FBF9F4;font-weight:600;}
+
+/* Calendar frame */
+.llv2-instruction{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--ink);
+  text-align:center;margin:0 0 26px;}
+.llv2-calframe{max-width:900px;margin:0 auto;background:var(--white);border-radius:14px;
+  border:1px solid var(--line-light);box-shadow:var(--shadow);padding:14px;}
+.llv2-calwrap{min-height:700px;border-radius:10px;overflow:hidden;}
+.llv2-calwrap iframe{width:100%;height:100%;min-height:700px;border:none;display:block;}
+.llv2-reassure{max-width:680px;margin:32px auto 0;text-align:center;font-size:15px;color:var(--ink-soft);
+  line-height:1.6;padding-top:26px;border-top:1px solid var(--line-light);}
+
+/* Footer line */
+.llv2-footer{background:#06111E;color:#7E8894;padding:40px 22px;text-align:center;font-size:12.8px;
+  line-height:1.7;letter-spacing:.02em;}
+
+/* Reveal */
+.llv2-reveal{opacity:1;transform:none;}
+.llv2-js .llv2-reveal{opacity:0;transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.22,.61,.36,1);}
+.llv2-js .llv2-reveal.llv2-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  .llv2-js .llv2-reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+
+@media (max-width:768px){
+  .llv2-section{padding:60px 20px;}
+  .llv2-calframe{padding:8px;}
+}

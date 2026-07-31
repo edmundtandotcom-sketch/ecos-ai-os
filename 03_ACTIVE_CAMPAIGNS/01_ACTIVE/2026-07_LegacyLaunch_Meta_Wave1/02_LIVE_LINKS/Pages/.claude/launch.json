@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "preview", "runtimeExecutable": "python", "runtimeArgs": ["-m","http.server","8099","--directory","C:/Users/Admin/AppData/Local/Temp/claude/H--Shared-drives-02-Legacy-Launch-Test-GHL-Site/dbc15c40-6299-4f4d-9725-74196fe2bbc3/scratchpad/dist"], "port": 8099 }
+  ]
+}

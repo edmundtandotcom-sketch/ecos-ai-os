@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Mas Agent Command Scorecard",
+  "schemaVersion": 1,
+  "description": "MAS Agent Command Score™ v3 — Singapore property agent diagnostic. 12 questions, 4 score bands, 6 sectors, 24 personalised outputs. Full results suite: animated score ring, radar chart, benchmark comparison, deep diagnostics, sector spotlight, 30-60-90 action map, AI advisor report, pre-reg flow. GHL webhook ready."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAS Agent Command Score™</title>
+<style>
+:root{color-scheme:light;--g:#B8841F;--g2:#D4A83A;--bg:#F5F5FA;--card:#FFFFFF;--border:#E4E4EE;--text:#0E0E20;--muted:#606078;--dim:#9090A8;--faint:#C0C0D0;--green:#059669;--amber:#D97706;--blue:#2563EB;--red:#DC2626}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideR{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+.screen{display:none;padding:20px}
+.screen.active{display:block;animation:fadeUp .3s ease}
+.badge{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(184,132,31,.3);background:rgba(184,132,31,.08);border-radius:30px;padding:4px 12px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g);margin-bottom:16px}
+.bdot{width:5px;height:5px;background:var(--g);border-radius:50%;animation:blink 2s infinite}
+h1.hero{font-size:clamp(20px,5vw,28px);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:10px;color:var(--text)}
+.gold{color:var(--g)}
+.sub{font-size:12px;line-height:1.85;color:var(--muted);margin-bottom:18px}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.sc{background:var(--card);padding:14px 8px;text-align:center}
+.sn{font-size:22px;font-weight:800;color:var(--g)}
+.sl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-top:2px}
+.pp{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px}
+.pi{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:12px 8px;text-align:center}
+.pi-i{font-size:16px;margin-bottom:3px}
+.pi-n{font-size:8px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g)}
+.pi-s{font-size:9px;color:var(--dim);margin-top:2px;line-height:1.4}
+.btn{display:flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:700;transition:all .15s;width:100%}
+.btn-g{background:var(--g);color:#fff;font-size:13px;padding:13px}
+.btn-g:hover{background:var(--g2)}
+.btn-ghost{background:transparent;color:var(--dim);font-size:11px;padding:10px;border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--g);color:var(--g)}
+.trust{text-align:center;font-size:9px;color:var(--faint);margin-top:8px}
+.steps{display:flex;align-items:center;margin-bottom:18px}
+.si{display:flex;align-items:center;flex:1}
+.si:last-child{flex:0}
+.sdot{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--dim);flex-shrink:0;transition:all .3s}
+.sdot.act{border-color:var(--g);color:var(--g);background:rgba(184,132,31,.06)}
+.sdot.done{background:var(--g);border-color:var(--g);color:#fff}
+.slbl{font-size:9px;color:var(--dim);margin-left:4px;white-space:nowrap}
+.slbl.act{color:var(--g);font-weight:700}
+.sline{flex:1;height:1px;background:var(--border);margin:0 5px}
+.fbox{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+.fbox h2{font-size:15px;font-weight:800;margin-bottom:5px;color:var(--text)}
+.fbox p{font-size:11px;color:var(--dim);margin-bottom:14px;line-height:1.65}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.field input,.field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:9px 11px;font-size:12px;color:var(--text);outline:none;font-family:inherit;transition:border-color .2s;-webkit-appearance:none}
+.field input:focus,.field select:focus{border-color:var(--g)}
+.field input::placeholder{color:var(--faint)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pb-wrap{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 12px;margin-bottom:16px}
+.pb-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.pb-lbl{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--g)}
+.pb-cnt{font-size:10px;font-weight:700;color:var(--dim)}
+.pb-track{height:3px;background:var(--border);border-radius:2px}
+.pb-fill{height:3px;background:linear-gradient(90deg,var(--g),var(--g2));border-radius:2px;transition:width .5s ease}
+#q-container{min-height:250px}
+.q-anim{animation:slideR .3s ease}
+.q-pil{display:inline-flex;align-items:center;gap:7px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:9px}
+.q-pil::before{content:'';width:12px;height:2px;background:var(--g)}
+.q-txt{font-size:clamp(13px,2.5vw,16px);font-weight:700;line-height:1.45;margin-bottom:16px;color:var(--text)}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:12px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;transition:all .12s;user-select:none}
+.opt:hover{border-color:rgba(184,132,31,.4);background:#FAFAFA}
+.opt.sel{border-color:var(--g);background:rgba(184,132,31,.06)}
+.opt.locked{pointer-events:none}
+.opt-l{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--faint);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--faint);flex-shrink:0;transition:all .15s;margin-top:1px}
+.opt.sel .opt-l{background:var(--g);border-color:var(--g);color:#fff}
+.opt-t{font-size:11px;line-height:1.6;color:var(--dim)}
+.opt.sel .opt-t{color:var(--text)}
+.think-layout{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:440px){.think-layout{grid-template-columns:1fr}}
+.think-stages{display:flex;flex-direction:column;gap:6px}
+.tstage{display:flex;align-items:center;gap:8px;padding:9px 11px;background:var(--card);border:1px solid var(--border);border-radius:8px;transition:all .4s}
+.tstage.act{border-color:rgba(184,132,31,.4);background:rgba(184,132,31,.04)}
+.tstage.done{border-color:rgba(5,150,105,.2);background:rgba(5,150,105,.03)}
+.ts-dot{width:6px;height:6px;border-radius:50%;background:var(--border);flex-shrink:0;transition:all .4s}
+.tstage.act .ts-dot{background:var(--g);animation:blink 1s infinite}
+.tstage.done .ts-dot{background:var(--green)}
+.ts-lbl{font-size:9px;color:var(--dim);transition:color .4s;line-height:1.4}
+.tstage.act .ts-lbl{color:var(--text)}
+.tstage.done .ts-lbl{color:var(--green)}
+.ic{background:var(--card);border:1px solid rgba(184,132,31,.2);border-radius:11px;padding:14px;transition:opacity .5s}
+.ic-type{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin-bottom:6px}
+.ic-title{font-size:12px;font-weight:800;margin-bottom:6px;line-height:1.3;color:var(--text)}
+.ic-body{font-size:10px;line-height:1.8;color:var(--muted)}
+.ic-src{font-size:9px;color:var(--faint);margin-top:8px;font-style:italic}
+.think-pct{text-align:center;padding:0 0 16px}
+.tp-n{font-size:44px;font-weight:900;color:var(--g);line-height:1}
+.tp-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);margin-top:2px}
+.r-top{text-align:center;padding:14px 0 12px}
+.r-eye{font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--g);margin-bottom:12px}
+.sring{position:relative;width:128px;height:128px;margin:0 auto 10px}
+.sring svg{transform:rotate(-90deg)}
+.s-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.s-num{font-size:34px;font-weight:900;line-height:1;color:var(--text)}
+.s-lbl{font-size:8px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin-top:2px}
+.band-n{font-size:16px;font-weight:800;margin-bottom:5px;color:var(--text)}
+.band-h{font-size:12px;font-weight:700;color:var(--g);margin-bottom:7px}
+.band-d{font-size:11px;color:var(--muted);line-height:1.8;max-width:400px;margin:0 auto}
+.sec-h{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--g);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.sec-h::after{content:'';flex:1;height:1px;background:var(--border)}
+.nums-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:6px}
+.num-card{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:13px;text-align:center}
+.nc-val{font-size:20px;font-weight:900;line-height:1;margin-bottom:3px;color:var(--g)}
+.nc-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);line-height:1.4}
+.nc-sub{font-size:8px;color:var(--faint);margin-top:2px}
+.gci-strip{background:rgba(184,132,31,.04);border:1px solid rgba(184,132,31,.15);border-radius:10px;padding:14px;margin-bottom:6px}
+.gci-g{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;text-align:center;margin-bottom:7px}
+.gg-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:4px}
+.gg-val{font-size:14px;font-weight:800}
+.gg-arr{font-size:13px;color:var(--faint)}
+.gci-note{font-size:10px;color:var(--dim);line-height:1.65;text-align:center}
+.radar-block{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:15px;margin-bottom:6px}
+.radar-inner{display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start}
+@media(max-width:420px){.radar-inner{grid-template-columns:1fr;justify-items:center}}
+.radar-legend{display:flex;flex-direction:column;gap:9px;padding-top:8px}
+.rl{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted)}
+.rl-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.rl-val{font-size:10px;font-weight:700;margin-left:auto}
+.bm-group{display:flex;flex-direction:column;gap:7px;margin-bottom:6px}
+.bm-pillar{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:13px}
+.bm-pn{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.bm-rows{display:flex;flex-direction:column;gap:7px}
+.bm-row{display:flex;align-items:center;gap:7px}
+.bm-lbl{font-size:9px;color:var(--dim);width:80px;flex-shrink:0;text-align:right}
+.bm-track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+.bm-bar{height:100%;border-radius:4px;width:0%;transition:width 1.3s ease}
+.bm-v{font-size:9px;font-weight:700;width:30px;text-align:right}
+.diag-cards{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.dc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.dc.weak{border-color:rgba(184,132,31,.4);background:rgba(184,132,31,.03)}
+.dc-tag{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g);margin-bottom:6px;min-height:11px}
+.dc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.dc-name{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text)}
+.dc-pts{font-size:9px;font-weight:700}
+.dc-bt{height:3px;background:var(--border);border-radius:2px;margin-bottom:11px}
+.dc-b{height:3px;border-radius:2px;width:0%;transition:width 1.5s ease}
+.dc-d{font-size:11px;line-height:1.8;color:var(--muted);margin-bottom:6px}
+.dc-cost{font-size:10px;color:var(--amber);font-weight:600;line-height:1.5;margin-bottom:6px}
+.dc-gap-block{background:var(--bg);border-radius:6px;padding:8px 11px;margin-bottom:6px;border:1px solid var(--border)}
+.dc-gap-lbl{font-size:8px;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:3px}
+.dc-gap-txt{font-size:10px;color:var(--dim);line-height:1.65}
+.dc-next{font-size:10px;color:var(--green);font-weight:600;padding-top:7px;border-top:1px solid var(--border);line-height:1.6}
+.spot{background:rgba(184,132,31,.04);border:1px solid rgba(184,132,31,.18);border-radius:10px;padding:14px;margin-bottom:6px}
+.spot-h{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.spot-title{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g)}
+.spot-body{font-size:11px;line-height:1.8;color:var(--muted)}
+.amap{display:flex;flex-direction:column;margin-bottom:6px}
+.aitem{display:flex;gap:13px;padding:13px 0}
+.aitem:not(:last-child){border-bottom:1px solid var(--border)}
+.atl{display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0}
+.atl-day{font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g);text-align:center;line-height:1.4}
+.atl-line{flex:1;width:1px;background:var(--border);margin-top:5px}
+.acontent .act-t{font-size:12px;font-weight:700;margin-bottom:3px;color:var(--text)}
+.acontent .act-d{font-size:11px;line-height:1.7;color:var(--muted)}
+.vsec{background:rgba(184,132,31,.04);border:1px solid rgba(184,132,31,.2);border-radius:13px;padding:18px;margin-bottom:6px}
+.vsec-lbl{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--g);margin-bottom:12px;text-align:center}
+.vgen{display:flex;flex-direction:column;align-items:center;padding:14px 0}
+.vspin{width:38px;height:38px;margin:0 auto 11px}
+.vspin svg{animation:spin 2s linear infinite}
+.vgen-txt{font-size:11px;color:var(--muted);text-align:center;line-height:1.7;max-width:220px}
+.vplayer{background:#F0F0F8;border:1px solid var(--border);border-radius:9px;overflow:hidden;display:none}
+.vthumb{position:relative;padding-bottom:50%;background:#E8E8F4}
+.vtinner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}
+.vavatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--g),#8B5E15);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:#fff}
+.vtitle{font-size:11px;font-weight:700;text-align:center;padding:0 20px;line-height:1.4;color:var(--text)}
+.vdur{font-size:9px;color:var(--dim)}
+.vplay-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vplay-btn{width:46px;height:46px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;transition:all .15s}
+.vplay-btn:hover{background:var(--g2);transform:scale(1.08)}
+.vmeta{background:#EAEAF4;padding:9px 13px;display:flex;justify-content:space-between;align-items:center}
+.vmeta-n{font-size:10px;font-weight:700;color:var(--text)}
+.vmeta-tag{font-size:9px;color:var(--dim)}
+.vmodal-wrap{margin-top:9px}
+.vmodal{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:15px}
+.vm-chrome{display:flex;align-items:center;gap:6px;margin-bottom:11px}
+.vm-d{width:7px;height:7px;border-radius:50%}
+.vm-title{font-size:10px;color:var(--dim);flex:1;text-align:center}
+.vm-pb{height:2px;background:var(--border);border-radius:1px;margin-bottom:11px;overflow:hidden}
+.vm-pb-fill{height:100%;background:var(--g);width:0%;transition:width .1s linear}
+.vm-script{font-size:12px;line-height:1.9;color:var(--muted);min-height:80px}
+.vm-script .word{opacity:0;transition:opacity .08s}
+.vm-time{font-size:9px;color:var(--faint);text-align:right;margin-top:7px}
+.vm-cta{margin-top:11px;padding-top:11px;border-top:1px solid var(--border)}
+.prereg{background:var(--card);border:1px solid rgba(184,132,31,.2);border-radius:13px;padding:22px;text-align:center;margin-top:6px;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+.prereg-c{display:inline-flex;align-items:center;gap:7px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.2);border-radius:30px;padding:5px 13px;font-size:10px;font-weight:700;color:var(--green);margin-bottom:13px}
+.pcd{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+.prereg-tag{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--g);margin-bottom:8px}
+.prereg-h{font-size:clamp(14px,3vw,18px);font-weight:800;margin-bottom:7px;line-height:1.25;color:var(--text)}
+.prereg-sub{font-size:11px;color:var(--muted);line-height:1.8;margin-bottom:13px;max-width:370px;margin-left:auto;margin-right:auto}
+.prereg-det{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin-bottom:13px}
+.pd{font-size:9px;color:var(--dim);display:flex;align-items:center;gap:4px}
+.pd::before{content:'';width:3px;height:3px;background:var(--g);border-radius:50%;flex-shrink:0}
+.conf-box{background:var(--bg);border:1px solid rgba(184,132,31,.2);border-radius:10px;padding:18px;text-align:center}
+.cf-ic{font-size:26px;margin-bottom:10px}
+.cf-h{font-size:16px;font-weight:800;margin-bottom:5px;color:var(--text)}
+.cf-sub{font-size:11px;color:var(--dim);margin-bottom:13px;line-height:1.7}
+.cf-cnt{font-size:30px;font-weight:900;color:var(--g);line-height:1;margin-bottom:2px}
+.cf-cl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:13px}
+.cf-note{font-size:10px;color:var(--faint);line-height:1.6;margin-top:10px}
+.succ-box{background:rgba(5,150,105,.05);border:1px solid rgba(5,150,105,.18);border-radius:10px;padding:18px;text-align:center}
+.retake{text-align:center;margin-top:13px}
+.retake a{font-size:10px;color:var(--faint);text-decoration:underline;cursor:pointer}
+.retake a:hover{color:var(--g)}
+</style>
+</head>
+<body>
+
+<div class="screen active" id="s-intro">
+  <div class="badge"><span class="bdot"></span>MAS Agent Edition · Free Diagnostic</div>
+  <h1 class="hero">Most agents don't have a lead problem.<br><span class="gold">They have a command problem.</span></h1>
+  <p class="sub">12 questions. A diagnostic that maps your income ceiling and exactly what's holding it in place.</p>
+  <div class="sg">
+    <div class="sc"><div class="sn">12</div><div class="sl">Questions</div></div>
+    <div class="sc"><div class="sn">3</div><div class="sl">Areas scored</div></div>
+    <div class="sc"><div class="sn">1%</div><div class="sl">Benchmark</div></div>
+  </div>
+  <div class="pp">
+    <div class="pi"><div class="pi-i">🎯</div><div class="pi-n">Market Position</div><div class="pi-s">How the market sees you</div></div>
+    <div class="pi"><div class="pi-i">⚡</div><div class="pi-n">Advisory System</div><div class="pi-s">How you convert</div></div>
+    <div class="pi"><div class="pi-i">🏛️</div><div class="pi-n">Income Architecture</div><div class="pi-s">How you compound</div></div>
+  </div>
+  <button class="btn btn-g" onclick="go('s-lead')">Take the Free Diagnostic →</button>
+  <p class="trust">Free · 3 minutes · Personalised to your sector</p>
+</div>
+
+<div class="screen" id="s-lead">
+  <div class="steps">
+    <div class="si"><div class="sdot act" id="sd1">1</div><span class="slbl act">Your info</span><div class="sline"></div></div>
+    <div class="si"><div class="sdot" id="sd2">2</div><span class="slbl" id="sl2">Diagnostic</span><div class="sline"></div></div>
+    <div class="si" style="flex:0"><div class="sdot" id="sd3">3</div><span class="slbl" id="sl3">Results</span></div>
+  </div>
+  <div class="fbox">
+    <h2>Before we begin</h2>
+    <p>Your diagnostic is personalised to your sector. We'll follow up with your full score breakdown.</p>
+    <form id="lead-form" onsubmit="submitLead(event)">
+      <div class="frow">
+        <div class="field"><label>First name</label><input type="text" id="f-name" placeholder="Edmund" required></div>
+        <div class="field"><label>Mobile</label><input type="tel" id="f-mobile" placeholder="+65 9xxx xxxx" required></div>
+      </div>
+      <div class="field"><label>Email</label><input type="email" id="f-email" placeholder="your@email.com" required></div>
+      <div class="frow">
+        <div class="field"><label>Agency</label><input type="text" id="f-agency" placeholder="PropNex" required></div>
+        <div class="field"><label>Primary sector</label>
+          <select id="f-sector" required>
+            <option value="">Choose sector...</option>
+            <option>HDB</option><option>Private Resale</option><option>New Launch</option>
+            <option>Landed</option><option>Commercial</option><option>Rentals</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-g" style="margin-top:6px">Start my diagnostic →</button>
+    </form>
+  </div>
+</div>
+
+<div class="screen" id="s-q">
+  <div class="pb-wrap">
+    <div class="pb-row"><span class="pb-lbl" id="pb-lbl">Market Positioning</span><span class="pb-cnt" id="pb-cnt">1 of 12</span></div>
+    <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
+  </div>
+  <div id="q-container">
+    <div id="q-inner" class="q-anim">
+      <div class="q-pil" id="q-pil">Market Positioning</div>
+      <h2 class="q-txt" id="q-txt"></h2>
+      <div class="opts" id="q-opts"></div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-think">
+  <div class="think-pct" style="margin-bottom:16px;text-align:center">
+    <div class="tp-n" id="tp-n">0%</div>
+    <div class="tp-lbl">Analysing your profile</div>
+  </div>
+  <div class="think-layout">
+    <div class="think-stages" id="think-stages"></div>
+    <div class="ic" id="insight-card">
+      <div class="ic-type" id="ic-type"></div>
+      <div class="ic-title" id="ic-title"></div>
+      <div class="ic-body" id="ic-body"></div>
+      <div class="ic-src" id="ic-src"></div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="s-results">
+  <div class="r-top">
+    <p class="r-eye">Your Agent Command Score™</p>
+    <div class="sring">
+      <svg width="128" height="128" viewBox="0 0 128 128">
+        <circle cx="64" cy="64" r="54" fill="none" stroke="#E4E4EE" stroke-width="8"/>
+        <circle cx="64" cy="64" r="54" id="sarc" fill="none" stroke="#B8841F" stroke-width="8" stroke-linecap="round" stroke-dasharray="339" stroke-dashoffset="339"/>
+      </svg>
+      <div class="s-in"><div class="s-num" id="snum">0</div><div class="s-lbl">/ 100</div></div>
+    </div>
+    <div class="band-n" id="band-n"></div>
+    <div class="band-h" id="band-h"></div>
+    <p class="band-d" id="band-d"></p>
+  </div>
+  <p class="sec-h">What this is costing you</p>
+  <div class="nums-grid" id="nums-grid"></div>
+  <div class="gci-strip">
+    <div class="gci-g">
+      <div><div class="gg-lbl">Current ceiling</div><div class="gg-val" id="gc" style="color:var(--amber)"></div></div>
+      <div class="gg-arr">→</div>
+      <div><div class="gg-lbl">Command-level target</div><div class="gg-val" id="gt" style="color:var(--green)"></div></div>
+    </div>
+    <p class="gci-note" id="gci-note"></p>
+  </div>
+  <p class="sec-h">Your command profile</p>
+  <div class="radar-block">
+    <div class="radar-inner">
+      <canvas id="radar" width="170" height="170"></canvas>
+      <div class="radar-legend" id="radar-legend"></div>
+    </div>
+  </div>
+  <p class="sec-h">Benchmark comparison</p>
+  <div class="bm-group" id="bm-group"></div>
+  <p class="sec-h">Your diagnostic — 3 areas</p>
+  <div class="diag-cards" id="diag-cards"></div>
+  <p class="sec-h">Your sector spotlight</p>
+  <div class="spot" id="spot-card"></div>
+  <p class="sec-h">Your 30-60-90 priority map</p>
+  <div class="amap" id="amap"></div>
+  <p class="sec-h">Your personal advisor report</p>
+  <div class="vsec">
+    <div class="vsec-lbl">AI Advisor Report — personalised to your profile</div>
+    <div class="vgen" id="vgen">
+      <div class="vspin">
+        <svg width="38" height="38" viewBox="0 0 38 38">
+          <circle cx="19" cy="19" r="15" fill="none" stroke="#E4E4EE" stroke-width="4"/>
+          <circle cx="19" cy="19" r="15" fill="none" stroke="#B8841F" stroke-width="4" stroke-dasharray="18 76" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="vgen-txt">Generating your personal situation review...</p>
+    </div>
+    <div class="vplayer" id="vplayer">
+      <div class="vthumb">
+        <div class="vtinner">
+          <div class="vavatar">ET</div>
+          <div class="vtitle" id="vtitle">Personal Situation Review</div>
+          <div class="vdur">2:47 · AI-generated advisor report</div>
+        </div>
+        <div class="vplay-layer">
+          <button class="vplay-btn" onclick="playVideo()">
+            <svg width="16" height="16" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21" fill="#fff"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="vmeta">
+        <div class="vmeta-n" id="vmeta-n">Personal Situation Review</div>
+        <div class="vmeta-tag">Coach Edmund Tan</div>
+      </div>
+    </div>
+    <div class="vmodal-wrap" id="vmodal-wrap" style="display:none">
+      <div class="vmodal">
+        <div class="vm-chrome">
+          <div class="vm-d" style="background:#FF5F57"></div>
+          <div class="vm-d" style="background:#FEBC2E"></div>
+          <div class="vm-d" style="background:#28C840"></div>
+          <div class="vm-title" id="vm-title">Playing your advisor report</div>
+        </div>
+        <div class="vm-pb"><div class="vm-pb-fill" id="vm-pb-fill"></div></div>
+        <div class="vm-script" id="vm-script"></div>
+        <div class="vm-time" id="vm-time">0:00 / 2:47</div>
+        <div class="vm-cta" id="vm-cta" style="display:none">
+          <button class="btn btn-g" onclick="showPreReg()">Reserve my seat at the bootcamp →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="prereg" id="prereg-section">
+    <div class="prereg-c"><div class="pcd"></div><span id="seat-n">47</span>&nbsp;agents pre-registered</div>
+    <p class="prereg-tag">1-Day Advisor Command Bootcamp</p>
+    <h3 class="prereg-h">The fastest path to closing your command gap — in one day.</h3>
+    <p class="prereg-sub">Live in Singapore. You leave with your market position, advisory system, and income architecture fully built.</p>
+    <div class="prereg-det">
+      <span class="pd">Live, Singapore</span><span class="pd">Full day</span><span class="pd">S$297</span><span class="pd">Limited seats</span>
+    </div>
+    <button class="btn btn-g" onclick="showPreReg()">Pre-register my seat (free) →</button>
+    <p class="trust" style="margin-top:8px">No payment now · Priority window before public opens</p>
+  </div>
+  <div class="retake"><a onclick="retake()">Retake the diagnostic →</a></div>
+</div>
+
+<script>
+const GHL='YOUR_GHL_WEBHOOK_URL_HERE';let SEAT_COUNT=47;
+const Qs=[{p:'Market Positioning',q:'How many genuinely new clients — not referrals from people who already know you — have you closed in the past 6 months?',o:['0–1 · Almost everything comes from my existing network','2–3 · A few, but not something I can predict or repeat','4–6 · I\'m building some independent inbound interest','7+ · I generate consistent new business independently of my network']},{p:'Market Positioning',q:'When you lose a deal to another agent, the most common reason is:',o:['They had an existing relationship with that client','The other agent offered a lower commission','The other agent appeared more specialised in that segment','I rarely lose deals — clients seek me out specifically']},{p:'Market Positioning',q:'If someone in your target market searched for "the right agent for my situation" right now, what would happen?',o:['They wouldn\'t find me — I look the same as every other agent','They might find me only if someone referred them directly','Good chance — I have a reputation in this space','Very likely — I show up where my clients look and I\'m the obvious choice']},{p:'Market Positioning',q:'When a potential client isn\'t ready to transact yet, what typically happens?',o:['They go cold — by the time they\'re ready, they\'ve moved on','I follow up but inconsistently — some come back, most don\'t','They stay in my network and receive my updates','I have a system — by the time they\'re ready, I\'m already the first call']},{p:'Advisory System',q:'When a motivated client says "let me think about it", what most often happens next?',o:['I wait and hope — most don\'t come back with a clear yes','I send more information and follow up repeatedly','I have a standard approach that addresses hesitation on the spot','I rarely hear it — my process creates decisions, not deliberation']},{p:'Advisory System',q:'What primarily convinces a client to take your recommendation?',o:['My experience — I explain the market to them','Market data I pull for each specific case','A consistent advisory framework I walk every client through','A proprietary process clients say they haven\'t seen from any other agent']},{p:'Advisory System',q:'The last time a client pushed back on your fee:',o:['I reduced it — I needed the deal and didn\'t want to lose it','I held mostly firm but gave a small discount to close','I held firm and clearly demonstrated my value','Fee objections are rare — clients see my rate as justified without being asked']},{p:'Advisory System',q:'From first meeting with a motivated client to a signed commitment, your typical timeline:',o:['3 months or longer — clients take time and I let them','1–3 months — depends on how ready they feel when we meet','2–6 weeks — my process moves things along consistently','Under 2 weeks for motivated clients — I know how to create a clear decision']},{p:'Income Architecture',q:'What percentage of your time genuinely goes toward income-generating activity vs. admin, chasing, or low-value meetings?',o:['Less than 30% — most of my day doesn\'t directly produce income','Around 30–50%','Around 50–70%','Above 70% — my systems handle the rest so I stay in high-value work']},{p:'Income Architecture',q:'Your GCI for the past 12 months (approximately):',o:['Below S$120,000','S$120,000 – S$250,000','S$250,000 – S$500,000','Above S$500,000']},{p:'Income Architecture',q:'If you needed to add S$50,000 in GCI in the next 90 days on top of your current workload:',o:['No specific plan — I\'d push harder and hope for referrals','I\'d work longer hours — more viewings and follow-ups','I\'d reactivate my database and referral network with a specific sequence','I\'d run a targeted outreach to my defined niche — I know exactly who to contact']},{p:'Income Architecture',q:'Year over year, the honest trajectory of your business is:',o:['Flat or declining — same ceiling, same stress, every year','Slow and inconsistent — some strong years, some difficult ones','Consistent upward trend — clear momentum building year on year','Compounding — each year I earn more with less stress and more focus']}];
+const TC=[{lbl:'Mapping your market footprint...',type:'SINGAPORE MARKET DATA',title:'The income gap most agents never see',body:'73% of Singapore property agents never exceed S$200K GCI. Not because of market conditions — because they compete on price instead of value. Agents who claim a defined client category earn 2.3× more per transaction.',src:'CEA Industry Analysis · MAS Research Library'},{lbl:'Benchmarking your conversion signals...',type:'CASE STUDY',title:'S$182K → S$411K — 14 months, same market',body:'A PropNex agent made one change: stopped chasing every inbound lead and built a referral system around one specific client type. Fee negotiations dropped from 9 deals in 10 to almost never. The method is replicable.',src:'MAS Advisor Community · 2024'},{lbl:'Calibrating your income architecture...',type:'PATTERN INSIGHT',title:'The S$300K → S$600K divide',body:'The #1 differentiator between agents earning S$300K and S$600K+ GCI is not knowledge or hours worked. It\'s a documented advisory system clients can see, experience and refer others into.',src:'MAS Pattern Intelligence Library · v3.1'},{lbl:'Generating your diagnostic...',type:'ABOUT YOUR DIAGNOSTIC',title:'16 years. 500+ agents. Every plateau has a specific move.',body:'Coach Edmund Tan has identified 3 exact leverage points that determine every agent\'s income ceiling in Singapore. This diagnostic maps where yours sits.',src:'Edmund Tan · Singapore Real Estate Insider'},{lbl:'Preparing your personal report...',type:'AI REPORT',title:'Your personal situation review is being prepared',body:'Based on your diagnostic, Coach Edmund will speak directly to your specific income gap, what\'s creating it, and the single most important action to take.',src:'AI-powered · Personalised to your profile'}];
+const BM={trap:{n:'⚠️ Transaction Trap',h:'Your business is running on effort — not architecture.',d:'You\'re active. But every month restarts from zero because there\'s no system running underneath. The ceiling you\'re hitting isn\'t a market problem — it\'s a structure problem. And structure is fixable.',gc:'S$60K – S$150K',gt:'S$400K – S$600K+',num:[{v:'S$150K–250K',l:'Estimated annual income gap',s:'vs. command-level equivalent'},{v:'65%',l:'Market decisions before you',s:'Going to perceived specialists'},{v:'68%',l:'Time not generating income',s:'Admin, chasing, reactive calls'},{v:'Most',l:'Fee negotiations',s:'Price competing not value'}],diag:{mkt:{t:'Market Positioning',d:'Without a defined niche, every prospect evaluates you against commission rate rather than capability.',cost:'Estimated annual impact: S$60K–S$120K in transactions going to agents perceived as more specialised.',gap:'Command-level advisors are called before the first search. Their niche is so specific that clients pre-qualify themselves.',next:'Name the one client type you serve best and rebuild every visible touchpoint around that single position.'},adv:{t:'Advisory System',d:'Your client experience depends on how you\'re feeling that day. There\'s no repeatable framework clients can feel and refer others into.',cost:'Estimated annual impact: S$25K–S$60K in commission discounts annually, compounding with referral loss.',gap:'Command-level advisors have a named, proprietary process. Clients can describe how you work in specific terms and refer precisely.',next:'Document your best client experience into 3 stages and give it a name. Present it in your first conversation. Watch fee pushback drop.'},inc:{t:'Income Architecture',d:'Your pipeline has no engine. Lead flow depends entirely on your daily manual effort — income stops when you stop.',cost:'Estimated annual impact: S$80K–S$150K in unrealised pipeline.',gap:'Command-level advisors have a pipeline that generates while they sleep. Their system qualifies, nurtures and positions independently.',next:'Build one 90-day lead activation sequence targeting your defined niche. This single addition permanently changes your monthly income baseline.'}},spot:{HDB:'In the HDB segment, 71% of first-time buyer mandates go to agents perceived as category specialists. Your positioning gap can be closed within 90 days.','Private Resale':'Private resale buyers are highly comparison-driven. Without category ownership, you\'re evaluated on commission rate before the first conversation.','New Launch':'New Launch is increasingly specialist-driven. Developers allocate premium commissions to agents with clear positioning.',Landed:'Landed clients have extremely high trust requirements. Generic positioning costs you deals before the first conversation.',Commercial:'Commercial clients buy expertise, not relationships. Without a visible advisory framework, you compete on other agents\' terms.',Rentals:'Rental agents who build category ownership in a specific cluster convert 3× faster and need fewer new leads.',default:'Without a defined market category, you\'re competing on price in every transaction. This pattern costs the average SG agent S$80K–S$150K annually.'},actions:[{day:'7 days',t:'Write your category declaration',d:'One paragraph: the specific client type you serve, the result you deliver, and what makes your approach different.'},{day:'30 days',t:'Build your signature advisory system',d:'Map your best client experience into 3 named stages. Give the system a name. Fee objections typically drop within the first 5 conversations.'},{day:'90 days',t:'Launch your first category lead engine',d:'Build one reactivation sequence — 3 touchpoints, consistent cadence. This sequence should generate S$30K–S$60K in additional GCI.'}],vs:(n,s)=>`${n}, I've just reviewed your diagnostic. Your score places you in what I call the Transaction Trap. Every top producer I've worked with has been exactly where you are. This isn't about effort. It's about architecture. Right now in ${s||'your market'}, your business relies on people who already know you. Every month restarts from zero. The shift doesn't come from working more — it comes from rebuilding 3 specific things in a specific order. The fastest way to help you do that is at my 1-Day Advisor Command Bootcamp. One day. In person. You leave with everything rebuilt. ${n}, your next move is clear.`},plateau:{n:'📊 Plateau Player',h:'You\'re earning. But you\'ve hit a ceiling that doesn\'t move on its own.',d:'Income is coming in but inconsistent. Referrals are keeping you afloat but they can\'t scale. You\'re too invested to quit and too busy to see clearly what\'s missing.',gc:'S$150K – S$300K',gt:'S$500K – S$700K+',num:[{v:'S$100K–180K',l:'Annual income gap to next tier',s:'Vs. advisors with equivalent experience'},{v:'50%',l:'Deals going to specialists',s:'In your market right now'},{v:'52%',l:'Time not generating income',s:'Reactive vs. proactive'},{v:'Regular',l:'Fee negotiation frequency',s:'Rate not value'}],diag:{mkt:{t:'Market Positioning',d:'You\'re known — but only to people who already know you. Your positioning works within your existing network but doesn\'t reach beyond it.',cost:'60–70% of your potential market doesn\'t know you exist and has no specific reason to seek you out.',gap:'Command-level advisors get calls from people who have never met them — only heard of them.',next:'Reverse-engineer what your top 3 referral sources actually say about you. Build your category position around those exact words.'},adv:{t:'Advisory System',d:'Your advisory instincts are solid — but invisible to clients as a structured system they can describe and refer others to.',cost:'Conversion rate 20–35% lower than advisors running a visible, named advisory process.',gap:'Command-level advisors have a system with a name. Clients can describe your process to friends — and that referability compounds income.',next:'Give your current process a name and 3 stages. Present it explicitly in your first meeting. Referral rate typically lifts within 60 days.'},inc:{t:'Income Architecture',d:'Your pipeline is reactive. Good months happen when the right person shows up. Quiet months feel like starting over.',cost:'S$100K–S$200K in unrealised pipeline that exists in your market but isn\'t reaching you.',gap:'Command-level advisors have a pipeline engine that runs without daily manual activation.',next:'Build one category-specific nurture sequence targeting your niche. Run it for 90 days. Expect 25–40% GCI lift.'}},spot:{HDB:'HDB specialists who break S$400K have one thing generalist agents lack: a systematic way of converting every buyer into 2+ referrals.','Private Resale':'The next unlock in private resale is positioning sharpness — clients see you as capable but not as the definitive specialist.','New Launch':'New Launch plateau agents typically have strong developer relationships but haven\'t built independent client-side lead flow.',Landed:'Landed plateau agents close well but have no lead generation engine. Every new deal requires a new relationship from scratch.',Commercial:'Commercial plateau agents have deep expertise but no visible advisory framework.',Rentals:'Rental specialists who break the plateau have a systematized portfolio management process that generates repeating referrals.',default:'The plateau is the most deceptive phase in SG real estate. You\'re earning enough to keep going but not enough to feel like it\'s working.'},actions:[{day:'7 days',t:'Map your referral pattern',d:'Identify where your last 10 deals came from. Find the 2–3 most common sources — that\'s where your category authority already sits.'},{day:'30 days',t:'Name and frame your advisory process',d:'Give your client journey a name and 3 stages. Introduce it explicitly in your next 5 conversations.'},{day:'90 days',t:'Install a category lead engine',d:'Build systematic monthly outreach to your niche. 3 touchpoints per cycle. Breaks referral dependency permanently.'}],vs:(n,s)=>`${n}, your diagnostic is in. You're earning. But you've hit a ceiling that doesn't move on its own — and I can see exactly why. In ${s||'Singapore\'s property market'}, this is the most common pattern I see in agents with 3 to 7 years of experience. You have the skill. But something between capability and income isn't converting at the rate it should. The agents who break through restructure 3 specific things in a specific sequence. I'd like to show you exactly what that looks like for your profile.`},rising:{n:'📈 Rising Advisor',h:'Real momentum — but your growth still depends too much on you.',d:'Top 20% of agents in Singapore. The right pieces are in place but not fully connected into a system that compounds independently of your daily effort.',gc:'S$300K – S$500K',gt:'S$700K – S$1M+',num:[{v:'S$80K–120K',l:'Annual income gap to next tier',s:'Based on your score and sector'},{v:'30%',l:'Market decisions before you',s:'Niche not sharp enough to own it'},{v:'38%',l:'Time not generating income',s:'System gaps pulling you backward'},{v:'Occasional',l:'Fee negotiation frequency',s:'Positioned but not fully commanding'}],diag:{mkt:{t:'Market Positioning',d:'You have a position — but not sharp enough to own a clear category. Clients know you\'re good. They can\'t always articulate precisely why you\'re the right choice.',cost:'Growing at 50–60% of your potential rate in this market.',gap:'Command-level advisors are sought out by name for specific situations. Prospects pre-qualify themselves before the first call.',next:'Refine your niche from "I work in X segment" to "I am the advisor for [specific client type] in [specific situation]."'},adv:{t:'Advisory System',d:'Your process works — but its value is invisible to clients as a system they can describe and refer others to.',cost:'15–25% lower referral conversion than advisors with a visible, named advisory process.',gap:'Command-level advisors have a named system with stages clients can articulate. Referability is the compound engine.',next:'Take what\'s already working and make it explicit. Give it a name. Create a one-page visual clients can keep.'},inc:{t:'Income Architecture',d:'Income architecture is strong but not interconnected. Momentum isn\'t automatically feeding into the next cycle.',cost:'25–40% of potential pipeline isn\'t being captured by your current system.',gap:'Command-level advisors run a closed-loop pipeline. Every closed deal feeds the next cycle.',next:'Identify the 2 points in your pipeline where potential clients drop out. Build a 3-touch follow-up for each.'}},spot:{HDB:'Rising HDB advisors are 1–2 positioning decisions away from doubling their referral rate.','Private Resale':'The next unlock in private resale is leverage — a system that works independently of your personal hours.','New Launch':'Rising New Launch advisors have strong developer relationships but haven\'t built client-side system that generates independent demand.',Landed:'Rising Landed advisors are one systematized referral process away from doubling their close rate.',Commercial:'Rising Commercial advisors need a sharper category position within their sector and repeatable pipeline architecture.',Rentals:'Rising Rental advisors have strong client relationships but haven\'t systematized portfolio management for compound income.',default:'You\'re in the top 20% of SG agents. The gap between here and the next tier is smaller than you think — but very specific.'},actions:[{day:'7 days',t:'Sharpen your category to one sentence',d:'Refine your market position until you can state it in 15 words. Test it on 5 existing clients.'},{day:'30 days',t:'Build your referral architecture',d:'Design a post-deal experience that generates 2 specific referral introductions from every closed transaction.'},{day:'90 days',t:'Install your leverage system',d:'Identify one high-value activity you do manually and systematize it. Compounds pipeline without adding hours.'}],vs:(n,s)=>`${n}, your diagnostic is ready. You're genuinely in the top 20% of agents in ${s||'Singapore\'s property market'}. That's a real achievement. But your score is telling me something specific about why you haven't reached the next tier. It's not skill. It's not effort. It's a structural gap in how your three core systems are connected. Agents at your level have the shortest path to the next breakthrough. The pieces are mostly in place — they just need to be connected correctly. I'd like to show you exactly what that looks like.`},command:{n:'⭐ Command-Level Advisor',h:'Top tier. The next move is leverage — not more effort.',d:'Category, advisory system and income architecture are working together. You\'ve built a high-performing individual practice. The question is leverage or bottleneck.',gc:'S$500K+',gt:'S$1M+ with leverage',num:[{v:'S$400K+',l:'Leverage opportunity gap',s:'Via leverage vs. individual ceiling'},{v:'12%',l:'Market decisions before you',s:'Strong but not fully owned'},{v:'22%',l:'Time not generating income',s:'System overhead to eliminate'},{v:'Rare',l:'Fee negotiation frequency',s:'Positioned and commanding'}],diag:{mkt:{t:'Market Positioning',d:'You own a position. The next move is converting it into transferable IP that works independently of your personal presence.',cost:'A documented category thesis could generate S$80K–S$150K in additional referrals annually without extra hours.',gap:'The top 1% convert personal positioning into institutional authority. Content and team leverage multiply reach.',next:'Document your positioning thesis in a publishable format. This begins the transition from practitioner to authority.'},adv:{t:'Advisory System',d:'Your advisory system is strong. The next step is packaging it into a one-to-many format.',cost:'One-to-many delivery could reach 20–50 clients with the depth of a personal advisory session.',gap:'Top-tier advisors build IP from their practice. Their system becomes a product others pay to experience.',next:'Document your signature process in a format that can be taught. First step to income that doesn\'t require your hours.'},inc:{t:'Income Architecture',d:'You\'ve built a high-performing solo practice. The bottleneck is now you.',cost:'The right leverage model could add S$300K–S$500K in GCI over 12 months without additional personal hours.',gap:'S$1M+ advisors don\'t work more hours. They\'ve built systems and people that multiply their capacity.',next:'Choose your leverage model: team, content platform, or advisory community. Execute one for 12 months before adding the next.'}},spot:{HDB:'At your HDB level, the next income tier requires a one-to-many system — team model, content platform, or training community.','Private Resale':'Command-level private resale advisors who cross S$1M run a systematized referral programme or team structure.','New Launch':'New Launch Command advisors are positioned to build developer exclusives or a training vertical.',Landed:'Landed Command advisors have built the hardest thing in SG property: trust at scale. Make that trust transferable.',Commercial:'Commercial Command advisors are one step from a portfolio management business generating recurring advisory income.',Rentals:'Command Rental advisors can build a portfolio management model generating recurring income on top of transaction GCI.',default:'You\'ve built what most agents never build. The ceiling from here is leverage — not skill.'},actions:[{day:'7 days',t:'Define your leverage model',d:'Choose one: team, content platform, or advisory community. Write your 12-month vision for that model.'},{day:'30 days',t:'Package your signature IP',d:'Document your advisory system in a teachable format. This asset multiplies income and authority simultaneously.'},{day:'90 days',t:'Launch your leverage vehicle',d:'Recruit your first team member, publish your first content piece, or run your first group session.'}],vs:(n,s)=>`${n}, I've reviewed your diagnostic and want to acknowledge what you've built. You're operating at a genuinely high level in ${s||'Singapore\'s property market'}. That's rare. But your score is showing me something interesting: you've built a very strong individual practice. Individual practices have ceilings. You're likely approaching yours. The question I want to leave you with is this: are you ready to build something that earns beyond your personal hours? That's the specific next move for an advisor with your profile.`}};
+let curQ=0,catP=0,convP=0,cmdP=0,ld={},seatN=SEAT_COUNT,regDone=false,isT=false,vPlaying=false,scriptTimer=null;
+const PM=['Market Positioning','Market Positioning','Market Positioning','Market Positioning','Advisory System','Advisory System','Advisory System','Advisory System','Income Architecture','Income Architecture','Income Architecture','Income Architecture'];
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function submitLead(e){e.preventDefault();ld={name:document.getElementById('f-name').value.trim(),email:document.getElementById('f-email').value.trim(),mobile:document.getElementById('f-mobile').value.trim(),agency:document.getElementById('f-agency').value.trim(),sector:document.getElementById('f-sector').value,type:'lead_captured',ts:new Date().toISOString()};sendGHL(ld);markStep(1);go('s-q');renderQ()}
+function renderQ(){const q=Qs[curQ];document.getElementById('pb-lbl').textContent=PM[curQ];document.getElementById('pb-cnt').textContent=(curQ+1)+' of 12';document.getElementById('pb-fill').style.width=Math.round((curQ/12)*100)+'%';document.getElementById('q-pil').textContent=PM[curQ];document.getElementById('q-txt').textContent=q.q;const L=['A','B','C','D'];document.getElementById('q-opts').innerHTML=q.o.map((o,i)=>`<div class="opt" id="opt-${i}" onclick="selOpt(${i})" tabindex="0" role="button"><div class="opt-l">${L[i]}</div><div class="opt-t">${o}</div></div>`).join('');const inn=document.getElementById('q-inner');if(inn){inn.style.animation='none';void inn.offsetWidth;inn.style.animation='slideR .3s ease'}}
+function selOpt(i){if(isT)return;isT=true;document.querySelectorAll('.opt').forEach(el=>el.classList.add('locked'));document.getElementById('opt-'+i).classList.add('sel');const p=Qs[curQ].p;if(p==='Market Positioning')catP+=i;else if(p==='Advisory System')convP+=i;else cmdP+=i;curQ++;setTimeout(()=>{if(curQ>=Qs.length)startCalc();else{renderQ();isT=false}},400)}
+function startCalc(){go('s-think');buildThinkStages();showInsight(0);animatePct(0,100,9000,()=>buildResults());runStages()}
+function buildThinkStages(){document.getElementById('think-stages').innerHTML=TC.map((t,i)=>`<div class="tstage" id="ts-${i}"><div class="ts-dot"></div><div class="ts-lbl">${t.lbl}</div></div>`).join('')}
+function runStages(){const d=[0,1800,3600,5400,7200];d.forEach((t,i)=>{setTimeout(()=>{if(i>0)document.getElementById('ts-'+(i-1)).className='tstage done';document.getElementById('ts-'+i).className='tstage act';showInsight(i)},t)});setTimeout(()=>{const el=document.getElementById('ts-4');if(el)el.className='tstage done'},9000)}
+function showInsight(i){const c=TC[i],ic=document.getElementById('insight-card');ic.style.opacity='0';setTimeout(()=>{document.getElementById('ic-type').textContent=c.type;document.getElementById('ic-title').textContent=c.title;document.getElementById('ic-body').textContent=c.body;document.getElementById('ic-src').textContent=c.src;ic.style.opacity='1'},200)}
+function animatePct(from,to,dur,cb){const s=performance.now();function step(n){const p=Math.min((n-s)/dur,1);document.getElementById('tp-n').textContent=Math.round(from+(to-from)*p)+'%';if(p<1)requestAnimationFrame(step);else if(cb)setTimeout(cb,300)}requestAnimationFrame(step)}
+function buildResults(){const total=catP+convP+cmdP,pct=Math.round((total/36)*100);let bk;if(pct<=35)bk='trap';else if(pct<=55)bk='plateau';else if(pct<=75)bk='rising';else bk='command';const B=BM[bk];sendGHL({...ld,score:pct,cat:catP,conv:convP,cmd:cmdP,band:bk,type:'scorecard_complete',ts:new Date().toISOString()});markStep(2);markStep(3);document.getElementById('band-n').textContent=B.n;document.getElementById('band-h').textContent=B.h;document.getElementById('band-d').textContent=B.d;document.getElementById('gc').textContent=B.gc;document.getElementById('gt').textContent=B.gt;document.getElementById('gci-note').textContent=bk==='trap'?'This is not a market ceiling. It\'s a system ceiling. And system ceilings are movable.':bk==='plateau'?'This ceiling is not the market. Advisors at your experience level are breaking S$500K in your sector.':bk==='rising'?'90 days of specific system-building could unlock your next income tier.':'You\'ve built the hardest thing to build. The next frontier requires leverage, not more effort.';buildNums(B);go('s-results');setTimeout(()=>{animateScore(pct);setTimeout(()=>{drawRadar(catP,convP,cmdP);buildBenchmark(B,catP,convP,cmdP,bk);buildDiagCards(B,catP,convP,cmdP);buildSpot(B,ld.sector);buildActions(B);setTimeout(()=>revealVideo(B,ld.name,ld.sector),3000)},400)},300)}
+function buildNums(B){document.getElementById('nums-grid').innerHTML=B.num.map(n=>`<div class="num-card"><div class="nc-val">${n.v}</div><div class="nc-lbl">${n.l}</div><div class="nc-sub">${n.s}</div></div>`).join('')}
+function animateScore(pct){const arc=document.getElementById('sarc'),circ=339;let n=0;const t=setInterval(()=>{n=Math.min(n+2,pct);document.getElementById('snum').textContent=n;arc.style.strokeDashoffset=circ-(circ*n/100);if(n>=pct)clearInterval(t)},22)}
+function drawRadar(cat,conv,cmd){const canvas=document.getElementById('radar');if(!canvas||!canvas.getContext)return;const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,R=Math.min(cx,cy)-28;ctx.clearRect(0,0,W,H);const angles=[-Math.PI/2,-Math.PI/2+(2*Math.PI/3),-Math.PI/2+(4*Math.PI/3)];for(let i=1;i<=4;i++){ctx.beginPath();angles.forEach((a,j)=>{const x=cx+(R*i/4)*Math.cos(a),y=cy+(R*i/4)*Math.sin(a);j===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.closePath();ctx.strokeStyle=`rgba(0,0,0,${i===4?.12:.05})`;ctx.lineWidth=1;ctx.stroke()}angles.forEach(a=>{ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));ctx.strokeStyle='rgba(0,0,0,.08)';ctx.lineWidth=1;ctx.stroke()});const bench=.75;ctx.beginPath();angles.forEach((a,j)=>{const x=cx+R*bench*Math.cos(a),y=cy+R*bench*Math.sin(a);j===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.closePath();ctx.strokeStyle='rgba(5,150,105,.5)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);const scores=[cat/12,conv/12,cmd/12];ctx.beginPath();angles.forEach((a,j)=>{const x=cx+R*scores[j]*Math.cos(a),y=cy+R*scores[j]*Math.sin(a);j===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.closePath();ctx.fillStyle='rgba(184,132,31,.18)';ctx.fill();ctx.strokeStyle='#B8841F';ctx.lineWidth=2;ctx.stroke();angles.forEach((a,j)=>{const x=cx+R*scores[j]*Math.cos(a),y=cy+R*scores[j]*Math.sin(a);ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fillStyle='#B8841F';ctx.fill()});const lbls=[['Market','Position'],['Advisory','System'],['Income','Arch.']];const lo=1.22;ctx.font='bold 8px system-ui,sans-serif';ctx.fillStyle='rgba(0,0,0,.45)';ctx.textAlign='center';ctx.textBaseline='middle';angles.forEach((a,j)=>{const x=cx+R*lo*Math.cos(a),y=cy+R*lo*Math.sin(a);lbls[j].forEach((ln,li)=>ctx.fillText(ln,x,y+(li-(lbls[j].length-1)/2)*11))});document.getElementById('radar-legend').innerHTML=`<div class="rl"><div class="rl-dot" style="background:#B8841F"></div>Your score<div class="rl-val" style="color:#B8841F">${Math.round((cat+conv+cmd)/36*100)}%</div></div><div class="rl"><div class="rl-dot" style="background:transparent;border:1.5px dashed #059669"></div>Command level<div class="rl-val" style="color:#059669">75%+</div></div><div style="height:1px;background:var(--border);margin:4px 0"></div><div class="rl"><div class="rl-dot" style="background:#2563EB"></div>Market Position<div class="rl-val" style="color:#2563EB">${cat}/12</div></div><div class="rl"><div class="rl-dot" style="background:#D97706"></div>Advisory System<div class="rl-val" style="color:#D97706">${conv}/12</div></div><div class="rl"><div class="rl-dot" style="background:#059669"></div>Income Arch.<div class="rl-val" style="color:#059669">${cmd}/12</div></div>`}
+function buildBenchmark(B,cat,conv,cmd,bk){const benchmarks={trap:[25,58,91],plateau:[45,67,91],rising:[62,75,91],command:[78,87,91]};const [avg,top20,top1]=benchmarks[bk];const pillars=[{n:'Market Positioning',score:Math.round((cat/12)*100),bgs:['#2563EB','rgba(37,99,235,.4)','rgba(37,99,235,.2)','rgba(5,150,105,.25)']},{n:'Advisory System',score:Math.round((conv/12)*100),bgs:['#D97706','rgba(217,119,6,.4)','rgba(217,119,6,.2)','rgba(5,150,105,.25)']},{n:'Income Architecture',score:Math.round((cmd/12)*100),bgs:['#059669','rgba(5,150,105,.4)','rgba(5,150,105,.2)','rgba(5,150,105,.35)']}];document.getElementById('bm-group').innerHTML=pillars.map(p=>`<div class="bm-pillar"><div class="bm-pn" style="color:${p.bgs[0]}">${p.n}</div><div class="bm-rows"><div class="bm-row"><div class="bm-lbl">You</div><div class="bm-track"><div class="bm-bar" data-w="${p.score}" style="background:${p.bgs[0]};width:0%"></div></div><div class="bm-v" style="color:${p.bgs[0]}">${p.score}%</div></div><div class="bm-row"><div class="bm-lbl">SG average</div><div class="bm-track"><div class="bm-bar" data-w="${avg}" style="background:${p.bgs[1]};width:0%"></div></div><div class="bm-v" style="color:${p.bgs[1]}">${avg}%</div></div><div class="bm-row"><div class="bm-lbl">Top 20%</div><div class="bm-track"><div class="bm-bar" data-w="${top20}" style="background:${p.bgs[2]};width:0%"></div></div><div class="bm-v" style="color:${p.bgs[2]}">${top20}%</div></div><div class="bm-row"><div class="bm-lbl">Command level</div><div class="bm-track"><div class="bm-bar" data-w="${top1}" style="background:${p.bgs[3]};width:0%"></div></div><div class="bm-v" style="color:#059669">${top1}%</div></div></div></div>`).join('');setTimeout(()=>document.querySelectorAll('.bm-bar').forEach(b=>b.style.width=b.dataset.w+'%'),400)}
+function buildDiagCards(B,cat,conv,cmd){const pillars=[{key:'mkt',score:cat,col:'#2563EB',id:'bc'},{key:'adv',score:conv,col:'#D97706',id:'ba'},{key:'inc',score:cmd,col:'#059669',id:'bi'}];const weakest=pillars.slice().sort((a,b)=>a.score-b.score)[0].key;document.getElementById('diag-cards').innerHTML=pillars.map(p=>{const d=B.diag[p.key],isW=p.key===weakest;return`<div class="dc${isW?' weak':''}"><div class="dc-tag">${isW?'⚠ Most urgent gap to close':''}</div><div class="dc-head"><span class="dc-name" style="color:${p.col}">${d.t}</span><span class="dc-pts" style="color:${p.col}">${p.score}/12</span></div><div class="dc-bt"><div class="dc-b" id="${p.id}" style="background:${p.col}"></div></div><p class="dc-d">${d.d}</p><p class="dc-cost">${d.cost}</p><div class="dc-gap-block"><div class="dc-gap-lbl">What command-level advisors do differently</div><div class="dc-gap-txt">${d.gap}</div></div><p class="dc-next">Your immediate move → ${d.next}</p></div>`}).join('');setTimeout(()=>{[['bc',cat],['ba',conv],['bi',cmd]].forEach(([id,sc])=>{const b=document.getElementById(id);if(b)b.style.width=Math.round((sc/12)*100)+'%'})},500)}
+function buildSpot(B,sector){const txt=B.spot[sector]||B.spot.default;document.getElementById('spot-card').innerHTML=`<div class="spot-h"><span>📍</span><div class="spot-title">${sector||'Your market'} · Sector Spotlight</div></div><p class="spot-body">${txt}</p>`}
+function buildActions(B){document.getElementById('amap').innerHTML=B.actions.map(a=>`<div class="aitem"><div class="atl"><div class="atl-day">${a.day}</div><div class="atl-line"></div></div><div class="acontent"><div class="act-t">${a.t}</div><div class="act-d">${a.d}</div></div></div>`).join('')}
+function revealVideo(B,name,sector){document.getElementById('vgen').style.display='none';const vp=document.getElementById('vplayer'),t=`Personal situation review — ${name||'your profile'}`;document.getElementById('vtitle').textContent=t;document.getElementById('vmeta-n').textContent=`Coach Edmund for ${name||'you'}`;document.getElementById('vm-title').textContent=t;vp.style.display='block'}
+function playVideo(){if(vPlaying)return;vPlaying=true;const modal=document.getElementById('vmodal-wrap');modal.style.display='block';const B=getActiveBand(),script=B.vs(ld.name||'there',ld.sector||'your market');const el=document.getElementById('vm-script');el.innerHTML='';const words=script.split(' ');words.forEach((w,i)=>{const sp=document.createElement('span');sp.className='word';sp.id='w'+i;sp.textContent=(i>0?' ':'')+w;el.appendChild(sp)});const totalDur=167;let idx=0;const fill=document.getElementById('vm-pb-fill'),time=document.getElementById('vm-time');function tick(){if(idx<words.length){const sp=document.getElementById('w'+idx);if(sp)sp.style.opacity='1';idx++;const el=idx/words.length*totalDur;fill.style.width=Math.min((el/totalDur)*100,100)+'%';const s=Math.round(el),m=Math.floor(s/60),sc=s%60;time.textContent=m+':'+(sc<10?'0':'')+sc+' / 2:47';scriptTimer=setTimeout(tick,Math.max(60,(totalDur*1000)/words.length*.7))}else{document.getElementById('vm-cta').style.display='block';fill.style.width='100%'}}tick();modal.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function getActiveBand(){const total=catP+convP+cmdP,pct=Math.round((total/36)*100);if(pct<=35)return BM.trap;if(pct<=55)return BM.plateau;if(pct<=75)return BM.rising;return BM.command}
+function showPreReg(){if(regDone){showSuccess();return}document.getElementById('prereg-section').innerHTML=`<div class="conf-box"><div class="cf-ic">🏛️</div><h3 class="cf-h">Reserve your spot</h3><p class="cf-sub">No payment now. 48-hour priority window before seats go public.</p><div class="cf-cnt">${seatN}</div><div class="cf-cl">agents already pre-registered</div><button class="btn btn-g" style="max-width:260px;margin:0 auto 8px" onclick="confirmReg()">Yes — reserve my spot →</button><button class="btn btn-ghost" style="max-width:260px;margin:0 auto" onclick="cancelReg()">Not now</button><p class="cf-note">We'll reach out to <strong>${ld.email||'your email'}</strong> with the bootcamp date.</p></div>`}
+function confirmReg(){regDone=true;seatN++;sendGHL({...ld,type:'prereg_confirmed',ts:new Date().toISOString()});showSuccess()}
+function showSuccess(){document.getElementById('prereg-section').innerHTML=`<div class="succ-box"><div class="cf-ic">✅</div><h3 class="cf-h">You're on the list</h3><p class="cf-sub">Pre-registration confirmed, <strong>${ld.name||'there'}</strong>. Watch your WhatsApp and email.</p><div class="cf-cnt" style="color:var(--green)">${seatN}</div><div class="cf-cl">agents now pre-registered</div></div>`}
+function cancelReg(){document.getElementById('prereg-section').innerHTML=`<div class="prereg-c"><div class="pcd"></div><span>${seatN}</span>&nbsp;agents pre-registered</div><p class="prereg-tag">1-Day Advisor Command Bootcamp</p><h3 class="prereg-h">The fastest path to closing your command gap.</h3><div class="prereg-det"><span class="pd">Live, Singapore</span><span class="pd">Full day</span><span class="pd">S$297</span></div><button class="btn btn-g" onclick="showPreReg()">Pre-register my seat (free) →</button>`}
+function retake(){curQ=0;catP=0;convP=0;cmdP=0;ld={};regDone=false;vPlaying=false;if(scriptTimer)clearTimeout(scriptTimer);isT=false;['sd1','sd2','sd3'].forEach((id,i)=>{const d=document.getElementById(id);if(d){d.className='sdot'+(i===0?' act':'');d.textContent=i+1}});go('s-intro')}
+function markStep(n){if(n>=1){const d=document.getElementById('sd1');if(d){d.className='sdot done';d.textContent='✓'}}if(n>=2){const d=document.getElementById('sd2');if(d){d.className='sdot done';d.textContent='✓'}}if(n>=3){const d=document.getElementById('sd3');if(d)d.classList.add('act');const l=document.getElementById('sl3');if(l)l.classList.add('act')}}
+function sendGHL(data){if(!GHL||GHL==='YOUR_GHL_WEBHOOK_URL_HERE')return;fetch(GHL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{})}
+</script>
+</body>
+</html>

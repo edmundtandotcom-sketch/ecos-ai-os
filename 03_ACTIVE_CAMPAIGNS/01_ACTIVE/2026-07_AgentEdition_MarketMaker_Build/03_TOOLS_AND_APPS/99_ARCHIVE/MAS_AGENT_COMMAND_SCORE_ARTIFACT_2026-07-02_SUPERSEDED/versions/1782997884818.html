@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Mas Agent Command Scorecard",
+  "schemaVersion": 1,
+  "description": "MAS Agent Command Score™ — 12-question diagnostic scorecard for Singapore property agents. Lead capture form → 12 questions across 3 pillars (Category, Conviction, Command Centre) → animated score results with diagnostic output per pillar and GCI gap analysis → pre-registration CTA for 1-Day Advisor Command Bootcamp. GHL webhook fires on lead_captured, scorecard_complete and prereg_confirmed events."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAS Agent Command Score™</title>
+<style>
+:root { color-scheme: light; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: #F4F5FA;
+  color: #0A0A18;
+  min-height: 100vh;
+  padding: 0;
+}
+.wrap {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+.screen { display: none; }
+.screen.active { display: block; }
+/* Animations */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+@keyframes spin { to{transform:rotate(360deg)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.fadein { animation: fadeUp .35s ease both; }
+/* Badge */
+.badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid rgba(184,132,31,.35);
+  background: rgba(184,132,31,.08);
+  border-radius: 30px; padding: 5px 14px;
+  font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: #B8841F; margin-bottom: 20px;
+}
+.bdot { width:6px; height:6px; background:#B8841F; border-radius:50%; animation:blink 2s infinite; }
+/* Hero */
+h1.hero {
+  font-size: clamp(22px,5vw,34px); font-weight: 900; line-height: 1.1;
+  letter-spacing: -.022em; margin-bottom: 14px; color: #0A0A18;
+}
+.gold { color: #B8841F; }
+.hero-sub { font-size: 13px; line-height: 1.8; color: #6B6B85; margin-bottom: 24px; }
+/* Stat grid */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: #DDE0EF; border: 1px solid #DDE0EF;
+  border-radius: 10px; overflow: hidden; margin-bottom: 20px;
+}
+.stat { background: #FFFFFF; padding: 14px 8px; text-align: center; }
+.stat-n { font-size: 26px; font-weight: 900; color: #B8841F; }
+.stat-l { font-size: 9px; text-transform: uppercase; letter-spacing: .07em; color: #9090A8; margin-top: 2px; }
+/* Pillar grid */
+.pgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 22px; }
+.pc { background: #FFFFFF; border: 1px solid #E2E4EF; border-radius: 9px; padding: 14px 10px; text-align: center; }
+.pc-icon { font-size: 18px; margin-bottom: 5px; }
+.pc-name { font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #B8841F; }
+.pc-sub { font-size: 9px; color: #9090A8; margin-top: 3px; line-height: 1.5; }
+/* Buttons */
+.btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: none; border-radius: 9px; cursor: pointer;
+  font-family: inherit; font-weight: 700; transition: all .15s; width: 100%;
+}
+.btn-g { background: #B8841F; color: #FFF; font-size: 14px; padding: 15px; letter-spacing: .01em; }
+.btn-g:hover { background: #9A6E18; }
+.btn-g:disabled { opacity: .35; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent; color: #9090A8; font-size: 12px; padding: 11px;
+  border: 1px solid #DDE0EF;
+}
+.btn-ghost:hover { border-color: #B8841F; color: #B8841F; }
+.trust { text-align: center; font-size: 10px; color: #B0B0C8; margin-top: 10px; }
+/* Steps */
+.steps { display: flex; align-items: center; margin-bottom: 24px; }
+.si { display: flex; align-items: center; flex: 1; }
+.si:last-child { flex: 0; }
+.sdot {
+  width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #DDE0EF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: #9090A8; flex-shrink: 0; transition: all .3s;
+}
+.sdot.act { border-color: #B8841F; color: #B8841F; background: rgba(184,132,31,.08); }
+.sdot.done { background: #B8841F; border-color: #B8841F; color: #FFF; }
+.slbl { font-size: 9px; color: #9090A8; margin-left: 5px; white-space: nowrap; }
+.slbl.act { color: #B8841F; font-weight: 700; }
+.sline { flex: 1; height: 1px; background: #DDE0EF; margin: 0 6px; }
+/* Lead form */
+.fbox { background: #FFFFFF; border: 1px solid #E2E4EF; border-radius: 12px; padding: 22px; }
+.fbox-h { font-size: 16px; font-weight: 800; margin-bottom: 5px; color: #0A0A18; }
+.fbox-sub { font-size: 11px; color: #7A7A95; margin-bottom: 18px; line-height: 1.65; }
+.field { margin-bottom: 13px; }
+.field label { display: block; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #7A7A95; margin-bottom: 5px; }
+.field input, .field select {
+  width: 100%; background: #F8F9FC; border: 1px solid #DDE0EF;
+  border-radius: 7px; padding: 10px 12px; font-size: 12px; color: #0A0A18;
+  outline: none; font-family: inherit; transition: border-color .2s;
+  -webkit-appearance: none; appearance: none;
+}
+.field input:focus, .field select:focus { border-color: #B8841F; background: #FFF; }
+.field input::placeholder { color: #B0B0C8; }
+.field select option { background: #FFF; }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+/* Progress bar (inline in question screen) */
+.pb-wrap {
+  background: #FFFFFF; border: 1px solid #E2E4EF; border-radius: 9px;
+  padding: 12px 14px; margin-bottom: 20px;
+}
+.pb-row { display: flex; justify-content: space-between; margin-bottom: 7px; }
+.pb-lbl { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #B8841F; }
+.pb-cnt { font-size: 9px; color: #9090A8; }
+.pb-track { height: 2px; background: #E2E4EF; border-radius: 2px; }
+.pb-fill { height: 2px; background: #B8841F; border-radius: 2px; transition: width .4s; }
+/* Question */
+.q-pil {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #B8841F; margin-bottom: 10px;
+}
+.q-pil::before { content:''; width:12px; height:2px; background:#B8841F; }
+.q-txt { font-size: clamp(14px,2.5vw,18px); font-weight: 700; line-height: 1.45; margin-bottom: 20px; letter-spacing: -.01em; color: #0A0A18; }
+.opts { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+.opt {
+  background: #FFFFFF; border: 1px solid #E2E4EF; border-radius: 9px;
+  padding: 13px 15px; cursor: pointer; display: flex; align-items: flex-start;
+  gap: 11px; transition: all .12s;
+}
+.opt:hover { border-color: rgba(184,132,31,.45); background: rgba(184,132,31,.03); }
+.opt.sel { border-color: #B8841F; background: rgba(184,132,31,.06); }
+.opt-l {
+  width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #DDE0EF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: #B0B0C8; flex-shrink: 0; transition: all .12s; margin-top: 1px;
+}
+.opt.sel .opt-l { background: #B8841F; border-color: #B8841F; color: #FFF; }
+.opt-t { font-size: 12px; line-height: 1.6; color: #6B6B85; }
+.opt.sel .opt-t { color: #0A0A18; }
+/* Calculating */
+.calc-c { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 0; text-align: center; }
+.calc-spin { width: 76px; height: 76px; margin: 0 auto 24px; position: relative; }
+.calc-spin svg { animation: spin 2.5s linear infinite; }
+.calc-ic { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.calc-h { font-size: 17px; font-weight: 700; margin-bottom: 5px; color: #0A0A18; }
+.calc-p { font-size: 11px; color: #9090A8; margin-bottom: 28px; }
+.ci-list { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 300px; }
+.ci {
+  display: flex; align-items: center; gap: 9px; padding: 10px 12px;
+  border-radius: 7px; background: #FFFFFF; border: 1px solid #E2E4EF;
+  font-size: 11px; color: #9090A8; transition: all .3s;
+}
+.ci.on { border-color: rgba(184,132,31,.35); color: #0A0A18; background: rgba(184,132,31,.04); }
+.ci.ok { border-color: rgba(5,150,105,.25); color: #059669; background: rgba(5,150,105,.04); }
+.ci-d { width: 6px; height: 6px; border-radius: 50%; background: #DDE0EF; flex-shrink: 0; }
+.ci.on .ci-d { background: #B8841F; animation: blink 1s infinite; }
+.ci.ok .ci-d { background: #059669; }
+/* Results */
+.r-top { text-align: center; padding: 24px 0 20px; }
+.r-eye { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #B8841F; margin-bottom: 14px; }
+.sring { position: relative; width: 136px; height: 136px; margin: 0 auto 16px; }
+.sring svg { transform: rotate(-90deg); }
+.s-in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.s-num { font-size: 36px; font-weight: 900; letter-spacing: -.03em; line-height: 1; color: #0A0A18; }
+.s-lbl { font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #B0B0C8; margin-top: 2px; }
+.band-n { font-size: 17px; font-weight: 800; margin-bottom: 7px; color: #0A0A18; }
+.band-d { font-size: 12px; color: #6B6B85; line-height: 1.7; max-width: 420px; margin: 0 auto; }
+/* Diagnostic cards */
+.diag-cards { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+.dc { background: #FFFFFF; border: 1px solid #E2E4EF; border-radius: 11px; padding: 16px; }
+.dc.weak { border-color: rgba(184,132,31,.4); background: rgba(184,132,31,.03); }
+.dc-wtag { font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #B8841F; margin-bottom: 8px; min-height: 14px; }
+.dc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+.dc-name { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.dc-sc { font-size: 10px; font-weight: 700; }
+.dc-bar-t { height: 3px; background: #E2E4EF; border-radius: 2px; margin-bottom: 11px; }
+.dc-bar { height: 3px; border-radius: 2px; width: 0%; transition: width 1.5s ease; }
+.dc-diag { font-size: 11px; line-height: 1.75; color: #6B6B85; margin-bottom: 6px; }
+.dc-cost { font-size: 10px; color: #D97706; font-weight: 600; line-height: 1.5; }
+.dc-day { font-size: 9px; color: #059669; font-weight: 700; margin-top: 8px; padding-top: 8px; border-top: 1px solid #E2E4EF; letter-spacing: .04em; }
+/* GCI Gap strip */
+.gap-strip {
+  background: rgba(184,132,31,.05); border: 1px solid rgba(184,132,31,.2);
+  border-radius: 11px; padding: 16px 18px; margin-bottom: 8px;
+}
+.gap-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; text-align: center; }
+.gg-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .07em; color: #9090A8; margin-bottom: 4px; }
+.gg-val { font-size: 16px; font-weight: 800; }
+.gg-arrow { font-size: 14px; color: #B0B0C8; }
+.gap-note { font-size: 10px; color: #9090A8; line-height: 1.65; margin-top: 10px; text-align: center; }
+/* Pre-reg section */
+.prereg {
+  background: #FFFFFF; border: 1px solid rgba(184,132,31,.25);
+  border-radius: 14px; padding: 24px; text-align: center; margin-top: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.prereg-c {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(5,150,105,.08); border: 1px solid rgba(5,150,105,.2);
+  border-radius: 30px; padding: 6px 14px; font-size: 11px; font-weight: 700;
+  color: #059669; margin-bottom: 16px;
+}
+.pc-d { width: 6px; height: 6px; background: #059669; border-radius: 50%; animation: blink 2s infinite; }
+.prereg-tag { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #B8841F; margin-bottom: 10px; }
+.prereg-h { font-size: clamp(15px,3vw,20px); font-weight: 800; margin-bottom: 8px; line-height: 1.25; color: #0A0A18; }
+.prereg-sub { font-size: 11px; color: #6B6B85; line-height: 1.75; margin-bottom: 16px; max-width: 380px; margin-left: auto; margin-right: auto; }
+.prereg-det { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.pd { font-size: 10px; color: #9090A8; display: flex; align-items: center; gap: 5px; }
+.pd::before { content:''; width:3px; height:3px; background:#B8841F; border-radius:50%; flex-shrink:0; }
+/* Confirm / success boxes */
+.confirm-box {
+  background: #F8F9FC; border: 1px solid rgba(184,132,31,.25);
+  border-radius: 12px; padding: 22px; text-align: center;
+}
+.cf-icon { font-size: 30px; margin-bottom: 12px; }
+.cf-h { font-size: 17px; font-weight: 800; margin-bottom: 6px; color: #0A0A18; }
+.cf-sub { font-size: 11px; color: #6B6B85; margin-bottom: 16px; line-height: 1.7; }
+.cf-count { font-size: 34px; font-weight: 900; color: #B8841F; line-height: 1; margin-bottom: 2px; }
+.cf-clbl { font-size: 9px; color: #9090A8; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+.cf-note { font-size: 10px; color: #B0B0C8; line-height: 1.6; margin-top: 12px; }
+.success-box {
+  background: rgba(5,150,105,.05); border: 1px solid rgba(5,150,105,.2);
+  border-radius: 12px; padding: 22px; text-align: center;
+}
+/* Retake */
+.retake { text-align: center; margin-top: 16px; }
+.retake a { font-size: 10px; color: #B0B0C8; text-decoration: underline; cursor: pointer; }
+.retake a:hover { color: #B8841F; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- INTRO -->
+<div class="screen active fadein" id="s-intro">
+  <div class="badge"><span class="bdot"></span>MAS Agent Edition · Free Diagnostic</div>
+  <h1 class="hero">Most agents don't have<br>a lead problem.<br><span class="gold">They have a command problem.</span></h1>
+  <p class="hero-sub">Answer 12 questions. Get your Agent Command Score across the 3 pillars that separate Singapore's top-1% property advisors from everyone else.</p>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Minutes</div></div>
+    <div class="stat"><div class="stat-n">12</div><div class="stat-l">Questions</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Pillars scored</div></div>
+  </div>
+  <div class="pgrid">
+    <div class="pc"><div class="pc-icon">🎯</div><div class="pc-name">Category</div><div class="pc-sub">How the market positions you</div></div>
+    <div class="pc"><div class="pc-icon">⚡</div><div class="pc-name">Conviction</div><div class="pc-sub">Strength of your advisory system</div></div>
+    <div class="pc"><div class="pc-icon">🏛️</div><div class="pc-name">Command Centre</div><div class="pc-sub">Pipeline, leverage and scale</div></div>
+  </div>
+  <button class="btn btn-g" onclick="goScreen('s-lead')">Take the Free Diagnostic →</button>
+  <p class="trust">Free · 3 minutes · Results personalised to your market sector · No spam</p>
+</div>
+
+<!-- LEAD FORM -->
+<div class="screen fadein" id="s-lead">
+  <div class="steps">
+    <div class="si"><div class="sdot act" id="sd1">1</div><span class="slbl act">Your info</span><div class="sline"></div></div>
+    <div class="si"><div class="sdot" id="sd2">2</div><span class="slbl" id="sl2">Diagnostic</span><div class="sline"></div></div>
+    <div class="si" style="flex:0"><div class="sdot" id="sd3">3</div><span class="slbl" id="sl3">Your score</span></div>
+  </div>
+  <div class="fbox">
+    <h2 class="fbox-h">Before we begin</h2>
+    <p class="fbox-sub">Your results are personalised to your market sector. We'll also follow up with your score breakdown and next steps.</p>
+    <form id="lead-form" onsubmit="submitLead(event)">
+      <div class="frow">
+        <div class="field"><label>First name</label><input type="text" id="f-name" placeholder="E.g. Edmund" required></div>
+        <div class="field"><label>Mobile number</label><input type="tel" id="f-mobile" placeholder="+65 9xxx xxxx" required></div>
+      </div>
+      <div class="field"><label>Email address</label><input type="email" id="f-email" placeholder="your@email.com" required></div>
+      <div class="frow">
+        <div class="field"><label>Agency / company</label><input type="text" id="f-agency" placeholder="E.g. PropNex" required></div>
+        <div class="field"><label>Primary market sector</label>
+          <select id="f-sector" required>
+            <option value="">Choose sector...</option>
+            <option>HDB</option><option>Private Resale</option><option>New Launch</option>
+            <option>Landed</option><option>Commercial</option><option>Rentals</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-g" style="margin-top:6px">Start My Diagnostic →</button>
+    </form>
+  </div>
+  <p class="trust" style="margin-top:12px">🔒 Your details are confidential and will not be shared with third parties.</p>
+</div>
+
+<!-- QUESTIONS -->
+<div class="screen fadein" id="s-q">
+  <div class="pb-wrap">
+    <div class="pb-row"><span class="pb-lbl" id="pb-lbl">Category</span><span class="pb-cnt" id="pb-cnt">1 / 12</span></div>
+    <div class="pb-track"><div class="pb-fill" id="pb-fill" style="width:0%"></div></div>
+  </div>
+  <div class="q-pil" id="q-pil">Category</div>
+  <h2 class="q-txt" id="q-txt"></h2>
+  <div class="opts" id="q-opts"></div>
+  <button class="btn btn-g" id="btn-next" onclick="nextQ()" disabled style="max-width:240px">Continue →</button>
+</div>
+
+<!-- CALCULATING -->
+<div class="screen fadein" id="s-calc">
+  <div class="calc-c">
+    <div class="calc-spin">
+      <svg width="76" height="76" viewBox="0 0 76 76">
+        <circle cx="38" cy="38" r="32" fill="none" stroke="#E2E4EF" stroke-width="5"/>
+        <circle cx="38" cy="38" r="32" fill="none" stroke="#B8841F" stroke-width="5" stroke-dasharray="35 166" stroke-linecap="round"/>
+      </svg>
+      <div class="calc-ic">📊</div>
+    </div>
+    <h2 class="calc-h">Analysing your command profile...</h2>
+    <p class="calc-p">Mapping your answers against the 1% practitioner benchmark</p>
+    <div class="ci-list">
+      <div class="ci" id="ci1"><div class="ci-d"></div>Scoring Category positioning...</div>
+      <div class="ci" id="ci2"><div class="ci-d"></div>Scoring Conviction strength...</div>
+      <div class="ci" id="ci3"><div class="ci-d"></div>Scoring Command Centre systems...</div>
+      <div class="ci" id="ci4"><div class="ci-d"></div>Generating your diagnostic report...</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="screen fadein" id="s-results">
+  <div class="r-top">
+    <p class="r-eye">Your Agent Command Score™</p>
+    <div class="sring">
+      <svg width="136" height="136" viewBox="0 0 136 136">
+        <circle cx="68" cy="68" r="58" fill="none" stroke="#E2E4EF" stroke-width="8"/>
+        <circle cx="68" cy="68" r="58" id="sarc" fill="none" stroke="#B8841F" stroke-width="8"
+          stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="364"/>
+      </svg>
+      <div class="s-in">
+        <div class="s-num" id="snum">0</div>
+        <div class="s-lbl">/ 100</div>
+      </div>
+    </div>
+    <div class="band-n" id="band-n"></div>
+    <p class="band-d" id="band-d"></p>
+  </div>
+
+  <div class="diag-cards" id="diag-cards"></div>
+
+  <div class="gap-strip">
+    <div class="gap-grid">
+      <div><div class="gg-lbl">Your current ceiling</div><div class="gg-val" id="gc" style="color:#D97706"></div></div>
+      <div class="gg-arrow">→</div>
+      <div><div class="gg-lbl">Command-level target</div><div class="gg-val" id="gt" style="color:#059669"></div></div>
+    </div>
+    <p class="gap-note" id="gnote"></p>
+  </div>
+
+  <div class="prereg" id="prereg-section">
+    <div class="prereg-c"><div class="pc-d"></div><span id="seat-n">47</span>&nbsp;agents have pre-registered</div>
+    <p class="prereg-tag">1-Day Advisor Command Bootcamp</p>
+    <h3 class="prereg-h">The fastest way to close your command gap — in one day.</h3>
+    <p class="prereg-sub">A full-day live session in Singapore where you build your Category positioning, Conviction system and Command Centre — with Coach Edmund Tan.</p>
+    <div class="prereg-det">
+      <span class="pd">Live in-person, Singapore</span>
+      <span class="pd">Full day implementation</span>
+      <span class="pd">S$297</span>
+      <span class="pd">Limited seats</span>
+    </div>
+    <button class="btn btn-g" style="max-width:320px;margin:0 auto" onclick="showPreReg()">Pre-Register My Seat (Free) →</button>
+    <p class="trust" style="margin-top:10px">No payment now · We'll notify you when registration opens</p>
+  </div>
+
+  <div class="retake"><a onclick="retake()">Retake the diagnostic →</a></div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+const GHL_WEBHOOK = 'YOUR_GHL_WEBHOOK_URL_HERE';
+let SEAT_COUNT = 47;
+
+const Qs = [
+  {p:'Category',q:'How many NEW clients — not referrals from existing clients — have you closed in the last 6 months?',o:['0–1 — almost everything comes from people who already know me','2–3 — a few, but not consistent','4–6 — I\'m starting to generate my own inbound interest','7 or more — I generate consistent new business independently']},
+  {p:'Category',q:'When you lose a deal to another agent, the most common reason is:',o:['The client already had an existing agent relationship','The other agent offered a lower commission','The other agent appeared more specialised in that segment','Honestly, I rarely lose — clients seek me out specifically for my expertise']},
+  {p:'Category',q:'If someone in your target market searched for "the best agent for their situation", how likely are they to find you?',o:['Unlikely — I look the same as most other agents','Possible — only if someone directly referred them to me','Good chance — I have a presence and growing reputation in this segment','Very likely — I actively show up where my clients look and I\'m the go-to name']},
+  {p:'Category',q:'What happens most often when a potential client is not ready to transact yet?',o:['They go cold — by the time they\'re ready, they\'ve found someone else','I follow up occasionally but it\'s inconsistent','They stay in my contact list and receive my periodic updates','I have a nurture system — by the time they\'re ready, I\'m already their first call']},
+  {p:'Conviction',q:'When a motivated client says "let me think about it", what usually happens?',o:['I wait and hope — most don\'t come back with a clear commitment','I send more information and follow up until they respond','I have a standard approach to address hesitation on the spot','I rarely hear it — my advisory process creates decisions, not deliberation']},
+  {p:'Conviction',q:'What do you primarily use to convince a client your recommendation is the right one?',o:['My experience and market knowledge — I explain the situation','Market data and comparables I pull for each individual case','A consistent advisory framework I walk every client through','A proprietary system clients say they\'ve never seen from any other agent']},
+  {p:'Conviction',q:'The last time a client pushed back on your commission:',o:['I reduced it — I needed the deal','I tried to hold firm but gave a small discount to close it','I held firm and clearly explained the value I deliver','Fee objections are rare — clients see my rate as fair without negotiation']},
+  {p:'Conviction',q:'From first meeting with a motivated client to a signed OTP or exclusive agreement, your typical timeline is:',o:['3 months or longer — clients take time to commit','1–3 months — depends on how ready they feel','2–6 weeks — my process moves things consistently','Under 2 weeks for motivated clients — I know how to create a clear decision']},
+  {p:'Command Centre',q:'What percentage of your working hours genuinely goes toward income-generating activity vs. admin, chasing, or low-value meetings?',o:['Less than 30% — most of my day doesn\'t directly produce income','Around 30–50%','Around 50–70%','Above 70% — my systems handle the rest so I stay in high-value work']},
+  {p:'Command Centre',q:'Your GCI for the past 12 months (approximately):',o:['Below S$120,000','S$120,000 – S$250,000','S$250,000 – S$500,000','Above S$500,000']},
+  {p:'Command Centre',q:'If you had 90 days to add S$50,000 in GCI on top of your current workload, your most realistic plan:',o:['Cold call and push harder — no specific playbook, just effort','Work longer hours — more viewings, more follow-ups','Systematically reactivate my existing database and referral network','Run a targeted campaign to my defined niche — I know exactly who to call']},
+  {p:'Command Centre',q:'Year over year, the honest trajectory of your business:',o:['Flat or declining — same ceiling, same stress, every year','Slow and inconsistent — some good years, some difficult ones','Consistent upward trend — clear momentum building','Compounding — each year I earn more with less stress and more clarity']}
+];
+
+const Bands = {
+  trap:{n:'⚠️ Transaction Trap',d:'You\'re active but earning unpredictably. Without a defined category, a signature system, or a pipeline — every month restarts from zero. The ceiling you\'re hitting is real. It doesn\'t move on its own.',gc:'S$60K – S$150K',gt:'S$400K – S$600K+',gn:'The gap is not effort. Agents in the Transaction Trap often work longer hours than Command-level advisors. The difference is architecture, not activity.',pd:{Category:{diag:'Without a defined niche, every prospect compares you on price rather than value. You\'re invisible to clients who are not already in your network.',cost:'Estimated impact: 40–60% of your potential market chooses a perceived specialist over you before the first conversation.'},Conviction:{diag:'Every deal is a negotiation from scratch. Clients sense they\'re getting the same experience they\'d get from any other agent.',cost:'Estimated impact: Fee discounts of 0.5–1% per deal. Across 5 transactions that\'s S$25K–S$50K in lost income annually.'},'Command Centre':{diag:'Your income is unpredictable because your pipeline is unpredictable. There\'s no system generating leads independently of your daily effort.',cost:'Estimated impact: Feast-or-famine cycles compound every year. The gap between transaction agents and advisors widens by S$50K–S$100K annually.'}}},
+  plateau:{n:'📊 Plateau Player',d:'You\'re making money — but you\'ve hit an invisible ceiling. Income is inconsistent. Referrals keep you alive but they don\'t scale. You\'re too busy to grow and too invested to stop.',gc:'S$150K – S$300K',gt:'S$500K – S$700K+',gn:'This ceiling is not the market. Agents in your sector are breaking S$500K. The difference between you and them is system, not skill.',pd:{Category:{diag:'You have experience — but no defined category. You\'re known to people who already know you. Invisible to everyone else.',cost:'Estimated impact: 60–70% of your potential market never reaches out because they can\'t identify you as the specialist for their situation.'},Conviction:{diag:'Your advisory instincts are solid — but they\'re not packaged into a visible system that clients can recognise, trust, and refer others to.',cost:'Estimated impact: You\'re losing deals in the first 20 minutes — before you\'ve had a chance to show your real capability.'},'Command Centre':{diag:'Your pipeline is reactive. Good months happen when the right referral arrives. Quiet months feel like starting from scratch.',cost:'Estimated impact: You\'re leaving S$100K–S$200K annually on the table without a predictable, system-driven lead flow.'}}},
+  rising:{n:'📈 Rising Advisor',d:'You have real skills, real clients, real momentum. Some of the right pieces are in place — but they\'re not yet connected into a system. Your growth still depends too much on you showing up every day.',gc:'S$300K – S$500K',gt:'S$600K – S$1M+',gn:'90 days of focused system-building could unlock your next income tier. The pieces already exist — they need architecture to connect.',pd:{Category:{diag:'You have positioning — but it\'s not sharp enough to own a category. Clients find you through referrals, but the market doesn\'t seek you out independently.',cost:'Estimated impact: You\'re growing at 50% of your possible rate. Sharpening your niche could double your referral quality and inbound volume.'},Conviction:{diag:'Your process works — but it\'s invisible to clients as a proprietary system they can\'t get from anyone else.',cost:'Estimated impact: You convert well, but not at the premium rate a branded system commands. Fee pressure still appears occasionally.'},'Command Centre':{diag:'You have systems but they\'re not interconnected. Strong months don\'t automatically feed stronger months.',cost:'Estimated impact: Most Rising Advisors have 2 key pipeline gaps. Fix them and the typical GCI lift is 25–40% within 90 days.'}}},
+  command:{n:'⭐ Command-Level Advisor',d:'You\'re operating close to the 1% practitioner level. Category, Conviction and Command Centre are working together. The question is whether you\'ll build the leverage to scale beyond your personal hours.',gc:'S$500K+',gt:'S$1M+ with leverage',gn:'You\'ve built a strong individual practice. The next frontier is one-to-many leverage — systems, community, or a team that multiplies your reach beyond your personal time.',pd:{Category:{diag:'You own a position. The next move is converting it into transferable IP that works independently of your personal presence.',cost:'Opportunity: A documented category thesis generates content, media presence, and referral briefs — all producing income passively.'},Conviction:{diag:'Your advisory system is strong. The next step is packaging it into a format that serves more than one client at a time.',cost:'Opportunity: One-to-many delivery of your signature system could reach 50 prospects with the depth of a personal session.'},'Command Centre':{diag:'You\'ve built a high-performing solo practice. You\'re likely still the bottleneck — leverage is the next unlock.',cost:'Opportunity: The right leverage model could add S$300K–S$500K in GCI over 12 months without additional personal hours.'}}}
+};
+
+let curQ=0, catP=0, convP=0, cmdP=0, selI=null, ld={}, regDone=false;
+let seatN = SEAT_COUNT;
+
+function goScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); });
+  const el = document.getElementById(id);
+  el.classList.add('active');
+}
+
+function submitLead(e) {
+  e.preventDefault();
+  ld = {
+    name: document.getElementById('f-name').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    mobile: document.getElementById('f-mobile').value.trim(),
+    agency: document.getElementById('f-agency').value.trim(),
+    sector: document.getElementById('f-sector').value,
+    source: 'agent_command_scorecard_v2',
+    ts: new Date().toISOString(),
+    type: 'lead_captured'
+  };
+  sendToGHL(ld);
+  document.getElementById('sd1').className = 'sdot done';
+  document.getElementById('sd1').textContent = '✓';
+  document.getElementById('sd2').classList.add('act');
+  document.getElementById('sl2').classList.add('act');
+  goScreen('s-q');
+  renderQ();
+}
+
+function renderQ() {
+  const q = Qs[curQ];
+  selI = null;
+  const pm = ['Category','Category','Category','Category','Conviction','Conviction','Conviction','Conviction','Command Centre','Command Centre','Command Centre','Command Centre'];
+  document.getElementById('pb-lbl').textContent = pm[curQ];
+  document.getElementById('pb-cnt').textContent = (curQ+1) + ' / 12';
+  document.getElementById('pb-fill').style.width = Math.round((curQ/12)*100) + '%';
+  document.getElementById('q-pil').textContent = pm[curQ];
+  document.getElementById('q-txt').textContent = q.q;
+  const L = ['A','B','C','D'];
+  document.getElementById('q-opts').innerHTML = q.o.map((o,i) =>
+    `<div class="opt" id="opt-${i}" onclick="selOpt(${i})"><div class="opt-l">${L[i]}</div><div class="opt-t">${o}</div></div>`
+  ).join('');
+  document.getElementById('btn-next').disabled = true;
+}
+
+function selOpt(i) {
+  document.querySelectorAll('.opt').forEach(el => el.classList.remove('sel'));
+  document.getElementById('opt-'+i).classList.add('sel');
+  selI = i;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQ() {
+  if (selI === null) return;
+  const p = Qs[curQ].p;
+  if (p === 'Category') catP += selI;
+  else if (p === 'Conviction') convP += selI;
+  else cmdP += selI;
+  curQ++;
+  if (curQ >= Qs.length) startCalc();
+  else renderQ();
+}
+
+function startCalc() {
+  goScreen('s-calc');
+  const ids = ['ci1','ci2','ci3','ci4'];
+  const delays = [500, 1100, 1700, 2300];
+  delays.forEach((d, i) => {
+    setTimeout(() => {
+      if (i > 0) document.getElementById(ids[i-1]).className = 'ci ok';
+      document.getElementById(ids[i]).className = 'ci on';
+    }, d);
+  });
+  setTimeout(() => {
+    document.getElementById('ci4').className = 'ci ok';
+    buildResults();
+  }, 3500);
+}
+
+function buildResults() {
+  const total = catP + convP + cmdP;
+  const pct = Math.round((total / 36) * 100);
+  let bk;
+  if (pct <= 35) bk = 'trap';
+  else if (pct <= 55) bk = 'plateau';
+  else if (pct <= 75) bk = 'rising';
+  else bk = 'command';
+
+  sendToGHL({
+    ...ld,
+    score: pct, cat: catP, conv: convP, cmd: cmdP,
+    band: bk, type: 'scorecard_complete',
+    ts: new Date().toISOString()
+  });
+
+  const B = Bands[bk];
+  document.getElementById('sd2').className = 'sdot done';
+  document.getElementById('sd2').textContent = '✓';
+  document.getElementById('sd3').classList.add('act');
+  document.getElementById('sl3').classList.add('act');
+  document.getElementById('band-n').textContent = B.n;
+  document.getElementById('band-d').textContent = B.d;
+  document.getElementById('gc').textContent = B.gc;
+  document.getElementById('gt').textContent = B.gt;
+  document.getElementById('gnote').textContent = B.gn;
+
+  const pc = [
+    {k:'Category', pts:catP, col:'#3B82F6'},
+    {k:'Conviction', pts:convP, col:'#D97706'},
+    {k:'Command Centre', pts:cmdP, col:'#059669'}
+  ];
+  const weakest = pc.slice().sort((a,b) => a.pts - b.pts)[0].k;
+  const icon = {Category:'🎯', Conviction:'⚡', 'Command Centre':'🏛️'};
+  const dayMap = {
+    Category:'Day 1 — Choose the Battlefield',
+    Conviction:'Day 2 — Build the Signature System',
+    'Command Centre':'Day 3 — Launch the Command Centre'
+  };
+
+  document.getElementById('diag-cards').innerHTML = pc.map(p => {
+    const d = B.pd[p.k];
+    const isW = p.k === weakest;
+    const bid = 'bar-' + p.k.replace(/\s/g,'');
+    return `<div class="dc${isW ? ' weak' : ''}">
+      <p class="dc-wtag">${isW ? '⚠ Your most urgent gap' : ''}</p>
+      <div class="dc-head">
+        <span class="dc-name" style="color:${p.col}">${icon[p.k]} ${p.k}</span>
+        <span class="dc-sc" style="color:${p.col}">${p.pts}/12</span>
+      </div>
+      <div class="dc-bar-t"><div class="dc-bar" id="${bid}" style="background:${p.col}"></div></div>
+      <p class="dc-diag">${d.diag}</p>
+      <p class="dc-cost">${d.cost}</p>
+      <p class="dc-day">→ ${dayMap[p.k]}</p>
+    </div>`;
+  }).join('');
+
+  goScreen('s-results');
+
+  setTimeout(() => {
+    let n = 0;
+    const arc = document.getElementById('sarc');
+    const circ = 364;
+    const t = setInterval(() => {
+      n = Math.min(n + 2, pct);
+      document.getElementById('snum').textContent = n;
+      arc.style.strokeDashoffset = circ - (circ * n / 100);
+      if (n >= pct) clearInterval(t);
+    }, 22);
+    setTimeout(() => {
+      pc.forEach(p => {
+        const bar = document.getElementById('bar-' + p.k.replace(/\s/g,''));
+        if (bar) bar.style.width = Math.round((p.pts/12)*100) + '%';
+      });
+    }, 450);
+  }, 300);
+}
+
+function showPreReg() {
+  if (regDone) { showSuccess(); return; }
+  const sec = document.getElementById('prereg-section');
+  sec.innerHTML = `<div class="confirm-box">
+    <div class="cf-icon">🏛️</div>
+    <h3 class="cf-h">Reserve your spot</h3>
+    <p class="cf-sub">No payment needed now. You'll be among the first contacted when registration opens — with a 48-hour priority window before seats go public.</p>
+    <div class="cf-count">${seatN}</div>
+    <div class="cf-clbl">agents already pre-registered</div>
+    <button class="btn btn-g" style="max-width:280px;margin:0 auto 10px" onclick="confirmReg()">Yes — Reserve My Spot →</button>
+    <button class="btn btn-ghost" style="max-width:280px;margin:0 auto" onclick="cancelPreReg()">Not now</button>
+    <p class="cf-note">We'll reach out to <strong>${ld.email || 'your email'}</strong> with the bootcamp date and your priority registration link.</p>
+  </div>`;
+}
+
+function confirmReg() {
+  regDone = true;
+  seatN++;
+  sendToGHL({ ...ld, type: 'prereg_confirmed', ts: new Date().toISOString() });
+  showSuccess();
+}
+
+function showSuccess() {
+  document.getElementById('prereg-section').innerHTML = `<div class="success-box">
+    <div class="cf-icon">✅</div>
+    <h3 class="cf-h">You're on the list!</h3>
+    <p class="cf-sub">Pre-registration confirmed, <strong>${ld.name || 'there'}</strong>. Watch your WhatsApp and email — you'll hear from us before anyone else when registration opens.</p>
+    <div class="cf-count" style="color:#059669">${seatN}</div>
+    <div class="cf-clbl">agents now pre-registered</div>
+  </div>`;
+}
+
+function cancelPreReg() {
+  document.getElementById('prereg-section').innerHTML = `
+    <div class="prereg-c"><div class="pc-d"></div><span>${seatN}</span>&nbsp;agents have pre-registered</div>
+    <p class="prereg-tag">1-Day Advisor Command Bootcamp</p>
+    <h3 class="prereg-h">The fastest way to close your command gap — in one day.</h3>
+    <p class="prereg-sub">A full-day live session in Singapore where you build your Category positioning, Conviction system and Command Centre — with Coach Edmund Tan.</p>
+    <div class="prereg-det">
+      <span class="pd">Live in-person, Singapore</span>
+      <span class="pd">Full day implementation</span>
+      <span class="pd">S$297</span>
+      <span class="pd">Limited seats</span>
+    </div>
+    <button class="btn btn-g" style="max-width:320px;margin:0 auto" onclick="showPreReg()">Pre-Register My Seat (Free) →</button>
+    <p class="trust" style="margin-top:10px">No payment now · We'll notify you when registration opens</p>`;
+}
+
+function retake() {
+  curQ=0; catP=0; convP=0; cmdP=0; selI=null; ld={}; regDone=false;
+  goScreen('s-intro');
+}
+
+function sendToGHL(data) {
+  if (GHL_WEBHOOK === 'YOUR_GHL_WEBHOOK_URL_HERE') return;
+  fetch(GHL_WEBHOOK, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(data)
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>

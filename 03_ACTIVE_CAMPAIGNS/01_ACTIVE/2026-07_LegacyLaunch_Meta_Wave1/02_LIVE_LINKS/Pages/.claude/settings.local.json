@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__claude-in-chrome__navigate",
+      "WebSearch",
+      "mcp__claude-in-chrome__computer",
+      "WebFetch(domain:sawankr.com)",
+      "WebFetch(domain:help.gohighlevel.com)",
+      "WebFetch(domain:www.propertylimbrothers.com)",
+      "WebFetch(domain:stackedhomes.com)",
+      "WebFetch(domain:www.fisherinvestments.com)",
+      "WebFetch(domain:swipepages.com)",
+      "WebFetch(domain:automatethejourney.com)",
+      "WebFetch(domain:goadstra.co)",
+      "Bash(ls -la dist)",
+      "Bash(ls -la dist/ghl)",
+      "mcp__claude-in-chrome__browser_batch",
+      "mcp__claude-in-chrome__find",
+      "mcp__claude-in-chrome__read_page",
+      "Bash(python build_preview.py)",
+      "Bash(py build_preview.py)",
+      "Bash(python -)",
+      "mcp__claude-in-chrome__resize_window",
+      "mcp__claude-in-chrome__tabs_create_mcp",
+      "mcp__claude-in-chrome__tabs_close_mcp",
+      "mcp__claude-in-chrome__javascript_tool",
+      "mcp__claude-in-chrome__read_network_requests",
+      "PowerShell($src = \"C:\\\\Users\\\\Admin\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\H--Shared-drives-02-Legacy-Launch-Test-GHL-Site\\\\dbc15c40-6299-4f4d-9725-74196fe2bbc3\\\\scratchpad\"; $dst = \"H:\\\\Shared drives\\\\02-Legacy Launch\\\\Test GHL Site\\\\Legacy Launch V2\"; New-Item -ItemType Directory -Force $dst | Out-Null; Copy-Item \"$src\\\\dist\" -Destination $dst -Recurse -Force; Copy-Item \"$src\\\\ghl-build-guide.md\",\"$src\\\\copy-deck.md\",\"$src\\\\creative-brief.md\",\"$src\\\\research-cro.md\",\"$src\\\\research-ghl.md\" -Destination $dst -Force; Get-ChildItem -Recurse $dst | Select-Object FullName, Length | Format-Table -AutoSize)",
+      "WebFetch(domain:update.theintellia.com)"
+    ]
+  }
+}

@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Launch Strategy Call | Legacy Launch — Exit-First Property Advisory Singapore</title>
+<meta name="description" content="We disqualify 90% of new launch projects and map your next 2–3 property moves before you buy. A calm, numbers-first strategy call for Singapore buyers moving in 3–6 months. Not an agent pitch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   LEGACY LAUNCH V2 — PAGE 1 (OPT-IN) CUSTOM CSS
+   Paste into: GHL Page Settings -> Custom CSS
+   Everything scoped under .llv2 so it never bleeds into GHL chrome.
+   Fonts loaded via @import below. ALTERNATIVE (faster, preferred if
+   you have header access): remove the @import lines and instead add
+   this to Funnel/Page Tracking Code -> Header:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+   ============================================================ */
+
+/* ---- Tokens ---- */
+.llv2{
+  --navy:#0A1C30;
+  --navy-2:#0C2036;
+  --ivory:#F7F4EE;
+  --white:#FFFFFF;
+  --gold:#C2A15C;
+  --gold-dk:#A9873F;
+  --ink:#16202C;
+  --ink-soft:#3C4A57;
+  --paper-ink:#EDE8DD;
+  --paper-ink-soft:#B9C2CC;
+  --line-dark:rgba(194,161,92,0.34);
+  --line-light:rgba(22,32,44,0.14);
+  --shadow:0 24px 60px -30px rgba(10,28,48,0.35);
+  --maxw:1120px;
+  --textw:720px;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  line-height:1.62;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.llv2 *{box-sizing:border-box;}
+.llv2 p{margin:0 0 1.05em;}
+.llv2 p:last-child{margin-bottom:0;}
+
+/* ---- Backgrounds ---- */
+.llv2-navy{background:var(--navy);color:var(--paper-ink);}
+.llv2-navy .llv2-lead,.llv2-navy p{color:var(--paper-ink-soft);}
+.llv2-ivory{background:var(--ivory);color:var(--ink);}
+.llv2-white{background:var(--white);color:var(--ink);}
+
+/* ---- Section rhythm ---- */
+.llv2-section{position:relative;padding:104px 22px;overflow:hidden;}
+.llv2-wrap{max-width:var(--maxw);margin:0 auto;position:relative;z-index:2;}
+.llv2-narrow{max-width:var(--textw);}
+.llv2-center{text-align:center;}
+
+/* ---- Eyebrow ---- */
+.llv2-eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 20px;display:inline-flex;align-items:center;gap:12px;
+}
+.llv2-eyebrow::before{content:"";width:26px;height:1px;background:var(--gold);opacity:.7;display:inline-block;}
+.llv2-center .llv2-eyebrow{justify-content:center;}
+.llv2-center .llv2-eyebrow::after{content:"";width:26px;height:1px;background:var(--gold);opacity:.7;display:inline-block;}
+
+/* ---- Headings ---- */
+.llv2-h1{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:clamp(2.15rem,1.2rem + 4vw,3.55rem);line-height:1.08;letter-spacing:-.01em;
+  margin:0 0 22px;color:inherit;
+}
+.llv2-navy .llv2-h1{color:#FBF9F4;}
+.llv2-h2{
+  font-family:'Playfair Display',Georgia,serif;font-weight:600;
+  font-size:clamp(1.7rem,1.05rem + 2.6vw,2.55rem);line-height:1.14;letter-spacing:-.005em;
+  margin:0 0 20px;color:inherit;
+}
+.llv2-navy .llv2-h2{color:#FBF9F4;}
+.llv2-h3{
+  font-family:'Playfair Display',Georgia,serif;font-weight:600;
+  font-size:clamp(1.2rem,1rem + .7vw,1.42rem);line-height:1.22;margin:0 0 10px;color:inherit;
+}
+.llv2-lead{font-size:clamp(1.02rem,.98rem + .35vw,1.2rem);line-height:1.6;color:var(--ink-soft);}
+.llv2-navy .llv2-lead{color:var(--paper-ink);}
+
+/* ---- Hairline rule ---- */
+.llv2-rule{height:1px;width:100%;background:var(--line-light);border:0;margin:0;}
+.llv2-navy .llv2-rule{background:var(--line-dark);}
+.llv2-tick{width:56px;height:2px;background:var(--gold);margin:0 0 30px;border-radius:2px;}
+.llv2-center .llv2-tick{margin-left:auto;margin-right:auto;}
+
+/* ---- Buttons ---- */
+.llv2-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--gold);color:#122234 !important;font-family:'Inter',sans-serif;
+  font-weight:600;font-size:16px;letter-spacing:.01em;text-decoration:none;
+  padding:0 34px;min-height:54px;border-radius:8px;border:0;cursor:pointer;
+  box-shadow:0 12px 26px -14px rgba(194,161,92,.7);
+  transition:transform .18s ease,background .18s ease,box-shadow .18s ease;
+}
+.llv2-btn:hover{background:var(--gold-dk);transform:translateY(-2px);box-shadow:0 18px 34px -16px rgba(194,161,92,.8);}
+.llv2-btn:focus-visible{outline:2px solid #fff;outline-offset:3px;}
+.llv2-btn-micro{margin-top:16px;font-size:13.5px;line-height:1.5;color:var(--ink-soft);max-width:460px;}
+.llv2-navy .llv2-btn-micro{color:var(--paper-ink-soft);}
+.llv2-center .llv2-btn-micro{margin-left:auto;margin-right:auto;}
+
+/* ---- Audience callout bar (Section 1) ---- */
+.llv2-callout{background:#081524;border-bottom:1px solid var(--line-dark);padding:13px 22px;}
+.llv2-callout-inner{max-width:var(--maxw);margin:0 auto;text-align:center;
+  font-size:13px;letter-spacing:.03em;color:var(--paper-ink);}
+.llv2-callout-inner strong{color:var(--gold);font-weight:600;}
+
+/* ---- Hero ---- */
+.llv2-hero{padding-top:88px;padding-bottom:96px;}
+.llv2-hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center;}
+.llv2-hero-portrait{
+  position:relative;min-height:420px;border-radius:12px;border:1px solid var(--line-dark);
+  background:
+    radial-gradient(120% 90% at 70% 15%,rgba(194,161,92,.16),transparent 60%),
+    linear-gradient(155deg,#0E2842 0%,#0A1C30 60%,#081120 100%);
+  overflow:hidden;display:flex;align-items:flex-end;padding:26px;
+}
+.llv2-hero-portrait .llv2-plate{
+  position:relative;z-index:2;border-top:1px solid var(--line-dark);padding-top:16px;width:100%;
+}
+.llv2-plate-name{font-family:'Playfair Display',serif;font-size:1.16rem;color:#FBF9F4;margin:0 0 3px;}
+.llv2-plate-role{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);}
+.llv2-hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;z-index:1;}
+.llv2-hero-bg{position:absolute;inset:0;z-index:0;opacity:.42;pointer-events:none;}
+
+/* ---- Trust strip / stat blocks ---- */
+.llv2-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;
+  border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);
+}
+.llv2-stat{padding:26px 22px 24px;border-right:1px solid var(--line-dark);}
+.llv2-stat:last-child{border-right:0;}
+.llv2-stat-num{font-family:'Playfair Display',serif;font-weight:600;color:var(--gold);
+  font-size:clamp(1.5rem,1.1rem + 1.4vw,2.05rem);line-height:1;margin:0 0 10px;letter-spacing:-.01em;}
+.llv2-stat-label{font-size:12.5px;line-height:1.5;color:var(--paper-ink-soft);letter-spacing:.01em;}
+.llv2-stat-label strong{color:var(--paper-ink);font-weight:600;}
+
+/* ---- Generic list with gold marker ---- */
+.llv2-list{list-style:none;margin:26px 0 0;padding:0;}
+.llv2-list li{position:relative;padding:0 0 20px 30px;margin:0;}
+.llv2-list li:last-child{padding-bottom:0;}
+.llv2-list li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;
+  background:var(--gold);transform:rotate(45deg);}
+.llv2-list li strong{color:inherit;font-weight:600;}
+.llv2-navy .llv2-list li strong{color:#FBF9F4;}
+.llv2-white .llv2-list li strong,.llv2-ivory .llv2-list li strong{color:var(--ink);}
+
+/* ---- Two-panel mechanism (usual way vs ladder) ---- */
+.llv2-duo{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:40px;}
+.llv2-panel{padding:34px 32px;border-radius:12px;border:1px solid var(--line-light);background:var(--white);}
+.llv2-panel-muted{background:#F1ECE2;border-color:var(--line-light);}
+.llv2-panel-gold{background:var(--navy);border-color:var(--line-dark);color:var(--paper-ink);}
+.llv2-panel-gold .llv2-h3,.llv2-panel-gold .llv2-kicker{color:#FBF9F4;}
+.llv2-panel-gold p{color:var(--paper-ink-soft);}
+.llv2-kicker{font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-dk);margin:0 0 14px;}
+.llv2-panel-gold .llv2-kicker{color:var(--gold);}
+
+/* ---- Reasons (3-up) ---- */
+.llv2-reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:44px;
+  border-top:1px solid var(--line-light);}
+.llv2-reason{padding:32px 30px 8px;border-right:1px solid var(--line-light);}
+.llv2-reason:last-child{border-right:0;}
+.llv2-reason-n{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);margin:0 0 12px;
+  display:block;line-height:1;}
+.llv2-reason p{font-size:15.5px;color:var(--ink-soft);}
+
+/* ---- Case studies ---- */
+.llv2-cases{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:44px;}
+.llv2-case{
+  position:relative;padding:36px 34px;border-radius:12px;background:var(--navy-2);
+  border:1px solid var(--line-dark);box-shadow:var(--shadow);
+}
+.llv2-case-own{border-color:var(--gold);}
+.llv2-case-badge{display:inline-block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:#122234;background:var(--gold);padding:4px 11px;border-radius:20px;margin-bottom:16px;font-weight:600;}
+.llv2-case-index{font-family:'Playfair Display',serif;font-size:2.4rem;line-height:1;color:var(--gold);
+  opacity:.55;position:absolute;top:26px;right:32px;}
+.llv2-case h3{color:#FBF9F4;margin-bottom:4px;}
+.llv2-case-tag{font-size:12.5px;font-style:italic;color:var(--gold);margin:0 0 18px;font-family:'Playfair Display',serif;}
+.llv2-ba{margin:0 0 4px;padding:0;list-style:none;}
+.llv2-ba li{position:relative;padding:12px 0 12px 74px;border-top:1px solid var(--line-dark);
+  font-size:14.5px;color:var(--paper-ink-soft);line-height:1.55;}
+.llv2-ba li:first-child{border-top:0;}
+.llv2-ba li .llv2-ba-k{position:absolute;left:0;top:12px;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);font-weight:600;}
+.llv2-ba li strong{color:#FBF9F4;font-weight:600;}
+.llv2-reseed{margin-top:44px;text-align:center;}
+.llv2-reseed-line{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;
+  color:var(--gold);margin:0 0 18px;}
+
+/* ---- Testimonials ---- */
+.llv2-quotes{columns:2;column-gap:26px;margin-top:40px;}
+.llv2-quote{break-inside:avoid;margin:0 0 26px;padding:30px 30px 26px;position:relative;
+  background:var(--white);border:1px solid var(--line-light);border-radius:12px;}
+.llv2-quote::before{content:"\201C";font-family:'Playfair Display',serif;font-size:4.4rem;
+  line-height:1;color:var(--gold);opacity:.32;position:absolute;top:6px;left:20px;}
+.llv2-quote p{font-family:'Playfair Display',serif;font-size:1.12rem;line-height:1.42;color:var(--ink);
+  margin:22px 0 14px;font-weight:500;}
+.llv2-quote cite{font-style:normal;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-soft);}
+
+/* ---- What happens on the call (steps) ---- */
+.llv2-steps{list-style:none;margin:36px 0 0;padding:0;counter-reset:llv2s;}
+.llv2-steps li{position:relative;padding:24px 0 24px 70px;border-top:1px solid var(--line-light);
+  counter-increment:llv2s;}
+.llv2-steps li:last-child{border-bottom:1px solid var(--line-light);}
+.llv2-steps li::before{content:counter(llv2s,decimal-leading-zero);position:absolute;left:0;top:24px;
+  font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold);line-height:1;}
+.llv2-steps li strong{display:block;font-weight:600;color:var(--ink);margin-bottom:4px;font-size:1.05rem;}
+.llv2-note{margin-top:30px;padding:22px 26px;border-left:2px solid var(--gold);background:#F1ECE2;
+  border-radius:0 8px 8px 0;font-size:15px;color:var(--ink-soft);}
+
+/* ---- Qualification two-column ---- */
+.llv2-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:42px;}
+.llv2-col{padding:34px 32px;border-radius:12px;border:1px solid var(--line-light);background:var(--white);}
+.llv2-col-yes{border-top:3px solid var(--gold);}
+.llv2-col-no{border-top:3px solid #9AA3AC;background:#F4F1EB;}
+.llv2-col h3{margin-bottom:20px;}
+.llv2-check{list-style:none;margin:0;padding:0;}
+.llv2-check li{position:relative;padding:0 0 16px 38px;font-size:15.5px;color:var(--ink-soft);line-height:1.5;}
+.llv2-check li:last-child{padding-bottom:0;}
+.llv2-check li svg{position:absolute;left:0;top:1px;width:22px;height:22px;}
+.llv2-check li strong{color:var(--ink);font-weight:600;}
+.llv2-closing{margin-top:34px;text-align:center;font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.2rem;line-height:1.5;color:var(--ink);max-width:760px;margin-left:auto;margin-right:auto;}
+
+/* ---- FAQ ---- */
+.llv2-faq{margin-top:40px;max-width:820px;margin-left:auto;margin-right:auto;}
+.llv2-faq details{border-top:1px solid var(--line-light);padding:0;}
+.llv2-faq details:last-child{border-bottom:1px solid var(--line-light);}
+.llv2-faq summary{list-style:none;cursor:pointer;padding:24px 44px 24px 0;position:relative;
+  font-family:'Playfair Display',serif;font-size:1.16rem;color:var(--ink);font-weight:600;line-height:1.35;}
+.llv2-faq summary::-webkit-details-marker{display:none;}
+.llv2-faq summary::after{content:"";position:absolute;right:6px;top:30px;width:13px;height:13px;
+  border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(45deg);
+  transition:transform .25s ease;}
+.llv2-faq details[open] summary::after{transform:rotate(-135deg);top:34px;}
+.llv2-faq details p{padding:0 44px 26px 0;color:var(--ink-soft);font-size:15.5px;margin:0;}
+
+/* ---- Opt-in form frame ---- */
+.llv2-formframe{max-width:720px;margin:40px auto 0;background:var(--white);border-radius:14px;
+  border:1px solid var(--line-light);box-shadow:var(--shadow);padding:14px;}
+.llv2-formframe-inner{border:1px solid var(--line-light);border-radius:10px;padding:30px 30px 24px;}
+.llv2-formframe .llv2-eyebrow{margin-bottom:14px;}
+.llv2-formwrap{min-height:560px;margin-top:20px;}
+.llv2-formwrap iframe{width:100%;min-height:560px;border:none;display:block;}
+.llv2-consent-note{margin-top:14px;font-size:12.5px;color:var(--ink-soft);line-height:1.5;text-align:center;}
+
+/* ---- Final CTA ---- */
+.llv2-final .llv2-recap{margin-top:30px;font-size:13.5px;letter-spacing:.05em;color:var(--paper-ink-soft);}
+.llv2-final .llv2-recap span{color:var(--gold);padding:0 4px;}
+
+/* ---- Footer ---- */
+.llv2-footer{background:#06111E;color:var(--paper-ink-soft);padding:64px 22px 40px;font-size:13.5px;line-height:1.7;}
+.llv2-footer .llv2-wrap{max-width:900px;}
+.llv2-footer-cred{color:var(--paper-ink);font-size:15px;margin-bottom:24px;}
+.llv2-footer-cred strong{color:var(--gold);font-weight:600;}
+.llv2-footer small{display:block;color:#7E8894;font-size:12.5px;margin-top:18px;}
+.llv2-footer-copy{margin-top:26px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);
+  color:#6E7883;letter-spacing:.03em;}
+
+/* ---- Sticky mobile CTA ---- */
+.llv2-sticky{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:none;
+  align-items:center;gap:12px;padding:11px 14px calc(11px + env(safe-area-inset-bottom));
+  background:rgba(8,18,32,.97);border-top:1px solid var(--line-dark);backdrop-filter:blur(8px);}
+.llv2-sticky-txt{flex:1;font-size:13px;line-height:1.3;color:var(--paper-ink);font-weight:500;}
+.llv2-sticky .llv2-btn{min-height:44px;padding:0 18px;font-size:14px;box-shadow:none;white-space:nowrap;}
+.llv2-sticky-x{background:transparent;border:0;color:var(--paper-ink-soft);font-size:20px;line-height:1;
+  padding:6px;cursor:pointer;flex:none;}
+
+/* ---- Scroll reveal ---- */
+.llv2-reveal{opacity:1;transform:none;}
+.llv2-js .llv2-reveal{opacity:0;transform:translateY(22px);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.22,.61,.36,1);}
+.llv2-js .llv2-reveal.llv2-in{opacity:1;transform:none;}
+@media (prefers-reduced-motion:reduce){
+  .llv2-js .llv2-reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  .llv2-btn{transition:none;}
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:900px){
+  .llv2-hero-grid{grid-template-columns:1fr;gap:36px;}
+  .llv2-hero-portrait{min-height:300px;order:-1;}
+  .llv2-stats{grid-template-columns:1fr 1fr;}
+  .llv2-stat:nth-child(2){border-right:0;}
+  .llv2-stat:nth-child(1),.llv2-stat:nth-child(2){border-bottom:1px solid var(--line-dark);}
+  .llv2-duo,.llv2-cases,.llv2-cols{grid-template-columns:1fr;}
+  .llv2-reasons{grid-template-columns:1fr;}
+  .llv2-reason{border-right:0;border-bottom:1px solid var(--line-light);padding:26px 0 22px;}
+  .llv2-reason:last-child{border-bottom:0;}
+  .llv2-quotes{columns:1;}
+}
+@media (max-width:768px){
+  .llv2-section{padding:66px 20px;}
+  .llv2-hero{padding-top:56px;padding-bottom:64px;}
+  .llv2-sticky{display:flex;}
+  .llv2-has-sticky{padding-bottom:104px;}
+  .llv2-btn{width:100%;}
+  .llv2-hero .llv2-btn,.llv2-reseed .llv2-btn{width:auto;max-width:100%;}
+  .llv2-callout-inner{font-size:12px;line-height:1.45;}
+}
+@media (max-width:520px){
+  .llv2{font-size:16px;}
+  .llv2-stats{grid-template-columns:1fr;}
+  .llv2-stat{border-right:0;border-bottom:1px solid var(--line-dark);}
+  .llv2-stat:last-child{border-bottom:0;}
+  .llv2-hero .llv2-btn,.llv2-reseed .llv2-btn{width:100%;}
+  .llv2-case-index{font-size:1.8rem;top:22px;right:24px;}
+  .llv2-formframe-inner{padding:24px 18px 20px;}
+  .llv2-sticky-txt{display:none;}
+  .llv2-sticky .llv2-btn{flex:1;}
+  .llv2-has-sticky{padding-bottom:88px;}
+}
+
+    /* ---- Preview-only mock form styling (mirrors form-builder-custom-css.css) ---- */
+    .llv2 .llv2-mockform{margin-top:20px;}
+    .llv2 .llv2-mf-row{margin-bottom:16px;}
+    .llv2 .llv2-mockform label{display:block;font-size:13px;font-weight:500;color:#16202C;margin-bottom:7px;letter-spacing:.01em;}
+    .llv2 .llv2-mockform input[type=text],.llv2 .llv2-mockform input[type=email],
+    .llv2 .llv2-mockform input[type=tel],.llv2 .llv2-mockform select{
+      width:100%;height:48px;padding:0 14px;font-family:'Inter',sans-serif;font-size:15px;color:#16202C;
+      background:#FBFAF7;border:1px solid rgba(22,32,44,.18);border-radius:8px;appearance:none;-webkit-appearance:none;}
+    .llv2 .llv2-mockform select{background-image:linear-gradient(45deg,transparent 50%,#C2A15C 50%),linear-gradient(135deg,#C2A15C 50%,transparent 50%);
+      background-position:calc(100% - 20px) 20px,calc(100% - 14px) 20px;background-size:6px 6px,6px 6px;background-repeat:no-repeat;}
+    .llv2 .llv2-mockform input:focus,.llv2 .llv2-mockform select:focus{outline:none;border-color:#C2A15C;box-shadow:0 0 0 3px rgba(194,161,92,.15);}
+    .llv2 .llv2-mf-consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.5;color:#3C4A57;margin:4px 0 18px;font-weight:400;}
+    .llv2 .llv2-mf-consent input{margin-top:3px;accent-color:#C2A15C;flex:none;}
+</style>
+</head>
+<body>
+<div class="llv2">
+
+  <!-- Section 1 — Audience callout bar -->
+  <div class="llv2-callout">
+    <div class="llv2-callout-inner">
+      For Singapore buyers moving in the next <strong>3&ndash;6 months</strong> &mdash; with <strong>$1M+</strong> to place and no appetite for a mistake.
+    </div>
+  </div>
+
+  <!-- Section 2 — Hero -->
+  <section class="llv2-section llv2-navy llv2-hero">
+    <!-- Faint ascending-ladder line motif -->
+    <svg class="llv2-hero-bg" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="#C2A15C" stroke-width="1" opacity="0.5">
+        <path d="M-40 560 L360 420 L360 300 L760 160 L760 40 L1160 -100"/>
+        <path d="M60 600 L460 460 L460 340 L860 200 L860 80 L1260 -60"/>
+        <line x1="220" y1="490" x2="360" y2="490"/>
+        <line x1="360" y1="360" x2="500" y2="360"/>
+        <line x1="620" y1="230" x2="760" y2="230"/>
+        <line x1="760" y1="100" x2="900" y2="100"/>
+      </g>
+    </svg>
+
+    <div class="llv2-wrap">
+      <div class="llv2-hero-grid">
+        <div class="llv2-reveal">
+          <span class="llv2-eyebrow">The New Launch Ladder&trade; &mdash; Exit-First Property Advisory</span>
+          <h1 class="llv2-h1">We Disqualify 90% of New Launches &mdash; So You Buy the One You Can Actually Exit</h1>
+          <p class="llv2-lead">Most buyers pick a unit they can afford to enter. We map the unit you can afford to leave &mdash; with your next 2&ndash;3 moves planned before you commit a single dollar. This is advisory, not agency.</p>
+          <div style="margin-top:30px;">
+            <a href="#llv2-apply" class="llv2-btn">Check If You Qualify</a>
+            <p class="llv2-btn-micro">Free 1-hour strategy call. By application only. We take on buyers we can genuinely move forward &mdash; and turn away those we can&rsquo;t.</p>
+          </div>
+        </div>
+
+        <!-- IMAGE SLOT: hero portrait of Edmund Tan & Cindior Ho (architectural/muted). Replace the .llv2-hero-portrait block below with an <img>, keep the caption plate. -->
+        <div class="llv2-hero-portrait llv2-reveal" role="img" aria-label="Legacy Launch advisory">
+          <svg class="llv2-hero-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="#C2A15C" stroke-width="1" opacity="0.55">
+              <path d="M40 360 L150 300 L150 230 L260 170 L260 100 L370 40"/>
+              <line x1="95" y1="330" x2="150" y2="330"/>
+              <line x1="205" y1="200" x2="260" y2="200"/>
+              <line x1="315" y1="70" x2="370" y2="70"/>
+            </g>
+          </svg>
+          <div class="llv2-plate">
+            <div class="llv2-plate-name">Edmund Tan &amp; Cindior Ho</div>
+            <div class="llv2-plate-role">Exit-First New Launch Advisory</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust strip — hard numbers -->
+      <div class="llv2-stats llv2-reveal">
+        <div class="llv2-stat">
+          <div class="llv2-stat-num">$160,014,029</div>
+          <div class="llv2-stat-label">collectively invested in <strong>exit-ready launch units</strong></div>
+        </div>
+        <div class="llv2-stat">
+          <div class="llv2-stat-num">100+</div>
+          <div class="llv2-stat-label"><strong>buyers guided</strong> through their next move</div>
+        </div>
+        <div class="llv2-stat">
+          <div class="llv2-stat-num">90%</div>
+          <div class="llv2-stat-label">of projects <strong>disqualified</strong> before we recommend one</div>
+        </div>
+        <div class="llv2-stat">
+          <div class="llv2-stat-num">600+</div>
+          <div class="llv2-stat-label"><strong>videos</strong>, 2,000+ subscribers &mdash; our thinking is on the record</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<div class="llv2">
+
+  <!-- Section 3 — Problem / agitation -->
+  <section class="llv2-section llv2-ivory">
+    <div class="llv2-wrap llv2-narrow llv2-reveal">
+      <span class="llv2-eyebrow">The mistake that costs $200K and five years</span>
+      <h2 class="llv2-h2">The Dead-End Property: The Unit You Can Buy, But Can&rsquo;t Sell Without Losing</h2>
+      <div class="llv2-tick"></div>
+      <p>There is a specific kind of loss that doesn&rsquo;t announce itself on completion day. You buy the showflat you fell for. The renovation is beautiful. And then &mdash; three, five, seven years on &mdash; you try to move, and the numbers refuse to cooperate.</p>
+      <p>The unit hasn&rsquo;t kept pace. The layout the market wanted was next door. The stack you chose faces the wrong way for resale. You are not broke; you are <em>stuck</em> &mdash; capital locked in a home that became a forever home by accident, while the moves you meant to make quietly closed.</p>
+      <p style="margin-bottom:.4em;">Run the arithmetic and it is rarely small:</p>
+      <ul class="llv2-list">
+        <li><strong>Stuck 5&ndash;10 years</strong> in an asset that won&rsquo;t appreciate or won&rsquo;t sell, watching better positioned owners move twice while you can&rsquo;t move once.</li>
+        <li><strong>$200,000+</strong> in unrealised gains and misplaced entry &mdash; the gap between the unit you bought on emotion and the one the data would have chosen.</li>
+        <li><strong>One compounding move lost</strong> &mdash; because the next purchase you were counting on to build the portfolio can&rsquo;t happen until the first one lets you out.</li>
+      </ul>
+      <p style="margin-top:1.2em;">A showflat is engineered to make you feel. An exit is decided by numbers. The buyers who lose confuse the two. The cost isn&rsquo;t the mistake itself &mdash; it&rsquo;s the decade you spend paying for it.</p>
+    </div>
+  </section>
+
+  <!-- Section 4 — Unique mechanism -->
+  <section class="llv2-section llv2-white">
+    <div class="llv2-wrap">
+      <div class="llv2-narrow llv2-reveal">
+        <span class="llv2-eyebrow">Why the usual way fails</span>
+        <h2 class="llv2-h2">Agents Sell What They Have. We Decide What You Should Never Touch.</h2>
+        <div class="llv2-tick"></div>
+      </div>
+
+      <div class="llv2-duo llv2-reveal">
+        <div class="llv2-panel llv2-panel-muted">
+          <div class="llv2-kicker">The usual way &mdash; why it fails</div>
+          <p>The conventional path is built to close a transaction, not to build your position. An agent representing a project is paid to move <em>that</em> project &mdash; so every launch becomes the right launch, every stack a &ldquo;good buy&rdquo;, every showflat visit an exercise in managed emotion. You are shown the upside and steered past the exit.</p>
+          <p>Decisions get made on hype, floor-plan aesthetics, and the pressure of a launch weekend &mdash; the three worst inputs a serious buyer can use. It is not dishonest. It is simply not on your side of the table.</p>
+        </div>
+        <div class="llv2-panel llv2-panel-gold">
+          <div class="llv2-kicker">The New Launch Ladder&trade; &mdash; why it works</div>
+          <p>We start from the opposite end. Before we look at a single unit, we look at how you get <em>out</em> of it &mdash; and what it lets you buy next. That is the Exit-First method: every entry is judged by its exit, and every purchase is one rung on a ladder of 2&ndash;3 planned moves, not a standalone bet.</p>
+          <ul class="llv2-list" style="margin-top:20px;">
+            <li><strong>We disqualify 90% of projects</strong> on data &mdash; pricing, location, unit mix, exit liquidity &mdash; before any reach your shortlist. Most of the work is subtraction.</li>
+            <li><strong>We map 2&ndash;3 moves before you buy the first</strong> &mdash; so today&rsquo;s purchase is chosen for where it takes you in five and ten years.</li>
+            <li><strong>We decide with the numbers on the table</strong> &mdash; entry PSF, holding costs, ABSD exposure, projected exit window &mdash; the way a fund evaluates a position.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="llv2-reasons llv2-reveal">
+        <div class="llv2-reason">
+          <span class="llv2-reason-n">01</span>
+          <h3 class="llv2-h3">Exit-first, always.</h3>
+          <p>We won&rsquo;t recommend an entry we can&rsquo;t show you the exit for. If we can&rsquo;t map how and when you get out at a gain, you don&rsquo;t buy &mdash; full stop. It&rsquo;s the discipline agents can&rsquo;t offer because their incentive ends at your signature.</p>
+        </div>
+        <div class="llv2-reason">
+          <span class="llv2-reason-n">02</span>
+          <h3 class="llv2-h3">We turn away most of the market.</h3>
+          <p>Ninety percent of projects fail our filter and never reach you. What survives is a short, defensible list &mdash; chosen for liquidity and upside, not commission or convenience. Disqualification is the product.</p>
+        </div>
+        <div class="llv2-reason">
+          <span class="llv2-reason-n">03</span>
+          <h3 class="llv2-h3">We invest the way we advise.</h3>
+          <p>Our own portfolio is built on this exact method &mdash; the same ladder, the same exit-first rule, the same numbers. We eat our own cooking. You&rsquo;re not buying a theory; you&rsquo;re buying the process we use with our own capital.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<div class="llv2">
+
+  <!-- Section 5 — Case studies -->
+  <section class="llv2-section llv2-navy">
+    <div class="llv2-wrap">
+      <div class="llv2-narrow llv2-reveal">
+        <span class="llv2-eyebrow">The record &mdash; numbers, not adjectives</span>
+        <h2 class="llv2-h2">Four Portfolios, One Method: Exit Planned Before Entry</h2>
+        <div class="llv2-tick"></div>
+        <p class="llv2-lead">Every figure below is a real position. The first is our own.</p>
+      </div>
+
+      <div class="llv2-cases llv2-reveal">
+        <!-- IMAGE SLOT: optional property/portrait thumbnail per case (top-left of each .llv2-case). -->
+        <article class="llv2-case llv2-case-own">
+          <span class="llv2-case-index">01</span>
+          <span class="llv2-case-badge">Our own portfolio</span>
+          <h3 class="llv2-h3">Edmund Tan &amp; Cindior Ho</h3>
+          <p class="llv2-case-tag">We eat our own cooking.</p>
+          <ul class="llv2-ba">
+            <li><span class="llv2-ba-k">Before</span>10+ years in a sub-$600K HDB flat, capital sitting still.</li>
+            <li><span class="llv2-ba-k">After</span>Tre Ver 2BR bought at <strong>$1.05M</strong>, sold at <strong>$1.28M</strong> &rarr; laddered into a <strong>$3M</strong> property in under 4 years. Parc Clematis 2BR bought at $1.15M, sold at $1.525M over 3 years. Portfolio today: <strong>$5M+</strong>.</li>
+            <li><span class="llv2-ba-k">Lesson</span>The flat wasn&rsquo;t the problem &mdash; staying in it was. Every rung was chosen for its exit before we entered.</li>
+          </ul>
+        </article>
+
+        <article class="llv2-case">
+          <span class="llv2-case-index">02</span>
+          <h3 class="llv2-h3">Edward &amp; Rose</h3>
+          <p class="llv2-case-tag">The upgrade that feels best often costs the most.</p>
+          <ul class="llv2-ba">
+            <li><span class="llv2-ba-k">Before</span>On the verge of a &ldquo;comfort upgrade&rdquo; &mdash; the emotionally satisfying home that quietly ends a portfolio.</li>
+            <li><span class="llv2-ba-k">After</span>Skipped it, followed the ladder, booked <strong>$500K+ in gains over 4 years</strong> and crossed <strong>$3.5M</strong> net asset value.</li>
+            <li><span class="llv2-ba-k">Lesson</span>The math disagreed with the feeling &mdash; the math was right.</li>
+          </ul>
+        </article>
+
+        <article class="llv2-case">
+          <span class="llv2-case-index">03</span>
+          <h3 class="llv2-h3">MoK &amp; Jine</h3>
+          <p class="llv2-case-tag">Structure beats size.</p>
+          <ul class="llv2-ba">
+            <li><span class="llv2-ba-k">Before</span>15 years in a ~$600K 4-room HDB flat, one asset, no plan.</li>
+            <li><span class="llv2-ba-k">After</span>Split into two 3-bedroom units &mdash; a ~$1.2M home to stay in and a ~$1M unit that rents. Rental offsets the loans, <strong>8 years of reserves</strong> kept intact, <strong>$235K+ in gains</strong>, portfolio now past <strong>$3M</strong>.</li>
+            <li><span class="llv2-ba-k">Lesson</span>One flat became two assets that pay for themselves.</li>
+          </ul>
+        </article>
+
+        <article class="llv2-case">
+          <span class="llv2-case-index">04</span>
+          <h3 class="llv2-h3">Win / Esther &amp; Family</h3>
+          <p class="llv2-case-tag">Confidence is what&rsquo;s left once the numbers remove the guesswork.</p>
+          <ul class="llv2-ba">
+            <li><span class="llv2-ba-k">Before</span>Fearful and lost &mdash; too many opinions, no framework, paralysed on a decision they couldn&rsquo;t afford to get wrong.</li>
+            <li><span class="llv2-ba-k">After</span>A 1-on-1 plan, data-driven filtering of the field, and a confident purchase of an <strong>$1.8M unit</strong> aligned with their future moves.</li>
+            <li><span class="llv2-ba-k">Lesson</span>Confidence isn&rsquo;t a personality trait. It&rsquo;s what&rsquo;s left once the numbers have removed the guesswork.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="llv2-reseed llv2-reveal">
+        <p class="llv2-reseed-line">See where your own numbers land &rarr;</p>
+        <a href="#llv2-apply" class="llv2-btn">Check If You Qualify</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6 — Testimonial wall -->
+  <section class="llv2-section llv2-ivory">
+    <div class="llv2-wrap">
+      <div class="llv2-narrow llv2-center llv2-reveal" style="margin:0 auto;">
+        <span class="llv2-eyebrow">In their words</span>
+        <h2 class="llv2-h2">What Changes When the Guesswork Leaves the Room</h2>
+        <div class="llv2-tick"></div>
+      </div>
+
+      <div class="llv2-quotes llv2-reveal">
+        <figure class="llv2-quote"><p>I came in guessing. I left with a framework I could actually follow.</p><cite>Private client, 2024</cite></figure>
+        <figure class="llv2-quote"><p>For the first time the $1.5M decision felt like a calculation, not a gamble.</p><cite>Private client, 2024</cite></figure>
+        <figure class="llv2-quote"><p>They showed me the exit before they showed me the entry. No one had ever done that.</p><cite>Private client, 2023</cite></figure>
+        <figure class="llv2-quote"><p>Total clarity. I finally understood what I owned and where it was taking me.</p><cite>Private client, 2024</cite></figure>
+        <figure class="llv2-quote"><p>Real numbers, not sales talk. That was the whole difference.</p><cite>Private client, 2023</cite></figure>
+        <figure class="llv2-quote"><p>They ran the math over the hype and let me decide with my eyes open.</p><cite>Private client, 2024</cite></figure>
+        <figure class="llv2-quote"><p>The most useful part was learning which launches to walk away from.</p><cite>Private client, 2023</cite></figure>
+        <figure class="llv2-quote"><p>This felt like growth by design, not luck. I knew exactly why each move made sense.</p><cite>Private client, 2024</cite></figure>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<div class="llv2">
+
+  <!-- Section 7 — What happens on your Strategy Call -->
+  <section class="llv2-section llv2-white">
+    <div class="llv2-wrap llv2-narrow llv2-reveal">
+      <span class="llv2-eyebrow">The 60 minutes</span>
+      <h2 class="llv2-h2">One Hour. Four Questions Answered. No Pitch.</h2>
+      <div class="llv2-tick"></div>
+      <p class="llv2-lead">This is a working session, not a sales meeting. In an hour, we cover the four things that actually determine your next move:</p>
+      <ol class="llv2-steps">
+        <li><strong>Where you stand now.</strong> We map your real position &mdash; equity, timeline, financing headroom, ABSD exposure, and the constraints that quietly rule options in or out.</li>
+        <li><strong>What to avoid immediately.</strong> Which launches &mdash; and which stacks within them &mdash; you should take off your list today, and why the numbers disqualify them.</li>
+        <li><strong>One or two strategic entries.</strong> The specific options that fit your position, chosen for exit liquidity and upside, not for what&rsquo;s launching this weekend.</li>
+        <li><strong>The exit, mapped first.</strong> How and when you get out at a gain, and what that exit lets you buy next &mdash; the ladder, not the single step.</li>
+      </ol>
+      <p style="margin-top:1.4em;"><strong style="color:var(--ink);font-weight:600;">The promise.</strong> You&rsquo;ll leave knowing exactly what to do next &mdash; even if we never work together. That&rsquo;s the point of the hour.</p>
+      <div class="llv2-note">This is not a general property consultation or a market chat. It&rsquo;s a focused strategy session for buyers moving in the next 3&ndash;6 months. If you&rsquo;re browsing, gathering opinions, or years from a decision, this won&rsquo;t serve you &mdash; and we&rsquo;ll say so early.</div>
+      <div style="margin-top:34px;"><a href="#llv2-apply" class="llv2-btn">Check If You Qualify</a></div>
+    </div>
+  </section>
+
+  <!-- Section 8 — Qualification two-column -->
+  <section class="llv2-section llv2-ivory">
+    <div class="llv2-wrap">
+      <div class="llv2-narrow llv2-reveal">
+        <span class="llv2-eyebrow">By application</span>
+        <h2 class="llv2-h2">We&rsquo;re Selective on Purpose. Read Both Columns Before You Apply.</h2>
+        <div class="llv2-tick"></div>
+      </div>
+
+      <div class="llv2-cols llv2-reveal">
+        <div class="llv2-col llv2-col-yes">
+          <h3 class="llv2-h3">This is for you if&hellip;</h3>
+          <ul class="llv2-check">
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(194,161,92,.14)"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke="#C2A15C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>You&rsquo;re actively planning a purchase in the next <strong>3&ndash;6 months</strong>, not &ldquo;someday&rdquo;.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(194,161,92,.14)"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke="#C2A15C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>You have <strong>$1M+</strong> to place and want it working, not sitting in a dead-end unit.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(194,161,92,.14)"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke="#C2A15C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>You&rsquo;d rather avoid a <strong>$200K+ mistake</strong> than chase the hottest launch of the month.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(194,161,92,.14)"/><path d="M7 12.4l3.2 3.2L17 8.8" stroke="#C2A15C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>You&rsquo;re serious about your next move and want a plan, not a pep talk.</li>
+          </ul>
+        </div>
+        <div class="llv2-col llv2-col-no">
+          <h3 class="llv2-h3">This is not for you if&hellip;</h3>
+          <ul class="llv2-check">
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(22,32,44,.06)"/><path d="M8 8l8 8M16 8l-8 8" stroke="#9AA3AC" stroke-width="2.2" stroke-linecap="round"/></svg>You&rsquo;re browsing, comparing agents, or collecting second opinions for free.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(22,32,44,.06)"/><path d="M8 8l8 8M16 8l-8 8" stroke="#9AA3AC" stroke-width="2.2" stroke-linecap="round"/></svg>You&rsquo;re not buying within the next 3&ndash;6 months.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(22,32,44,.06)"/><path d="M8 8l8 8M16 8l-8 8" stroke="#9AA3AC" stroke-width="2.2" stroke-linecap="round"/></svg>You want someone to validate a unit you&rsquo;ve already emotionally decided on.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(22,32,44,.06)"/><path d="M8 8l8 8M16 8l-8 8" stroke="#9AA3AC" stroke-width="2.2" stroke-linecap="round"/></svg>You&rsquo;re looking for hype, hot tips, or a hard-sell close.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="llv2-closing llv2-reveal">If you&rsquo;re in the left column, the call will be one of the most useful hours of your buying journey. If you&rsquo;re in the right, we&rsquo;d rather tell you now.</p>
+    </div>
+  </section>
+
+</div>
+
+
+<div class="llv2">
+
+  <!-- Section 9 — FAQ -->
+  <section class="llv2-section llv2-white">
+    <div class="llv2-wrap">
+      <div class="llv2-narrow llv2-center llv2-reveal" style="margin:0 auto;">
+        <span class="llv2-eyebrow">Before you apply</span>
+        <h2 class="llv2-h2">Questions, Answered Plainly</h2>
+        <div class="llv2-tick"></div>
+      </div>
+      <div class="llv2-faq llv2-reveal">
+        <details>
+          <summary>Is this a sales pitch in disguise?</summary>
+          <p>No. It&rsquo;s a working strategy session. We map your position, tell you which launches to avoid, and outline one or two entries that fit &mdash; and you leave with that whether or not you ever engage us. If a project genuinely suits you, we&rsquo;ll say so; if none does, we&rsquo;ll say that too. The disqualification is real.</p>
+        </details>
+        <details>
+          <summary>What does the call cost?</summary>
+          <p>Nothing. The hour is free. It&rsquo;s limited to buyers moving in the next 3&ndash;6 months because that&rsquo;s who we can actually help &mdash; which is also why we ask a few qualifying questions before booking.</p>
+        </details>
+        <details>
+          <summary>How are you different from a property agent?</summary>
+          <p>An agent representing a project is paid to move that project. We start from your exit and work backwards &mdash; disqualifying 90% of launches before any reach you, and mapping 2&ndash;3 moves ahead rather than closing one. Our incentive is your position over the next decade, not your signature this weekend.</p>
+        </details>
+        <details>
+          <summary>What if I haven&rsquo;t shortlisted anything yet?</summary>
+          <p>That&rsquo;s often the better starting point. It means we build the filter with you from the ground up &mdash; instead of talking you out of choices you&rsquo;ve already grown attached to. Bring what you have, or bring nothing but your numbers.</p>
+        </details>
+        <details>
+          <summary>Do you earn commissions?</summary>
+          <p>Where we transact, we&rsquo;re compensated like any professional in this market &mdash; and we&rsquo;re transparent about it on the call. What&rsquo;s different is the order of operations: nothing is recommended unless it survives the exit-first filter first. The process disqualifies before it ever earns.</p>
+        </details>
+        <details>
+          <summary>Is my information safe?</summary>
+          <p>Yes. Your details are used only to prepare for and arrange your strategy call, held in line with Singapore&rsquo;s PDPA (2012), and never sold or passed to third parties. You can ask us to remove your data at any time.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<div class="llv2">
+
+  <!-- Section 13 — Opt-in form (anchor target for every CTA) -->
+  <section class="llv2-section llv2-navy" id="llv2-apply">
+    <div class="llv2-wrap llv2-reveal">
+      <div class="llv2-narrow llv2-center" style="margin:0 auto;">
+        <span class="llv2-eyebrow">By application</span>
+        <h2 class="llv2-h2">Check If You Qualify for a Strategy Call</h2>
+        <div class="llv2-tick" style="margin-left:auto;margin-right:auto;"></div>
+        <p class="llv2-lead">Four quick questions. If it&rsquo;s a fit, you&rsquo;ll go straight to the calendar. If it isn&rsquo;t, we&rsquo;ll be honest &mdash; your time matters as much as ours.</p>
+      </div>
+
+      <div class="llv2-formframe">
+        <div class="llv2-formframe-inner">
+          <div class="llv2-formwrap">
+            <form class="llv2-mockform" onsubmit="return false;" novalidate>
+              <div class="llv2-mf-row"><label>Full name</label><input type="text" placeholder="Your full name"></div>
+              <div class="llv2-mf-row"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+              <div class="llv2-mf-row"><label>Mobile</label><input type="tel" placeholder="+65"></div>
+              <div class="llv2-mf-row"><label>When are you planning to buy?</label>
+                <select><option>Within 3 months</option><option>3&ndash;6 months</option><option>6&ndash;12 months</option><option>Just exploring for now</option></select></div>
+              <div class="llv2-mf-row"><label>Your current property</label>
+                <select><option>HDB &mdash; planning to upgrade</option><option>Private &mdash; planning my next move</option><option>Own both HDB and private</option><option>First-time buyer</option></select></div>
+              <label class="llv2-mf-consent"><input type="checkbox"> I agree to be contacted about my New Launch Strategy Call. My details are held under Singapore&rsquo;s PDPA (2012) and never sold or shared.</label>
+              <button type="submit" class="llv2-btn" style="width:100%;margin-top:6px;">Request My Strategy Call</button>
+              <p style="text-align:center;font-size:12px;color:#9AA3AC;margin:14px 0 0;">Preview mock &mdash; live page renders the GHL form iframe here.</p>
+            </form>
+          </div>
+          <p class="llv2-consent-note">By submitting you agree to be contacted about your New Launch Strategy Call. Your details are held under Singapore&rsquo;s PDPA (2012) and never sold or shared.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 10 — Final CTA -->
+  <section class="llv2-section llv2-navy llv2-final" style="padding-top:0;">
+    <div class="llv2-wrap llv2-narrow llv2-center llv2-reveal" style="margin:0 auto;border-top:1px solid var(--line-dark);padding-top:96px;">
+      <span class="llv2-eyebrow">The next move</span>
+      <h2 class="llv2-h2">Map the Exit Before You Commit the Capital</h2>
+      <div class="llv2-tick" style="margin-left:auto;margin-right:auto;"></div>
+      <p class="llv2-lead">One hour. Your real numbers on the table. A clear view of which launches to avoid, one or two that fit, and how your next 2&ndash;3 moves connect. You&rsquo;ll leave knowing what to do next &mdash; even if we never work together.</p>
+      <div style="margin-top:30px;"><a href="#llv2-apply" class="llv2-btn">Check If You Qualify</a></div>
+      <p class="llv2-recap">$160M+ placed<span>&middot;</span>100+ buyers guided<span>&middot;</span>90% of projects disqualified<span>&middot;</span>By application only</p>
+    </div>
+  </section>
+
+  <!-- Section 11 — Footer -->
+  <footer class="llv2-footer">
+    <div class="llv2-wrap">
+      <p class="llv2-footer-cred"><strong>Legacy Launch</strong> &mdash; Exit-First New Launch Advisory. 100+ buyers guided &middot; $160,014,029 collectively invested &middot; 2,000+ YouTube subscribers &middot; 600+ videos on the record.</p>
+      <div class="llv2-rule"></div>
+      <small>All figures and case studies reflect specific client and portfolio outcomes and are shared for illustration. Property involves risk; past results do not guarantee future performance, and your outcomes will vary with market conditions, timing, and individual circumstances. Nothing here is financial advice.</small>
+      <small>By submitting your details you consent to Legacy Launch contacting you about your strategy call in accordance with Singapore&rsquo;s Personal Data Protection Act (2012). We do not sell or share your data. Request removal at any time.</small>
+      <p class="llv2-footer-copy">&copy; 2026 Singapore Real Estate Insider. All rights reserved.</p>
+    </div>
+  </footer>
+
+</div>
+
+
+
+<div class="llv2">
+  <!-- Section 12 — Sticky mobile CTA bar -->
+  <div class="llv2-sticky" id="llv2-sticky" role="region" aria-label="Qualify call to action">
+    <span class="llv2-sticky-txt">Moving in 3&ndash;6 months? See if you qualify.</span>
+    <a href="#llv2-apply" class="llv2-btn">Check If You Qualify</a>
+    <button class="llv2-sticky-x" id="llv2-sticky-x" aria-label="Dismiss">&times;</button>
+  </div>
+</div>
+<script type="text/javascript">
+(function(){
+  var roots = document.querySelectorAll('.llv2');
+  for (var i=0;i<roots.length;i++){ roots[i].classList.add('llv2-js'); }
+
+  /* Scroll-reveal — content is visible by default; animate only when observed.
+     Safety net guarantees nothing ever stays hidden if IO fails to dispatch. */
+  var reveals = document.querySelectorAll('.llv2-reveal');
+  function revealAll(){ for (var m=0;m<reveals.length;m++){ reveals[m].classList.add('llv2-in'); } }
+  if ('IntersectionObserver' in window && reveals.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('llv2-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+    for (var r=0;r<reveals.length;r++){ io.observe(reveals[r]); }
+    /* If the observer hasn't revealed the first in-view block quickly, show everything. */
+    setTimeout(function(){ if (!document.querySelector('.llv2-reveal.llv2-in')){ revealAll(); } }, 900);
+  } else {
+    revealAll();
+  }
+
+  /* Smooth in-page scroll for .llv2 anchor CTAs */
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest ? ev.target.closest('.llv2 a[href^="#llv2-"]') : null;
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target){
+      ev.preventDefault();
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+      try { history.replaceState(null,'','#'+id); } catch(e){}
+    }
+  });
+
+  /* Sticky bar dismiss + body bottom padding compensation */
+  var bar = document.getElementById('llv2-sticky');
+  var closeBtn = document.getElementById('llv2-sticky-x');
+  function syncPad(){
+    if (!bar) return;
+    var visible = window.matchMedia('(max-width:768px)').matches && bar.style.display !== 'none';
+    document.body.classList.toggle('llv2-has-sticky', visible);
+  }
+  if (closeBtn && bar){
+    closeBtn.addEventListener('click', function(){
+      bar.style.display = 'none';
+      document.body.classList.remove('llv2-has-sticky');
+    });
+  }
+  syncPad();
+  window.addEventListener('resize', syncPad);
+})();
+</script>
+
+</body>
+</html>

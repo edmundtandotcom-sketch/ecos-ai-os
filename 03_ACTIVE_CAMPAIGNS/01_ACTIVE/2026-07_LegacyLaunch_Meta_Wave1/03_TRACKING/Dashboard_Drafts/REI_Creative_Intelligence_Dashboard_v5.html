@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REI Creative Intelligence Dashboard v5</title>
+<style>
+  /* ─── CSS Variables: Light (default) & Dark themes ─── */
+  :root {
+    --bg:          #F5F2EE;
+    --bg-card:     #FFFFFF;
+    --bg-table:    #FAFAF8;
+    --bg-header:   #1F2F3D;
+    --text:        #1F2F3D;
+    --text-muted:  #6B7280;
+    --text-header: #FFFFFF;
+    --border:      #E5E0D8;
+    --champagne:   #D8C3A8;
+    --navy:        #1F2F3D;
+    --gold:        #BFA37A;
+    --gold-light:  #F0E8D8;
+    --kill:        #DC2626;
+    --kill-bg:     #FEE2E2;
+    --scale:       #16A34A;
+    --scale-bg:    #DCFCE7;
+    --monitor:     #D97706;
+    --monitor-bg:  #FEF3C7;
+    --shadow:      0 1px 4px rgba(0,0,0,0.08);
+    --radius:      10px;
+    --font-base:   16px;
+    --font-sm:     14px;
+    --font-lg:     18px;
+    --font-xl:     22px;
+    --font-2xl:    28px;
+  }
+  [data-theme="dark"] {
+    --bg:          #111827;
+    --bg-card:     #1F2937;
+    --bg-table:    #1A2332;
+    --bg-header:   #0F1923;
+    --text:        #F9FAFB;
+    --text-muted:  #9CA3AF;
+    --text-header: #F9FAFB;
+    --border:      #374151;
+    --gold-light:  #2A2010;
+    --shadow:      0 1px 4px rgba(0,0,0,0.4);
+  }
+
+  /* ─── Reset & Base ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: var(--font-base);
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+    min-height: 100vh;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    background: var(--bg-header);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    height: 64px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .header-logo {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    color: var(--champagne);
+    letter-spacing: -0.5px;
+  }
+  .header-logo span { color: var(--gold); }
+  .header-subtitle {
+    font-size: var(--font-sm);
+    color: rgba(255,255,255,0.5);
+    flex: 1;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sync-status {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+  }
+  .btn-icon {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: var(--font-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-icon:hover { background: rgba(255,255,255,0.18); }
+  .theme-badge {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ─── Tabs ─── */
+  .tabs {
+    background: var(--bg-card);
+    border-bottom: 2px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 4px;
+    position: sticky;
+    top: 64px;
+    z-index: 99;
+  }
+  .tab {
+    padding: 14px 20px;
+    font-size: var(--font-base);
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    color: var(--text-muted);
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--navy); border-bottom-color: var(--gold); font-weight: 600; }
+  [data-theme="dark"] .tab.active { color: var(--champagne); border-bottom-color: var(--gold); }
+
+  /* ─── Content ─── */
+  .content { padding: 28px 24px; max-width: 1400px; }
+
+  /* ─── Section titles ─── */
+  .section-title {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  /* ─── KPI Cards ─── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+  }
+  .kpi-label {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-size: var(--font-2xl);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-sub {
+    font-size: var(--font-sm);
+    color: var(--text-muted);
+  }
+  .kpi-card.accent { border-top: 3px solid var(--gold); }
+
+  /* ─── Signals panel ─── */
+  .signals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .signal-card {
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border: 1px solid transparent;
+  }
+  .signal-card.kill   { background: var(--kill-bg);    border-color: #FECACA; }
+  .signal-card.scale  { background: var(--scale-bg);   border-color: #BBF7D0; }
+  .signal-card.monitor{ background: var(--monitor-bg); border-color: #FDE68A; }
+  .signal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .kill   .signal-dot { background: var(--kill); }
+  .scale  .signal-dot { background: var(--scale); }
+  .monitor .signal-dot { background: var(--monitor); }
+  .signal-text { font-size: var(--font-sm); color: var(--text); line-height: 1.5; }
+  .signal-text strong { display: block; font-size: var(--font-base); margin-bottom: 2px; }
+
+  /* ─── Toolbar ─── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 9px 14px;
+    font-size: var(--font-base);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--gold); }
+  .btn {
+    padding: 9px 18px;
+    font-size: var(--font-base);
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--navy); color: #fff; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { opacity: 0.88; }
+  .btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-outline:hover { background: var(--bg-table); }
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: var(--font-sm);
+    border-radius: 6px;
+  }
+  .btn-danger { background: var(--kill); color: #fff; }
+  .btn-danger:hover { opacity: 0.85; }
+  .btn-success { background: var(--scale); color: #fff; }
+
+  /* ─── Tables ─── */
+  .table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: auto;
+    box-shadow: var(--shadow);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: var(--font-base); }
+  thead { background: var(--bg-table); }
+  th {
+    padding: 13px 16px;
+    font-size: var(--font-sm);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-table); }
+  .actions-cell { display: flex; gap: 6px; align-items: center; }
+
+  /* ─── Badges ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-kill    { background: var(--kill-bg);    color: var(--kill);    border: 1px solid #FECACA; }
+  .badge-scale   { background: var(--scale-bg);   color: var(--scale);   border: 1px solid #BBF7D0; }
+  .badge-monitor { background: var(--monitor-bg); color: var(--monitor); border: 1px solid #FDE68A; }
+  .badge-active  { background: #DBEAFE; color: #1D4ED8; border: 1px solid #BFDBFE; }
+  .badge-paused  { background: #F3F4F6; color: #6B7280; border: 1px solid var(--border); }
+  .badge-meta    { background: #EDE9FE; color: #6D28D9; border: 1px solid #DDD6FE; }
+  .badge-google  { background: #FEF9C3; color: #854D0E; border: 1px solid #FEF08A; }
+
+  /* ─── Empty state ─── */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-title { font-size: var(--font-lg); font-weight: 600; margin-bottom: 8px; color: var(--text); }
+  .empty-sub { font-size: var(--font-base); margin-bottom: 20px; }
+
+  /* ─── Modal ─── */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border-radius: 14px;
+    padding: 28px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-title {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: var(--font-sm); font-weight: 600; color: var(--text-muted); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 9px 12px;
+    font-size: var(--font-base);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: inherit;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+  /* ─── Settings ─── */
+  .settings-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .settings-card h3 {
+    font-size: var(--font-lg);
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+  .settings-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .settings-row label {
+    min-width: 180px;
+    font-size: var(--font-base);
+    font-weight: 500;
+    color: var(--text);
+  }
+  .settings-row input {
+    flex: 1;
+    min-width: 200px;
+    padding: 8px 12px;
+    font-size: var(--font-base);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+  }
+  .settings-row input:focus { border-color: var(--gold); }
+  .info-box {
+    background: var(--gold-light);
+    border: 1px solid var(--champagne);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: var(--font-sm);
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .info-box strong { color: var(--navy); }
+  [data-theme="dark"] .info-box strong { color: var(--champagne); }
+  .rule-list { list-style: none; }
+  .rule-list li {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: var(--font-sm);
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+  }
+  .rule-list li.kill    { background: var(--kill-bg);    border-color: #FECACA; }
+  .rule-list li.scale   { background: var(--scale-bg);   border-color: #BBF7D0; }
+
+  /* ─── Sample data banner ─── */
+  .sample-banner {
+    display: none;
+    background: #FEF3C7;
+    border: 1px solid #FDE68A;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: var(--font-sm);
+    color: #92400E;
+    margin-bottom: 16px;
+    align-items: center;
+    gap: 10px;
+  }
+  .sample-banner.visible { display: flex; }
+  .sample-banner .btn-sm { background: #D97706; color: #fff; border: none; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 640px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .tabs { gap: 0; }
+    .tab { padding: 12px 12px; font-size: var(--font-sm); }
+    .content { padding: 16px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header class="header">
+  <div class="header-logo">REI <span>Creative</span></div>
+  <div class="header-subtitle">Creative Intelligence Dashboard v5</div>
+  <div class="header-right">
+    <span class="sync-status" id="syncStatus">Not synced</span>
+    <button class="btn-icon" onclick="syncFromSheet()">↻ Sync Sheet</button>
+    <button class="btn-icon" onclick="toggleTheme()">
+      <span id="themeIcon">🌙</span>
+      <span class="theme-badge" id="themeBadge">Auto</span>
+    </button>
+  </div>
+</header>
+
+<!-- ─── TABS ─── -->
+<nav class="tabs">
+  <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
+  <div class="tab" onclick="showTab('campaigns')">📢 Campaigns</div>
+  <div class="tab" onclick="showTab('creatives')">🎨 Creatives</div>
+  <div class="tab" onclick="showTab('leads')">👤 Leads</div>
+  <div class="tab" onclick="showTab('settings')">⚙️ Settings</div>
+</nav>
+
+<!-- ─── CONTENT ─── -->
+<div class="content">
+
+  <!-- SAMPLE BANNER -->
+  <div class="sample-banner" id="sampleBanner">
+    ⚠️ <strong>Sample data is active.</strong> This is demo data — not your real campaigns.
+    <button class="btn btn-sm" onclick="clearSampleData()">Clear Sample Data</button>
+  </div>
+
+  <!-- ═══════════ OVERVIEW TAB ═══════════ -->
+  <div id="tab-overview">
+    <div class="section-title">Overview</div>
+    <div class="section-sub" id="overviewDate">Loading...</div>
+
+    <div class="kpi-grid" id="kpiGrid"></div>
+
+    <div class="section-title" style="font-size:var(--font-lg);margin-bottom:12px;">🚦 Active Signals</div>
+    <div class="signals-grid" id="signalsGrid">
+      <div style="color:var(--text-muted);font-size:var(--font-sm);padding:12px 0;">No signals yet — add campaigns and creatives to see kill/scale recommendations.</div>
+    </div>
+
+    <div class="section-title" style="font-size:var(--font-lg);margin-bottom:12px;">📋 Recent Leads</div>
+    <div class="table-wrap" id="recentLeadsTable"></div>
+  </div>
+
+  <!-- ═══════════ CAMPAIGNS TAB ═══════════ -->
+  <div id="tab-campaigns" style="display:none">
+    <div class="section-title">Campaigns</div>
+    <div class="section-sub">Track all Meta and Google Ads campaigns. Status auto-updates from Sheet sync.</div>
+    <div class="toolbar">
+      <input class="search-input" id="campaignSearch" placeholder="Search campaigns..." oninput="renderCampaigns()">
+      <button class="btn btn-gold" onclick="openModal('campaign')">+ Add Campaign</button>
+      <button class="btn btn-outline" onclick="exportCSV('campaigns')">↓ Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Campaign Name</th>
+            <th>Platform</th>
+            <th>Daily Budget</th>
+            <th>Total Spend</th>
+            <th>Leads</th>
+            <th>CPL</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="campaignsBody"></tbody>
+      </table>
+    </div>
+    <div id="campaignsEmpty" class="empty-state" style="display:none">
+      <div class="empty-icon">📢</div>
+      <div class="empty-title">No campaigns yet</div>
+      <div class="empty-sub">Add your first campaign or load sample data</div>
+      <button class="btn btn-primary" onclick="openModal('campaign')">+ Add Campaign</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ CREATIVES TAB ═══════════ -->
+  <div id="tab-creatives" style="display:none">
+    <div class="section-title">Creatives</div>
+    <div class="section-sub">Hook Rate, CPL, and bookings per ad. Kill/Scale signals fire automatically based on your rules.</div>
+    <div class="toolbar">
+      <input class="search-input" id="creativeSearch" placeholder="Search creatives..." oninput="renderCreatives()">
+      <select id="creativeFilter" onchange="renderCreatives()" style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--text);font-size:var(--font-base);">
+        <option value="">All Signals</option>
+        <option value="KILL">⛔ Kill</option>
+        <option value="SCALE">🚀 Scale</option>
+        <option value="MONITOR">👁 Monitor</option>
+      </select>
+      <button class="btn btn-gold" onclick="openModal('creative')">+ Add Creative</button>
+      <button class="btn btn-outline" onclick="exportCSV('creatives')">↓ Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Creative Name</th>
+            <th>Type</th>
+            <th>Platform</th>
+            <th>Hook Rate</th>
+            <th>CPL (SGD)</th>
+            <th>Bookings</th>
+            <th>Spend (SGD)</th>
+            <th>Signal</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="creativesBody"></tbody>
+      </table>
+    </div>
+    <div id="creativesEmpty" class="empty-state" style="display:none">
+      <div class="empty-icon">🎨</div>
+      <div class="empty-title">No creatives yet</div>
+      <div class="empty-sub">Add your first creative or load sample data</div>
+      <button class="btn btn-primary" onclick="openModal('creative')">+ Add Creative</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ LEADS TAB ═══════════ -->
+  <div id="tab-leads" style="display:none">
+    <div class="section-title">Lead Log</div>
+    <div class="section-sub">Every lead captured from Meta + Google Ads. Source is always preserved even when APIs are connected.</div>
+    <div class="toolbar">
+      <input class="search-input" id="leadSearch" placeholder="Search leads..." oninput="renderLeads()">
+      <select id="leadFilter" onchange="renderLeads()" style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg-card);color:var(--text);font-size:var(--font-base);">
+        <option value="">All Stages</option>
+        <option value="New">New</option>
+        <option value="Contacted">Contacted</option>
+        <option value="Booked">Booked</option>
+        <option value="Attended">Attended</option>
+        <option value="Converted">Converted</option>
+        <option value="Dead">Dead</option>
+      </select>
+      <button class="btn btn-gold" onclick="openModal('lead')">+ Add Lead</button>
+      <button class="btn btn-outline" onclick="exportCSV('leads')">↓ Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Source</th>
+            <th>Campaign</th>
+            <th>Creative</th>
+            <th>Ad Cost (SGD)</th>
+            <th>Stage</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="leadsBody"></tbody>
+      </table>
+    </div>
+    <div id="leadsEmpty" class="empty-state" style="display:none">
+      <div class="empty-icon">👤</div>
+      <div class="empty-title">No leads yet</div>
+      <div class="empty-sub">Add your first lead or load sample data</div>
+      <button class="btn btn-primary" onclick="openModal('lead')">+ Add Lead</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ SETTINGS TAB ═══════════ -->
+  <div id="tab-settings" style="display:none">
+    <div class="section-title">Settings</div>
+    <div class="section-sub">Configure sync, theme, and kill/scale rules.</div>
+
+    <div class="settings-card">
+      <h3>📊 Google Sheet Sync</h3>
+      <div class="info-box">
+        <strong>Sheet is always kept as backup.</strong> Even when Meta + Google Ads APIs are connected via Apps Script, all data is written to the Sheet first. This dashboard reads from the Sheet. Your data is always in Drive.
+      </div>
+      <div class="settings-row">
+        <label>Sheet ID</label>
+        <input id="settingSheetId" placeholder="1Wp3zxkQkB7WzlqOaAQENzwJIKjEqzJ42628Q6JCoU0Y" oninput="saveSettings()">
+      </div>
+      <div class="settings-row">
+        <label>Apps Script Web App URL</label>
+        <input id="settingWebAppUrl" placeholder="https://script.google.com/macros/s/.../exec" oninput="saveSettings()">
+      </div>
+      <div class="info-box" style="margin-top:8px;">
+        <strong>To enable Sheet sync:</strong> In your Google Sheet, go to Extensions → Apps Script → Deploy → Web App. Copy the URL here. Then click <strong>↻ Sync Sheet</strong> in the header.
+      </div>
+      <button class="btn btn-primary" onclick="syncFromSheet()" style="margin-top:8px;">↻ Test Sync Now</button>
+    </div>
+
+    <div class="settings-card">
+      <h3>🌙 Theme Settings</h3>
+      <div class="settings-row">
+        <label>Night mode starts at</label>
+        <input type="number" id="settingNightStart" min="0" max="23" value="19" oninput="saveSettings();applyAutoTheme()">
+        <span style="font-size:var(--font-sm);color:var(--text-muted);">hour (0–23)</span>
+      </div>
+      <div class="settings-row">
+        <label>Night mode ends at</label>
+        <input type="number" id="settingNightEnd" min="0" max="23" value="7" oninput="saveSettings();applyAutoTheme()">
+        <span style="font-size:var(--font-sm);color:var(--text-muted);">hour (0–23)</span>
+      </div>
+      <div class="settings-row">
+        <label>Theme override</label>
+        <select id="settingTheme" onchange="saveSettings();applyThemeOverride()" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:var(--font-base);">
+          <option value="auto">Auto (follow time)</option>
+          <option value="light">Always Light</option>
+          <option value="dark">Always Dark</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>📋 Kill / Scale Rules</h3>
+      <div class="info-box">These rules fire automatically on every creative in the Creatives tab. Rules are based on your confirmed thresholds.</div>
+      <ul class="rule-list">
+        <li class="kill">⛔ <strong>KILL</strong> — Hook Rate &lt;25% after SGD 80 spend</li>
+        <li class="kill">⛔ <strong>KILL</strong> — CPL &gt;2× average CPL after SGD 80 spend</li>
+        <li class="kill">⛔ <strong>KILL</strong> — Zero leads after SGD 150 spend</li>
+        <li class="scale">🚀 <strong>SCALE</strong> — Hook Rate &gt;35% + 3 or more bookings</li>
+      </ul>
+      <div style="font-size:var(--font-sm);color:var(--text-muted);margin-top:10px;">Google Ads account: <strong>185-1788166</strong> &nbsp;|&nbsp; Meta Ads: <strong>act_1467621970951606</strong></div>
+    </div>
+
+    <div class="settings-card">
+      <h3>🧪 Sample Data</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-outline" onclick="loadSampleData()">Load Sample Data</button>
+        <button class="btn btn-danger" onclick="clearSampleData()">Clear Sample Data</button>
+        <button class="btn btn-danger btn-outline" style="border-color:var(--kill);color:var(--kill);" onclick="clearAllData()">⚠️ Clear ALL Data</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- ─── MODALS ─── -->
+
+<!-- Campaign Modal -->
+<div class="modal-backdrop" id="modal-campaign">
+  <div class="modal">
+    <div class="modal-title" id="campaignModalTitle">Add Campaign</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Campaign Name</label>
+        <input id="c-name" placeholder="e.g. LL LGR Agent Jan 2026">
+      </div>
+      <div class="form-group">
+        <label>Platform</label>
+        <select id="c-platform">
+          <option>Meta</option>
+          <option>Google</option>
+          <option>Both</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="c-status">
+          <option>Active</option>
+          <option>Paused</option>
+          <option>Ended</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Daily Budget (SGD)</label>
+        <input id="c-budget" type="number" placeholder="50">
+      </div>
+      <div class="form-group">
+        <label>Total Spend (SGD)</label>
+        <input id="c-spend" type="number" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label>Leads</label>
+        <input id="c-leads" type="number" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label>Bookings</label>
+        <input id="c-bookings" type="number" placeholder="0">
+      </div>
+      <div class="form-group full">
+        <label>Notes</label>
+        <textarea id="c-notes" rows="2" placeholder="Optional notes"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('campaign')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveCampaign()">Save Campaign</button>
+    </div>
+  </div>
+</div>
+
+<!-- Creative Modal -->
+<div class="modal-backdrop" id="modal-creative">
+  <div class="modal">
+    <div class="modal-title" id="creativeModalTitle">Add Creative</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Creative Name</label>
+        <input id="cr-name" placeholder="e.g. Hook_A_AgentStory_v1">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select id="cr-type">
+          <option>Video</option>
+          <option>Image</option>
+          <option>Carousel</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Platform</label>
+        <select id="cr-platform">
+          <option>Meta</option>
+          <option>Google</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Campaign</label>
+        <input id="cr-campaign" placeholder="Campaign name">
+      </div>
+      <div class="form-group">
+        <label>Hook Rate (%)</label>
+        <input id="cr-hookrate" type="number" placeholder="0" step="0.1">
+      </div>
+      <div class="form-group">
+        <label>CPL (SGD)</label>
+        <input id="cr-cpl" type="number" placeholder="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Bookings</label>
+        <input id="cr-bookings" type="number" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label>Total Spend (SGD)</label>
+        <input id="cr-spend" type="number" placeholder="0">
+      </div>
+      <div class="form-group full">
+        <label>Notes</label>
+        <textarea id="cr-notes" rows="2" placeholder="Optional notes"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('creative')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveCreative()">Save Creative</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lead Modal -->
+<div class="modal-backdrop" id="modal-lead">
+  <div class="modal">
+    <div class="modal-title" id="leadModalTitle">Add Lead</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Date</label>
+        <input id="l-date" type="date">
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input id="l-name" placeholder="Lead name">
+      </div>
+      <div class="form-group">
+        <label>Phone / Email</label>
+        <input id="l-contact" placeholder="Optional">
+      </div>
+      <div class="form-group">
+        <label>Source</label>
+        <select id="l-source">
+          <option>Meta</option>
+          <option>Google</option>
+          <option>Organic</option>
+          <option>Referral</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Campaign</label>
+        <input id="l-campaign" placeholder="Campaign name">
+      </div>
+      <div class="form-group">
+        <label>Creative</label>
+        <input id="l-creative" placeholder="Creative name">
+      </div>
+      <div class="form-group">
+        <label>Ad Cost (SGD)</label>
+        <input id="l-cost" type="number" placeholder="0" step="0.01">
+      </div>
+      <div class="form-group">
+        <label>Stage</label>
+        <select id="l-stage">
+          <option>New</option>
+          <option>Contacted</option>
+          <option>Booked</option>
+          <option>Attended</option>
+          <option>Converted</option>
+          <option>Dead</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Notes</label>
+        <textarea id="l-notes" rows="2" placeholder="Optional notes"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('lead')">Cancel</button>
+      <button class="btn btn-gold" onclick="saveLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete Modal -->
+<div class="modal-backdrop" id="modal-confirm">
+  <div class="modal" style="max-width:380px;text-align:center;">
+    <div style="font-size:36px;margin-bottom:12px;">🗑️</div>
+    <div class="modal-title" style="text-align:center;">Delete this entry?</div>
+    <div style="color:var(--text-muted);font-size:var(--font-base);margin-bottom:24px;">This cannot be undone.</div>
+    <div class="modal-actions" style="justify-content:center;">
+      <button class="btn btn-outline" onclick="closeModal('confirm')">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORE_KEY = 'rei_dash_v5';
+let db = { campaigns: [], creatives: [], leads: [], settings: {}, isSample: false };
+let editIndex = { type: null, idx: null };
+
+function loadDB() {
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) db = JSON.parse(raw); } catch(e) {}
+  if (!db.settings) db.settings = {};
+  if (!db.settings.sheetId)    db.settings.sheetId    = '1Wp3zxkQkB7WzlqOaAQENzwJIKjEqzJ42628Q6JCoU0Y';
+  if (!db.settings.webAppUrl)  db.settings.webAppUrl  = '';
+  if (!db.settings.nightStart) db.settings.nightStart = 19;
+  if (!db.settings.nightEnd)   db.settings.nightEnd   = 7;
+  if (!db.settings.themeMode)  db.settings.themeMode  = 'auto';
+  if (!db.campaigns)  db.campaigns  = [];
+  if (!db.creatives)  db.creatives  = [];
+  if (!db.leads)      db.leads      = [];
+}
+function saveDB() { localStorage.setItem(STORE_KEY, JSON.stringify(db)); }
+function saveSettings() {
+  db.settings.sheetId    = document.getElementById('settingSheetId').value.trim() || '1Wp3zxkQkB7WzlqOaAQENzwJIKjEqzJ42628Q6JCoU0Y';
+  db.settings.webAppUrl  = document.getElementById('settingWebAppUrl').value.trim();
+  db.settings.nightStart = parseInt(document.getElementById('settingNightStart').value) || 19;
+  db.settings.nightEnd   = parseInt(document.getElementById('settingNightEnd').value) || 7;
+  db.settings.themeMode  = document.getElementById('settingTheme').value;
+  saveDB();
+}
+function applyAutoTheme() {
+  if (db.settings.themeMode !== 'auto') return;
+  const h = new Date().getHours(), s = db.settings.nightStart||19, e = db.settings.nightEnd||7;
+  const isNight = (s < e) ? (h >= s && h < e) : (h >= s || h < e);
+  setTheme(isNight ? 'dark' : 'light', true);
+}
+function applyThemeOverride() {
+  const mode = db.settings.themeMode;
+  if (mode === 'auto') applyAutoTheme(); else setTheme(mode, false);
+}
+function setTheme(t, auto) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeIcon').textContent = t === 'dark' ? '☀️' : '🌙';
+  document.getElementById('themeBadge').textContent = auto ? 'Auto' : (t === 'dark' ? 'Dark' : 'Light');
+}
+function toggleTheme() {
+  const next = (document.documentElement.getAttribute('data-theme')||'light') === 'dark' ? 'light' : 'dark';
+  db.settings.themeMode = next;
+  document.getElementById('settingTheme').value = next;
+  setTheme(next, false); saveDB();
+}
+function showTab(id) {
+  ['overview','campaigns','creatives','leads','settings'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = (t===id)?'':'none';
+  });
+  document.querySelectorAll('.tab').forEach(el => {
+    el.classList.remove('active');
+    if (el.getAttribute('onclick') && el.getAttribute('onclick').includes("'"+id+"'")) el.classList.add('active');
+  });
+  if (id==='overview')  renderOverview();
+  if (id==='campaigns') renderCampaigns();
+  if (id==='creatives') renderCreatives();
+  if (id==='leads')     renderLeads();
+  if (id==='settings')  populateSettings();
+}
+function getSignal(cr) {
+  const spend=parseFloat(cr.spend)||0, hookRate=parseFloat(cr.hookrate)||0,
+        cpl=parseFloat(cr.cpl)||0, bookings=parseInt(cr.bookings)||0, leads=parseInt(cr.leads)||0;
+  const validCPLs = db.creatives.filter(c=>parseFloat(c.cpl)>0).map(c=>parseFloat(c.cpl));
+  const avgCPL = validCPLs.length ? validCPLs.reduce((a,b)=>a+b,0)/validCPLs.length : 0;
+  if (spend>=150 && leads===0) return 'KILL';
+  if (spend>=80 && hookRate>0 && hookRate<25) return 'KILL';
+  if (spend>=80 && avgCPL>0 && cpl>avgCPL*2) return 'KILL';
+  if (hookRate>35 && bookings>=3) return 'SCALE';
+  return 'MONITOR';
+}
+function signalBadge(sig) {
+  if (sig==='KILL')  return '<span class="badge badge-kill">⛔ Kill</span>';
+  if (sig==='SCALE') return '<span class="badge badge-scale">🚀 Scale</span>';
+  return '<span class="badge badge-monitor">👁 Monitor</span>';
+}
+function renderOverview() {
+  const now = new Date();
+  document.getElementById('overviewDate').textContent = now.toLocaleDateString('en-SG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const totalSpend=db.campaigns.reduce((s,c)=>s+(parseFloat(c.spend)||0),0);
+  const totalLeads=db.leads.length, activeCamps=db.campaigns.filter(c=>c.status==='Active').length;
+  const avgCPL=totalLeads>0?(totalSpend/totalLeads):0;
+  document.getElementById('kpiGrid').innerHTML=`
+    <div class="kpi-card accent"><div class="kpi-label">Total Ad Spend</div><div class="kpi-value">SGD ${totalSpend.toFixed(0)}</div><div class="kpi-sub">Across all campaigns</div></div>
+    <div class="kpi-card accent"><div class="kpi-label">Total Leads</div><div class="kpi-value">${totalLeads}</div><div class="kpi-sub">${db.leads.filter(l=>l.stage==='Booked').length} booked</div></div>
+    <div class="kpi-card accent"><div class="kpi-label">Avg CPL</div><div class="kpi-value">SGD ${avgCPL>0?avgCPL.toFixed(2):'—'}</div><div class="kpi-sub">Cost per lead</div></div>
+    <div class="kpi-card accent"><div class="kpi-label">Active Campaigns</div><div class="kpi-value">${activeCamps}</div><div class="kpi-sub">${db.campaigns.length} total</div></div>
+    <div class="kpi-card accent"><div class="kpi-label">Creatives Running</div><div class="kpi-value">${db.creatives.length}</div><div class="kpi-sub">${db.creatives.filter(c=>getSignal(c)==='KILL').length} flagged to kill</div></div>
+    <div class="kpi-card accent"><div class="kpi-label">Conversions</div><div class="kpi-value">${db.leads.filter(l=>l.stage==='Converted').length}</div><div class="kpi-sub">${db.leads.filter(l=>l.stage==='Attended').length} attended</div></div>`;
+  const signals=db.creatives.map(c=>({...c,signal:getSignal(c)})).filter(c=>c.signal!=='MONITOR');
+  const grid=document.getElementById('signalsGrid');
+  grid.innerHTML=signals.length===0?'<div style="color:var(--text-muted);font-size:var(--font-sm);padding:12px 0;">No kill/scale signals yet.</div>':
+    signals.map(c=>`<div class="signal-card ${c.signal.toLowerCase()}"><div class="signal-dot"></div><div class="signal-text"><strong>${c.signal==='KILL'?'⛔ Kill':'🚀 Scale'}: ${c.name}</strong>Hook ${c.hookrate||0}% · CPL SGD ${c.cpl||0} · ${c.bookings||0} bookings · SGD ${c.spend||0} spend</div></div>`).join('');
+  const recentLeads=[...db.leads].reverse().slice(0,5);
+  document.getElementById('recentLeadsTable').innerHTML=recentLeads.length===0?'<div class="empty-state"><div class="empty-icon">👤</div><div class="empty-title">No leads yet</div></div>':
+    `<table><thead><tr><th>Date</th><th>Name</th><th>Source</th><th>Campaign</th><th>Stage</th></tr></thead><tbody>${recentLeads.map(l=>`<tr><td>${l.date||'—'}</td><td>${l.name||'—'}</td><td>${l.source||'—'}</td><td>${l.campaign||'—'}</td><td><span class="badge badge-active">${l.stage||'New'}</span></td></tr>`).join('')}</tbody></table>`;
+}
+function renderCampaigns() {
+  const q=(document.getElementById('campaignSearch')?.value||'').toLowerCase();
+  const rows=db.campaigns.filter(c=>!q||c.name?.toLowerCase().includes(q)||c.platform?.toLowerCase().includes(q));
+  const tbody=document.getElementById('campaignsBody'), empty=document.getElementById('campaignsEmpty');
+  if(rows.length===0){tbody.innerHTML='';empty.style.display='';document.querySelector('#tab-campaigns .table-wrap').style.display='none';return;}
+  empty.style.display='none';document.querySelector('#tab-campaigns .table-wrap').style.display='';
+  tbody.innerHTML=rows.map(c=>{
+    const leads=parseInt(c.leads)||0,spend=parseFloat(c.spend)||0,cpl=leads>0?(spend/leads).toFixed(2):'—';
+    const platBadge=c.platform==='Meta'?'badge-meta':c.platform==='Google'?'badge-google':'badge-active';
+    const realIdx=db.campaigns.indexOf(c);
+    return `<tr><td><strong>${c.name||'—'}</strong>${c.notes?`<br><span style="font-size:12px;color:var(--text-muted)">${c.notes}</span>`:''}</td><td><span class="badge ${platBadge}">${c.platform||'—'}</span></td><td>SGD ${parseFloat(c.budget||0).toFixed(0)}/day</td><td>SGD ${spend.toFixed(0)}</td><td>${leads}</td><td>${cpl!=='—'?'SGD '+cpl:'—'}</td><td><span class="badge ${c.status==='Active'?'badge-active':'badge-paused'}">${c.status||'Active'}</span></td><td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="editEntry('campaign',${realIdx})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDelete('campaign',${realIdx})">🗑️</button></div></td></tr>`;
+  }).join('');
+}
+function renderCreatives() {
+  const q=(document.getElementById('creativeSearch')?.value||'').toLowerCase();
+  const flt=document.getElementById('creativeFilter')?.value||'';
+  const rows=db.creatives.filter(c=>{const sig=getSignal(c);return(!q||c.name?.toLowerCase().includes(q)||c.campaign?.toLowerCase().includes(q))&&(!flt||sig===flt);});
+  const tbody=document.getElementById('creativesBody'),empty=document.getElementById('creativesEmpty');
+  if(rows.length===0){tbody.innerHTML='';empty.style.display='';document.querySelector('#tab-creatives .table-wrap').style.display='none';return;}
+  empty.style.display='none';document.querySelector('#tab-creatives .table-wrap').style.display='';
+  tbody.innerHTML=rows.map(c=>{
+    const sig=getSignal(c),realIdx=db.creatives.indexOf(c),hookVal=parseFloat(c.hookrate)||0;
+    const hookColor=hookVal>=35?'color:var(--scale)':hookVal<25&&parseFloat(c.spend)>=80?'color:var(--kill)':'';
+    return `<tr><td><strong>${c.name||'—'}</strong>${c.notes?`<br><span style="font-size:12px;color:var(--text-muted)">${c.notes}</span>`:''}</td><td>${c.type||'—'}</td><td><span class="badge ${c.platform==='Meta'?'badge-meta':'badge-google'}">${c.platform||'—'}</span></td><td style="${hookColor};font-weight:600">${hookVal>0?hookVal+'%':'—'}</td><td>${c.cpl>0?'SGD '+parseFloat(c.cpl).toFixed(2):'—'}</td><td>${c.bookings||0}</td><td>SGD ${parseFloat(c.spend||0).toFixed(0)}</td><td>${signalBadge(sig)}</td><td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="editEntry('creative',${realIdx})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDelete('creative',${realIdx})">🗑️</button></div></td></tr>`;
+  }).join('');
+}
+function renderLeads() {
+  const q=(document.getElementById('leadSearch')?.value||'').toLowerCase();
+  const flt=document.getElementById('leadFilter')?.value||'';
+  const rows=db.leads.filter(l=>(!q||l.name?.toLowerCase().includes(q)||l.campaign?.toLowerCase().includes(q)||l.source?.toLowerCase().includes(q))&&(!flt||l.stage===flt));
+  const tbody=document.getElementById('leadsBody'),empty=document.getElementById('leadsEmpty');
+  if(rows.length===0){tbody.innerHTML='';empty.style.display='';document.querySelector('#tab-leads .table-wrap').style.display='none';return;}
+  empty.style.display='none';document.querySelector('#tab-leads .table-wrap').style.display='';
+  const stageColors={New:'badge-active',Contacted:'badge-monitor',Booked:'badge-scale',Attended:'badge-scale',Converted:'badge-success',Dead:'badge-paused'};
+  tbody.innerHTML=rows.map(l=>{
+    const realIdx=db.leads.indexOf(l);
+    return `<tr><td>${l.date||'—'}</td><td><strong>${l.name||'—'}</strong>${l.contact?`<br><span style="font-size:12px;color:var(--text-muted)">${l.contact}</span>`:''}</td><td>${l.source||'—'}</td><td>${l.campaign||'—'}</td><td>${l.creative||'—'}</td><td>${l.cost>0?'SGD '+parseFloat(l.cost).toFixed(2):'—'}</td><td><span class="badge ${stageColors[l.stage]||'badge-active'}">${l.stage||'New'}</span></td><td><div class="actions-cell"><button class="btn btn-outline btn-sm" onclick="editEntry('lead',${realIdx})">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="confirmDelete('lead',${realIdx})">🗑️</button></div></td></tr>`;
+  }).join('');
+}
+function openModal(type) {
+  editIndex={type,idx:null}; clearForm(type);
+  if(type==='lead') document.getElementById('l-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('modal-'+type).classList.add('open');
+  const titles={campaign:'Add Campaign',creative:'Add Creative',lead:'Add Lead'};
+  const t=document.getElementById(type+'ModalTitle'); if(t) t.textContent=titles[type];
+}
+function closeModal(type){document.getElementById('modal-'+type).classList.remove('open');}
+function clearForm(type){
+  const ids={campaign:['c-name','c-platform','c-status','c-budget','c-spend','c-leads','c-bookings','c-notes'],creative:['cr-name','cr-type','cr-platform','cr-campaign','cr-hookrate','cr-cpl','cr-bookings','cr-spend','cr-notes'],lead:['l-date','l-name','l-contact','l-source','l-campaign','l-creative','l-cost','l-stage','l-notes']};
+  (ids[type]||[]).forEach(id=>{const el=document.getElementById(id);if(el)el.value=el.tagName==='SELECT'?el.options[0]?.value:'';});
+}
+function saveCampaign(){
+  const obj={name:document.getElementById('c-name').value.trim(),platform:document.getElementById('c-platform').value,status:document.getElementById('c-status').value,budget:document.getElementById('c-budget').value,spend:document.getElementById('c-spend').value,leads:document.getElementById('c-leads').value,bookings:document.getElementById('c-bookings').value,notes:document.getElementById('c-notes').value.trim()};
+  if(!obj.name){alert('Campaign name is required.');return;}
+  if(editIndex.idx!==null)db.campaigns[editIndex.idx]=obj; else db.campaigns.push(obj);
+  saveDB();closeModal('campaign');renderCampaigns();renderOverview();
+}
+function saveCreative(){
+  const obj={name:document.getElementById('cr-name').value.trim(),type:document.getElementById('cr-type').value,platform:document.getElementById('cr-platform').value,campaign:document.getElementById('cr-campaign').value.trim(),hookrate:document.getElementById('cr-hookrate').value,cpl:document.getElementById('cr-cpl').value,bookings:document.getElementById('cr-bookings').value,leads:document.getElementById('cr-bookings').value,spend:document.getElementById('cr-spend').value,notes:document.getElementById('cr-notes').value.trim()};
+  if(!obj.name){alert('Creative name is required.');return;}
+  if(editIndex.idx!==null)db.creatives[editIndex.idx]=obj; else db.creatives.push(obj);
+  saveDB();closeModal('creative');renderCreatives();renderOverview();
+}
+function saveLead(){
+  const obj={date:document.getElementById('l-date').value,name:document.getElementById('l-name').value.trim(),contact:document.getElementById('l-contact').value.trim(),source:document.getElementById('l-source').value,campaign:document.getElementById('l-campaign').value.trim(),creative:document.getElementById('l-creative').value.trim(),cost:document.getElementById('l-cost').value,stage:document.getElementById('l-stage').value,notes:document.getElementById('l-notes').value.trim()};
+  if(!obj.name){alert('Lead name is required.');return;}
+  if(editIndex.idx!==null)db.leads[editIndex.idx]=obj; else db.leads.push(obj);
+  saveDB();closeModal('lead');renderLeads();renderOverview();
+}
+function editEntry(type,idx){
+  editIndex={type,idx}; const item=db[type+'s'][idx];
+  document.getElementById('modal-'+type).classList.add('open');
+  const titleMap={campaign:'campaignModalTitle',creative:'creativeModalTitle',lead:'leadModalTitle'};
+  document.getElementById(titleMap[type]).textContent='Edit '+type.charAt(0).toUpperCase()+type.slice(1);
+  if(type==='campaign'){document.getElementById('c-name').value=item.name||'';document.getElementById('c-platform').value=item.platform||'Meta';document.getElementById('c-status').value=item.status||'Active';document.getElementById('c-budget').value=item.budget||'';document.getElementById('c-spend').value=item.spend||'';document.getElementById('c-leads').value=item.leads||'';document.getElementById('c-bookings').value=item.bookings||'';document.getElementById('c-notes').value=item.notes||'';}
+  if(type==='creative'){document.getElementById('cr-name').value=item.name||'';document.getElementById('cr-type').value=item.type||'Video';document.getElementById('cr-platform').value=item.platform||'Meta';document.getElementById('cr-campaign').value=item.campaign||'';document.getElementById('cr-hookrate').value=item.hookrate||'';document.getElementById('cr-cpl').value=item.cpl||'';document.getElementById('cr-bookings').value=item.bookings||'';document.getElementById('cr-spend').value=item.spend||'';document.getElementById('cr-notes').value=item.notes||'';}
+  if(type==='lead'){document.getElementById('l-date').value=item.date||'';document.getElementById('l-name').value=item.name||'';document.getElementById('l-contact').value=item.contact||'';document.getElementById('l-source').value=item.source||'Meta';document.getElementById('l-campaign').value=item.campaign||'';document.getElementById('l-creative').value=item.creative||'';document.getElementById('l-cost').value=item.cost||'';document.getElementById('l-stage').value=item.stage||'New';document.getElementById('l-notes').value=item.notes||'';}
+}
+function confirmDelete(type,idx){
+  document.getElementById('modal-confirm').classList.add('open');
+  document.getElementById('confirmDeleteBtn').onclick=()=>{db[type+'s'].splice(idx,1);saveDB();closeModal('confirm');if(type==='campaign')renderCampaigns();if(type==='creative')renderCreatives();if(type==='lead')renderLeads();renderOverview();};
+}
+document.querySelectorAll('.modal-backdrop').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');}));
+function populateSettings(){
+  document.getElementById('settingSheetId').value=db.settings.sheetId||'';
+  document.getElementById('settingWebAppUrl').value=db.settings.webAppUrl||'';
+  document.getElementById('settingNightStart').value=db.settings.nightStart||19;
+  document.getElementById('settingNightEnd').value=db.settings.nightEnd||7;
+  document.getElementById('settingTheme').value=db.settings.themeMode||'auto';
+}
+async function syncFromSheet(){
+  const sheetId=db.settings.sheetId, webApp=db.settings.webAppUrl;
+  if(!sheetId&&!webApp){alert('No Sheet ID or Apps Script URL set. Go to Settings to configure.');return;}
+  document.getElementById('syncStatus').textContent='Syncing...';
+  if(webApp){try{const res=await fetch(webApp+'?action=getData');if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json();if(data.campaigns)db.campaigns=data.campaigns;if(data.creatives)db.creatives=data.creatives;if(data.leads)db.leads=data.leads;saveDB();document.getElementById('syncStatus').textContent='Synced '+new Date().toLocaleTimeString('en-SG');renderOverview();return;}catch(e){console.warn('Apps Script sync failed:',e);}}
+  try{const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Campaign_Data`;const res=await fetch(url);const text=await res.text();const json=JSON.parse(text.replace(/^[^\(]+\(/,'').replace(/\);?\s*$/,''));const rows=json.table?.rows||[];if(rows.length>0){db.campaigns=rows.slice(1).map(r=>({name:r.c[0]?.v||'',platform:r.c[1]?.v||'',status:r.c[2]?.v||'Active',budget:r.c[3]?.v||0,spend:r.c[4]?.v||0,leads:r.c[5]?.v||0,bookings:r.c[6]?.v||0}));saveDB();document.getElementById('syncStatus').textContent='Synced (Sheet) '+new Date().toLocaleTimeString('en-SG');renderOverview();return;}}catch(e){console.warn('Sheet sync failed:',e);}
+  document.getElementById('syncStatus').textContent='Sync failed — check settings';
+}
+function loadSampleData(){
+  db.campaigns=[{name:'LL LGR Agent Launch Jan 2026',platform:'Meta',status:'Active',budget:50,spend:320,leads:12,bookings:4,notes:'Main campaign'},{name:'LL LGR Agent Retargeting',platform:'Meta',status:'Active',budget:20,spend:110,leads:3,bookings:1,notes:'Warm audiences'},{name:'MAS Agent Awareness',platform:'Google',status:'Active',budget:30,spend:195,leads:6,bookings:2,notes:'Brand search'},{name:'MAS Agent Remarketing',platform:'Google',status:'Paused',budget:25,spend:85,leads:2,bookings:0,notes:'Paused for review'}];
+  db.creatives=[{name:'Hook_A_AgentStory_v1',type:'Video',platform:'Meta',campaign:'LL LGR Agent Launch',hookrate:38,cpl:26.7,bookings:4,leads:4,spend:107,notes:'Best performer'},{name:'Hook_B_ResultsProof_v1',type:'Video',platform:'Meta',campaign:'LL LGR Agent Launch',hookrate:19,cpl:95,bookings:0,leads:2,spend:190,notes:'Poor hook'},{name:'Carousel_Framework_v2',type:'Carousel',platform:'Meta',campaign:'LL LGR Agent Launch',hookrate:28,cpl:34.5,bookings:2,leads:3,spend:103,notes:'Stable'},{name:'GSearch_Brand_v1',type:'Image',platform:'Google',campaign:'MAS Agent Awareness',hookrate:0,cpl:32.5,bookings:2,leads:6,spend:195,notes:'Search text ad'}];
+  db.leads=[{date:'2026-06-10',name:'Sarah Lim',contact:'+65 9123 4567',source:'Meta',campaign:'LL LGR Agent Launch',creative:'Hook_A_AgentStory_v1',cost:26.7,stage:'Booked'},{date:'2026-06-11',name:'David Tan',contact:'+65 9234 5678',source:'Meta',campaign:'LL LGR Agent Launch',creative:'Carousel_Framework_v2',cost:34.5,stage:'Attended'},{date:'2026-06-12',name:'Michelle Ng',contact:'+65 9345 6789',source:'Google',campaign:'MAS Agent Awareness',creative:'GSearch_Brand_v1',cost:32.5,stage:'Converted'},{date:'2026-06-13',name:'James Koh',contact:'+65 9456 7890',source:'Meta',campaign:'LL LGR Agent Launch',creative:'Hook_A_AgentStory_v1',cost:26.7,stage:'New'},{date:'2026-06-14',name:'Priya Raj',contact:'+65 9567 8901',source:'Meta',campaign:'LL LGR Agent Retargeting',creative:'Hook_A_AgentStory_v1',cost:26.7,stage:'Contacted'}];
+  db.isSample=true; saveDB();
+  document.getElementById('sampleBanner').classList.add('visible');
+  renderOverview();renderCampaigns();renderCreatives();renderLeads();
+}
+function clearSampleData(){
+  if(!db.isSample&&!confirm('Clear all data?'))return;
+  db.campaigns=[];db.creatives=[];db.leads=[];db.isSample=false;saveDB();
+  document.getElementById('sampleBanner').classList.remove('visible');
+  renderOverview();renderCampaigns();renderCreatives();renderLeads();
+}
+function clearAllData(){if(!confirm('CLEAR ALL DATA?'))return;clearSampleData();}
+function exportCSV(type){
+  const headers={campaigns:['Name','Platform','Status','Budget','Spend','Leads','Bookings','Notes'],creatives:['Name','Type','Platform','Campaign','HookRate%','CPL','Bookings','Spend','Notes'],leads:['Date','Name','Contact','Source','Campaign','Creative','Cost','Stage','Notes']};
+  const fields={campaigns:['name','platform','status','budget','spend','leads','bookings','notes'],creatives:['name','type','platform','campaign','hookrate','cpl','bookings','spend','notes'],leads:['date','name','contact','source','campaign','creative','cost','stage','notes']};
+  const rows=[headers[type],...db[type+'s'].map(r=>fields[type].map(f=>r[f]||''))];
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`REI_${type}_${new Date().toISOString().split('T')[0]}.csv`;a.click();
+}
+function init(){loadDB();applyThemeOverride();if(db.isSample)document.getElementById('sampleBanner').classList.add('visible');renderOverview();setInterval(applyAutoTheme,60000);}
+init();
+</script>
+</body>
+</html>

@@ -15,6 +15,19 @@
 !/PROJECT_LOCATIONS.md
 !/START_HERE.md
 !/00_AI_OPERATING_SYSTEM/
+!/03_ACTIVE_CAMPAIGNS/
+
+# ── 03_ACTIVE_CAMPAIGNS: track the strategy layer, not the media ──
+# Campaign markdown/html is ~1.5MB and worth full version history.
+# Campaign video is ~4.9GB and is NOT — its home is the Asset Library
+# (constitution §9 rule 7: bulk media does not live in the AI OS).
+# Video/images/audio are already excluded globally further down.
+# These Office binaries are scoped to campaigns only — legacy .docx already
+# tracked inside 00_AI_OPERATING_SYSTEM/99_ARCHIVE must stay tracked.
+03_ACTIVE_CAMPAIGNS/**/*.docx
+03_ACTIVE_CAMPAIGNS/**/*.xlsx
+03_ACTIVE_CAMPAIGNS/**/*.doc
+03_ACTIVE_CAMPAIGNS/**/*.xls
 
 # ── Never tracked, anywhere ──
 desktop.ini
@@ -40,3 +53,10 @@ Thumbs.db
 *.jpg
 *.jpeg
 *.psd
+
+# Extension-less Word document (verified: "Microsoft Word 2007+" by content).
+# Excluded because it is a binary, not text. NOTE FOR EDMUND: this file has lost
+# its .docx extension so nothing opens it by double-click — it should be renamed
+# or (better, per constitution §9 rule 1) converted to markdown, after which this
+# line can be deleted.
+03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_LegacyLaunch_Meta_Wave1/01_CREATIVE/Scripts_Library/ANGLE_05_PORTFOLIO_SEQUENCE/1-LL_ANGLE1_OWNERSHIP_LIABILITY_v1

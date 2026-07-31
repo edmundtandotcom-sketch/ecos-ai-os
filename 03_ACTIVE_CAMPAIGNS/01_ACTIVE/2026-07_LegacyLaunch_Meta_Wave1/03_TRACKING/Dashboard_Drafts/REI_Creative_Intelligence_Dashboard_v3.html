@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REI Creative Intelligence Dashboard v3</title>
+<style>
+  :root {
+    --navy: #1A1A2E;
+    --navy2: #16213E;
+    --navy3: #0F3460;
+    --red: #E94560;
+    --gold: #F5A623;
+    --green: #27AE60;
+    --green-dim: #1E8449;
+    --orange: #F39C12;
+    --purple: #8E44AD;
+    --text: #E8E8F0;
+    --text-dim: #9090A8;
+    --card: #1E1E3A;
+    --border: #2A2A4A;
+    --kill-bg: rgba(233,69,96,0.15);
+    --scale-bg: rgba(39,174,96,0.15);
+    --watch-bg: rgba(243,156,18,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px; }
+
+  /* HEADER */
+  .top-bar { background: var(--navy2); border-bottom: 2px solid var(--red); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 18px; font-weight: 700; color: var(--red); letter-spacing: 1px; }
+  .logo span { color: var(--gold); }
+  .top-meta { color: var(--text-dim); font-size: 11px; text-align: right; }
+  .top-meta strong { color: var(--text); }
+  .sync-btn { background: var(--red); color: #fff; border: none; padding: 7px 16px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; margin-left: 16px; }
+  .sync-btn:hover { background: #C0392B; }
+  .sync-btn.loading { background: var(--navy3); cursor: not-allowed; }
+
+  /* TABS */
+  .tab-bar { background: var(--navy2); padding: 0 24px; border-bottom: 1px solid var(--border); display: flex; gap: 2px; overflow-x: auto; }
+  .tab { padding: 10px 18px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 600; font-size: 12px; color: var(--text-dim); white-space: nowrap; transition: all .2s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--red); border-bottom-color: var(--red); }
+
+  /* MAIN */
+  .main { padding: 20px 24px; max-width: 1600px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* CARDS */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .card-title .badge { background: var(--red); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin-left: 6px; }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+  /* KPI TILES */
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; text-align: center; }
+  .kpi-value { font-size: 26px; font-weight: 700; color: var(--red); }
+  .kpi-label { font-size: 10px; color: var(--text-dim); margin-top: 3px; text-transform: uppercase; letter-spacing: .5px; }
+  .kpi-sub { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .kpi.green .kpi-value { color: var(--green); }
+  .kpi.gold .kpi-value { color: var(--gold); }
+  .kpi.orange .kpi-value { color: var(--orange); }
+
+  /* NOTIFICATIONS */
+  .notif { border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+  .notif.kill { background: var(--kill-bg); border-left: 3px solid var(--red); }
+  .notif.scale { background: var(--scale-bg); border-left: 3px solid var(--green); }
+  .notif.watch { background: var(--watch-bg); border-left: 3px solid var(--gold); }
+  .notif-icon { font-size: 14px; margin-top: 1px; }
+  .notif-text { flex: 1; }
+  .notif-title { font-weight: 700; font-size: 12px; }
+  .notif-desc { color: var(--text-dim); font-size: 11px; margin-top: 2px; }
+
+  /* TABLES */
+  .tbl-wrap { overflow-x: auto; border-radius: 6px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th { background: var(--navy3); color: var(--text); padding: 9px 10px; text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; position: sticky; top: 0; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: rgba(255,255,255,0.03); }
+  tbody td { padding: 8px 10px; vertical-align: middle; }
+  .td-name { font-weight: 600; color: var(--text); }
+  .td-dim { color: var(--text-dim); }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; }
+  .pill-kill { background: var(--kill-bg); color: var(--red); border: 1px solid var(--red); }
+  .pill-scale { background: var(--scale-bg); color: var(--green); border: 1px solid var(--green); }
+  .pill-watch { background: var(--watch-bg); color: var(--gold); border: 1px solid var(--gold); }
+  .pill-cold { background: rgba(52,152,219,.15); color: #3498DB; border: 1px solid #3498DB; }
+  .pill-warm { background: rgba(231,76,60,.15); color: #E74C3C; border: 1px solid #E74C3C; }
+  .pill-a { background: rgba(245,166,35,.1); color: var(--gold); border: 1px solid var(--gold); }
+  .pill-h { background: rgba(142,68,173,.15); color: #B97AC3; border: 1px solid #8E44AD; }
+  .num-good { color: var(--green); font-weight: 700; }
+  .num-bad { color: var(--red); font-weight: 700; }
+  .num-warn { color: var(--gold); font-weight: 700; }
+
+  /* MATRIX */
+  .matrix { overflow-x: auto; }
+  .matrix table { min-width: 900px; }
+  .matrix thead th:first-child { width: 120px; }
+  .matrix td { padding: 5px 6px; font-size: 10px; text-align: center; }
+  .matrix-cell { border-radius: 4px; padding: 4px 6px; font-size: 10px; }
+  .mc-a { background: rgba(245,166,35,.2); color: var(--gold); }
+  .mc-v { background: rgba(52,152,219,.2); color: #5DADE2; }
+  .mc-empty { color: var(--border); }
+
+  /* RULES BOX */
+  .rule-box { border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; }
+  .rule-box.kill-rule { background: var(--kill-bg); border: 1px solid rgba(233,69,96,.3); }
+  .rule-box.scale-rule { background: var(--scale-bg); border: 1px solid rgba(39,174,96,.3); }
+  .rule-box.watch-rule { background: var(--watch-bg); border: 1px solid rgba(243,156,18,.3); }
+  .rule-title { font-weight: 700; font-size: 12px; margin-bottom: 6px; }
+  .rule-title.kill { color: var(--red); }
+  .rule-title.scale { color: var(--green); }
+  .rule-title.watch { color: var(--gold); }
+  .rule-item { display: flex; align-items: baseline; gap: 6px; margin: 4px 0; font-size: 11px; color: var(--text-dim); }
+  .rule-item::before { content: "→"; color: var(--text-dim); flex-shrink: 0; }
+
+  /* LAYER BADGE */
+  .layer-row { display: flex; gap: 8px; margin-bottom: 14px; align-items: center; flex-wrap: wrap; }
+  .layer-badge { border-radius: 4px; padding: 4px 12px; font-size: 11px; font-weight: 700; }
+  .layer-what { background: rgba(245,166,35,.2); color: var(--gold); border: 1px solid var(--gold); }
+  .layer-how { background: rgba(52,152,219,.2); color: #5DADE2; border: 1px solid #3498DB; }
+  .layer-why { background: rgba(142,68,173,.2); color: #B97AC3; border: 1px solid #8E44AD; }
+  .layer-arrow { color: var(--border); font-size: 16px; }
+
+  /* FORM ELEMENTS */
+  input, select, textarea { background: var(--navy); border: 1px solid var(--border); color: var(--text); padding: 7px 10px; border-radius: 4px; font-size: 12px; font-family: inherit; }
+  input:focus, select:focus { outline: none; border-color: var(--red); }
+  label { font-size: 11px; color: var(--text-dim); display: block; margin-bottom: 4px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-row.wide { grid-template-columns: 1fr 1fr; }
+  .btn { padding: 8px 16px; border-radius: 4px; border: none; cursor: pointer; font-weight: 600; font-size: 12px; font-family: inherit; }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: #C0392B; }
+  .btn-green { background: var(--green-dim); color: #fff; }
+  .btn-green:hover { background: #196F3D; }
+  .btn-outline { background: transparent; color: var(--text-dim); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--text); color: var(--text); }
+
+  /* SETTINGS */
+  .settings-group { margin-bottom: 20px; }
+  .settings-title { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .settings-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .settings-row label { width: 220px; flex-shrink: 0; color: var(--text-dim); font-size: 12px; margin: 0; }
+  .settings-row input { width: 120px; }
+  .settings-desc { color: var(--text-dim); font-size: 11px; flex: 1; }
+
+  /* LEGEND */
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-dim); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* SHEET STATUS */
+  .sheet-status { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .status-dot.ok { background: var(--green); }
+  .status-dot.err { background: var(--red); }
+  .status-dot.warn { background: var(--gold); }
+  .status-dot.idle { background: var(--text-dim); }
+
+  /* SCROLLABLE SECTION */
+  .scroll-y { max-height: 420px; overflow-y: auto; }
+  .scroll-y::-webkit-scrollbar { width: 4px; }
+  .scroll-y::-webkit-scrollbar-track { background: var(--navy); }
+  .scroll-y::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* SECTION HEADER */
+  .sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .sec-title { font-size: 15px; font-weight: 700; color: var(--text); }
+  .sec-sub { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  /* PROGRESS BAR */
+  .pbar-wrap { background: var(--border); border-radius: 3px; height: 5px; margin-top: 4px; }
+  .pbar { height: 5px; border-radius: 3px; }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+  /* TOOLTIP */
+  .tooltip { position: relative; cursor: help; }
+  .tooltip::after { content: attr(data-tip); position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background: #000; color: #fff; padding: 5px 8px; border-radius: 4px; font-size: 10px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 100; }
+  .tooltip:hover::after { opacity: 1; }
+
+  /* EMPTY STATE */
+  .empty { text-align: center; padding: 40px 20px; color: var(--text-dim); }
+  .empty-icon { font-size: 32px; margin-bottom: 10px; }
+  .empty-text { font-size: 13px; }
+
+  @media (max-width: 900px) {
+    .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div>
+    <div class="logo">REI <span>Creative Intelligence</span></div>
+    <div style="font-size:10px;color:var(--text-dim);margin-top:3px;">Singapore Real Estate Insider · Millionaire Advisory System™ · v3.0</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="sheet-status">
+      <div class="status-dot idle" id="sheetDot"></div>
+      <span id="sheetStatus" style="color:var(--text-dim);">Google Sheets: not connected</span>
+    </div>
+    <div class="top-meta">
+      <div>Last sync: <strong id="lastSync">—</strong></div>
+      <div>Account: <strong>1467621970951606</strong></div>
+    </div>
+    <button class="sync-btn" onclick="syncFromSheets()">⟳ Sync Data</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
+  <div class="tab" onclick="showTab('creative')">🧠 Creative System</div>
+  <div class="tab" onclick="showTab('inventory')">📋 Creative Inventory</div>
+  <div class="tab" onclick="showTab('performance')">📈 Performance</div>
+  <div class="tab" onclick="showTab('leadlog')">👥 Lead Log</div>
+  <div class="tab" onclick="showTab('killscale')">⚡ Kill / Scale Log</div>
+  <div class="tab" onclick="showTab('settings')">⚙️ Settings</div>
+</div>
+
+<div class="main">
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 1 — OVERVIEW
+═════════════════════════════════════════════════════════ -->
+<div id="tab-overview" class="panel active">
+
+  <!-- KPIs -->
+  <div class="grid-5" style="margin-bottom:16px;">
+    <div class="kpi"><div class="kpi-value" id="kpi-ads-live">—</div><div class="kpi-label">Active Ads</div></div>
+    <div class="kpi gold"><div class="kpi-value" id="kpi-spend">—</div><div class="kpi-label">Total Spend (SGD)</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpi-leads">—</div><div class="kpi-label">Total Leads</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpi-cpl">—</div><div class="kpi-label">Avg CPL (SGD)</div></div>
+    <div class="kpi"><div class="kpi-value" id="kpi-hookrate">—</div><div class="kpi-label tooltip" data-tip="25% Watch Time ÷ Impressions">Avg Hook Rate</div></div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- NOTIFICATIONS -->
+    <div class="card">
+      <div class="card-title">🚨 Action Signals <span class="badge" id="notif-count">0</span></div>
+      <div id="notif-area">
+        <div class="notif watch">
+          <div class="notif-icon">⚡</div>
+          <div class="notif-text">
+            <div class="notif-title">No data yet</div>
+            <div class="notif-desc">Sync from Google Sheets or enter performance data to see kill / scale / watch signals here.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN BREAKDOWN -->
+    <div class="card">
+      <div class="card-title">🎯 Campaign Structure (3-Track)</div>
+      <div class="grid-3" style="gap:10px;margin-bottom:12px;">
+        <div style="background:rgba(52,152,219,.1);border:1px solid rgba(52,152,219,.3);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:20px;font-weight:700;color:#5DADE2;">60%</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:3px;">Campaign 1</div>
+          <div style="font-size:10px;color:var(--text);margin-top:2px;">Video → LP<br>Cold</div>
+        </div>
+        <div style="background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:20px;font-weight:700;color:var(--gold);">30%</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:3px;">Campaign 2</div>
+          <div style="font-size:10px;color:var(--text);margin-top:2px;">Checklist → Lead Form<br>Cold</div>
+        </div>
+        <div style="background:rgba(233,69,96,.1);border:1px solid rgba(233,69,96,.3);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:20px;font-weight:700;color:var(--red);">10%</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:3px;">Campaign 3</div>
+          <div style="font-size:10px;color:var(--text);margin-top:2px;">Retargeting<br>Warm</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);">Campaign: <strong style="color:var(--text);">Legacy Launch (SI-05)</strong> · Account: <strong style="color:var(--gold);">1467621970951606</strong></div>
+    </div>
+
+  </div>
+
+  <!-- KILL/SCALE RULES REMINDER -->
+  <div class="grid-3">
+    <div class="rule-box kill-rule">
+      <div class="rule-title kill">⛔ KILL Rule</div>
+      <div class="rule-item">Hook Rate &lt; 25% after SGD <strong id="r-kill-spend">80</strong> spend</div>
+      <div class="rule-item">CPL &gt; 2× avg after SGD <strong id="r-kill-spend2">80</strong> spend</div>
+      <div class="rule-item">Zero leads after SGD <strong id="r-zero-spend">150</strong> spend</div>
+    </div>
+    <div class="rule-box scale-rule">
+      <div class="rule-title scale">🚀 SCALE Rule</div>
+      <div class="rule-item">Hook Rate ≥ <strong id="r-scale-hook">35%</strong></div>
+      <div class="rule-item">CPL on target</div>
+      <div class="rule-item">3+ bookings confirmed</div>
+      <div class="rule-item">→ Duplicate ad set, +20% budget per 48h</div>
+    </div>
+    <div class="rule-box watch-rule">
+      <div class="rule-title watch">👁 WATCH Rule</div>
+      <div class="rule-item">Hook Rate 25–35%</div>
+      <div class="rule-item">CPL within range</div>
+      <div class="rule-item">Leads &gt; 0 but not at target</div>
+      <div class="rule-item">→ Monitor for 48h before action</div>
+    </div>
+  </div>
+
+  <!-- TOP PERFORMERS -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🏆 Top Performers by Hook Rate</div>
+    <div class="tbl-wrap">
+      <table id="top-perf-table">
+        <thead><tr>
+          <th>Ad</th><th>Angle</th><th>System</th>
+          <th class="tooltip" data-tip="25% Watch Time ÷ Impressions">Hook Rate</th>
+          <th>Spend</th><th>Leads</th><th>CPL</th><th>Signal</th>
+        </tr></thead>
+        <tbody id="top-perf-body">
+          <tr><td colspan="8" class="empty"><div class="empty-icon">📊</div><div class="empty-text">No performance data yet. Sync from Google Sheets.</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end overview -->
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 2 — CREATIVE SYSTEM (10A × 10S × 10H)
+═════════════════════════════════════════════════════════ -->
+<div id="tab-creative" class="panel">
+
+  <div class="sec-header">
+    <div>
+      <div class="sec-title">Creative System Foundation</div>
+      <div class="sec-sub">The permanent 3-layer framework for all REI ad creation</div>
+    </div>
+  </div>
+
+  <div class="layer-row">
+    <span class="layer-badge layer-what">WHAT — 10 Angles</span>
+    <span class="layer-arrow">×</span>
+    <span class="layer-badge layer-how">HOW — 10 Systems</span>
+    <span class="layer-arrow">×</span>
+    <span class="layer-badge layer-why">WHY — 10 Hooks</span>
+    <span style="color:var(--text-dim);font-size:11px;margin-left:8px;">= Creative brief for every ad</span>
+  </div>
+
+  <div class="grid-3">
+
+    <!-- ANGLES (WHAT) -->
+    <div class="card">
+      <div class="card-title" style="color:var(--gold);">🟡 WHAT — 10 Ad Angles</div>
+      <div style="font-size:10px;color:var(--text-dim);margin-bottom:10px;">Content direction — the story told in each ad</div>
+      <div id="angle-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- SYSTEMS (HOW) -->
+    <div class="card">
+      <div class="card-title" style="color:#5DADE2;">🔵 HOW — 10 Ad Systems</div>
+      <div style="font-size:10px;color:var(--text-dim);margin-bottom:10px;">Visual creative format — how the ad looks and is structured</div>
+      <div id="system-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- HOOKS (WHY) -->
+    <div class="card">
+      <div class="card-title" style="color:#B97AC3;">🟣 WHY — 10 Hook Psychologies</div>
+      <div style="font-size:10px;color:var(--text-dim);margin-bottom:10px;">Source: 10 Ad System Google Doc · Emotional trigger mechanism</div>
+      <div id="hook-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ANGLE × SYSTEM × HOOK MATRIX -->
+  <div class="card">
+    <div class="card-title">📐 Angle × System Matrix (with Hook Psychology)</div>
+    <div style="font-size:10px;color:var(--text-dim);margin-bottom:12px;">Maps creative assignments · A = Assigned | V = Video · Colour = phase</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--gold);"></div>Assigned (cold)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#5DADE2;"></div>Video</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#8E44AD;"></div>Hook reference</div>
+    </div>
+    <div class="matrix scroll-y">
+      <table id="matrix-table">
+        <!-- Populated by JS -->
+      </table>
+    </div>
+  </div>
+
+</div><!-- end creative -->
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 3 — CREATIVE INVENTORY
+═════════════════════════════════════════════════════════ -->
+<div id="tab-inventory" class="panel">
+  <div class="sec-header">
+    <div>
+      <div class="sec-title">Creative Inventory</div>
+      <div class="sec-sub">All ads registered in the system · Click row to see performance</div>
+    </div>
+    <button class="btn btn-red" onclick="openAddCreative()">+ Add Creative</button>
+  </div>
+
+  <div class="legend" style="margin-bottom:12px;">
+    <span style="font-size:11px;color:var(--text-dim);font-weight:600;">Legend:</span>
+    <div class="legend-item"><span class="pill pill-cold">COLD</span> Cold-phase system (SYS01–05)</div>
+    <div class="legend-item"><span class="pill pill-warm">WARM</span> Warm-phase system (SYS06–10)</div>
+    <div class="legend-item"><span class="pill pill-a">A01</span> Angle code</div>
+    <div class="legend-item"><span class="pill pill-h">H01</span> Hook psychology</div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap">
+      <table id="inventory-table">
+        <thead><tr>
+          <th>#</th><th>Ad Name / File</th><th>Angle</th><th>System</th><th>Hook</th>
+          <th>Format</th><th>Phase</th><th>Campaign</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody id="inventory-body">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 4 — PERFORMANCE
+═════════════════════════════════════════════════════════ -->
+<div id="tab-performance" class="panel">
+
+  <div class="sec-header">
+    <div>
+      <div class="sec-title">Performance Tracker</div>
+      <div class="sec-sub">Meta data via Google Sheets sync · Quality metrics pulled from Lead Log once entered</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <select id="perf-filter-campaign" style="font-size:11px;" onchange="renderPerformance()">
+        <option value="">All Campaigns</option>
+        <option>Campaign 1 — Video</option>
+        <option>Campaign 2 — Checklist</option>
+        <option>Campaign 3 — Retargeting</option>
+      </select>
+      <button class="btn btn-outline" onclick="addManualPerfRow()">+ Add Row</button>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span style="font-size:11px;color:var(--text-dim);font-weight:600;">Columns:</span>
+    <div class="legend-item"><div class="legend-dot" style="background:#5DADE2;"></div>From Meta API (auto via Sheets)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#B97AC3;"></div>From Lead Log (manual input required)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green);"></div>Calculated automatically once above are filled</div>
+    <div class="legend-item"><span class="pill pill-kill">KILL</span><div class="legend-dot" style="background:transparent;"></div>Signal at rule thresholds</div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap scroll-y">
+      <table id="perf-table" style="min-width:1300px;">
+        <thead>
+          <tr>
+            <th rowspan="2" style="vertical-align:bottom;">Date</th>
+            <th rowspan="2" style="vertical-align:bottom;">Ad</th>
+            <th rowspan="2" style="vertical-align:bottom;">Angle</th>
+            <th rowspan="2" style="vertical-align:bottom;">System</th>
+            <th rowspan="2" style="vertical-align:bottom;background:#1A3A5C;" class="tooltip" data-tip="Manual entry">Budget/Day</th>
+            <!-- Meta API columns -->
+            <th colspan="6" style="text-align:center;background:#0D3349;color:#5DADE2;">← Meta API (auto sync)</th>
+            <!-- Lead Log columns -->
+            <th colspan="6" style="text-align:center;background:#2A1A3A;color:#B97AC3;">← Lead Log (manual input required)</th>
+            <!-- Calculated -->
+            <th colspan="4" style="text-align:center;background:#0D2A1A;color:var(--green);">← Calculated</th>
+            <th rowspan="2" style="vertical-align:bottom;">Signal</th>
+          </tr>
+          <tr>
+            <!-- Meta -->
+            <th style="background:#0D3349;color:#5DADE2;">Spend (SGD)</th>
+            <th style="background:#0D3349;color:#5DADE2;" class="tooltip" data-tip="25% Watch Time ÷ Impressions. Target &gt;25%">Hook Rate%</th>
+            <th style="background:#0D3349;color:#5DADE2;">Link Clicks</th>
+            <th style="background:#0D3349;color:#5DADE2;" class="tooltip" data-tip="Link Click-Through Rate">CTR%</th>
+            <th style="background:#0D3349;color:#5DADE2;" class="tooltip" data-tip="Cost Per Link Click">CPC</th>
+            <th style="background:#0D3349;color:#5DADE2;">Leads</th>
+            <!-- Lead Log -->
+            <th style="background:#2A1A3A;color:#B97AC3;">Qual Leads</th>
+            <th style="background:#2A1A3A;color:#B97AC3;">Appts</th>
+            <th style="background:#2A1A3A;color:#B97AC3;">Qual Appts</th>
+            <th style="background:#2A1A3A;color:#B97AC3;">CPL (SGD)</th>
+            <th style="background:#2A1A3A;color:#B97AC3;">Cost/QL</th>
+            <th style="background:#2A1A3A;color:#B97AC3;">Cost/Appt</th>
+            <!-- Calculated -->
+            <th style="background:#0D2A1A;color:var(--green);">Cost/QAppt</th>
+            <th style="background:#0D2A1A;color:var(--green);">Lead→Qual%</th>
+            <th style="background:#0D2A1A;color:var(--green);">Qual→Appt%</th>
+            <th style="background:#0D2A1A;color:var(--green);">Notes</th>
+          </tr>
+        </thead>
+        <tbody id="perf-body">
+          <tr><td colspan="22" class="empty"><div class="empty-icon">📈</div><div class="empty-text">No performance data yet.<br>Sync from Google Sheets or add a row manually.</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 5 — LEAD LOG
+═════════════════════════════════════════════════════════ -->
+<div id="tab-leadlog" class="panel">
+  <div class="sec-header">
+    <div>
+      <div class="sec-title">Lead Log</div>
+      <div class="sec-sub">Manual input — quality moves Performance metrics from raw leads to qualified leads, appointments, qualified appointments</div>
+    </div>
+    <button class="btn btn-red" onclick="openAddLead()">+ Log Lead</button>
+  </div>
+
+  <div class="legend" style="margin-bottom:12px;">
+    <span style="font-size:11px;color:var(--text-dim);">These fields feed Cost/QL · Cost/Appt · Cost/Qual Appt · Lead→Qual% · Qual→Appt% in Performance tab.</span>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap scroll-y">
+      <table id="leadlog-table">
+        <thead><tr>
+          <th>#</th><th>Date</th><th>Ad Source</th><th>Lead Name / Ref</th>
+          <th>Qualified?</th><th>Appt Booked?</th><th>Appt Qualified?</th><th>Notes</th><th>Del</th>
+        </tr></thead>
+        <tbody id="leadlog-body">
+          <tr><td colspan="9" class="empty"><div class="empty-icon">👥</div><div class="empty-text">No leads logged yet. Click "+ Log Lead" to start.</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Lead Log Entry Form (inline) -->
+  <div class="card" id="lead-form-card" style="display:none;">
+    <div class="card-title">+ New Lead Entry</div>
+    <div class="form-row">
+      <div><label>Date</label><input type="date" id="ll-date" style="width:100%;"></div>
+      <div><label>Ad Source (Ad Name)</label><input type="text" id="ll-source" placeholder="e.g. A01_SYS01_IMG_v1" style="width:100%;"></div>
+      <div><label>Lead Name / Ref</label><input type="text" id="ll-name" placeholder="Name or internal ref" style="width:100%;"></div>
+    </div>
+    <div class="form-row">
+      <div><label>Qualified Lead?</label><select id="ll-qual" style="width:100%;"><option value="">—</option><option>Yes</option><option>No</option></select></div>
+      <div><label>Appointment Booked?</label><select id="ll-appt" style="width:100%;"><option value="">—</option><option>Yes</option><option>No</option></select></div>
+      <div><label>Appointment Qualified?</label><select id="ll-apptq" style="width:100%;"><option value="">—</option><option>Yes</option><option>No</option></select></div>
+    </div>
+    <div style="margin-bottom:12px;"><label>Notes</label><textarea id="ll-notes" rows="2" style="width:100%;"></textarea></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-green" onclick="saveLeadEntry()">Save Entry</button>
+      <button class="btn btn-outline" onclick="closeLead()">Cancel</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 6 — KILL / SCALE LOG
+═════════════════════════════════════════════════════════ -->
+<div id="tab-killscale" class="panel">
+  <div class="sec-header">
+    <div>
+      <div class="sec-title">Kill / Scale Log</div>
+      <div class="sec-sub">Decisions made on each ad — audit trail</div>
+    </div>
+    <button class="btn btn-red" onclick="openAddDecision()">+ Log Decision</button>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:16px;">
+    <div class="kpi"><div class="kpi-value num-bad" id="ks-kill">0</div><div class="kpi-label">Killed</div></div>
+    <div class="kpi"><div class="kpi-value num-good" id="ks-scale">0</div><div class="kpi-label">Scaled</div></div>
+    <div class="kpi orange"><div class="kpi-value" id="ks-watch">0</div><div class="kpi-label">Watching</div></div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap scroll-y">
+      <table id="ks-table">
+        <thead><tr>
+          <th>Date</th><th>Ad</th><th>Decision</th><th>Hook Rate%</th><th>Spend</th>
+          <th>Leads</th><th>CPL</th><th>Trigger Rule</th><th>Action Taken</th>
+        </tr></thead>
+        <tbody id="ks-body">
+          <tr><td colspan="9" class="empty"><div class="empty-icon">⚡</div><div class="empty-text">No decisions logged yet.</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Decision Form -->
+  <div class="card" id="ks-form-card" style="display:none;">
+    <div class="card-title">+ Log Decision</div>
+    <div class="form-row">
+      <div><label>Date</label><input type="date" id="ks-date" style="width:100%;"></div>
+      <div><label>Ad Name</label><input type="text" id="ks-adname" placeholder="Ad name" style="width:100%;"></div>
+      <div><label>Decision</label><select id="ks-decision" style="width:100%;"><option>KILL</option><option>SCALE</option><option>WATCH</option></select></div>
+    </div>
+    <div class="form-row">
+      <div><label>Hook Rate%</label><input type="number" id="ks-hookrate" style="width:100%;"></div>
+      <div><label>Spend (SGD)</label><input type="number" id="ks-spendv" style="width:100%;"></div>
+      <div><label>CPL (SGD)</label><input type="number" id="ks-cplv" style="width:100%;"></div>
+    </div>
+    <div class="form-row wide">
+      <div><label>Trigger Rule</label><input type="text" id="ks-rule" placeholder="e.g. Hook Rate &lt; 25% at $80 spend" style="width:100%;"></div>
+      <div><label>Action Taken</label><input type="text" id="ks-action" placeholder="e.g. Paused ad set, moved budget to A03" style="width:100%;"></div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-red" onclick="saveDecision()">Save Decision</button>
+      <button class="btn btn-outline" onclick="closeDecision()">Cancel</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     TAB 7 — SETTINGS
+═════════════════════════════════════════════════════════ -->
+<div id="tab-settings" class="panel">
+  <div class="sec-title" style="margin-bottom:20px;">Settings</div>
+
+  <div class="grid-2">
+    <div>
+      <!-- THRESHOLDS -->
+      <div class="card">
+        <div class="settings-group">
+          <div class="settings-title">Kill / Scale Thresholds</div>
+          <div class="settings-row">
+            <label>Hook Rate Minimum (Kill below)</label>
+            <input type="number" id="s-hook-min" value="25"> <span class="settings-desc">% · 25% of watch time ÷ impressions</span>
+          </div>
+          <div class="settings-row">
+            <label>Hook Rate Scale Trigger</label>
+            <input type="number" id="s-hook-scale" value="35"> <span class="settings-desc">% · Trigger scale evaluation above this</span>
+          </div>
+          <div class="settings-row">
+            <label>Kill Spend Threshold</label>
+            <input type="number" id="s-kill-spend" value="80"> <span class="settings-desc">SGD · Apply kill rules after this spend</span>
+          </div>
+          <div class="settings-row">
+            <label>Final Decision Spend</label>
+            <input type="number" id="s-zero-spend" value="150"> <span class="settings-desc">SGD · Kill if zero leads by this point</span>
+          </div>
+          <div class="settings-row">
+            <label>Target Max CPL</label>
+            <input type="number" id="s-max-cpl" value="100"> <span class="settings-desc">SGD · Kill if CPL &gt; 2× this</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TARGETS -->
+      <div class="card">
+        <div class="settings-group">
+          <div class="settings-title">Performance Targets (Benchmarks)</div>
+          <div class="settings-row">
+            <label>Target Hook Rate</label>
+            <input type="number" id="s-target-hook" value="30"> <span class="settings-desc">% target to aim for</span>
+          </div>
+          <div class="settings-row">
+            <label>Target CTR%</label>
+            <input type="number" id="s-target-ctr" value="1.5"> <span class="settings-desc">% link click-through rate</span>
+          </div>
+          <div class="settings-row">
+            <label>Target CPC (SGD)</label>
+            <input type="number" id="s-target-cpc" value="3"> <span class="settings-desc">Cost per link click</span>
+          </div>
+          <div class="settings-row">
+            <label>Target CPL (SGD)</label>
+            <input type="number" id="s-target-cpl" value="60"> <span class="settings-desc">Cost per lead</span>
+          </div>
+          <div class="settings-row">
+            <label>Target Lead→Qual%</label>
+            <input type="number" id="s-target-lq" value="30"> <span class="settings-desc">% of leads that qualify</span>
+          </div>
+          <div class="settings-row">
+            <label>Target Qual→Appt%</label>
+            <input type="number" id="s-target-qa" value="50"> <span class="settings-desc">% of qualified leads who book</span>
+          </div>
+          <button class="btn btn-red" onclick="saveSettings()" style="margin-top:8px;">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- GOOGLE SHEETS CONNECTION -->
+      <div class="card">
+        <div class="settings-group">
+          <div class="settings-title">Google Sheets Connection</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;">
+            Dashboard reads from your Google Sheet (published CSV URL — free, no auth needed).<br>
+            To set up: Sheet → File → Share → Publish to Web → CSV → Copy link for each tab.
+          </div>
+          <div class="settings-row" style="flex-direction:column;align-items:flex-start;">
+            <label>Performance Tab CSV URL</label>
+            <input type="text" id="s-sheet-perf" placeholder="https://docs.google.com/spreadsheets/.../pub?...output=csv" style="width:100%;margin-top:4px;">
+          </div>
+          <div class="settings-row" style="flex-direction:column;align-items:flex-start;margin-top:10px;">
+            <label>Lead Log Tab CSV URL</label>
+            <input type="text" id="s-sheet-lead" placeholder="https://docs.google.com/spreadsheets/.../pub?...output=csv" style="width:100%;margin-top:4px;">
+          </div>
+          <div class="settings-row" style="flex-direction:column;align-items:flex-start;margin-top:10px;">
+            <label>Apps Script Webhook URL (for writing back)</label>
+            <input type="text" id="s-webhook" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%;margin-top:4px;">
+          </div>
+          <button class="btn btn-green" onclick="testSheetConnection()" style="margin-top:12px;">Test Connection</button>
+          <span style="margin-left:10px;font-size:11px;color:var(--text-dim);" id="sheet-test-result"></span>
+        </div>
+      </div>
+
+      <!-- META API -->
+      <div class="card">
+        <div class="settings-group">
+          <div class="settings-title">Meta API (via Google Apps Script)</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;">
+            <strong style="color:var(--text);">How it works (free, no 3rd party tools):</strong><br><br>
+            1. Paste <code style="color:var(--gold);">GoogleAppsScript_Meta_Sync.js</code> into your Google Sheet<br>
+            &nbsp;&nbsp;&nbsp;→ Extensions → Apps Script → Paste → Save<br><br>
+            2. In CONFIG, paste your Meta token and confirm Account ID: <strong style="color:var(--gold);">1467621970951606</strong><br><br>
+            3. Run <code>setupTrigger()</code> once → daily sync at 7am Singapore time<br><br>
+            4. Run <code>testConnection()</code> to verify token is valid<br><br>
+            5. Deploy as Web App → copy URL above (Webhook URL)<br><br>
+            6. Publish each Sheet tab as CSV → paste URLs above<br><br>
+            Hook Rate formula used: <strong style="color:var(--gold);">video_p25_watched_actions ÷ impressions</strong>
+          </div>
+          <div style="background:var(--navy);border:1px solid var(--border);border-radius:4px;padding:10px;font-size:11px;">
+            <div style="color:var(--text-dim);">Meta Account ID</div>
+            <div style="color:var(--gold);font-size:14px;font-weight:700;font-family:monospace;">1467621970951606</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div><!-- end main -->
+
+<!-- ════════════════════════════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════════════════════════════ -->
+<script>
+// ─── DATA STORE ──────────────────────────────────────────────────────────────
+const DB = {
+  creatives: [],
+  performance: [],
+  leadLog: [],
+  killScaleLog: [],
+  settings: {
+    hookMin: 25, hookScale: 35, killSpend: 80, zeroSpend: 150, maxCpl: 100,
+    targetHook: 30, targetCtr: 1.5, targetCpc: 3, targetCpl: 60, targetLq: 30, targetQa: 50,
+    sheetPerf: '', sheetLead: '', webhook: ''
+  }
+};
+
+// ─── FRAMEWORK DATA ───────────────────────────────────────────────────────────
+const ANGLES = [
+  {id:'A01', name:'Exit First / Ownership Without Exit', desc:'Lead with exit strategy before purchase'},
+  {id:'A02', name:'Forever Home Trap', desc:'Exposing the danger of the forever home mindset'},
+  {id:'A03', name:'Buyer Mistakes / Forensic Audit', desc:'Specific costly errors buyers make'},
+  {id:'A04', name:'3-Entry Difference', desc:'Three ways to enter the market — not equal'},
+  {id:'A05', name:'Client Transformation', desc:'Real client journey from stuck to growing portfolio'},
+  {id:'A06', name:'Ballot / Crowd Culture', desc:'The balloting addiction and lottery mentality'},
+  {id:'A07', name:'Advisor vs Agent', desc:'Why the type of professional matters to your outcome'},
+  {id:'A08', name:'Math / Numbers Reality', desc:'Hard numbers showing what the market actually rewards'},
+  {id:'A09', name:'Practitioner Journey', desc:'Edmund's personal experience and insider insight'},
+  {id:'A10', name:'Strategic Advisor POV', desc:'High-level advisory perspective, positioning'},
+];
+
+const SYSTEMS = [
+  {id:'SYS01', name:'Pure Typography Shock', phase:'COLD', desc:'Bold text, no imagery, stop-scroll via words alone'},
+  {id:'SYS02', name:'Strategic Contrast', phase:'COLD', desc:'Side-by-side comparison reveals the right move'},
+  {id:'SYS03', name:'Notes App / Insider', phase:'COLD', desc:'Screenshot-style note reveals hidden insider truth'},
+  {id:'SYS04', name:'Property Audit / Markup', phase:'COLD', desc:'Annotated property listing or data shows the mistake'},
+  {id:'SYS05', name:'Self-Audit Question', phase:'COLD', desc:'Provocative question forces self-evaluation'},
+  {id:'SYS06', name:'Practitioner Journey', phase:'WARM', desc:'Advisor shares personal real-estate story'},
+  {id:'SYS07', name:'Client Transformation', phase:'WARM', desc:'Before / after: client's situation and result'},
+  {id:'SYS08', name:'Decision Comparison', phase:'WARM', desc:'This path vs that path — clear fork-in-road'},
+  {id:'SYS09', name:'Screenshot / Conversation', phase:'WARM', desc:'Real conversation or result screenshot as social proof'},
+  {id:'SYS10', name:'Strategic Advisor POV', phase:'WARM', desc:'Advisor gives high-level market thesis directly'},
+];
+
+const HOOKS = [
+  {id:'H01', name:'Self-Realization', desc:'Reader sees their own situation — creates sudden clarity and discomfort'},
+  {id:'H02', name:'Future Regret', desc:'Vivid image of the future they'll regret — forces re-evaluation now'},
+  {id:'H03', name:'Decision Tension', desc:'Forces a binary choice — exposes which side they're on'},
+  {id:'H04', name:'Hidden Insider Advantage', desc:'Reveals what only the inner circle knows — creates FOMO and urgency'},
+  {id:'H05', name:'Buyer Blindspots', desc:'Names the mistake they didn't know they were making — triggers shame + motivation'},
+  {id:'H06', name:'Practitioner Reality', desc:'Practitioner's lived experience lends credibility — bypasses skepticism'},
+  {id:'H07', name:'Transformation / Escape', desc:'Paints the escape from their current trapped situation'},
+  {id:'H08', name:'Strategic Superiority', desc:'Shows what the smart money does — positions reader to want to be on that side'},
+  {id:'H09', name:'Social Mirror', desc:'Others like them have already moved — social proof plus urgency'},
+  {id:'H10', name:'Pattern Interrupt', desc:'Breaks expected format entirely — stops scroll before the message lands'},
+];
+
+// Creative assignments (pre-populated from session)
+const CREATIVE_MATRIX = {
+  'A01': {SYS01:'A', SYS02:'A', SYS03:'A', SYS05:'A'},
+  'A03': {SYS04:'A'},
+  'A04': {SYS02:'A'},
+  'A05': {SYS07:'A', SYS06:'A'},
+  'A06': {SYS01:'A'},
+  'A07': {SYS02:'A', SYS10:'A'},
+  'A09': {SYS06:'A'},
+  'A10': {SYS10:'A', SYS06:'A'},
+  'VID': {VIDEO:'V'},
+};
+
+const HOOK_ASSIGNMENTS = {
+  A01:'H01,H02', A02:'H02,H05', A03:'H05,H04', A04:'H03,H08',
+  A05:'H07,H01', A06:'H09,H05', A07:'H06,H04', A08:'H08,H03',
+  A09:'H06,H05', A10:'H04,H08'
+};
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  loadFromStorage();
+  renderAngles();
+  renderSystems();
+  renderHooks();
+  renderMatrix();
+  renderInventory();
+  renderPerformance();
+  renderLeadLog();
+  renderKillScale();
+  applySettings();
+  setTodayDate();
+});
+
+function setTodayDate() {
+  const today = new Date().toISOString().split('T')[0];
+  ['ll-date','ks-date'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = today;
+  });
+}
+
+// ─── TAB NAV ──────────────────────────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'performance') renderPerformance();
+  if (id === 'overview') renderOverview();
+}
+
+// ─── RENDER CREATIVE SYSTEM ───────────────────────────────────────────────────
+function renderAngles() {
+  const el = document.getElementById('angle-list');
+  el.innerHTML = ANGLES.map(a => `
+    <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:8px;">
+      <span class="pill pill-a" style="min-width:36px;text-align:center;">${a.id}</span>
+      <div>
+        <div style="font-weight:600;font-size:12px;color:var(--text);">${a.name}</div>
+        <div style="font-size:10px;color:var(--text-dim);">${a.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderSystems() {
+  const el = document.getElementById('system-list');
+  el.innerHTML = SYSTEMS.map(s => `
+    <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:8px;">
+      <span class="pill" style="min-width:44px;text-align:center;background:rgba(52,152,219,.15);color:#5DADE2;border:1px solid #3498DB;">${s.id}</span>
+      <div>
+        <div style="font-weight:600;font-size:12px;color:var(--text);">${s.name} <span class="pill ${s.phase==='COLD'?'pill-cold':'pill-warm'}" style="font-size:9px;">${s.phase}</span></div>
+        <div style="font-size:10px;color:var(--text-dim);">${s.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderHooks() {
+  const el = document.getElementById('hook-list');
+  el.innerHTML = HOOKS.map(h => `
+    <div style="display:flex;gap:8px;align-items:baseline;margin-bottom:8px;">
+      <span class="pill pill-h" style="min-width:36px;text-align:center;">${h.id}</span>
+      <div>
+        <div style="font-weight:600;font-size:12px;color:var(--text);">${h.name}</div>
+        <div style="font-size:10px;color:var(--text-dim);">${h.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMatrix() {
+  const tbl = document.getElementById('matrix-table');
+  const sysCols = SYSTEMS.map(s => s.id);
+  let html = '<thead><tr><th style="text-align:left;padding:6px;">Angle</th>';
+  sysCols.forEach(s => {
+    const sys = SYSTEMS.find(x => x.id === s);
+    html += `<th class="tooltip" data-tip="${sys.name} (${sys.phase})" style="font-size:9px;padding:4px 2px;width:60px;">${s}<br><span style="color:var(--text-dim);font-weight:400;">${sys.phase}</span></th>`;
+  });
+  html += '<th style="padding:4px 8px;font-size:9px;color:#B97AC3;">Hook<br>Assign</th></tr></thead><tbody>';
+
+  ANGLES.forEach(a => {
+    const rowMap = CREATIVE_MATRIX[a.id] || {};
+    const hooks = HOOK_ASSIGNMENTS[a.id] || '';
+    html += `<tr><td style="padding:5px 6px;"><span class="pill pill-a">${a.id}</span> <span style="font-size:10px;color:var(--text);">${a.name.split('/')[0].trim()}</span></td>`;
+    sysCols.forEach(s => {
+      const val = rowMap[s];
+      if (val === 'A') {
+        html += `<td><div class="matrix-cell mc-a">A</div></td>`;
+      } else if (val === 'V') {
+        html += `<td><div class="matrix-cell mc-v">V</div></td>`;
+      } else {
+        html += `<td><span class="mc-empty">·</span></td>`;
+      }
+    });
+    const hookBadges = hooks.split(',').map(h => `<span class="pill pill-h" style="font-size:9px;">${h.trim()}</span>`).join(' ');
+    html += `<td style="padding:4px 8px;">${hookBadges}</td></tr>`;
+  });
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+// ─── INVENTORY ────────────────────────────────────────────────────────────────
+const DEFAULT_CREATIVES = [
+  {name:'LL_LGR_FearTrap_01',        angle:'A01',format:'Image',phase:'COLD',system:'SYS01',hook:'H01',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_FearTrap_02',        angle:'A01',format:'Image',phase:'COLD',system:'SYS01',hook:'H02',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_FearTrap_03',        angle:'A01',format:'Image',phase:'COLD',system:'SYS01',hook:'H01',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_FearTrap_04',        angle:'A01',format:'Image',phase:'COLD',system:'SYS01',hook:'H02',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_FearTrap_05',        angle:'A01',format:'Image',phase:'COLD',system:'SYS01',hook:'H01',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_SelfAudit_01',       angle:'A01',format:'Image',phase:'COLD',system:'SYS05',hook:'H03',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_Disqualify_01',      angle:'A01',format:'Image',phase:'COLD',system:'SYS02',hook:'H05',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_BuyerMistake_N1',    angle:'A03',format:'Image',phase:'COLD',system:'SYS04',hook:'H05',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_Crowd_01',           angle:'A06',format:'Image',phase:'COLD',system:'SYS01',hook:'H09',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_Crowd_02',           angle:'A06',format:'Image',phase:'COLD',system:'SYS01',hook:'H09',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_RealityPost_O1',     angle:'A07',format:'Image',phase:'COLD',system:'SYS02',hook:'H06',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_RealityPost_O2',     angle:'A07',format:'Image',phase:'COLD',system:'SYS02',hook:'H06',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_RealityPost_O7',     angle:'A07',format:'Image',phase:'COLD',system:'SYS02',hook:'H04',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_PractitionerJourney_01',angle:'A09',format:'Image',phase:'WARM',system:'SYS06',hook:'H06',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_PractitionerJourney_02',angle:'A09',format:'Image',phase:'WARM',system:'SYS06',hook:'H05',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_AdvisorPOV_M1',      angle:'A10',format:'Image',phase:'WARM',system:'SYS10',hook:'H04',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_AdvisorPOV_M2',      angle:'A10',format:'Image',phase:'WARM',system:'SYS10',hook:'H08',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v1',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H01',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v2',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H02',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v3',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H03',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v4',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H04',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v5',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H05',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v6',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H06',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v7',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H07',campaign:'Legacy Launch',status:'Active'},
+  {name:'LL_LGR_VideoAd_v8',         angle:'VID',format:'Video',phase:'COLD',system:'Video', hook:'H08',campaign:'Legacy Launch',status:'Active'},
+];
+
+function renderInventory() {
+  const creatives = DB.creatives.length ? DB.creatives : DEFAULT_CREATIVES;
+  const tbody = document.getElementById('inventory-body');
+  tbody.innerHTML = creatives.map((c, i) => {
+    const phasePill = c.phase === 'COLD' ? '<span class="pill pill-cold">COLD</span>' : '<span class="pill pill-warm">WARM</span>';
+    return `<tr>
+      <td class="td-dim">${i+1}</td>
+      <td class="td-name">${c.name}</td>
+      <td><span class="pill pill-a">${c.angle}</span></td>
+      <td><span style="font-size:10px;color:var(--text-dim);">${c.system}</span></td>
+      <td><span class="pill pill-h">${c.hook}</span></td>
+      <td>${c.format}</td>
+      <td>${phasePill}</td>
+      <td class="td-dim">${c.campaign}</td>
+      <td><span class="pill" style="background:rgba(39,174,96,.15);color:var(--green);border:1px solid var(--green);">${c.status}</span></td>
+      <td><button class="btn btn-outline" onclick="editCreative(${i})" style="padding:3px 8px;font-size:10px;">Edit</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function openAddCreative() {
+  alert('Creative add form coming in v3.1 — for now, add directly in Google Sheets and sync.');
+}
+function editCreative(i) {}
+
+// ─── PERFORMANCE ─────────────────────────────────────────────────────────────
+function renderPerformance() {
+  const tbody = document.getElementById('perf-body');
+  if (!DB.performance.length) {
+    tbody.innerHTML = '<tr><td colspan="22" class="empty"><div class="empty-icon">📈</div><div class="empty-text">No performance data yet.<br>Sync from Google Sheets or add a row manually.</div></td></tr>';
+    return;
+  }
+  const s = DB.settings;
+  tbody.innerHTML = DB.performance.map((p, i) => {
+    const hrNum = parseFloat(p.hookRate) || 0;
+    const hrClass = hrNum >= s.hookScale ? 'num-good' : hrNum >= s.hookMin ? 'num-warn' : 'num-bad';
+    const qualLeads = countLeadLog(p.adName, 'qualified');
+    const appts = countLeadLog(p.adName, 'appt');
+    const qualAppts = countLeadLog(p.adName, 'qualAppt');
+    const spend = parseFloat(p.spend) || 0;
+    const leads = parseInt(p.leads) || 0;
+    const cpl = leads > 0 ? (spend / leads).toFixed(2) : '—';
+    const costQL = qualLeads > 0 ? (spend / qualLeads).toFixed(2) : '—';
+    const costAppt = appts > 0 ? (spend / appts).toFixed(2) : '—';
+    const costQAppt = qualAppts > 0 ? (spend / qualAppts).toFixed(2) : '—';
+    const lqPct = leads > 0 && qualLeads > 0 ? ((qualLeads/leads)*100).toFixed(0)+'%' : '—';
+    const qaPct = qualLeads > 0 && appts > 0 ? ((appts/qualLeads)*100).toFixed(0)+'%' : '—';
+    const sig = getSignal(hrNum, spend, leads, parseFloat(cpl) || 0);
+    const sigPill = sig === 'KILL' ? '<span class="pill pill-kill">KILL</span>' : sig === 'SCALE' ? '<span class="pill pill-scale">SCALE</span>' : sig === 'WATCH' ? '<span class="pill pill-watch">WATCH</span>' : '<span class="td-dim">—</span>';
+    return `<tr>
+      <td class="td-dim" style="font-size:10px;">${p.date||'—'}</td>
+      <td class="td-name" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.adName||'—'}</td>
+      <td><span class="pill pill-a" style="font-size:9px;">${p.angle||'—'}</span></td>
+      <td class="td-dim" style="font-size:10px;">${p.system||'—'}</td>
+      <td class="td-dim">${p.budget||'—'}</td>
+      <td>${spend > 0 ? 'S$'+spend.toFixed(0) : '—'}</td>
+      <td class="${hrClass}" class="tooltip" data-tip="25% Watch Time ÷ Impressions">${hrNum > 0 ? hrNum.toFixed(1)+'%' : '—'}</td>
+      <td>${p.linkClicks||'—'}</td>
+      <td>${p.ctr ? p.ctr+'%' : '—'}</td>
+      <td>${p.cpc ? 'S$'+p.cpc : '—'}</td>
+      <td>${leads||'—'}</td>
+      <td style="background:rgba(142,68,173,.05);">${qualLeads||'—'}</td>
+      <td style="background:rgba(142,68,173,.05);">${appts||'—'}</td>
+      <td style="background:rgba(142,68,173,.05);">${qualAppts||'—'}</td>
+      <td style="background:rgba(142,68,173,.05);">${cpl !== '—' ? 'S$'+cpl : '—'}</td>
+      <td style="background:rgba(142,68,173,.05);">${costQL !== '—' ? 'S$'+costQL : '—'}</td>
+      <td style="background:rgba(142,68,173,.05);">${costAppt !== '—' ? 'S$'+costAppt : '—'}</td>
+      <td style="background:rgba(39,174,96,.05);">${costQAppt !== '—' ? 'S$'+costQAppt : '—'}</td>
+      <td style="background:rgba(39,174,96,.05);">${lqPct}</td>
+      <td style="background:rgba(39,174,96,.05);">${qaPct}</td>
+      <td class="td-dim" style="font-size:10px;">${p.notes||''}</td>
+      <td>${sigPill}</td>
+    </tr>`;
+  }).join('');
+}
+
+function addManualPerfRow() {
+  const ad = prompt('Ad name:');
+  if (!ad) return;
+  const entry = {
+    date: new Date().toISOString().split('T')[0], adName: ad,
+    angle: prompt('Angle (e.g. A01):') || '—',
+    system: prompt('System (e.g. SYS01):') || '—',
+    budget: prompt('Budget/day (SGD):') || '',
+    spend: prompt('Spend (SGD):') || '0',
+    hookRate: prompt('Hook Rate % (25% watch time / impressions × 100):') || '0',
+    linkClicks: prompt('Link Clicks:') || '0',
+    ctr: prompt('CTR%:') || '0',
+    cpc: prompt('CPC (SGD):') || '0',
+    leads: prompt('Leads:') || '0',
+    notes: ''
+  };
+  DB.performance.push(entry);
+  saveToStorage();
+  renderPerformance();
+  renderOverview();
+}
+
+function countLeadLog(adName, type) {
+  return DB.leadLog.filter(l => {
+    if (l.adSource !== adName) return false;
+    if (type === 'qualified') return l.qualified === 'Yes';
+    if (type === 'appt') return l.apptBooked === 'Yes';
+    if (type === 'qualAppt') return l.apptQualified === 'Yes';
+    return false;
+  }).length;
+}
+
+function getSignal(hookRate, spend, leads, cpl) {
+  const s = DB.settings;
+  if (spend < s.killSpend) return '—';
+  if (hookRate < s.hookMin) return 'KILL';
+  if (cpl > s.maxCpl * 2 && leads > 0) return 'KILL';
+  if (leads === 0 && spend >= s.zeroSpend) return 'KILL';
+  if (hookRate >= s.hookScale && cpl <= s.maxCpl && leads >= 1) return 'SCALE';
+  return 'WATCH';
+}
+
+// ─── OVERVIEW ─────────────────────────────────────────────────────────────────
+function renderOverview() {
+  const perf = DB.performance;
+  document.getElementById('kpi-ads-live').textContent = perf.length || '—';
+  const totalSpend = perf.reduce((a,p)=>a+(parseFloat(p.spend)||0),0);
+  const totalLeads = perf.reduce((a,p)=>a+(parseInt(p.leads)||0),0);
+  document.getElementById('kpi-spend').textContent = totalSpend > 0 ? 'S$'+totalSpend.toFixed(0) : '—';
+  document.getElementById('kpi-leads').textContent = totalLeads || '—';
+  const avgCpl = totalLeads > 0 ? (totalSpend / totalLeads).toFixed(0) : '—';
+  document.getElementById('kpi-cpl').textContent = avgCpl !== '—' ? 'S$'+avgCpl : '—';
+  const hrs = perf.filter(p=>parseFloat(p.hookRate)>0).map(p=>parseFloat(p.hookRate));
+  const avgHr = hrs.length ? (hrs.reduce((a,b)=>a+b,0)/hrs.length).toFixed(1)+'%' : '—';
+  document.getElementById('kpi-hookrate').textContent = avgHr;
+
+  // Notifications
+  const signals = perf.map(p => ({
+    name: p.adName,
+    sig: getSignal(parseFloat(p.hookRate)||0, parseFloat(p.spend)||0, parseInt(p.leads)||0, parseFloat(p.spend)/Math.max(parseInt(p.leads)||1,1))
+  })).filter(p => p.sig !== '—');
+  document.getElementById('notif-count').textContent = signals.length;
+  const notifArea = document.getElementById('notif-area');
+  if (!signals.length) {
+    notifArea.innerHTML = '<div class="notif watch"><div class="notif-icon">⏳</div><div class="notif-text"><div class="notif-title">Watching</div><div class="notif-desc">No kill or scale signals yet. Ads below spend threshold or data not yet synced.</div></div></div>';
+  } else {
+    notifArea.innerHTML = signals.map(s => {
+      const cls = s.sig === 'KILL' ? 'kill' : s.sig === 'SCALE' ? 'scale' : 'watch';
+      const icon = s.sig === 'KILL' ? '⛔' : s.sig === 'SCALE' ? '🚀' : '👁';
+      return `<div class="notif ${cls}"><div class="notif-icon">${icon}</div><div class="notif-text"><div class="notif-title">${s.sig} — ${s.name}</div><div class="notif-desc">Check Performance tab for full metrics.</div></div></div>`;
+    }).join('');
+  }
+
+  // Top performers
+  const top = [...perf].sort((a,b)=>(parseFloat(b.hookRate)||0)-(parseFloat(a.hookRate)||0)).slice(0,5);
+  const tbody = document.getElementById('top-perf-body');
+  if (!top.length) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty"><div class="empty-icon">📊</div><div class="empty-text">No performance data yet.</div></td></tr>';
+  } else {
+    tbody.innerHTML = top.map(p => {
+      const hr = parseFloat(p.hookRate)||0;
+      const spend = parseFloat(p.spend)||0;
+      const leads = parseInt(p.leads)||0;
+      const cpl = leads > 0 ? 'S$'+(spend/leads).toFixed(0) : '—';
+      const sig = getSignal(hr, spend, leads, parseFloat(p.spend)/Math.max(leads,1));
+      const hrClass = hr >= DB.settings.hookScale ? 'num-good' : hr >= DB.settings.hookMin ? 'num-warn' : 'num-bad';
+      const sigPill = sig === 'KILL' ? '<span class="pill pill-kill">KILL</span>' : sig === 'SCALE' ? '<span class="pill pill-scale">SCALE</span>' : sig === 'WATCH' ? '<span class="pill pill-watch">WATCH</span>' : '—';
+      return `<tr><td class="td-name">${p.adName||'—'}</td><td><span class="pill pill-a" style="font-size:10px;">${p.angle||'—'}</span></td><td class="td-dim">${p.system||'—'}</td><td class="${hrClass}">${hr.toFixed(1)}%</td><td>${spend>0?'S$'+spend.toFixed(0):'—'}</td><td>${leads||'—'}</td><td>${cpl}</td><td>${sigPill}</td></tr>`;
+    }).join('');
+  }
+}
+
+// ─── LEAD LOG ─────────────────────────────────────────────────────────────────
+function openAddLead() {
+  document.getElementById('lead-form-card').style.display = 'block';
+}
+function closeLead() {
+  document.getElementById('lead-form-card').style.display = 'none';
+}
+function saveLeadEntry() {
+  const entry = {
+    date: document.getElementById('ll-date').value,
+    adSource: document.getElementById('ll-source').value,
+    leadRef: document.getElementById('ll-name').value,
+    qualified: document.getElementById('ll-qual').value,
+    apptBooked: document.getElementById('ll-appt').value,
+    apptQualified: document.getElementById('ll-apptq').value,
+    notes: document.getElementById('ll-notes').value,
+  };
+  if (!entry.adSource) { alert('Ad Source is required.'); return; }
+  DB.leadLog.push(entry);
+  saveToStorage();
+  renderLeadLog();
+  renderPerformance();
+  closeLead();
+}
+
+function renderLeadLog() {
+  const tbody = document.getElementById('leadlog-body');
+  if (!DB.leadLog.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty"><div class="empty-icon">👥</div><div class="empty-text">No leads logged yet.</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = DB.leadLog.map((l, i) => {
+    const check = (v) => v === 'Yes' ? '<span style="color:var(--green);">✓ Yes</span>' : v === 'No' ? '<span style="color:var(--red);">✗ No</span>' : '<span style="color:var(--text-dim);">—</span>';
+    return `<tr>
+      <td class="td-dim">${i+1}</td>
+      <td class="td-dim">${l.date||'—'}</td>
+      <td class="td-name">${l.adSource||'—'}</td>
+      <td>${l.leadRef||'—'}</td>
+      <td>${check(l.qualified)}</td>
+      <td>${check(l.apptBooked)}</td>
+      <td>${check(l.apptQualified)}</td>
+      <td class="td-dim">${l.notes||'—'}</td>
+      <td><button class="btn btn-outline" onclick="deleteLeadEntry(${i})" style="padding:2px 6px;font-size:10px;color:var(--red);">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function deleteLeadEntry(i) {
+  if (!confirm('Delete this lead entry?')) return;
+  DB.leadLog.splice(i, 1);
+  saveToStorage();
+  renderLeadLog();
+  renderPerformance();
+}
+
+// ─── KILL/SCALE LOG ───────────────────────────────────────────────────────────
+function openAddDecision() {
+  document.getElementById('ks-form-card').style.display = 'block';
+}
+function closeDecision() {
+  document.getElementById('ks-form-card').style.display = 'none';
+}
+function saveDecision() {
+  const entry = {
+    date: document.getElementById('ks-date').value,
+    adName: document.getElementById('ks-adname').value,
+    decision: document.getElementById('ks-decision').value,
+    hookRate: document.getElementById('ks-hookrate').value,
+    spend: document.getElementById('ks-spendv').value,
+    leads: '',
+    cpl: document.getElementById('ks-cplv').value,
+    rule: document.getElementById('ks-rule').value,
+    action: document.getElementById('ks-action').value,
+  };
+  DB.killScaleLog.push(entry);
+  saveToStorage();
+  renderKillScale();
+  closeDecision();
+}
+
+function renderKillScale() {
+  const tbody = document.getElementById('ks-body');
+  const kill = DB.killScaleLog.filter(e=>e.decision==='KILL').length;
+  const scale = DB.killScaleLog.filter(e=>e.decision==='SCALE').length;
+  const watch = DB.killScaleLog.filter(e=>e.decision==='WATCH').length;
+  document.getElementById('ks-kill').textContent = kill;
+  document.getElementById('ks-scale').textContent = scale;
+  document.getElementById('ks-watch').textContent = watch;
+  if (!DB.killScaleLog.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty"><div class="empty-icon">⚡</div><div class="empty-text">No decisions logged yet.</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = DB.killScaleLog.map((e,i) => {
+    const pill = e.decision === 'KILL' ? '<span class="pill pill-kill">KILL</span>' : e.decision === 'SCALE' ? '<span class="pill pill-scale">SCALE</span>' : '<span class="pill pill-watch">WATCH</span>';
+    return `<tr>
+      <td class="td-dim">${e.date||'—'}</td>
+      <td class="td-name">${e.adName||'—'}</td>
+      <td>${pill}</td>
+      <td>${e.hookRate ? e.hookRate+'%' : '—'}</td>
+      <td>${e.spend ? 'S$'+e.spend : '—'}</td>
+      <td>${e.leads||'—'}</td>
+      <td>${e.cpl ? 'S$'+e.cpl : '—'}</td>
+      <td class="td-dim">${e.rule||'—'}</td>
+      <td class="td-dim">${e.action||'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────────────────
+function applySettings() {
+  const s = DB.settings;
+  document.getElementById('s-hook-min').value = s.hookMin;
+  document.getElementById('s-hook-scale').value = s.hookScale;
+  document.getElementById('s-kill-spend').value = s.killSpend;
+  document.getElementById('s-zero-spend').value = s.zeroSpend;
+  document.getElementById('s-max-cpl').value = s.maxCpl;
+  document.getElementById('s-target-hook').value = s.targetHook;
+  document.getElementById('s-target-ctr').value = s.targetCtr;
+  document.getElementById('s-target-cpc').value = s.targetCpc;
+  document.getElementById('s-target-cpl').value = s.targetCpl;
+  document.getElementById('s-target-lq').value = s.targetLq;
+  document.getElementById('s-target-qa').value = s.targetQa;
+  if (s.sheetPerf) document.getElementById('s-sheet-perf').value = s.sheetPerf;
+  if (s.sheetLead) document.getElementById('s-sheet-lead').value = s.sheetLead;
+  if (s.webhook) document.getElementById('s-webhook').value = s.webhook;
+  // Update rules display
+  ['r-kill-spend','r-kill-spend2'].forEach(id => { document.getElementById(id).textContent = s.killSpend; });
+  document.getElementById('r-zero-spend').textContent = s.zeroSpend;
+  document.getElementById('r-scale-hook').textContent = s.hookScale + '%';
+}
+
+function saveSettings() {
+  DB.settings = {
+    hookMin: parseFloat(document.getElementById('s-hook-min').value) || 25,
+    hookScale: parseFloat(document.getElementById('s-hook-scale').value) || 35,
+    killSpend: parseFloat(document.getElementById('s-kill-spend').value) || 80,
+    zeroSpend: parseFloat(document.getElementById('s-zero-spend').value) || 150,
+    maxCpl: parseFloat(document.getElementById('s-max-cpl').value) || 100,
+    targetHook: parseFloat(document.getElementById('s-target-hook').value) || 30,
+    targetCtr: parseFloat(document.getElementById('s-target-ctr').value) || 1.5,
+    targetCpc: parseFloat(document.getElementById('s-target-cpc').value) || 3,
+    targetCpl: parseFloat(document.getElementById('s-target-cpl').value) || 60,
+    targetLq: parseFloat(document.getElementById('s-target-lq').value) || 30,
+    targetQa: parseFloat(document.getElementById('s-target-qa').value) || 50,
+    sheetPerf: document.getElementById('s-sheet-perf').value,
+    sheetLead: document.getElementById('s-sheet-lead').value,
+    webhook: document.getElementById('s-webhook').value,
+  };
+  saveToStorage();
+  applySettings();
+  renderPerformance();
+  renderOverview();
+  alert('Settings saved.');
+}
+
+async function testSheetConnection() {
+  const url = document.getElementById('s-sheet-perf').value;
+  const el = document.getElementById('sheet-test-result');
+  if (!url) { el.textContent = 'Paste Performance CSV URL first.'; return; }
+  el.textContent = 'Testing...';
+  try {
+    const r = await fetch(url);
+    if (r.ok) {
+      el.style.color = 'var(--green)';
+      el.textContent = '✓ Connected';
+    } else {
+      el.style.color = 'var(--red)';
+      el.textContent = 'Error: ' + r.status;
+    }
+  } catch(e) {
+    el.style.color = 'var(--red)';
+    el.textContent = 'Failed — check URL is published to web';
+  }
+}
+
+// ─── SYNC FROM SHEETS ─────────────────────────────────────────────────────────
+async function syncFromSheets() {
+  const btn = document.querySelector('.sync-btn');
+  btn.textContent = '⟳ Syncing...';
+  btn.classList.add('loading');
+  const s = DB.settings;
+  let synced = false;
+
+  if (s.sheetPerf) {
+    try {
+      const resp = await fetch(s.sheetPerf);
+      const text = await resp.text();
+      const rows = parseCSV(text);
+      if (rows.length > 1) {
+        const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g,''));
+        DB.performance = rows.slice(1).filter(r=>r.some(c=>c.trim())).map(r => {
+          const obj = {};
+          headers.forEach((h,i) => obj[h] = r[i] || '');
+          return {
+            date: obj['date'] || obj['datestart'] || '',
+            adName: obj['adname'] || obj['ad'] || '',
+            angle: obj['angle'] || '—',
+            system: obj['system'] || '—',
+            budget: obj['budgetday'] || obj['budget'] || '',
+            spend: obj['spendsgd'] || obj['spend'] || '0',
+            hookRate: obj['hookrate'] || obj['hookrate'] || '0',
+            linkClicks: obj['linkclicks'] || '0',
+            ctr: obj['ctr'] || '0',
+            cpc: obj['cpcsgd'] || obj['cpc'] || '0',
+            leads: obj['leads'] || '0',
+            notes: obj['notes'] || '',
+          };
+        });
+        synced = true;
+      }
+    } catch(e) { console.warn('Performance sync failed:', e); }
+  }
+
+  if (s.sheetLead) {
+    try {
+      const resp = await fetch(s.sheetLead);
+      const text = await resp.text();
+      const rows = parseCSV(text);
+      if (rows.length > 1) {
+        const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g,''));
+        DB.leadLog = rows.slice(1).filter(r=>r.some(c=>c.trim())).map(r => {
+          const obj = {};
+          headers.forEach((h,i) => obj[h] = r[i] || '');
+          return {
+            date: obj['date'] || '',
+            adSource: obj['adsource'] || obj['adsource'] || '',
+            leadRef: obj['leadref'] || obj['leadname'] || '',
+            qualified: obj['qualified'] || '',
+            apptBooked: obj['apptbooked'] || obj['appointment'] || '',
+            apptQualified: obj['apptqualified'] || '',
+            notes: obj['notes'] || '',
+          };
+        });
+        synced = true;
+      }
+    } catch(e) { console.warn('Lead log sync failed:', e); }
+  }
+
+  saveToStorage();
+  renderPerformance();
+  renderLeadLog();
+  renderOverview();
+
+  const now = new Date().toLocaleTimeString('en-SG');
+  document.getElementById('lastSync').textContent = now;
+  document.getElementById('sheetDot').className = `status-dot ${synced ? 'ok' : 'warn'}`;
+  document.getElementById('sheetStatus').textContent = synced ? 'Google Sheets: connected' : 'Google Sheets: no data';
+
+  btn.textContent = '⟳ Sync Data';
+  btn.classList.remove('loading');
+}
+
+function parseCSV(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  return lines.map(line => {
+    const result = [];
+    let cur = '', inQuote = false;
+    for (let c of line) {
+      if (c === '"') { inQuote = !inQuote; }
+      else if (c === ',' && !inQuote) { result.push(cur.trim()); cur = ''; }
+      else cur += c;
+    }
+    result.push(cur.trim());
+    return result;
+  });
+}
+
+// ─── LOCAL STORAGE ────────────────────────────────────────────────────────────
+function saveToStorage() {
+  try {
+    const data = {
+      creatives: DB.creatives, performance: DB.performance,
+      leadLog: DB.leadLog, killScaleLog: DB.killScaleLog, settings: DB.settings
+    };
+    sessionStorage.setItem('REI_DB', JSON.stringify(data));
+  } catch(e) {}
+}
+
+function loadFromStorage() {
+  try {
+    const raw = sessionStorage.getItem('REI_DB');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.creatives) DB.creatives = data.creatives;
+    if (data.performance) DB.performance = data.performance;
+    if (data.leadLog) DB.leadLog = data.leadLog;
+    if (data.killScaleLog) DB.killScaleLog = data.killScaleLog;
+    if (data.settings) Object.assign(DB.settings, data.settings);
+  } catch(e) {}
+}
+
+// Initial render
+renderOverview();
+</script>
+</body>
+</html>

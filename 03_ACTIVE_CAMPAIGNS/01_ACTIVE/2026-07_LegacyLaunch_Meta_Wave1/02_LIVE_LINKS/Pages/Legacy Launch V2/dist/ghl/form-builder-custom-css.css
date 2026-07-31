@@ -1,0 +1,121 @@
+/* ============================================================
+   LEGACY LAUNCH V2 — GHL FORM BUILDER CUSTOM CSS
+   Paste into: Sites -> Forms -> [your form] -> Styles -> Advanced
+   -> Custom CSS.  (Page-level CSS CANNOT reach inside the form
+   iframe — this is the ONLY place these styles take effect.)
+   Goal: match the page — transparent/ivory field wells, Inter body,
+   navy text, gold submit button with dark navy text that reads clearly.
+   ============================================================ */
+
+/* Load Inter inside the iframe (the page's font does not cascade in) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Form canvas — keep transparent so the navy page frame shows through */
+.ghl-form,
+form,
+.form-builder--preview {
+  background: transparent !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  color: #16202C !important;
+}
+
+/* Field labels */
+label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: .01em !important;
+  color: #16202C !important;
+  margin-bottom: 7px !important;
+  line-height: 1.4 !important;
+}
+
+/* Inputs, textareas, selects */
+input,
+textarea,
+select {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 15px !important;
+  color: #16202C !important;
+  background-color: #FBFAF7 !important;      /* warm ivory field well */
+  border: 1px solid rgba(22,32,44,0.18) !important;
+  border-radius: 8px !important;
+  min-height: 48px !important;
+  padding: 10px 14px !important;
+  box-shadow: none !important;
+  transition: border-color .18s ease, box-shadow .18s ease !important;
+}
+textarea { min-height: 96px !important; }
+
+input::placeholder,
+textarea::placeholder { color: #9AA3AC !important; opacity: 1 !important; }
+
+/* Focus state — champagne gold ring */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: #C2A15C !important;
+  box-shadow: 0 0 0 3px rgba(194,161,92,0.15) !important;
+}
+
+/* Select dropdown caret */
+select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #C2A15C 50%),
+    linear-gradient(135deg, #C2A15C 50%, transparent 50%) !important;
+  background-position: calc(100% - 20px) 21px, calc(100% - 14px) 21px !important;
+  background-size: 6px 6px, 6px 6px !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Consent / checkbox rows */
+input[type="checkbox"],
+input[type="radio"] {
+  min-height: auto !important;
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: #C2A15C !important;
+}
+
+/* Submit button — solid gold, dark navy text (high contrast, reads clearly) */
+button[type="submit"],
+.ghl-footer-preview .ghl-submit-btn,
+.ghl-btn-primary {
+  background-color: #C2A15C !important;
+  background-image: none !important;
+  color: #122234 !important;                 /* navy ink — never white on gold */
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  letter-spacing: .01em !important;
+  border: none !important;
+  border-radius: 8px !important;
+  min-height: 52px !important;
+  width: 100% !important;
+  box-shadow: 0 12px 26px -14px rgba(194,161,92,0.7) !important;
+  transition: background-color .18s ease, transform .18s ease !important;
+  cursor: pointer !important;
+}
+button[type="submit"]:hover,
+.ghl-footer-preview .ghl-submit-btn:hover,
+.ghl-btn-primary:hover {
+  background-color: #A9873F !important;
+  color: #122234 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Validation errors — muted, no harsh red bars (design uses no red) */
+.hl-error,
+.error-message {
+  color: #A9873F !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  margin-top: 5px !important;
+}
+.hl-error input,
+input.hl-error {
+  border-color: #A9873F !important;
+}

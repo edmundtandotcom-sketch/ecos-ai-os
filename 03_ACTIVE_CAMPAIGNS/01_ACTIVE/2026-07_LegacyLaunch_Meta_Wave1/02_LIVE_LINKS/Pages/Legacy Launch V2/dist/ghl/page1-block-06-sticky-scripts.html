@@ -1,0 +1,67 @@
+<!-- ============================================================
+     LEGACY LAUNCH V2 — PAGE 1 — BLOCK 06: STICKY MOBILE CTA + SCRIPTS
+     Paste LAST on the page. Scripts are SIBLINGS after the wrapper div.
+     Handles: JS-enabled flag, scroll-reveal, smooth anchor scroll,
+     sticky-bar dismiss + body bottom padding.
+     ============================================================ -->
+<div class="llv2">
+  <!-- Section 12 — Sticky mobile CTA bar -->
+  <div class="llv2-sticky" id="llv2-sticky" role="region" aria-label="Qualify call to action">
+    <span class="llv2-sticky-txt">Moving in 3&ndash;6 months? See if you qualify.</span>
+    <a href="#llv2-apply" class="llv2-btn">Check If You Qualify</a>
+    <button class="llv2-sticky-x" id="llv2-sticky-x" aria-label="Dismiss">&times;</button>
+  </div>
+</div>
+<script type="text/javascript">
+(function(){
+  var roots = document.querySelectorAll('.llv2');
+  for (var i=0;i<roots.length;i++){ roots[i].classList.add('llv2-js'); }
+
+  /* Scroll-reveal — content is visible by default; animate only when observed.
+     Safety net guarantees nothing ever stays hidden if IO fails to dispatch. */
+  var reveals = document.querySelectorAll('.llv2-reveal');
+  function revealAll(){ for (var m=0;m<reveals.length;m++){ reveals[m].classList.add('llv2-in'); } }
+  if ('IntersectionObserver' in window && reveals.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('llv2-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+    for (var r=0;r<reveals.length;r++){ io.observe(reveals[r]); }
+    /* If the observer hasn't revealed the first in-view block quickly, show everything. */
+    setTimeout(function(){ if (!document.querySelector('.llv2-reveal.llv2-in')){ revealAll(); } }, 900);
+  } else {
+    revealAll();
+  }
+
+  /* Smooth in-page scroll for .llv2 anchor CTAs */
+  document.addEventListener('click', function(ev){
+    var a = ev.target.closest ? ev.target.closest('.llv2 a[href^="#llv2-"]') : null;
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    var target = document.getElementById(id);
+    if (target){
+      ev.preventDefault();
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+      try { history.replaceState(null,'','#'+id); } catch(e){}
+    }
+  });
+
+  /* Sticky bar dismiss + body bottom padding compensation */
+  var bar = document.getElementById('llv2-sticky');
+  var closeBtn = document.getElementById('llv2-sticky-x');
+  function syncPad(){
+    if (!bar) return;
+    var visible = window.matchMedia('(max-width:768px)').matches && bar.style.display !== 'none';
+    document.body.classList.toggle('llv2-has-sticky', visible);
+  }
+  if (closeBtn && bar){
+    closeBtn.addEventListener('click', function(){
+      bar.style.display = 'none';
+      document.body.classList.remove('llv2-has-sticky');
+    });
+  }
+  syncPad();
+  window.addEventListener('resize', syncPad);
+})();
+</script>

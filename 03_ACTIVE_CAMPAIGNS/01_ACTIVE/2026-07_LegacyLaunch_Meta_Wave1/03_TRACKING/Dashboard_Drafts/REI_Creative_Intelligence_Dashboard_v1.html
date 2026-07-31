@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REI Creative Intelligence Dashboard</title>
+<style>
+  :root {
+    --navy: #1A1A2E;
+    --dark: #16213E;
+    --red: #E94560;
+    --gold: #F5A623;
+    --green: #27AE60;
+    --blue: #2980B9;
+    --light: #F2F2F7;
+    --white: #FFFFFF;
+    --kill: #FFDADA;
+    --kill-text: #721C24;
+    --scale: #D4EDDA;
+    --scale-text: #155724;
+    --watch: #FFF3CD;
+    --watch-text: #856404;
+    --border: #E0E0E8;
+    --text: #1A1A2E;
+    --muted: #666;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Arial', sans-serif; background: var(--light); color: var(--text); font-size: 13px; }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--navy);
+    color: white;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .topbar h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.3px; }
+  .topbar .sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+  .badge { background: var(--red); color: white; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+
+  /* NAV TABS */
+  .tabs { background: var(--dark); display: flex; gap: 0; padding: 0 20px; border-bottom: 2px solid var(--red); }
+  .tab { padding: 10px 20px; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+  .tab:hover { color: white; background: rgba(255,255,255,0.05); }
+  .tab.active { color: white; border-bottom-color: var(--red); background: rgba(233,69,96,0.1); }
+
+  /* LAYOUT */
+  .view { display: none; padding: 20px 24px; }
+  .view.active { display: block; }
+
+  /* KPI CARDS */
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .kpi { background: white; border-radius: 10px; padding: 16px 18px; border-left: 4px solid var(--navy); box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+  .kpi.red { border-left-color: var(--red); }
+  .kpi.green { border-left-color: var(--green); }
+  .kpi.gold { border-left-color: var(--gold); }
+  .kpi.blue { border-left-color: var(--blue); }
+  .kpi-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+  .kpi-val { font-size: 26px; font-weight: 700; color: var(--navy); margin: 4px 0; line-height: 1; }
+  .kpi-sub { font-size: 10px; color: var(--muted); }
+
+  /* SECTION HEADERS */
+  .section-title { font-size: 13px; font-weight: 700; color: var(--navy); margin: 20px 0 10px; padding-left: 10px; border-left: 3px solid var(--red); display: flex; align-items: center; gap: 10px; }
+  .section-title span { font-size: 10px; color: var(--muted); font-weight: 400; }
+
+  /* TABLES */
+  .tbl-wrap { background: white; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); overflow: hidden; margin-bottom: 20px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+  thead th { background: var(--navy); color: white; padding: 10px 12px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.6px; text-align: left; font-weight: 700; position: sticky; top: 0; }
+  thead th.center { text-align: center; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: #F8F8FC; }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: 9px 12px; font-size: 12px; }
+  td.center { text-align: center; }
+  td.mono { font-family: 'Courier New', monospace; font-size: 11px; }
+  td.muted { color: var(--muted); font-size: 11px; font-style: italic; }
+
+  /* BADGES */
+  .status { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+  .s-active { background: var(--scale); color: var(--scale-text); }
+  .s-pending { background: var(--watch); color: var(--watch-text); }
+  .s-warn { background: var(--kill); color: var(--kill-text); }
+  .d-kill { background: var(--kill); color: var(--kill-text); }
+  .d-scale { background: var(--scale); color: var(--scale-text); }
+  .d-watch { background: var(--watch); color: var(--watch-text); }
+  .d-none { background: var(--light); color: var(--muted); }
+  .phase-cold { background: #E8F4FD; color: #2471A3; }
+  .phase-warm { background: #FFF9E6; color: #7D6608; }
+
+  /* METRIC CELL COLOR */
+  .metric-good { color: var(--green); font-weight: 700; }
+  .metric-warn { color: #E67E22; font-weight: 700; }
+  .metric-bad { color: var(--red); font-weight: 700; }
+  .metric-na { color: #ccc; font-size: 11px; }
+
+  /* FILTER BAR */
+  .filters { background: white; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+  .filters label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; }
+  .filters select, .filters input { border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 12px; color: var(--text); background: white; cursor: pointer; }
+  .filters select:focus, .filters input:focus { outline: 1px solid var(--navy); border-color: var(--navy); }
+  .filter-group { display: flex; align-items: center; gap: 6px; }
+  .btn { background: var(--navy); color: white; border: none; border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: background 0.2s; }
+  .btn:hover { background: var(--red); }
+  .btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+  .btn-outline:hover { background: var(--navy); color: white; }
+  .btn-red { background: var(--red); }
+  .btn-green { background: var(--green); }
+
+  /* ADD ENTRY FORM */
+  .form-panel { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  .form-panel h3 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 4px; }
+  .form-group label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px;
+    font-size: 12px; color: var(--text); background: white; font-family: Arial, sans-serif;
+  }
+  .form-group input:focus, .form-group select:focus { outline: 1px solid var(--navy); border-color: var(--navy); }
+  .form-group textarea { height: 60px; resize: vertical; }
+  .form-actions { display: flex; gap: 10px; margin-top: 14px; }
+
+  /* INFO BOXES */
+  .info-box { background: var(--navy); color: white; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+  .info-box h4 { font-size: 12px; font-weight: 700; margin-bottom: 8px; color: var(--gold); }
+  .info-box p, .info-box li { font-size: 11px; line-height: 1.7; color: rgba(255,255,255,0.85); }
+  .info-box ul { padding-left: 18px; }
+  .info-box .kill-rule { color: var(--kill); font-weight: 700; }
+  .info-box .scale-rule { color: #5CDB5C; font-weight: 700; }
+
+  /* CHART BARS */
+  .bar-container { background: var(--light); border-radius: 6px; overflow: hidden; height: 10px; width: 120px; display: inline-block; vertical-align: middle; }
+  .bar-fill { height: 100%; border-radius: 6px; transition: width 0.4s; }
+  .bar-good { background: var(--green); }
+  .bar-warn { background: var(--gold); }
+  .bar-bad { background: var(--red); }
+
+  /* MINI CHART */
+  .sparkline { display: inline-flex; align-items: flex-end; gap: 2px; height: 28px; }
+  .spark-bar { width: 6px; background: var(--navy); border-radius: 2px 2px 0 0; opacity: 0.7; }
+
+  /* TOGGLE */
+  .toggle-wrap { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-left: auto; }
+  .toggle-btn { padding: 5px 14px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; background: white; color: var(--muted); transition: all 0.2s; }
+  .toggle-btn.active { background: var(--navy); color: white; }
+
+  /* SCROLLABLE DATA AREA */
+  .data-area { max-height: 480px; overflow-y: auto; }
+
+  /* METRIC LEGEND */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 10px; color: var(--muted); margin-bottom: 10px; }
+  .leg-item { display: flex; align-items: center; gap: 4px; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .leg-green { background: var(--green); }
+  .leg-warn { background: var(--gold); }
+  .leg-red { background: var(--red); }
+
+  /* API INSTRUCTION */
+  .code-block { background: #1e1e2e; color: #cdd6f4; font-family: 'Courier New', monospace; font-size: 11px; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 8px 0; line-height: 1.6; }
+  .code-block .cmt { color: #6c7086; }
+  .code-block .key { color: #89b4fa; }
+  .code-block .val { color: #a6e3a1; }
+  .code-block .str { color: #f9e2af; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) { .kpi-val { font-size: 20px; } .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--light); }
+  ::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <div class="h1" style="font-size:16px;font-weight:700;color:white;">REI Creative Intelligence Dashboard</div>
+    <div class="sub">Singapore Real Estate Insider · Millionaire Advisory System™ · Legacy Launch (SI-05)</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span id="last-update" style="font-size:11px;color:rgba(255,255,255,0.5);"></span>
+    <span class="badge">MAS v3.1</span>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('overview')">Overview</div>
+  <div class="tab" onclick="switchTab('tracker')">Performance Tracker</div>
+  <div class="tab" onclick="switchTab('angles')">Angles</div>
+  <div class="tab" onclick="switchTab('systems')">Systems</div>
+  <div class="tab" onclick="switchTab('killscale')">Kill / Scale</div>
+  <div class="tab" onclick="switchTab('api')">API Setup</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VIEW: OVERVIEW -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="view-overview" class="view active">
+
+  <div class="kpi-row" style="margin-top:20px;">
+    <div class="kpi red">
+      <div class="kpi-label">Total Ads Running</div>
+      <div class="kpi-val" id="kpi-total-ads">23</div>
+      <div class="kpi-sub">8 video · 15 image</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Total Spend (SGD)</div>
+      <div class="kpi-val" id="kpi-spend">$0</div>
+      <div class="kpi-sub">Enter spend in Tracker tab</div>
+    </div>
+    <div class="kpi gold">
+      <div class="kpi-label">Leads Generated</div>
+      <div class="kpi-val" id="kpi-leads">0</div>
+      <div class="kpi-sub">Booked sessions in GHL</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-label">Avg CPL (SGD)</div>
+      <div class="kpi-val" id="kpi-cpl">—</div>
+      <div class="kpi-sub">Account average</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Avg Hook Rate</div>
+      <div class="kpi-val" id="kpi-hook">—</div>
+      <div class="kpi-sub">Target: >25%</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Kill Signals</div>
+      <div class="kpi-val" id="kpi-kill" style="color:var(--red);">0</div>
+      <div class="kpi-sub">Ads to pause</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Scale Signals</div>
+      <div class="kpi-val" id="kpi-scale" style="color:var(--green);">0</div>
+      <div class="kpi-sub">Ads to increase budget</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h4>KILL RULES — Apply after SGD 80 spend per ad</h4>
+    <ul>
+      <li><span class="kill-rule">KILL</span> — Hook Rate (3-sec views / impressions) &lt;25% after SGD 80</li>
+      <li><span class="kill-rule">KILL</span> — CPL &gt;2× account average after SGD 80</li>
+      <li><span class="kill-rule">KILL</span> — Zero leads after SGD 150 spend</li>
+      <li><span class="scale-rule">SCALE</span> — Hook Rate &gt;35% + CPL on target + 3+ bookings → duplicate ad set, increase budget 20% per 48h</li>
+      <li>WATCH — Borderline metrics → let run to SGD 150 before deciding</li>
+    </ul>
+  </div>
+
+  <div class="section-title">Campaign Structure <span>3-track simultaneous launch</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign</th><th>Track</th><th>Audience</th><th>Budget Split</th>
+          <th>Objective</th><th>Creative</th><th>Destination</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LL_LGR_COLD_VIDEO</strong></td>
+          <td>Track A — Quality</td>
+          <td>Broad + Interest (30–55, SG)</td>
+          <td class="center"><strong>60%</strong></td>
+          <td>Leads</td>
+          <td>8 × Video ads</td>
+          <td>Landing Page → GHL</td>
+        </tr>
+        <tr>
+          <td><strong>LL_LGR_COLD_CHECKLIST</strong></td>
+          <td>Track B — Volume</td>
+          <td>Broad (cold, 30–55, SG)</td>
+          <td class="center"><strong>30%</strong></td>
+          <td>Leads</td>
+          <td>Checklist image ads</td>
+          <td>Meta Lead Form</td>
+        </tr>
+        <tr>
+          <td><strong>LL_LGR_RETARGET</strong></td>
+          <td>Track C — Retargeting</td>
+          <td>25%+ video viewers + engagers + LP drop-offs</td>
+          <td class="center"><strong>10%</strong></td>
+          <td>Leads</td>
+          <td>Image ads (warm systems)</td>
+          <td>LP or Lead Form</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Priority Launch Order <span>Start with these 4</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Ad</th><th>Angle</th><th>Why First</th><th>⚠ Flag</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="center">1</td>
+          <td><strong>Math Doesn't Lie</strong></td>
+          <td>A08 — Numbers Reality</td>
+          <td>Strongest pattern interrupt. Numbers stop scroll.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="center">2</td>
+          <td><strong>Not For Most Buyers</strong></td>
+          <td>A07 — Advisor vs Agent</td>
+          <td>Identity filter — self-selects quality leads.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="center">3</td>
+          <td><strong>Pitch vs Reality</strong></td>
+          <td>A07 — Advisor vs Agent</td>
+          <td>Agent myth angle — historically highest engagement.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="center">4</td>
+          <td><strong>Regret Hindsight</strong></td>
+          <td>A01 — Exit First</td>
+          <td>Emotional hook — strong conviction driver.</td>
+          <td style="color:var(--red);font-weight:700;">Fix pngtree watermark first</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VIEW: PERFORMANCE TRACKER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="view-tracker" class="view">
+
+  <div style="margin-top:20px;">
+    <div class="filters">
+      <div class="filter-group">
+        <label>Angle</label>
+        <select id="filter-angle" onchange="renderTracker()">
+          <option value="">All</option>
+          <option>A01</option><option>A02</option><option>A03</option>
+          <option>A04</option><option>A05</option><option>A06</option>
+          <option>A07</option><option>A08</option><option>A09</option>
+          <option>A10</option><option>VID</option><option>CHK</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Format</label>
+        <select id="filter-format" onchange="renderTracker()">
+          <option value="">All</option>
+          <option>Video 9:16</option><option>Image - Static</option><option>Image - Checklist</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Decision</label>
+        <select id="filter-decision" onchange="renderTracker()">
+          <option value="">All</option>
+          <option>KILL</option><option>SCALE</option><option>WATCH</option><option>—</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Search</label>
+        <input type="text" id="filter-search" placeholder="Ad name..." oninput="renderTracker()" style="width:180px;">
+      </div>
+      <div class="toggle-wrap" style="margin-left:auto;">
+        <button class="toggle-btn active" onclick="setSort('hookrate',this)">Hook Rate ↓</button>
+        <button class="toggle-btn" onclick="setSort('cpl',this)">CPL ↓</button>
+        <button class="toggle-btn" onclick="setSort('spend',this)">Spend ↓</button>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot leg-green"></div> Good (target met)</div>
+      <div class="leg-item"><div class="leg-dot leg-warn"></div> Watch (borderline)</div>
+      <div class="leg-item"><div class="leg-dot leg-red"></div> Kill signal</div>
+    </div>
+
+    <div class="tbl-wrap">
+      <div class="data-area">
+        <table id="tracker-table">
+          <thead>
+            <tr>
+              <th>Ad Name</th>
+              <th class="center">Angle</th>
+              <th class="center">System</th>
+              <th class="center">Spend</th>
+              <th class="center">Impr.</th>
+              <th class="center">Hook Rate</th>
+              <th class="center">Hold Rate</th>
+              <th class="center">CTR</th>
+              <th class="center">CPL</th>
+              <th class="center">Leads</th>
+              <th class="center">Qual %</th>
+              <th class="center">Decision</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="tracker-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ADD ENTRY FORM -->
+    <div class="form-panel">
+      <h3>+ Log New Ad Performance</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Ad Name</label>
+          <input type="text" id="f-name" placeholder="e.g. LL_LGR_MATH_MathDoesntLie_v1">
+        </div>
+        <div class="form-group">
+          <label>Angle</label>
+          <select id="f-angle">
+            <option>A01</option><option>A02</option><option>A03</option><option>A04</option>
+            <option>A05</option><option>A06</option><option>A07</option><option>A08</option>
+            <option>A09</option><option>A10</option><option>VID</option><option>CHK</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>System</label>
+          <select id="f-system">
+            <option>Video</option><option>SYS01</option><option>SYS02</option><option>SYS03</option>
+            <option>SYS04</option><option>SYS05</option><option>SYS06</option><option>SYS07</option>
+            <option>SYS08</option><option>SYS09</option><option>SYS10</option><option>—</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Spend (SGD)</label>
+          <input type="number" id="f-spend" placeholder="0.00" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Impressions</label>
+          <input type="number" id="f-impr" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>3-Sec Views</label>
+          <input type="number" id="f-3sec" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>ThruPlay</label>
+          <input type="number" id="f-thru" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Clicks</label>
+          <input type="number" id="f-clicks" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Booked Sessions (GHL)</label>
+          <input type="number" id="f-leads" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Decision</label>
+          <select id="f-decision">
+            <option value="—">— Pending —</option>
+            <option value="WATCH">WATCH</option>
+            <option value="KILL">KILL</option>
+            <option value="SCALE">SCALE</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column: span 2;">
+          <label>Notes</label>
+          <textarea id="f-notes" placeholder="Observations, hook variations tested, audience notes..."></textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-green" onclick="addEntry()">Save Entry</button>
+        <button class="btn btn-outline" onclick="clearForm()">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VIEW: ANGLES -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="view-angles" class="view">
+  <div style="margin-top:20px;">
+    <div class="section-title">10 Ad Angles — Performance by Content Direction</div>
+    <div class="tbl-wrap">
+      <table id="angle-table">
+        <thead>
+          <tr>
+            <th>Angle</th><th>Name</th><th class="center">Creatives</th>
+            <th class="center">Total Spend</th><th class="center">Avg Hook %</th>
+            <th class="center">Avg CPL</th><th class="center">Total Leads</th>
+            <th class="center">Best Creative</th><th class="center">Status</th>
+          </tr>
+        </thead>
+        <tbody id="angle-body"></tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Angle × System Compatibility Matrix <span>Green = tested pairing · Gold = recommended untested</span></div>
+    <div class="tbl-wrap" style="overflow-x:auto;">
+      <table id="matrix-table">
+        <thead>
+          <tr>
+            <th>Angle ↓ / System →</th>
+            <th class="center">SYS01<br>Typography</th>
+            <th class="center">SYS02<br>Contrast</th>
+            <th class="center">SYS03<br>Notes</th>
+            <th class="center">SYS04<br>Audit</th>
+            <th class="center">SYS05<br>Self-Audit</th>
+            <th class="center">SYS06<br>Journey</th>
+            <th class="center">SYS07<br>Transform</th>
+            <th class="center">SYS08<br>Compare</th>
+            <th class="center">SYS09<br>Screenshot</th>
+            <th class="center">SYS10<br>Advisor</th>
+          </tr>
+        </thead>
+        <tbody id="matrix-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VIEW: SYSTEMS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="view-systems" class="view">
+  <div style="margin-top:20px;">
+    <div class="section-title">10 Ad Systems — Visual Format Performance</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>System</th><th>Name</th><th class="center">Phase</th>
+            <th class="center">Creatives</th><th class="center">Avg Hook %</th>
+            <th class="center">Avg CTR %</th><th class="center">Avg CPL</th>
+            <th class="center">Best Angle</th><th class="center">Verdict</th>
+          </tr>
+        </thead>
+        <tbody id="systems-body"></tbody>
+      </table>
+    </div>
+    <div class="section-title">Hook Psychology by System <span>What emotional trigger each system fires</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>System</th><th>Primary Hook</th><th>Psychology</th><th>Best Angle Pairing</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SYS01 Pure Typography Shock</td><td>Self-Realization · Future Regret</td><td>Brain reads bold text before it can stop itself. Shock statement forces pattern recognition pause.</td><td>A01, A08, A02</td></tr>
+          <tr><td>SYS02 Strategic Contrast</td><td>Decision Tension · Future Regret</td><td>Humans instinctively compare outcomes. Left/right tension creates "which side am I on?" urgency.</td><td>A06, A07, A02</td></tr>
+          <tr><td>SYS03 Notes App / Insider</td><td>Hidden Insider Advantage · Buyer Blindspots</td><td>Feels private and real. Voyeuristic access to advisor notes triggers curiosity urgency.</td><td>A03, A07</td></tr>
+          <tr><td>SYS04 Property Audit Markup</td><td>Hidden Insider Advantage · Buyer Blindspots</td><td>Red circles and rejection stamps trigger "what do they see that I don't?" anxiety.</td><td>A03</td></tr>
+          <tr><td>SYS05 Self-Audit Question</td><td>Self-Realization · Buyer Blindspots</td><td>Forces internal interrogation. Reader answers their own doubt before they reach the CTA.</td><td>A02, A03</td></tr>
+          <tr><td>SYS06 Practitioner Journey</td><td>Practitioner Reality · Hidden Insider Advantage</td><td>"They do this themselves" removes advisor/salesperson distance. Creates credibility through lived experience.</td><td>A09, A05</td></tr>
+          <tr><td>SYS07 Client Transformation</td><td>Transformation / Escape · Self-Realization</td><td>"I relate to this family" activates vicarious relief. Transforms belief through proxy experience.</td><td>A05</td></tr>
+          <tr><td>SYS08 Decision Comparison</td><td>Decision Tension · Strategic Superiority</td><td>Exposes how experts compare vs how buyers compare. Creates "I've been thinking wrong" realisation.</td><td>A04, A07</td></tr>
+          <tr><td>SYS09 Screenshot Conversation</td><td>Practitioner Reality · Buyer Blindspots</td><td>Real consult snippets bypass advertising skepticism. Feels like intercepted private conversation.</td><td>A07, A03</td></tr>
+          <tr><td>SYS10 Strategic Advisor POV</td><td>Hidden Insider Advantage · Strategic Superiority</td><td>Calm authority framing. "They see the market differently" creates aspirational trust.</td><td>A10, A07</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VIEW: KILL / SCALE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="view-killscale" class="view">
+  <div style="margin-top:20px;">
+
+    <div class="info-box">
+      <h4>DECISION PROTOCOL — Top Media Buyer Standard</h4>
+      <ul>
+        <li><strong>Day 1–2 (SGD 0–80):</strong> Watch Hook Rate only. Don't kill early based on CPL — not enough data.</li>
+        <li><strong>SGD 80 reached:</strong> Apply kill rules. Hook Rate &lt;25% = KILL. CPL &gt;2× account average = KILL.</li>
+        <li><strong>SGD 80–150:</strong> WATCH zone. Let borderline ads continue to 150 before deciding.</li>
+        <li><strong>Scale signal:</strong> Hook Rate &gt;35% + CPL on target + 3+ bookings → duplicate ad set → increase budget 20% every 48h (not more — let Facebook's algorithm stabilize).</li>
+        <li><strong>When scaling:</strong> Do NOT edit the winning ad. Duplicate the entire ad set and increase budget on the duplicate.</li>
+        <li><strong>Creative fatigue:</strong> Monitor CTR drop &gt;30% from peak over 7 days = refresh creative. Keep same angle, change visual.</li>
+      </ul>
+    </div>
+
+    <div class="section-title">Kill / Scale Log <span>Record every decision here</span></div>
+
+    <!-- Log form -->
+    <div class="form-panel">
+      <h3>Log a Kill / Scale Decision</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Ad Name</label>
+          <select id="ks-name">
+            <option value="">Select ad...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Spend at Decision (SGD)</label>
+          <input type="number" id="ks-spend" placeholder="80">
+        </div>
+        <div class="form-group">
+          <label>Kill Trigger Met?</label>
+          <select id="ks-trigger">
+            <option>Hook Rate &lt;25%</option>
+            <option>CPL &gt;2× average</option>
+            <option>Zero leads at $150</option>
+            <option>Scale: Hook &gt;35% + CPL on target</option>
+            <option>Scale: 3+ bookings</option>
+            <option>Manual decision</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Decision</label>
+          <select id="ks-decision">
+            <option value="KILL">KILL</option>
+            <option value="SCALE">SCALE</option>
+            <option value="WATCH">WATCH</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column:span 2;">
+          <label>Reason / Learning</label>
+          <textarea id="ks-reason" placeholder="What did this creative teach you? What to test next?"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Replacement Creative</label>
+          <input type="text" id="ks-replace" placeholder="e.g. A01_SYS02_SHOCK_v2.png">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-red" onclick="logKillScale()">Log Decision</button>
+        <button class="btn btn-outline" onclick="clearKSForm()">Clear</button>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Ad Name</th><th class="center">Spend</th>
+            <th class="center">Trigger</th><th class="center">Decision</th>
+            <th>Reason</th><th>Replacement</th>
+          </tr>
+        </thead>
+        <tbody id="ks-log-body">
+          <tr><td colspan="7" class="muted" style="text-align:center;padding:20px;">No decisions logged yet. Log your first kill or scale above.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VIEW: API SETUP -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="view-api" class="view">
+  <div style="margin-top:20px;max-width:900px;">
+
+    <div class="info-box">
+      <h4>HOW TO CONNECT LIVE DATA</h4>
+      <p>This dashboard runs on local data you enter manually. To pull live data automatically from Meta Ads and GHL, follow the steps below. You'll need a developer (or use Make/Zapier as a no-code bridge).</p>
+    </div>
+
+    <div class="section-title">Option 1 — Meta Marketing API (Direct)</div>
+    <div style="background:white;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+      <p style="font-size:12px;margin-bottom:10px;color:var(--muted);">Pull ad performance metrics directly from your Meta Ad Account.</p>
+      <p style="font-size:12px;font-weight:700;margin:10px 0 4px;">Step 1 — Get your credentials</p>
+      <ul style="font-size:12px;padding-left:18px;line-height:1.8;color:#333;">
+        <li>Go to <strong>developers.facebook.com</strong> → My Apps → Create App</li>
+        <li>Add the <strong>Marketing API</strong> product to your app</li>
+        <li>Generate a <strong>User Access Token</strong> with <code>ads_read</code> + <code>ads_management</code> permissions</li>
+        <li>Get your <strong>Ad Account ID</strong> from Meta Ads Manager → Settings → Account ID</li>
+      </ul>
+
+      <p style="font-size:12px;font-weight:700;margin:10px 0 4px;">Step 2 — Pull ad insights via API</p>
+      <div class="code-block">
+<span class="cmt"># Python — pull last 30 days of ad performance</span>
+<span class="key">import</span> requests, json
+
+AD_ACCOUNT_ID = <span class="str">"act_XXXXXXXXXX"</span>  <span class="cmt"># your account ID</span>
+ACCESS_TOKEN  = <span class="str">"YOUR_TOKEN_HERE"</span>
+BASE_URL = <span class="str">f"https://graph.facebook.com/v19.0/{AD_ACCOUNT_ID}/insights"</span>
+
+params = {
+  <span class="str">"fields"</span>: <span class="str">"ad_name,spend,impressions,video_thruplay_watched_actions,video_p25_watched_actions,clicks,cpm,actions"</span>,
+  <span class="str">"level"</span>:  <span class="str">"ad"</span>,
+  <span class="str">"date_preset"</span>: <span class="str">"last_30d"</span>,
+  <span class="str">"access_token"</span>: ACCESS_TOKEN
+}
+
+r = requests.get(BASE_URL, params=params)
+data = r.json()[<span class="str">"data"</span>]
+
+<span class="cmt"># data = list of dicts, one per ad</span>
+<span class="cmt"># Map into dashboard JSON format and paste into window.adData below</span>
+      </div>
+
+      <p style="font-size:12px;font-weight:700;margin:10px 0 4px;">Step 3 — Map to this dashboard</p>
+      <p style="font-size:12px;color:var(--muted);">Replace the <code>window.adData</code> array in the script section of this HTML file with the output from the API call. The dashboard will auto-render.</p>
+    </div>
+
+    <div class="section-title">Option 2 — Make / Zapier (No-Code)</div>
+    <div style="background:white;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+      <ul style="font-size:12px;padding-left:18px;line-height:1.8;color:#333;">
+        <li><strong>Make.com</strong> → Create a Scenario → Meta Ads module → "Get Ad Insights"</li>
+        <li>Schedule it to run daily at 8am Singapore time</li>
+        <li>Output to Google Sheets → share sheet → use Google Sheets API to read into this dashboard</li>
+        <li>Or output directly to a webhook that updates window.adData in this file</li>
+      </ul>
+    </div>
+
+    <div class="section-title">Option 3 — GHL Lead Quality Input</div>
+    <div style="background:white;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+      <p style="font-size:12px;margin-bottom:8px;color:var(--muted);">GHL doesn't have a public API for ad attribution, but you can:</p>
+      <ul style="font-size:12px;padding-left:18px;line-height:1.8;color:#333;">
+        <li>Add a custom field to GHL contacts: <strong>"Ad Source"</strong> (map to the ad name from Meta)</li>
+        <li>Use UTM parameters on all ad landing pages: <code>utm_content=LL_LGR_MATH_v1</code></li>
+        <li>GHL reads UTMs → stores in contact record → you can export and count per ad name</li>
+        <li>Enter "Booked Sessions" count weekly in the Tracker tab (col P) by filtering GHL contacts by Ad Source</li>
+      </ul>
+
+      <p style="font-size:12px;font-weight:700;margin:10px 0 4px;">UTM Template for all landing page URLs:</p>
+      <div class="code-block">https://your-lp.com?utm_source=<span class="val">meta</span>&utm_medium=<span class="val">paid_social</span>&utm_campaign=<span class="val">LL_LGR</span>&utm_content=<span class="val">LL_LGR_MATH_MathDoesntLie_v1</span></div>
+    </div>
+
+    <div class="section-title">Metrics Reference — What to Pull from Meta</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Meta API Field</th><th>Formula</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>Hook Rate</td><td><code>video_p25_watched_actions</code> (type: video_view)</td><td>3-sec views / Impressions</td><td>&gt;25%</td></tr>
+          <tr><td>Hold Rate</td><td><code>video_thruplay_watched_actions</code></td><td>ThruPlay / 3-sec views</td><td>&gt;40%</td></tr>
+          <tr><td>CTR</td><td><code>inline_link_click_ctr</code></td><td>Built-in</td><td>1–3%</td></tr>
+          <tr><td>CPM</td><td><code>cpm</code></td><td>Built-in</td><td>Monitor trend</td></tr>
+          <tr><td>Spend</td><td><code>spend</code></td><td>Built-in</td><td>—</td></tr>
+          <tr><td>CPL</td><td><code>cost_per_action_type</code> (lead)</td><td>Spend / Leads</td><td>&lt;2× avg</td></tr>
+          <tr><td>Impressions</td><td><code>impressions</code></td><td>Built-in</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- DATA + LOGIC -->
+<!-- ══════════════════════════════════════ -->
+<script>
+// ─── DATA STORE ─────────────────────────────────────────────
+let adData = JSON.parse(localStorage.getItem('rei_adData') || '[]');
+let ksLog  = JSON.parse(localStorage.getItem('rei_ksLog')  || '[]');
+let sortKey = 'hookrate';
+
+const ANGLES = {
+  A01: "Exit First / Ownership Without Exit",
+  A02: "Forever Home Trap",
+  A03: "Buyer Mistakes / Forensic Audit",
+  A04: "3-Entry Difference",
+  A05: "Client Transformation",
+  A06: "Ballot / Crowd Culture",
+  A07: "Advisor vs Agent",
+  A08: "Math / Numbers Reality",
+  A09: "Practitioner Journey",
+  A10: "Strategic Advisor POV",
+  VID: "Video Ads (All)",
+  CHK: "Checklist Campaign"
+};
+
+const SYSTEMS = [
+  { id:'SYS01', name:'Pure Typography Shock',    phase:'Cold' },
+  { id:'SYS02', name:'Strategic Contrast',        phase:'Cold' },
+  { id:'SYS03', name:'Notes App / Insider',       phase:'Cold' },
+  { id:'SYS04', name:'Property Audit / Markup',   phase:'Cold' },
+  { id:'SYS05', name:'Self-Audit Question',        phase:'Cold' },
+  { id:'SYS06', name:'Practitioner Journey',       phase:'Warm' },
+  { id:'SYS07', name:'Client Transformation',      phase:'Warm' },
+  { id:'SYS08', name:'Decision Comparison',        phase:'Warm' },
+  { id:'SYS09', name:'Screenshot / Conversation',  phase:'Warm' },
+  { id:'SYS10', name:'Strategic Advisor POV',      phase:'Warm' },
+];
+
+// ─── TAB SWITCHING ───────────────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  const tabs = { overview:0, tracker:1, angles:2, systems:3, killscale:4, api:5 };
+  document.querySelectorAll('.tab')[tabs[id]].classList.add('active');
+  if (id === 'tracker') renderTracker();
+  if (id === 'angles')  renderAngles();
+  if (id === 'systems') renderSystems();
+  if (id === 'overview') renderOverview();
+  if (id === 'killscale') { renderKSLog(); populateKSSelect(); }
+}
+
+// ─── COMPUTED METRICS ────────────────────────────────────────
+function hookRate(d)  { return d.impr  > 0 ? (d.v3sec / d.impr)  : null; }
+function holdRate(d)  { return d.v3sec > 0 ? (d.thru  / d.v3sec) : null; }
+function ctr(d)       { return d.impr  > 0 ? (d.clicks/ d.impr)  : null; }
+function cpl(d)       { return d.leads > 0 ? (d.spend / d.leads) : null; }
+function qualRate(d)  { return d.leads > 0 ? (d.leads / d.clicks): null; }
+
+function metricClass(val, thresholds, invert) {
+  if (val === null || val === undefined) return 'metric-na';
+  const [good, warn] = thresholds;
+  if (!invert) {
+    if (val >= good) return 'metric-good';
+    if (val >= warn) return 'metric-warn';
+    return 'metric-bad';
+  } else {
+    if (val <= good) return 'metric-good';
+    if (val <= warn) return 'metric-warn';
+    return 'metric-bad';
+  }
+}
+
+function pct(v) { return v !== null && v !== undefined ? (v*100).toFixed(1)+'%' : '—'; }
+function sgd(v) { return v !== null && v !== undefined ? '$'+v.toFixed(2) : '—'; }
+function num(v) { return v !== null && v !== undefined ? v.toLocaleString() : '—'; }
+
+function decisionBadge(d) {
+  const cls = { KILL:'d-kill', SCALE:'d-scale', WATCH:'d-watch' };
+  return `<span class="status ${cls[d]||'d-none'}">${d||'—'}</span>`;
+}
+
+// ─── OVERVIEW ────────────────────────────────────────────────
+function renderOverview() {
+  const totalSpend = adData.reduce((s,d) => s+(+d.spend||0), 0);
+  const totalLeads = adData.reduce((s,d) => s+(+d.leads||0), 0);
+  const hookRates  = adData.map(hookRate).filter(v=>v!==null);
+  const avgHook    = hookRates.length ? hookRates.reduce((a,b)=>a+b,0)/hookRates.length : null;
+  const cpls       = adData.map(cpl).filter(v=>v!==null);
+  const avgCpl     = cpls.length ? cpls.reduce((a,b)=>a+b,0)/cpls.length : null;
+
+  document.getElementById('kpi-spend').textContent  = '$'+totalSpend.toFixed(0);
+  document.getElementById('kpi-leads').textContent  = totalLeads;
+  document.getElementById('kpi-cpl').textContent    = avgCpl ? '$'+avgCpl.toFixed(0) : '—';
+  document.getElementById('kpi-hook').textContent   = avgHook ? pct(avgHook) : '—';
+  document.getElementById('kpi-kill').textContent   = adData.filter(d=>d.decision==='KILL').length;
+  document.getElementById('kpi-scale').textContent  = adData.filter(d=>d.decision==='SCALE').length;
+  document.getElementById('kpi-total-ads').textContent = adData.length || 23;
+}
+
+// ─── TRACKER ─────────────────────────────────────────────────
+function setSort(key, el) {
+  sortKey = key;
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderTracker();
+}
+
+function renderTracker() {
+  const angleF    = document.getElementById('filter-angle').value;
+  const formatF   = document.getElementById('filter-format').value;
+  const decisionF = document.getElementById('filter-decision').value;
+  const searchF   = (document.getElementById('filter-search').value||'').toLowerCase();
+
+  let rows = adData.filter(d => {
+    if (angleF    && d.angle    !== angleF)    return false;
+    if (formatF   && d.format   !== formatF)   return false;
+    if (decisionF && (d.decision||'—') !== decisionF) return false;
+    if (searchF   && !d.name.toLowerCase().includes(searchF)) return false;
+    return true;
+  });
+
+  // sort
+  rows.sort((a,b) => {
+    if (sortKey === 'hookrate') return (hookRate(b)||0) - (hookRate(a)||0);
+    if (sortKey === 'cpl')      return (cpl(a)||9999) - (cpl(b)||9999);
+    if (sortKey === 'spend')    return (b.spend||0) - (a.spend||0);
+    return 0;
+  });
+
+  const tbody = document.getElementById('tracker-body');
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="13" class="muted" style="text-align:center;padding:20px;">No ads logged yet — add your first entry above, or check filters.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = rows.map((d,i) => {
+    const hr = hookRate(d), hd = holdRate(d), ct = ctr(d), cp = cpl(d), qr = qualRate(d);
+    const hrClass = metricClass(hr, [0.35, 0.25], false);
+    const cpClass = metricClass(cp, [50, 100], true);
+    const ctClass = metricClass(ct, [0.02, 0.01], false);
+    const barW = hr ? Math.min(Math.round(hr*400), 100) : 0;
+    const barCls = hr >= 0.35 ? 'bar-good' : hr >= 0.25 ? 'bar-warn' : 'bar-bad';
+    return `
+    <tr>
+      <td class="mono" style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${d.name}</td>
+      <td class="center"><strong>${d.angle}</strong></td>
+      <td class="center">${d.system||'—'}</td>
+      <td class="center">$${(+d.spend||0).toFixed(0)}</td>
+      <td class="center">${num(d.impr)}</td>
+      <td class="center">
+        <span class="${hrClass}">${pct(hr)}</span><br>
+        <div class="bar-container"><div class="bar-fill ${barCls}" style="width:${barW}%"></div></div>
+      </td>
+      <td class="center ${metricClass(hd,[0.5,0.4],false)}">${pct(hd)}</td>
+      <td class="center ${ctClass}">${pct(ct)}</td>
+      <td class="center ${cpClass}">${sgd(cp)}</td>
+      <td class="center">${d.leads||'—'}</td>
+      <td class="center">${pct(qr)}</td>
+      <td class="center">${decisionBadge(d.decision)}</td>
+      <td class="muted">${d.notes||''}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── ANGLES ──────────────────────────────────────────────────
+// Compatibility matrix: [A01..A10] × [SYS01..SYS10]
+// 2=active tested, 1=recommended, 0=untested
+const MATRIX = {
+  A01: [2,1,1,1,1,0,0,0,0,1],
+  A02: [1,2,0,0,2,0,0,0,0,0],
+  A03: [0,0,2,2,1,0,0,0,1,0],
+  A04: [0,1,0,0,0,0,0,2,0,0],
+  A05: [0,0,0,0,0,2,2,0,1,0],
+  A06: [0,2,0,0,0,0,0,0,0,0],
+  A07: [0,2,1,0,0,0,0,1,1,2],
+  A08: [2,1,0,0,0,0,0,0,0,0],
+  A09: [0,0,0,0,0,2,0,0,0,0],
+  A10: [0,0,0,0,0,0,0,0,0,2],
+};
+
+function renderAngles() {
+  const tbody = document.getElementById('angle-body');
+  tbody.innerHTML = Object.entries(ANGLES).map(([k,name],i) => {
+    const ads = adData.filter(d => d.angle === k);
+    const totalSpend = ads.reduce((s,d)=>s+(+d.spend||0),0);
+    const totalLeads = ads.reduce((s,d)=>s+(+d.leads||0),0);
+    const hrs = ads.map(hookRate).filter(v=>v!==null);
+    const avgHr = hrs.length ? hrs.reduce((a,b)=>a+b,0)/hrs.length : null;
+    const cpls = ads.map(cpl).filter(v=>v!==null);
+    const avgCpl = cpls.length ? cpls.reduce((a,b)=>a+b,0)/cpls.length : null;
+    const best = ads.sort((a,b)=>(hookRate(b)||0)-(hookRate(a)||0))[0];
+    const bg = i%2===0 ? '#fff' : '#f8f8fc';
+    return `<tr style="background:${bg}">
+      <td><strong>${k}</strong></td>
+      <td>${name}</td>
+      <td class="center">${ads.length}</td>
+      <td class="center">$${totalSpend.toFixed(0)}</td>
+      <td class="center ${metricClass(avgHr,[0.35,0.25],false)}">${pct(avgHr)}</td>
+      <td class="center ${metricClass(avgCpl,[50,100],true)}">${sgd(avgCpl)}</td>
+      <td class="center">${totalLeads}</td>
+      <td class="muted">${best ? best.name : '— not tested yet —'}</td>
+      <td class="center">${ads.length ? decisionBadge(best?.decision) : '<span class="status d-none">Pending</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  // Matrix
+  const mbody = document.getElementById('matrix-body');
+  mbody.innerHTML = Object.entries(MATRIX).map(([angle, vals], i) => {
+    const bg = i%2===0 ? '#fff' : '#f8f8fc';
+    const cells = vals.map(v => {
+      if (v===2) return `<td class="center" style="background:#D4EDDA;color:#155724;font-weight:700;font-size:11px;">✓ Tested</td>`;
+      if (v===1) return `<td class="center" style="background:#FFF3CD;color:#856404;font-size:11px;">★ Try</td>`;
+      return `<td class="center" style="color:#ddd;font-size:11px;">—</td>`;
+    }).join('');
+    return `<tr style="background:${bg}"><td><strong>${angle}</strong></td>${cells}</tr>`;
+  }).join('');
+}
+
+// ─── SYSTEMS ─────────────────────────────────────────────────
+function renderSystems() {
+  const tbody = document.getElementById('systems-body');
+  tbody.innerHTML = SYSTEMS.map((s,i) => {
+    const ads = adData.filter(d => d.system === s.id);
+    const hrs = ads.map(hookRate).filter(v=>v!==null);
+    const avgHr = hrs.length ? hrs.reduce((a,b)=>a+b,0)/hrs.length : null;
+    const ctrs = ads.map(ctr).filter(v=>v!==null);
+    const avgCtr = ctrs.length ? ctrs.reduce((a,b)=>a+b,0)/ctrs.length : null;
+    const cpls = ads.map(cpl).filter(v=>v!==null);
+    const avgCpl = cpls.length ? cpls.reduce((a,b)=>a+b,0)/cpls.length : null;
+    const phaseCls = s.phase==='Cold' ? 'phase-cold' : 'phase-warm';
+    const bg = i%2===0 ? '#fff' : '#f8f8fc';
+    return `<tr style="background:${bg}">
+      <td><strong>${s.id}</strong></td>
+      <td>${s.name}</td>
+      <td class="center"><span class="status ${phaseCls}">${s.phase}</span></td>
+      <td class="center">${ads.length}</td>
+      <td class="center ${metricClass(avgHr,[0.35,0.25],false)}">${pct(avgHr)}</td>
+      <td class="center ${metricClass(avgCtr,[0.02,0.01],false)}">${pct(avgCtr)}</td>
+      <td class="center ${metricClass(avgCpl,[50,100],true)}">${sgd(avgCpl)}</td>
+      <td class="muted">${ads.length ? '—' : '— not tested —'}</td>
+      <td class="center">${ads.length ? '<span class="status s-active">Active</span>' : '<span class="status s-pending">Pending</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── KILL/SCALE LOG ──────────────────────────────────────────
+function populateKSSelect() {
+  const sel = document.getElementById('ks-name');
+  sel.innerHTML = '<option value="">Select ad...</option>' +
+    adData.map(d=>`<option>${d.name}</option>`).join('');
+}
+
+function renderKSLog() {
+  const tbody = document.getElementById('ks-log-body');
+  if (!ksLog.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="muted" style="text-align:center;padding:20px;">No decisions logged yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = ksLog.map((k,i) => {
+    const bg = i%2===0 ? '#fff' : '#f8f8fc';
+    return `<tr style="background:${bg}">
+      <td>${k.date}</td>
+      <td class="mono">${k.name}</td>
+      <td class="center">$${k.spend}</td>
+      <td>${k.trigger}</td>
+      <td class="center">${decisionBadge(k.decision)}</td>
+      <td class="muted">${k.reason}</td>
+      <td class="muted">${k.replace||'—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function logKillScale() {
+  const name    = document.getElementById('ks-name').value;
+  const spend   = document.getElementById('ks-spend').value;
+  const trigger = document.getElementById('ks-trigger').value;
+  const decision= document.getElementById('ks-decision').value;
+  const reason  = document.getElementById('ks-reason').value;
+  const replace = document.getElementById('ks-replace').value;
+  if (!name) { alert('Select an ad.'); return; }
+  const entry = { date: new Date().toLocaleDateString('en-SG'), name, spend, trigger, decision, reason, replace };
+  ksLog.unshift(entry);
+  // update decision in adData
+  const ad = adData.find(d=>d.name===name);
+  if (ad) { ad.decision = decision; saveData(); }
+  localStorage.setItem('rei_ksLog', JSON.stringify(ksLog));
+  renderKSLog();
+  clearKSForm();
+}
+
+function clearKSForm() {
+  ['ks-spend','ks-reason','ks-replace'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('ks-name').value='';
+}
+
+// ─── ADD TRACKER ENTRY ────────────────────────────────────────
+function addEntry() {
+  const name   = document.getElementById('f-name').value.trim();
+  const angle  = document.getElementById('f-angle').value;
+  const system = document.getElementById('f-system').value;
+  const spend  = parseFloat(document.getElementById('f-spend').value) || 0;
+  const impr   = parseInt(document.getElementById('f-impr').value)  || 0;
+  const v3sec  = parseInt(document.getElementById('f-3sec').value)  || 0;
+  const thru   = parseInt(document.getElementById('f-thru').value)  || 0;
+  const clicks = parseInt(document.getElementById('f-clicks').value)|| 0;
+  const leads  = parseInt(document.getElementById('f-leads').value) || 0;
+  const decision = document.getElementById('f-decision').value;
+  const notes  = document.getElementById('f-notes').value.trim();
+
+  if (!name) { alert('Enter an ad name.'); return; }
+
+  const existing = adData.findIndex(d=>d.name===name);
+  const entry = { name, angle, system, spend, impr, v3sec, thru, clicks, leads, decision, notes };
+
+  if (existing >= 0) { adData[existing] = entry; }
+  else { adData.push(entry); }
+
+  saveData();
+  renderTracker();
+  renderOverview();
+  clearForm();
+  alert(`Saved: ${name}`);
+}
+
+function clearForm() {
+  ['f-name','f-spend','f-impr','f-3sec','f-thru','f-clicks','f-leads','f-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-decision').value='—';
+}
+
+function saveData() {
+  localStorage.setItem('rei_adData', JSON.stringify(adData));
+}
+
+// ─── LAST UPDATE ─────────────────────────────────────────────
+document.getElementById('last-update').textContent = 'Updated: ' + new Date().toLocaleString('en-SG', {dateStyle:'medium',timeStyle:'short'});
+
+// ─── INIT ────────────────────────────────────────────────────
+renderOverview();
+</script>
+
+</body>
+</html>
