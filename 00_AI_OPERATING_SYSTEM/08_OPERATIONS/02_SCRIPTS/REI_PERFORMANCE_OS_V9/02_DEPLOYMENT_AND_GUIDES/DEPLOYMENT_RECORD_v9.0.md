@@ -27,14 +27,25 @@ Sources: `DEPLOYMENT_CHECKLIST.md`; live deployment performed 2026-07-31 via cla
 - Restored the project manifest to the supplied v9 version. **Note:** project creation overwrites `appsscript.json` with a default (`America/New_York`, no `webapp` block). It was replaced with the correct `Asia/Singapore` + `executeAs: USER_DEPLOYING` + `access: ANYONE_ANONYMOUS` manifest before pushing. Re-check this on any future recreate.
 - Created web-app deployment `@1`, described "REI Performance OS v9.0 production".
 
-## Status: DEPLOYED BUT NOT YET AUTHORIZED
+## Status: LIVE — authorized, setup run, web app serving
 
-The web app currently returns **HTTP 403 Access denied**. This is expected and not a fault: an "Execute as me" web app cannot serve until the owning account has authorized the script's scopes at least once. That authorization is checklist section B and requires a human — it cannot be automated.
+- **2026-07-31 14:47 SGT** — `setupV9` completed cleanly (execution log: "REI Performance OS v9 setup complete"). Scopes authorized by `admin@thereimethod.com`.
+- **Web app verified: HTTP 200**, title `REI Performance OS v9.0.1`, serving the REI access-key screen (not a Google account chooser) — checklist §C.7 satisfied.
+- Still pending: credentials, manual sync, triggers, Google Ads script. **v8.43 remains the system of record.**
+
+## Two source bugs found and fixed during deployment
+
+Both were in the generated `ALL_IN_ONE` bundle and had never surfaced because v9 had never been run.
+
+1. **`ReferenceError: stageRank_ is not defined`** (`rebuildDailyFunnelFact_`). The helper is named `statusRank_`; the modular `02_DataService.gs` calls it correctly, but the bundle used `stageRank_` in the funnel block — a name defined nowhere. 6 occurrences corrected.
+2. **`Cannot call SpreadsheetApp.getUi() from this context`** (`setupV9`). `getUi()` is unavailable from the script editor and from time-based triggers. Setup did all its real work then died on a cosmetic completion popup. Added a context-safe `uiAlert_()` helper (falls back to `console.log`) and routed the four alert-only calls through it. This also repaired `runFullSyncFromEditor` and `runHealthCheckFromEditor`, which were named for editor use yet called `getUi()` directly and could never have worked. `onOpen` and `promptProperty_` still use `getUi()` deliberately — they need the sheet UI, so **credential entry must be done from the sheet menu, not the editor.**
+
+**Anyone regenerating `ALL_IN_ONE` from the numbered modular files must re-check both.**
 
 ## Remaining steps (owner only)
 
-1. Open the script editor (link above) → select `setupV9` in the function dropdown → **Run** → approve the permission prompt. On the "Google hasn't verified this app" screen choose **Advanced → Go to REI Performance OS v9.0**.
-2. Refresh the sheet, then use the new **REI Performance OS v9** menu to store: Dashboard access key · Meta access token · GHL private integration key.
+1. ~~Run `setupV9` and approve permissions~~ — **DONE 2026-07-31.**
+2. Refresh the sheet, then use the new **REI Performance OS v9** menu to store: Dashboard access key · Meta access token · GHL private integration key. Must be done from the sheet menu (see bug 2).
 3. In **Project Settings → Script Properties**, add: `SHEET_ID` (value above), `META_AD_ACCOUNT_ID` (`act_...`), `META_API_VERSION`, `GHL_LOCATION_ID`, `GHL_PIPELINE_ID`, `GOOGLE_ADS_CUSTOMER_ID`.
 4. Run **REI Performance OS v9 → Run full sync now**. Resolve anything appearing in `Error_Log`.
 5. Only after a clean manual sync: **Install safe sync triggers**.
