@@ -7,18 +7,34 @@ Sources: `DEPLOYMENT_CHECKLIST.md`; live deployment performed 2026-07-31 via cla
 
 **Keep this file.** It holds the identifiers needed to update or roll back v9 without rebuilding anything.
 
-## Live identifiers
+## ⚠️ There were TWO v9 projects on this sheet. Only ONE is canonical.
+
+Discovered 2026-07-31: the sheet already had a container-bound v9 project created 2026-07-13 with its own live web app. A second project was created the same day via clasp before this was known. Both served working web apps simultaneously — the same parallel-deployment trap as the diagnostic app. **Resolved: the July project is canonical; the duplicate was undeployed.**
+
+**Rule: always open the script via the sheet → Extensions → Apps Script.** That is the canonical project. Never create a second bound project for this sheet.
+
+## Live identifiers — CANONICAL
 
 | Item | Value |
 |---|---|
-| Apps Script project | `REI Performance OS v9.0` |
-| Script ID | `1fBoZzks1qaWenl-UU7l9vyipv4VXvUHdkcDQ4bO6ejFpYilkHApyNH_C` |
-| Script editor | https://script.google.com/d/1fBoZzks1qaWenl-UU7l9vyipv4VXvUHdkcDQ4bO6ejFpYilkHApyNH_C/edit |
+| Apps Script project | `(Weekly Ads Dashboard) REI Performance OS v9.0` |
+| Script ID | `1KlPAiYWKZ_0xmK9ErqARBjkLDrJ5pXYTCuKdDXYwuTgR8ABr8QKxgq20` |
+| Script editor | https://script.google.com/d/1KlPAiYWKZ_0xmK9ErqARBjkLDrJ5pXYTCuKdDXYwuTgR8ABr8QKxgq20/edit |
+| Opens from | Sheet → **Extensions → Apps Script** (this is why it is canonical) |
 | Bound sheet | `(Weekly Ads Dashboard) REI_Performance_OS_MASTER_SHEET_v9.0` |
 | Sheet ID | `167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk` |
-| Deployment ID | `AKfycbwPOxtVYkLWxwlmP6PmclOT52UHFEoKr8oQGlxFTfCbQeqj5CEc9YEdlOBsSyJXeSL-BQ` |
-| Web app URL | https://script.google.com/macros/s/AKfycbwPOxtVYkLWxwlmP6PmclOT52UHFEoKr8oQGlxFTfCbQeqj5CEc9YEdlOBsSyJXeSL-BQ/exec |
-| Deployed by | `admin@thereimethod.com` |
+| Deployment | `AKfycbzdJ7VILpfty4TL7P76y6drQtkcmw0Dt2_Vai-cUFGZKWeZNia_QnuwiaQd5naerQzF` @3 |
+| Web app URL | https://script.google.com/macros/s/AKfycbzdJ7VILpfty4TL7P76y6drQtkcmw0Dt2_Vai-cUFGZKWeZNia_QnuwiaQd5naerQzF/exec |
+| Verified | HTTP 200, serving `REI Performance OS v9.0.1` access-key screen, running the fixed code |
+
+## Retired duplicate — do not use
+
+| Item | Value |
+|---|---|
+| Project | `REI Performance OS v9.0` (no "(Weekly Ads Dashboard)" prefix) |
+| Script ID | `1fBoZzks1qaWenl-UU7l9vyipv4VXvUHdkcDQ4bO6ejFpYilkHApyNH_C` |
+| Status | **All deployments deleted 2026-07-31 — web app returns HTTP 404.** Inert: no web app, no triggers. |
+| Cleanup | Safe to delete the project file from Drive. Retained-but-inert is also acceptable; it cannot run or serve. |
 
 ## What was done 2026-07-31 (checklist sections A and C)
 

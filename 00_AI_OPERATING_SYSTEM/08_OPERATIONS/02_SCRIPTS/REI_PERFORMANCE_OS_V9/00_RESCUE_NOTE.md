@@ -8,8 +8,15 @@ Sources: `H:\Shared drives\00_E.C.O.S\01_PROPERTY_BUSINESS\01_CLIENT_EDITION\06_
 ## What this is
 Full Apps Script source and deployment package for a v9.0 rebuild of the REI Performance OS dashboard — the same system whose older v8.43 build is the currently ACTIVE, deployed version at `08_OPERATIONS/02_SCRIPTS/` (`REI_AppsScript_ACTIVE_v8.43.gs`, `REI_GoogleAds_Script_ACTIVE_v8.gs`). This v9.0 rebuild existed only in the legacy folder and was never carried into the AI OS — rescued here 2026-07-13 ahead of the legacy folder moving to `_ARCHIVE`.
 
-## Status: UNDEPLOYED
-This package has **not been deployed**. The live, production dashboard everyone is running today is still **v8.43** (`08_OPERATIONS/02_SCRIPTS/REI_AppsScript_ACTIVE_v8.43.gs`). v9.0 is a complete rebuild sitting ready to ship, not the active system.
+## Status: DEPLOYED (corrected 2026-07-31) — but v8.43 is still the system of record
+
+> **This section previously read "UNDEPLOYED" and was wrong.** A container-bound Apps Script project carrying this v9 code was created on the master sheet **2026-07-13** (modified 2026-07-19) with its own live web app. It was serving the whole time this note claimed otherwise. Corrected 2026-07-31 after the deployment was discovered during a second deployment attempt.
+
+Current state:
+- **v9 is deployed and serving** — canonical project `(Weekly Ads Dashboard) REI Performance OS v9.0`, script ID `1KlPAiYWKZ_0xmK9ErqARBjkLDrJ5pXYTCuKdDXYwuTgR8ABr8QKxgq20`. Full identifiers, URL and history: `02_DEPLOYMENT_AND_GUIDES/DEPLOYMENT_RECORD_v9.0.md`.
+- **Two source bugs were found and fixed 2026-07-31** (`stageRank_` ReferenceError; `SpreadsheetApp.getUi()` outside the sheet UI). Until then `setupV9` could not complete — so although the project existed since July, **v9 had never successfully initialised**. Both fixes are in `01_SOURCE_CODE/` and pushed to the live project.
+- **v8.43 remains the production system of record** (`08_OPERATIONS/02_SCRIPTS/REI_AppsScript_ACTIVE_v8.43.gs`) until v9 completes credential setup, a clean manual sync, and three consecutive clean days per `DEPLOYMENT_CHECKLIST.md` §F.
+- A duplicate v9 project created 2026-07-31 was undeployed the same day; see the deployment record. **Always reach the script via the sheet → Extensions → Apps Script.**
 
 ## Contents
 - `01_SOURCE_CODE/` — full v9.0 Apps Script source (Config, EntryPoints, DataService, MetaSync, GHLSync, Forecast, LogsHealth, Setup, Dashboard/Styles/Client HTML, appsscript.json manifest, plus the Google Ads-side script) and an all-in-one combined script
