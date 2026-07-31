@@ -247,7 +247,10 @@ const app={
   },
 
   renderHealth(h){
-    document.getElementById('healthSummary').innerHTML=`<div class="metric"><div class="label">System status</div><div class="value" style="color:${h.overall==='HEALTHY'?'var(--green)':'var(--amber)'}">${this.esc(h.overall)}</div><div class="sub">Checked ${new Date(h.generatedAt).toLocaleString('en-SG')}</div></div>`;
+    // Surface server-side section failures so an empty panel is never a mystery.
+    const warn=(this.state.data&&this.state.data.warnings)||[];
+    const warnHtml=warn.length?'<div class="leak-card" style="cursor:default;border-color:rgba(255,189,74,.5)"><div class="leak-label" style="color:var(--amber)">Sections that failed to build</div>'+warn.map(w=>'<div class="leak-stat">'+this.esc(w)+'</div>').join('')+'</div>':'';
+    document.getElementById('healthSummary').innerHTML=warnHtml+`<div class="metric"><div class="label">System status</div><div class="value" style="color:${h.overall==='HEALTHY'?'var(--green)':'var(--amber)'}">${this.esc(h.overall)}</div><div class="sub">Checked ${new Date(h.generatedAt).toLocaleString('en-SG')}</div></div>`;
     document.getElementById('healthList').innerHTML=(h.checks||[]).map(c=>`<div class="list-card"><div class="row"><h3>${this.esc(c.name)}</h3><span class="badge ${c.status==='OK'?'green':c.status==='ERROR'?'red':'amber'}">${this.esc(c.status)}</span></div><div class="sub" style="margin-top:8px;color:var(--muted)">${this.esc(c.detail)}</div></div>`).join('');
   },
 

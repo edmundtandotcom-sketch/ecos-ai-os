@@ -307,10 +307,23 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
   const forecast = getForecastData_();
   const health = buildHealthReport_(true);
   const funnelTotals = aggregateFunnel_(funnel);
-  const ads = aggregateAds_(perf);                       // v9.1 — media-buyer layer
-  const adSets = aggregateAdSets_(perf);
-  const stages = buildStageConversions_(funnelTotals);   // v9.1 — CEO leak detection
-  const pipeline = buildPipelineByStage_(leads);         // v9.1 — agent follow-up list
+
+  // v9.1 additions are individually fault-isolated. If one throws on unexpected data
+  // it must not take the whole payload down with it — that returns an error to the
+  // client and renders a blank dashboard, which is indistinguishable from "broken".
+  // Failures degrade to empty and are surfaced as warnings instead.
+  const warnings = [];
+  const safely = function (label, fn, fallback) {
+    try { return fn(); }
+    catch (e) { warnings.push(label + ': ' + (e && e.message || e)); return fallback; }
+  };
+  const ads = safely('ads', function () { return aggregateAds_(perf); }, []);
+  const adSets = safely('adSets', function () { return aggregateAdSets_(perf); }, []);
+  const stages = safely('stages', function () { return buildStageConversions_(funnelTotals); }, null);
+  const pipeline = safely('pipeline', function () { return buildPipelineByStage_(leads); }, []);
+  if (warnings.length) {
+    try { appendErrorLog_(makeRunId_('dash'), 'Dashboard', 'buildDashboardPayload_', 'WARN', warnings.join(' | '), '', '', '', {}, 'webapp'); } catch (ignored) {}
+  }
   return {
     ok: true,
     app: { name: APP.NAME, version: APP.VERSION },
@@ -325,11 +338,12 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
     funnel: funnelTotals,
     stages: stages,
     pipeline: pipeline,
+    warnings: warnings,
     actions: {
       kill: ads.filter(a => a.signal === 'KILL').length,
       scale: ads.filter(a => a.signal === 'SCALE').length,
       test: ads.filter(a => a.signal === 'TEST').length,
-      staleLeads: pipeline.reduce((n, g) => n + g.staleCount, 0)
+      staleLeads: pipeline.reduce((n, g) => n + asNumber_(g.staleCount), 0)
     },
     thresholds: signalThresholds_(),
     trend: buildDailyTrend_(perf, funnel),
