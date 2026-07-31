@@ -234,3 +234,39 @@ Property Ladder lane. Hook: "most couples decoupling are doing it wrong, losing 
 mistakes (50-50 split trap; forgotten stamp duty/legal/clawback costs) → free "Decoupling Decoded" guide.
 Gap REI owns: CP Homes teaches decoupling MECHANICS only, not the Know->Move->Own SEQUENCE. HIGH swipe value —
 model the structure, never the copy. See ad_breakdown.md.
+
+## 2026-07-31 batch scan (6 Edmund-supplied links via /rei-ads-scan) — 5 advertisers + 1 skipped
+Skipped: keyword search "Own This Property" (SG) returned >50,000 global-noise results, not a single advertiser — not usable; needs a page-ID or exact advertiser name.
+
+### Legacy Advisors Academy By Darren Tan (cross-vertical: financial-advisor B2B coaching, NOT property; note "Legacy Planning" ≠ retired Family Legacy) — page 102969409387188
+8 distinct video scripts downloaded+transcribed (COT/TOT / "4th Pillar" estate-planning workshop funnel to PTEPPL.ACADEMY):
+28281828724737890(1:32), 1537158361232028(1:37), 1715820026094977(2:11), 1336883881147313(9:50), 1038428128888050(1:01),
+1566918941555184(1:20), 1331498719138186(1:42), 2141371636781192(1:41). Files in `.../Legacy Advisors Academy/`. See _ad_breakdown.md.
+
+### M H Simon (cross-vertical: gym/clinic lead-gen agency, NOT property) — page 104247242216764
+2 distinct scripts, 6 video creatives downloaded+transcribed. Script A (visibility-problem spiral) rep 2244821123003319, variants
+1350786807221199/2096398737949182/2472689359872299; Script B (3-part system) 27941718185518744/1054391136971743.
+Script A dup IDs (same 32s video, not re-downloaded): 1034189992535375, 1092608663300296, 1321634266795826, 1399863335326064,
+1612721190237640, 2935842006759997, 790456294125001. Files in `.../M H Simon/`. See _ad_breakdown.md.
+
+### Caleb Sim (cross-vertical, already tracked) — page 106092578729020 — INCREMENTAL 2026-07-31 event-launch wave
+7 distinct under-cap videos downloaded+transcribed: 1082314647459608(0:49), 1593268255709022(1:01), 2582280952224762(2:06),
+1487176600122842(1:30), 1487669993190384(2:44), 1609941944028374(2:35), 1594050952152531(2:38).
+Over length cap (logged only): 1999792224075095(19:06). See _ad_breakdown_2026-07-31_incremental.md.
+
+### Frank Kern (cross-vertical: US direct-response marketing guru, NOT property; TOP copywriting swipe) — page 137568852956377
+29 of ~86 loaded (pagination ceiling). 5 distinct videos downloaded+transcribed: 256163192504793(9:09 hero), 1008850875271328(1:44),
+2176845223096594(2:58), 841908908855838(1:52), 960445710385080(3:12).
+9:09 video ("Ugly Ads", asset 3684332211890108) dup IDs (not re-downloaded): 1000542306100028, 1018758547719654, 1022414710493453,
+1024520427210412, 1024830437195189, 1030632769470713, 1066051765846798, 1257027706380872, 1390997869539709, 1517840393153740,
+1535511318366814, 1555043046089297, 1704815304057270, 1726711485021717, 2192735321285513, 2220164251856737, 2344733633002516,
+2831697150529808, 3039443796245774, 4366152100196634, 648629813009783. Over-cap (logged): 1366274928808099(10:20),
+1554756199661093(20:00), 1678797206571795(10:29). Key swipe = his long text posts (copywriting lessons) — captured in _ad_breakdown.md.
+
+### The Freedom Growth Academy (Resh / Modern Wealth Academy — SG trading/wealth-education, NOT property; TOP story-hook swipe) — page 297816853407449
+28 of ~120 loaded (pagination ceiling; distinct scripts, so more worth pulling later). 26 distinct story videos downloaded+transcribed:
+1050420507321445, 1251093426994602, 1290743936607545, 1290999412909754, 1300508938192622, 1313153937344899, 1418539352933418,
+1557843655689608, 1615654663100382, 1647692559607630, 1922164271740255, 2077236032888332, 2133338937415366, 2469018073550455,
+27493959486894923, 2790605554653288, 3099883466873934, 3210964305753729, 799994605807220, 803059239110210, 895229123305706,
+902235762869178, 910209901773720, 943896674928126, 946804381376573, 976536481570418. Over-cap (logged): 1204708498407081(16:14),
+952442443855278(46:43). Files in `.../The Freedom Growth Academy/`. See _ad_breakdown.md.
