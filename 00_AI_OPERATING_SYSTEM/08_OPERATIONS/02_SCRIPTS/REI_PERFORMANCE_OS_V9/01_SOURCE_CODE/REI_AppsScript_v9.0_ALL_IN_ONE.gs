@@ -629,6 +629,40 @@ function buildHealthReport_(light){
   Object.keys(APP.TABS).forEach(k=>{const name=APP.TABS[k];const sh=getSheet_(name,false);checks.push({name:'Sheet: '+name,status:sh?'OK':'MISSING',detail:sh?Math.max(0,sh.getLastRow()-1)+' data rows':'Run setupV9()'});});
   const syncRows=sheetRowsAsObjects_(APP.TABS.SYNC_LOG);const last={};syncRows.forEach(r=>{const s=safeText_(r.service);if(!last[s]||safeText_(r.timestamp)>safeText_(last[s].timestamp))last[s]=r;});
   Object.keys(last).forEach(s=>checks.push({name:'Last '+s+' sync',status:safeText_(last[s].status)==='SUCCESS'?'OK':'ERROR',detail:safeText_(last[s].timestamp)+' — '+safeText_(last[s].message)}));
+
+  // Errors logged AFTER the last successful sync. Without this, a token that expired
+  // an hour ago still reads green because the last SUCCESS row never changes.
+  // This is what let an expired Meta token (16-Jul) sit unnoticed for two weeks.
+  try{
+    const errs=sheetRowsAsObjects_(APP.TABS.ERROR_LOG);
+    const recent={};
+    errs.forEach(r=>{
+      const svc=safeText_(r.service); if(!svc) return;
+      const ts=safeText_(r.timestamp);
+      const lastOk=last[svc]&&safeText_(last[svc].status)==='SUCCESS'?safeText_(last[svc].timestamp):'';
+      if(ts>lastOk&&(!recent[svc]||ts>safeText_(recent[svc].timestamp)))recent[svc]=r;
+    });
+    Object.keys(recent).forEach(svc=>checks.push({
+      name:svc+' — errors since last success',
+      status:'ERROR',
+      detail:safeText_(recent[svc].timestamp)+' — '+safeText_(recent[svc].message).slice(0,240)
+    }));
+  }catch(e){checks.push({name:'Error-log review',status:'WARN',detail:'Could not read Error_Log: '+(e&&e.message||e)});}
+
+  // Staleness of the actual data, not of the sync attempt. A sync can report SUCCESS
+  // while writing nothing new, so measure the newest fact row instead.
+  try{
+    const perfRows=sheetRowsAsObjects_(APP.TABS.PERFORMANCE);
+    let newest='';
+    perfRows.forEach(r=>{const d=r.date instanceof Date?Utilities.formatDate(r.date,APP.TZ,'yyyy-MM-dd'):safeText_(r.date).slice(0,10);if(d>newest)newest=d;});
+    const today=sgtDate_(new Date());
+    const ageDays=newest?Math.round((new Date(today+'T00:00:00Z')-new Date(newest+'T00:00:00Z'))/86400000):null;
+    checks.push({
+      name:'Performance data freshness',
+      status:newest?(ageDays<=2?'OK':ageDays<=7?'WARN':'ERROR'):'ERROR',
+      detail:newest?('Newest row '+newest+' ('+ageDays+' day'+(ageDays===1?'':'s')+' old)'):'No dated rows found'
+    });
+  }catch(e){checks.push({name:'Performance data freshness',status:'WARN',detail:'Could not evaluate: '+(e&&e.message||e)});}
   const report={generatedAt:nowIso_(),overall:checks.some(c=>c.status==='ERROR')?'ERROR':checks.some(c=>c.status==='MISSING')?'SETUP REQUIRED':'HEALTHY',checks:checks};
   if(!light)writeHealthSheet_(report);return report;
 }
