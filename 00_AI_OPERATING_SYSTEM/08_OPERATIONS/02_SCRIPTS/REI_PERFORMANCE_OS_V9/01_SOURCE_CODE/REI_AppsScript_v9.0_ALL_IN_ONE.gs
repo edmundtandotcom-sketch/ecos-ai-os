@@ -90,6 +90,20 @@ function prop_(name, fallback) {
 
 function nowIso_() { return new Date().toISOString(); }
 
+/**
+ * Context-safe alert. SpreadsheetApp.getUi() only exists when the script is run
+ * from the spreadsheet UI — calling it from the script editor or a time-based
+ * trigger throws "Cannot call SpreadsheetApp.getUi() from this context" and kills
+ * the run. Setup and the *FromEditor helpers are meant to be runnable from the
+ * editor, so their messages fall back to the execution log instead of dying.
+ * Note: promptProperty_ still uses getUi() directly — it needs a real input
+ * dialog, so credential entry must be done from the sheet menu.
+ */
+function uiAlert_(message) {
+  try { SpreadsheetApp.getUi().alert(message); }
+  catch (e) { console.log(message); }
+}
+
 function sgtDate_(date) {
   return Utilities.formatDate(date || new Date(), APP.TZ, 'yyyy-MM-dd');
 }
@@ -596,14 +610,14 @@ function onOpen(){SpreadsheetApp.getUi().createMenu('REI Performance OS v9').add
 
 function setupV9(){
   const ss=getMasterSpreadsheet_();Object.keys(TAB_HEADERS).forEach(name=>{let sh=ss.getSheetByName(name);if(!sh)sh=ss.insertSheet(name);if(sh.getLastRow()===0)sh.appendRow(TAB_HEADERS[name]);sh.setFrozenRows(1);});
-  seedStageMap_();seedForecastAssumptions_();seedConfigV9_();backfillGoogleDailyFact_();rebuildDailyFunnelFact_(makeRunId_('setup'));buildHealthReport_(false);SpreadsheetApp.getUi().alert('REI Performance OS v9 setup complete. Next: set the API credentials, run a manual sync, then install the safe triggers and deploy as Web App.');
+  seedStageMap_();seedForecastAssumptions_();seedConfigV9_();backfillGoogleDailyFact_();rebuildDailyFunnelFact_(makeRunId_('setup'));buildHealthReport_(false);uiAlert_('REI Performance OS v9 setup complete. Next: set the API credentials, run a manual sync, then install the safe triggers and deploy as Web App.');
 }
 
 function seedStageMap_(){const headers=['canonicalStage','rank','countsAsResponded','countsAsBooked','countsAsAppointment','countsAsQualified','countsAsClosed','knownAliases'];const aliases={New:'new lead, new, signup',Contacted:'attempting contact, contacted, nurture',Responded:'responded, replied', 'Booked Call':'booked call, booking, booked appointment, diagnosis call booked',Appointment:'appointment, show, showed','Strategy Session':'strategy session, strategy session booked','Appt Qualified':'implementation opportunity, attended, qualified','Closed':'close, closed, won','Lost':'unqualified, lost'};const rows=CANONICAL_STAGES.map((s,i)=>({canonicalStage:s,rank:i,countsAsResponded:i>=2&&s!=='Lost'?'Y':'',countsAsBooked:i>=3&&s!=='Lost'?'Y':'',countsAsAppointment:i>=4&&s!=='Lost'?'Y':'',countsAsQualified:i>=6&&s!=='Lost'?'Y':'',countsAsClosed:s==='Closed'?'Y':'',knownAliases:aliases[s]||''}));overwriteObjects_(APP.TABS.STAGES,headers,rows);}
 function seedConfigV9_(){const headers=['setting','value','required','description'];const rows=[['Sheet ID',getMasterSheetId_(),'Yes','v9 master spreadsheet'],['Meta API version',prop_('META_API_VERSION','v19.0'),'Yes','Keep configurable; change only after testing'],['Meta history days',APP.DEFAULT_META_DAYS,'No','Daily ad insights lookback'],['GHL sync interval','15 minutes','No','Server trigger only; no browser polling'],['Meta sync interval','30 minutes','No','Server trigger only'],['Web app execute as','User deploying','Yes','Avoids per-viewer Google OAuth'],['Web app access','Anyone','Yes','Direct-link access; no dashboard login gate'],['Mobile mode','Responsive bottom navigation','Yes','Designed for Chrome Android/iOS']].map(r=>({setting:r[0],value:r[1],required:r[2],description:r[3]}));overwriteObjects_(APP.TABS.CONFIG,headers,rows);}
 
 function installV9Triggers(){removeV9Triggers(false);ScriptApp.newTrigger('scheduledMetaSyncV9').timeBased().everyMinutes(30).create();ScriptApp.newTrigger('scheduledGHLSyncV9').timeBased().everyMinutes(15).create();ScriptApp.newTrigger('scheduledHealthCheckV9').timeBased().everyHours(6).create();}
-function removeV9Triggers(showAlert){ScriptApp.getProjectTriggers().forEach(t=>{if(['scheduledMetaSyncV9','scheduledGHLSyncV9','scheduledHealthCheckV9'].indexOf(t.getHandlerFunction())>=0)ScriptApp.deleteTrigger(t);});if(showAlert!==false)SpreadsheetApp.getUi().alert('v9 triggers removed.');}
+function removeV9Triggers(showAlert){ScriptApp.getProjectTriggers().forEach(t=>{if(['scheduledMetaSyncV9','scheduledGHLSyncV9','scheduledHealthCheckV9'].indexOf(t.getHandlerFunction())>=0)ScriptApp.deleteTrigger(t);});if(showAlert!==false)uiAlert_('v9 triggers removed.');}
 function scheduledMetaSyncV9(){withScriptLock_('Meta scheduled sync',1000,function(){const runId=makeRunId_('meta');try{syncMetaDaily_(runId,APP.DEFAULT_META_DAYS);backfillGoogleDailyFact_();clearDashboardCache_();}catch(e){appendErrorLog_(runId,'Meta','scheduledMetaSyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
 function scheduledGHLSyncV9(){withScriptLock_('GHL scheduled sync',1000,function(){const runId=makeRunId_('ghl');try{syncGHL_(runId);clearDashboardCache_();}catch(e){appendErrorLog_(runId,'GHL','scheduledGHLSyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
 function scheduledHealthCheckV9(){buildHealthReport_(false);}
@@ -612,6 +626,6 @@ function syncAllV9_(runId,triggerType){const result={ok:true,runId:runId,started
 function storeMetaAccessToken(){promptProperty_('META_ACCESS_TOKEN','Store Meta access token','Paste the Meta long-lived/system-user access token.');}
 function storeGHLApiKey(){promptProperty_('GHL_API_KEY','Store GHL private integration key','Paste the GHL Private Integration key.');}
 function promptProperty_(property,title,prompt){const ui=SpreadsheetApp.getUi(),res=ui.prompt(title,prompt,ui.ButtonSet.OK_CANCEL);if(res.getSelectedButton()!==ui.Button.OK)return;const value=res.getResponseText().trim();if(!value){ui.alert('Nothing saved.');return;}PropertiesService.getScriptProperties().setProperty(property,value);ui.alert(property+' saved in Script Properties.');}
-function runFullSyncFromEditor(){const result=withScriptLock_('Editor sync',1000,()=>syncAllV9_(makeRunId_('editor'),'editor'));SpreadsheetApp.getUi().alert(JSON.stringify(result,null,2));}
-function runHealthCheckFromEditor(){const report=buildHealthReport_(false);SpreadsheetApp.getUi().alert(report.overall+'\n\n'+report.checks.map(c=>c.status+' — '+c.name+': '+c.detail).join('\n'));}
+function runFullSyncFromEditor(){const result=withScriptLock_('Editor sync',1000,()=>syncAllV9_(makeRunId_('editor'),'editor'));uiAlert_(JSON.stringify(result,null,2));}
+function runHealthCheckFromEditor(){const report=buildHealthReport_(false);uiAlert_(report.overall+'\n\n'+report.checks.map(c=>c.status+' — '+c.name+': '+c.detail).join('\n'));}
 
