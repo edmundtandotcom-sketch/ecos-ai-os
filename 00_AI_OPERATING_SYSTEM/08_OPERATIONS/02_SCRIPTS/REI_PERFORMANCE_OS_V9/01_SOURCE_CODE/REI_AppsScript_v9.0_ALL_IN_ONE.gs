@@ -399,12 +399,12 @@ function rebuildDailyFunnelFact_(runId) {
     const platform=safeText_(r.platform)||'Other'; const campaign=safeText_(r.campaignName)||'(Unattributed)'; const key=date+'|'+platform+'|'+normaliseName_(campaign);
     if(!map[key])map[key]={date,platform,campaignId:'',campaignName:campaign,newLeads:0,contacted:0,responded:0,bookedCalls:0,appointments:0,strategySessions:0,qualified:0,closedWon:0,closedLost:0,revenue:0,sourceUpdatedAt:nowIso_(),syncRunId:runId||'',attributionConfidence:campaign==='(Unattributed)'?'Low':'Medium',notes:''};
     const x=map[key], stage=normaliseStage_(r.status); x.newLeads++;
-    if(stageRank_(stage)>=stageRank_('Contacted')&&stage!=='Lost')x.contacted++;
-    if(stageRank_(stage)>=stageRank_('Responded')&&stage!=='Lost')x.responded++;
-    if(stageRank_(stage)>=stageRank_('Booked Call')&&stage!=='Lost')x.bookedCalls++;
-    if(stageRank_(stage)>=stageRank_('Appointment')&&stage!=='Lost')x.appointments++;
-    if(stageRank_(stage)>=stageRank_('Strategy Session')&&stage!=='Lost')x.strategySessions++;
-    if(stageRank_(stage)>=stageRank_('Appt Qualified')&&stage!=='Lost')x.qualified++;
+    if(statusRank_(stage)>=statusRank_('Contacted')&&stage!=='Lost')x.contacted++;
+    if(statusRank_(stage)>=statusRank_('Responded')&&stage!=='Lost')x.responded++;
+    if(statusRank_(stage)>=statusRank_('Booked Call')&&stage!=='Lost')x.bookedCalls++;
+    if(statusRank_(stage)>=statusRank_('Appointment')&&stage!=='Lost')x.appointments++;
+    if(statusRank_(stage)>=statusRank_('Strategy Session')&&stage!=='Lost')x.strategySessions++;
+    if(statusRank_(stage)>=statusRank_('Appt Qualified')&&stage!=='Lost')x.qualified++;
     if(stage==='Closed'){x.closedWon++;x.revenue+=asNumber_(r.dealValue);} if(stage==='Lost')x.closedLost++;
   });
   overwriteObjects_(APP.TABS.FUNNEL,TAB_HEADERS.Daily_Funnel_Fact,Object.keys(map).map(k=>map[k]));
