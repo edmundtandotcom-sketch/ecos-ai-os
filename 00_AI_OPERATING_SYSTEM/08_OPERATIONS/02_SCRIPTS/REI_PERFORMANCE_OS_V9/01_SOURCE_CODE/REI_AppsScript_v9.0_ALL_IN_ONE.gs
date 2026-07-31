@@ -608,6 +608,37 @@ function writeHealthSheet_(report){const headers=['check','status','detail','che
 /** One-time setup, triggers and menu. */
 function onOpen(){SpreadsheetApp.getUi().createMenu('REI Performance OS v9').addItem('Run v9 setup','setupV9').addItem('Store Meta token','storeMetaAccessToken').addItem('Store GHL key','storeGHLApiKey').addSeparator().addItem('Install safe sync triggers','installV9Triggers').addItem('Remove v9 sync triggers','removeV9Triggers').addItem('Run full sync now','runFullSyncFromEditor').addItem('Run health check','runHealthCheckFromEditor').addToUi();}
 
+/**
+ * One-time config setter — run once from the editor, then never again.
+ *
+ * These four are non-secret IDENTIFIERS (which sheet, which ad account, which GHL
+ * location/pipeline), not credentials. They live in Script Properties, which the web
+ * app deliberately cannot edit: the dashboard is deployed with ANYONE_ANONYMOUS access,
+ * so exposing config writes there would let anyone with the URL repoint the system.
+ *
+ * Secrets are NOT set here and never should be. META_ACCESS_TOKEN, GHL_API_KEY and
+ * DASHBOARD_ACCESS_KEY are entered by a human via the sheet menu (promptProperty_),
+ * so they are never written into source code or version control.
+ *
+ * Values verified 2026-07-31 against the live GHL API and the v9 master sheet.
+ * Existing values are overwritten — safe to re-run if an ID ever changes.
+ */
+function setV9ConfigProperties(){
+  const props={
+    SHEET_ID:'167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
+    META_AD_ACCOUNT_ID:'act_1467621970951606',   // 1CallClose x The REI Method Team
+    META_API_VERSION:'v19.0',                    // bump only after testing (Config_v9 note)
+    GHL_LOCATION_ID:'cyeYxFVQE1l73kO6S6Lx',
+    GHL_PIPELINE_ID:'BdutTA7xHUrNoPpWc5Nu'       // 1-To-1 Pipeline
+  };
+  PropertiesService.getScriptProperties().setProperties(props,false);
+  const missing=['META_ACCESS_TOKEN','GHL_API_KEY','DASHBOARD_ACCESS_KEY']
+    .filter(k=>!prop_(k,''));
+  uiAlert_('v9 config identifiers set:\n- '+Object.keys(props).join('\n- ')+
+    (missing.length?'\n\nStill needed (enter via the sheet menu, never in code):\n- '+missing.join('\n- ')
+                   :'\n\nAll credentials already configured. Next: Run full sync now.'));
+}
+
 function setupV9(){
   const ss=getMasterSpreadsheet_();Object.keys(TAB_HEADERS).forEach(name=>{let sh=ss.getSheetByName(name);if(!sh)sh=ss.insertSheet(name);if(sh.getLastRow()===0)sh.appendRow(TAB_HEADERS[name]);sh.setFrozenRows(1);});
   seedStageMap_();seedForecastAssumptions_();seedConfigV9_();backfillGoogleDailyFact_();rebuildDailyFunnelFact_(makeRunId_('setup'));buildHealthReport_(false);uiAlert_('REI Performance OS v9 setup complete. Next: set the API credentials, run a manual sync, then install the safe triggers and deploy as Web App.');
