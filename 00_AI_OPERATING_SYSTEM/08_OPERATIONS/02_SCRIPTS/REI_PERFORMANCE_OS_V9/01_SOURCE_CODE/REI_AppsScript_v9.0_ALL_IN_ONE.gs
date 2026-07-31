@@ -306,6 +306,11 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
   const overview = aggregateOverview_(perf, funnel);
   const forecast = getForecastData_();
   const health = buildHealthReport_(true);
+  const funnelTotals = aggregateFunnel_(funnel);
+  const ads = aggregateAds_(perf);                       // v9.1 — media-buyer layer
+  const adSets = aggregateAdSets_(perf);
+  const stages = buildStageConversions_(funnelTotals);   // v9.1 — CEO leak detection
+  const pipeline = buildPipelineByStage_(leads);         // v9.1 — agent follow-up list
   return {
     ok: true,
     app: { name: APP.NAME, version: APP.VERSION },
@@ -314,8 +319,19 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
     overview: overview,
     platforms: platforms,
     campaigns: campaigns.slice(0, 100),
+    ads: ads.slice(0, 200),
+    adSets: adSets.slice(0, 100),
     leads: leads,
-    funnel: aggregateFunnel_(funnel),
+    funnel: funnelTotals,
+    stages: stages,
+    pipeline: pipeline,
+    actions: {
+      kill: ads.filter(a => a.signal === 'KILL').length,
+      scale: ads.filter(a => a.signal === 'SCALE').length,
+      test: ads.filter(a => a.signal === 'TEST').length,
+      staleLeads: pipeline.reduce((n, g) => n + g.staleCount, 0)
+    },
+    thresholds: signalThresholds_(),
     trend: buildDailyTrend_(perf, funnel),
     forecast: forecast,
     health: health
@@ -603,6 +619,207 @@ function buildHealthReport_(light){
   if(!light)writeHealthSheet_(report);return report;
 }
 function writeHealthSheet_(report){const headers=['check','status','detail','checkedAt'];overwriteObjects_(APP.TABS.HEALTH,headers,report.checks.map(c=>({check:c.name,status:c.status,detail:c.detail,checkedAt:report.generatedAt})));}
+
+// ==================== 08_Insights.gs (added v9.1, 2026-07-31) ====================
+/**
+ * Decision layer. Three audiences, one dataset:
+ *   Media buyer — per-ad and per-ad-set economics with a Kill/Scale verdict
+ *   CEO         — stage-by-stage conversion with the biggest leak named
+ *   Agents      — who to follow up next, grouped by GHL pipeline stage
+ *
+ * Everything here is READ-ONLY. Nothing writes to Meta, GHL, or the ad account.
+ *
+ * Range-filtered performance comes from Daily_Performance_Fact (daily grain, carries
+ * adId/adSetId). Creative metadata (thumbnail, hook rate, permalink) comes from the
+ * Meta_Ads snapshot, which is current-state only — so metadata reflects "now" while
+ * the money reflects the selected range. That is intentional and matches how Meta
+ * itself reports.
+ */
+
+/** Tunable decision thresholds — Script Properties, so they change without code edits. */
+function signalThresholds_() {
+  return {
+    targetCpl:     asNumber_(prop_('TARGET_CPL', 80)),
+    minSpend:      asNumber_(prop_('SIGNAL_MIN_SPEND', 100)),
+    minLeads:      asNumber_(prop_('SIGNAL_MIN_LEADS', 3)),
+    killCplMult:   asNumber_(prop_('SIGNAL_KILL_CPL_MULT', 2)),
+    scaleCplMult:  asNumber_(prop_('SIGNAL_SCALE_CPL_MULT', 0.7)),
+    killHookRate:  asNumber_(prop_('SIGNAL_KILL_HOOKRATE', 15)),
+    scaleHookRate: asNumber_(prop_('SIGNAL_SCALE_HOOKRATE', 30))
+  };
+}
+
+/**
+ * Kill / Scale / Monitor / Test verdict for one ad.
+ * TEST is returned whenever there is not enough spend or volume to judge — a low CPL
+ * on 1 lead is noise, not a winner. Every verdict carries a plain-English reason so
+ * the number is never presented without its justification.
+ */
+function adSignal_(row, t) {
+  const spend = asNumber_(row.spend), leads = asNumber_(row.leads);
+  const cpl = leads > 0 ? spend / leads : 0;
+  const hook = asNumber_(row.hookrate);
+  const money = function (n) { return '$' + Math.round(n); };
+
+  if (leads === 0 && spend >= t.minSpend * 2)
+    return { signal: 'KILL', reason: money(spend) + ' spent, zero leads' };
+  if (spend < t.minSpend && leads < t.minLeads)
+    return { signal: 'TEST', reason: 'Too early — needs ' + money(t.minSpend) + ' spend or ' + t.minLeads + ' leads' };
+  if (leads >= t.minLeads && cpl >= t.targetCpl * t.killCplMult)
+    return { signal: 'KILL', reason: 'CPL ' + money(cpl) + ' vs ' + money(t.targetCpl) + ' target' };
+  if (hook > 0 && hook < t.killHookRate && spend >= t.minSpend)
+    return { signal: 'KILL', reason: 'Hook rate ' + hook.toFixed(1) + '% — people scroll past' };
+  if (leads >= t.minLeads && cpl > 0 && cpl <= t.targetCpl * t.scaleCplMult)
+    return { signal: 'SCALE', reason: 'CPL ' + money(cpl) + ' vs ' + money(t.targetCpl) + ' target' };
+  if (hook >= t.scaleHookRate && leads >= t.minLeads)
+    return { signal: 'SCALE', reason: 'Hook rate ' + hook.toFixed(1) + '% and converting' };
+  return { signal: 'MONITOR', reason: 'CPL ' + money(cpl) + ' — near target, keep watching' };
+}
+
+/** Per-ad economics for the selected range, joined to current creative metadata. */
+function aggregateAds_(perf) {
+  const t = signalThresholds_(), meta = {};
+  sheetRowsAsObjects_(APP.TABS.META_ADS).forEach(a => { if (safeText_(a.metaId)) meta[safeText_(a.metaId)] = a; });
+
+  const map = {};
+  perf.forEach(r => {
+    const id = safeText_(r.adId); if (!id) return;
+    if (!map[id]) map[id] = {
+      adId: id, adName: safeText_(r.adName), adSetId: safeText_(r.adSetId), adSetName: safeText_(r.adSetName),
+      campaignId: safeText_(r.campaignId), campaignName: safeText_(r.campaignName), platform: safeText_(r.platform),
+      spend: 0, impressions: 0, clicks: 0, leads: 0
+    };
+    const x = map[id];
+    x.spend += asNumber_(r.spend); x.impressions += asNumber_(r.impressions);
+    x.clicks += asNumber_(r.clicks); x.leads += asNumber_(r.leads);
+  });
+
+  return Object.keys(map).map(id => {
+    const x = map[id], m = meta[id] || {};
+    x.hookrate = asNumber_(m.hookrate);
+    x.status = safeText_(m.status);
+    x.format = safeText_(m.format);
+    x.thumbUrl = safeText_(m.thumbUrl) || safeText_(m.imageUrl);
+    x.videoSrc = safeText_(m.videoSrc);
+    x.adPermalink = safeText_(m.adPermalink);
+    x.cpl = x.leads > 0 ? x.spend / x.leads : 0;
+    x.ctr = x.impressions > 0 ? (x.clicks / x.impressions) * 100 : 0;
+    x.cpc = x.clicks > 0 ? x.spend / x.clicks : 0;
+    x.cpm = x.impressions > 0 ? (x.spend / x.impressions) * 1000 : 0;
+    const s = adSignal_(x, t);
+    x.signal = s.signal; x.signalReason = s.reason;
+    return x;
+  }).sort((a, b) => b.spend - a.spend);
+}
+
+/** Per-ad-set economics — which audience/targeting is working. */
+function aggregateAdSets_(perf) {
+  const t = signalThresholds_(), meta = {};
+  sheetRowsAsObjects_(APP.TABS.META_ADSETS).forEach(a => { if (safeText_(a.metaId)) meta[safeText_(a.metaId)] = a; });
+
+  const map = {};
+  perf.forEach(r => {
+    const id = safeText_(r.adSetId); if (!id) return;
+    if (!map[id]) map[id] = {
+      adSetId: id, adSetName: safeText_(r.adSetName), campaignId: safeText_(r.campaignId),
+      campaignName: safeText_(r.campaignName), platform: safeText_(r.platform),
+      spend: 0, impressions: 0, clicks: 0, leads: 0, adIds: {}
+    };
+    const x = map[id];
+    x.spend += asNumber_(r.spend); x.impressions += asNumber_(r.impressions);
+    x.clicks += asNumber_(r.clicks); x.leads += asNumber_(r.leads);
+    if (safeText_(r.adId)) x.adIds[safeText_(r.adId)] = 1;
+  });
+
+  return Object.keys(map).map(id => {
+    const x = map[id], m = meta[id] || {};
+    x.adCount = Object.keys(x.adIds).length; delete x.adIds;
+    x.budget = asNumber_(m.budget); x.audience = safeText_(m.audience); x.status = safeText_(m.status);
+    x.cpl = x.leads > 0 ? x.spend / x.leads : 0;
+    x.ctr = x.impressions > 0 ? (x.clicks / x.impressions) * 100 : 0;
+    const s = adSignal_(x, t);
+    x.signal = s.signal; x.signalReason = s.reason;
+    return x;
+  }).sort((a, b) => b.spend - a.spend);
+}
+
+/**
+ * Stage-by-stage conversion following the live GHL 1-To-1 Pipeline, and the leak.
+ * Steps mirror the pipeline exactly: New Lead > Responded > Booked Call >
+ * Appointment > Strategy Session > Close.
+ *
+ * The "leak" is the weakest step by conversion rate, ignoring steps whose entry
+ * volume is too small to read (a 0% step with 1 lead in it is noise, not a leak).
+ */
+function buildStageConversions_(f) {
+  const minVolume = asNumber_(prop_('LEAK_MIN_VOLUME', 5));
+  const pct = function (num, den) { return den > 0 ? (num / den) * 100 : 0; };
+
+  const steps = [
+    { key: 'lead_responded',      label: 'New Lead → Responded',           from: 'New Leads',        fromCount: f.newLeads,         to: f.responded },
+    { key: 'responded_booked',    label: 'Responded → Booked Call',        from: 'Responded',        fromCount: f.responded,        to: f.bookedCalls },
+    { key: 'booked_appointment',  label: 'Booked Call → Appointment',      from: 'Booked Calls',     fromCount: f.bookedCalls,      to: f.appointments },
+    { key: 'appointment_session', label: 'Appointment → Strategy Session', from: 'Appointments',     fromCount: f.appointments,     to: f.strategySessions },
+    { key: 'session_closed',      label: 'Strategy Session → Closed',      from: 'Strategy Sessions', fromCount: f.strategySessions, to: f.closedWon }
+  ].map(s => {
+    s.rate = pct(s.to, s.fromCount);
+    s.dropped = Math.max(0, s.fromCount - s.to);
+    s.readable = s.fromCount >= minVolume;
+    return s;
+  });
+
+  const readable = steps.filter(s => s.readable);
+  let leak = null;
+  if (readable.length) {
+    leak = readable.reduce((worst, s) => (s.rate < worst.rate ? s : worst), readable[0]);
+  }
+
+  return {
+    steps: steps,
+    leak: leak ? { key: leak.key, label: leak.label, rate: leak.rate, dropped: leak.dropped } : null,
+    leakNote: leak ? null : 'Not enough volume yet to identify a leak (needs ' + minVolume + '+ entering a stage).',
+    overall: { rate: pct(f.closedWon, f.newLeads), from: f.newLeads, to: f.closedWon },
+    minVolume: minVolume
+  };
+}
+
+/**
+ * Agent view — the live pipeline grouped by stage, with the oldest-untouched first.
+ * Terminal stages (Closed/Lost) are excluded: this answers "who do I call next",
+ * not "what happened". No PII beyond what readRecentLeadSummaries_ already exposes.
+ */
+function buildPipelineByStage_(leads) {
+  const today = sgtDate_(new Date());
+  const daysBetween = function (iso) {
+    if (!iso) return 0;
+    const a = new Date(iso + 'T00:00:00Z'), b = new Date(today + 'T00:00:00Z');
+    return Math.max(0, Math.round((b - a) / 86400000));
+  };
+  const active = CANONICAL_STAGES.filter(s => s !== 'Closed' && s !== 'Lost');
+  const buckets = {};
+  active.forEach(s => buckets[s] = []);
+
+  (leads || []).forEach(l => {
+    const stage = normaliseStage_(l.status);
+    if (!buckets[stage]) return;                     // Closed/Lost drop out here
+    const age = daysBetween(l.date);
+    buckets[stage].push({
+      id: l.id, name: l.name, stage: stage, platform: l.platform,
+      campaignName: l.campaignName, sourceAdName: l.sourceAdName,
+      quality: l.quality, date: l.date, daysInStage: age,
+      stale: age >= asNumber_(prop_('STALE_DAYS', 7))
+    });
+  });
+
+  return active.map(stage => {
+    const rows = buckets[stage].sort((a, b) => b.daysInStage - a.daysInStage);
+    return {
+      stage: stage, count: rows.length,
+      staleCount: rows.filter(r => r.stale).length,
+      leads: rows.slice(0, 25)
+    };
+  }).filter(g => g.count > 0);
+}
 
 // ==================== 07_Setup.gs ====================
 /** One-time setup, triggers and menu. */

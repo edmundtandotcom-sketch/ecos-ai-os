@@ -1,3 +1,270 @@
 <script>
-const app={state:{key:'',rangeKey:'30d',data:null,view:'overview'},init(){document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>this.setRange(b.dataset.range));document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>this.showView(b.dataset.view));this.load(true);},server(name,arg){return new Promise((resolve,reject)=>{const runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e&&e.message||e)));switch(name){case 'login':runner.login(arg);break;case 'getDashboardData':runner.getDashboardData(arg);break;case 'runManualSync':runner.runManualSync(arg);break;case 'saveForecastScenario':runner.saveForecastScenario(arg);break;case 'getHealthData':runner.getHealthData(arg);break;default:reject(new Error('Unsupported server action: '+name));}});},async login(silent){const key=document.getElementById('accessKey').value.trim();if(!key)return;this.loading(true);try{await this.server('login',key);this.state.key=key;(document.getElementById('remember').checked?localStorage:sessionStorage).setItem('rei_v9_key',key);document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden');await this.load(true);}catch(e){document.getElementById('loginError').textContent=e.message;if(!silent)localStorage.removeItem('rei_v9_key');}finally{this.loading(false);}},async load(force){this.loading(true);try{const data=await this.server('getDashboardData',{accessKey:this.state.key,rangeKey:this.state.rangeKey,force:!!force});this.state.data=data;this.render();}catch(e){this.toast(e.message,true);}finally{this.loading(false);}},async sync(){this.setStatus('Syncing…');this.loading(true);try{const r=await this.server('runManualSync',{accessKey:this.state.key});this.toast(r.ok?'Sync completed':'Sync completed with warnings');await this.load(true);}catch(e){this.toast(e.message,true);}finally{this.loading(false);}},setRange(key){this.state.rangeKey=key;document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===key));this.load(false);},showView(view){this.state.view=view;document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));window.scrollTo({top:0,behavior:'smooth'});},render(){const d=this.state.data;document.getElementById('rangeLabel').textContent=d.range.label;this.setStatus('Updated '+new Date(d.generatedAt).toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'}));this.renderOverview(d);this.renderCampaigns(d.campaigns);this.renderFunnel(d);this.renderLeads(d.leads);this.renderForecast(d.forecast);this.renderHealth(d.health);},renderOverview(d){const o=d.overview;const cards=[['Spend',this.money(o.spend),'CPL '+this.money(o.cpl)],['Leads',this.num(o.leads),'Response '+this.pct(o.responseRate)],['Booked calls',this.num(o.bookedCalls),'Cost '+this.money(o.costPerBooked)],['Appointments',this.num(o.appointments),'Show '+this.pct(o.showRate)],['Qualified',this.num(o.qualified),'Cost '+this.money(o.costPerQualified)],['Closed',this.num(o.closed),'Cost '+this.money(o.costPerClose)],['Revenue',this.money(o.revenue),'ROAS '+o.roas.toFixed(2)+'x'],['CTR',o.ctr.toFixed(2)+'%','Clicks '+this.num(o.clicks)]];document.getElementById('overviewCards').innerHTML=cards.map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');const trend=d.trend||[],max=Math.max(1,...trend.map(x=>x.spend));document.getElementById('trendChart').innerHTML=trend.slice(-60).map(x=>`<div class="trend-col" title="${x.date}: ${this.money(x.spend)}, ${this.num(x.leads)} leads"><div class="trend-bar" style="height:${Math.max(2,x.spend/max*100)}%"></div><div class="trend-lead" style="opacity:${x.leads?1:.15}"></div></div>`).join('');document.getElementById('platformCards').innerHTML=(d.platforms||[]).map(x=>`<div class="platform-card"><div class="row"><h3>${this.esc(x.platform)}</h3><span class="badge ${x.roas>=3?'green':x.roas>0?'amber':''}">${x.roas.toFixed(2)}x ROAS</span></div><div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>CPL</span><strong>${this.money(x.cpl)}</strong></div></div></div>`).join('');document.getElementById('topCampaigns').innerHTML=this.campaignCards(d.campaigns.slice(0,5));},campaignCards(rows){return rows.map(x=>`<div class="list-card"><div class="row"><h3>${this.esc(x.campaignName||'Unattributed')}</h3><span class="badge">${this.esc(x.platform||'')}</span></div><div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.newLeads||x.leads)}</strong></div><div><span>CPL</span><strong>${this.money(x.cpl)}</strong></div><div><span>Booked</span><strong>${this.num(x.bookedCalls)}</strong></div><div><span>Qualified</span><strong>${this.num(x.qualified)}</strong></div><div><span>ROAS</span><strong>${(x.roas||0).toFixed(2)}x</strong></div></div></div>`).join('')||'<div class="panel">No campaign data for this period.</div>';},renderCampaigns(rows){document.getElementById('campaignList').innerHTML=this.campaignCards(rows||[]);},renderFunnel(d){const f=d.funnel,steps=[['New leads',f.newLeads],['Contacted',f.contacted],['Responded',f.responded],['Booked calls',f.bookedCalls],['Appointments',f.appointments],['Strategy sessions',f.strategySessions],['Qualified',f.qualified],['Closed won',f.closedWon]];document.getElementById('funnelVisual').innerHTML=steps.map((s,i)=>`<div class="funnel-step" style="margin-left:${Math.min(i*5,30)}px"><span>${s[0]}</span><strong>${this.num(s[1])}</strong></div>`).join('');const o=d.overview,c=[['Response',this.pct(o.responseRate)],['Booking',this.pct(o.bookingRate)],['Show',this.pct(o.showRate)],['Qualified',this.pct(o.qualificationRate)],['Close',this.pct(o.closeRate)]];document.getElementById('conversionCards').innerHTML=c.map(x=>`<div class="metric"><div class="label">${x[0]}</div><div class="value">${x[1]}</div></div>`).join('');},renderLeads(rows){document.getElementById('leadList').innerHTML=(rows||[]).map(x=>`<div class="list-card"><div class="row"><h3>${this.esc(x.name||'Unnamed lead')}</h3><span class="badge ${x.status==='Closed'?'green':x.status==='Lost'?'red':x.status==='Booked Call'?'amber':''}">${this.esc(x.status)}</span></div><div class="kv"><div><span>Date</span><strong>${this.esc(x.date)}</strong></div><div><span>Source</span><strong>${this.esc(x.platform)}</strong></div><div><span>Quality</span><strong>${this.esc(x.quality||'—')}</strong></div></div><div class="sub" style="margin-top:10px;color:var(--muted)">${this.esc(x.campaignName||x.sourceAdName||'Unattributed')}</div></div>`).join('')||'<div class="panel">No leads in this period.</div>';},renderForecast(f){document.getElementById('forecastScenarioCards').innerHTML=(f.scenarios||[]).map(x=>`<div class="scenario-card"><h3>${this.esc(x.scenarioName)}</h3><div class="big">${this.money(x.collectedRevenue)}</div><div class="sub">Projected collected revenue</div><div class="stats"><div><span>Budget</span><strong>${this.money(x.budget)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>Closings</span><strong>${x.closings.toFixed(1)}</strong></div><div><span>Net contribution</span><strong>${this.money(x.netContribution)}</strong></div></div></div>`).join('');const base=(f.scenarios||[]).find(x=>x.scenarioName==='Base')||{};const fields=[['budget','Budget',base.budget],['cpl','CPL',base.cpl],['responseRate','Response rate',base.responseRate],['bookingRate','Booking rate',base.bookingRate],['showRate','Show rate',base.showRate],['qualificationRate','Qualification rate',base.qualificationRate],['closeRate','Close rate',base.closeRate],['averageCommission','Avg commission',base.averageCommission],['collectionRate','Collection rate',base.collectionRate],['variableCostPerClose','Variable cost / close',base.variableCostPerClose],['forecastDays','Forecast days',base.forecastDays]];document.getElementById('forecastForm').innerHTML=fields.map(x=>`<label><span>${x[1]}</span><input data-forecast="${x[0]}" type="number" step="${x[0].includes('Rate')?'.01':'1'}" value="${x[2]||0}"></label>`).join('');},async calculateCustomForecast(){const values={scenarioName:'Custom'};document.querySelectorAll('[data-forecast]').forEach(i=>values[i.dataset.forecast]=Number(i.value));this.loading(true);try{const r=await this.server('saveForecastScenario',{accessKey:this.state.key,name:'Mobile Custom '+new Date().toLocaleDateString('en-SG'),values});document.getElementById('customForecastResult').innerHTML=`<div class="scenario-card" style="margin-top:12px"><h3>Custom result</h3><div class="big">${this.money(r.collectedRevenue)}</div><div class="stats"><div><span>Leads</span><strong>${this.num(r.leads)}</strong></div><div><span>Closings</span><strong>${r.closings.toFixed(1)}</strong></div><div><span>ROAS</span><strong>${r.roas.toFixed(2)}x</strong></div><div><span>Net</span><strong>${this.money(r.netContribution)}</strong></div></div></div>`;this.toast('Scenario saved');}catch(e){this.toast(e.message,true);}finally{this.loading(false);}},renderHealth(h){document.getElementById('healthSummary').innerHTML=`<div class="metric"><div class="label">System status</div><div class="value" style="color:${h.overall==='HEALTHY'?'var(--green)':'var(--amber)'}">${this.esc(h.overall)}</div><div class="sub">Checked ${new Date(h.generatedAt).toLocaleString('en-SG')}</div></div>`;document.getElementById('healthList').innerHTML=(h.checks||[]).map(c=>`<div class="list-card"><div class="row"><h3>${this.esc(c.name)}</h3><span class="badge ${c.status==='OK'?'green':c.status==='ERROR'?'red':'amber'}">${this.esc(c.status)}</span></div><div class="sub" style="margin-top:8px;color:var(--muted)">${this.esc(c.detail)}</div></div>`).join('');},setStatus(t){document.getElementById('syncStatus').textContent=t;},loading(on){document.getElementById('loading').classList.toggle('hidden',!on);},toast(msg,error){const el=document.getElementById('toast');el.textContent=msg;el.style.background=error?'#ff637d':'#edf4ff';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);},money(n){return new Intl.NumberFormat('en-SG',{style:'currency',currency:'SGD',maximumFractionDigits:0}).format(Number(n||0));},num(n){return new Intl.NumberFormat('en-SG',{maximumFractionDigits:0}).format(Number(n||0));},pct(n){return (Number(n||0)*100).toFixed(1)+'%';},esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}};window.addEventListener('DOMContentLoaded',()=>app.init());
+const VIEW_TITLES={today:'Today',funnel:'Pipeline conversion',ads:'Ads',pipeline:'Follow-up queue',forecast:'Forecaster',health:'System health'};
+const SIGNAL_META={SCALE:{cls:'green',icon:'🔥',label:'SCALE'},KILL:{cls:'red',icon:'🛑',label:'KILL'},MONITOR:{cls:'amber',icon:'👁',label:'MONITOR'},TEST:{cls:'',icon:'🧪',label:'TESTING'}};
+
+const app={
+  state:{key:'',rangeKey:'30d',data:null,view:'today',adFilter:'ALL',adSort:'spend'},
+
+  init(){
+    document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>this.setRange(b.dataset.range));
+    document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>this.showView(b.dataset.view));
+    document.querySelectorAll('[data-adfilter]').forEach(b=>b.onclick=()=>this.setAdFilter(b.dataset.adfilter));
+    const saved=localStorage.getItem('rei_v9_key')||sessionStorage.getItem('rei_v9_key');
+    if(saved){document.getElementById('accessKey').value=saved;this.login(true);}
+  },
+
+  server(name,arg){
+    return new Promise((resolve,reject)=>{
+      const runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e&&e.message||e)));
+      switch(name){
+        case 'login':runner.login(arg);break;
+        case 'getDashboardData':runner.getDashboardData(arg);break;
+        case 'runManualSync':runner.runManualSync(arg);break;
+        case 'saveForecastScenario':runner.saveForecastScenario(arg);break;
+        case 'getHealthData':runner.getHealthData(arg);break;
+        default:reject(new Error('Unsupported server action: '+name));
+      }
+    });
+  },
+
+  async login(silent){
+    const key=document.getElementById('accessKey').value.trim();
+    if(!key){document.getElementById('loginError').textContent='Enter your access key.';return;}
+    this.loading(true);
+    try{
+      await this.server('login',key);
+      this.state.key=key;
+      (document.getElementById('remember').checked?localStorage:sessionStorage).setItem('rei_v9_key',key);
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+      await this.load(true);
+    }catch(e){
+      document.getElementById('loginError').textContent=e.message;
+      if(silent){localStorage.removeItem('rei_v9_key');sessionStorage.removeItem('rei_v9_key');}
+    }finally{this.loading(false);}
+  },
+
+  async load(force){
+    this.loading(true);
+    try{
+      const data=await this.server('getDashboardData',{accessKey:this.state.key,rangeKey:this.state.rangeKey,force:!!force});
+      this.state.data=data;this.render();
+    }catch(e){this.toast(e.message,true);}finally{this.loading(false);}
+  },
+
+  async sync(){
+    this.setStatus('Syncing…');this.loading(true);
+    try{
+      const r=await this.server('runManualSync',{accessKey:this.state.key});
+      this.toast(r.ok?'Sync completed':'Sync completed with warnings');
+      await this.load(true);
+    }catch(e){this.toast(e.message,true);}finally{this.loading(false);}
+  },
+
+  setRange(key){this.state.rangeKey=key;document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===key));this.load(false);},
+  showView(view){this.state.view=view;document.getElementById('viewTitle').textContent=VIEW_TITLES[view]||'';document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));window.scrollTo({top:0,behavior:'smooth'});},
+  setAdFilter(f){this.state.adFilter=f;document.querySelectorAll('[data-adfilter]').forEach(b=>b.classList.toggle('active',b.dataset.adfilter===f));this.renderAds(this.state.data);},
+  setAdSort(s){this.state.adSort=s;this.renderAds(this.state.data);},
+
+  render(){
+    const d=this.state.data;
+    document.getElementById('rangeLabel').textContent=d.range.label;
+    this.setStatus('Updated '+new Date(d.generatedAt).toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'}));
+    this.renderToday(d);
+    this.renderStages(d);
+    this.renderAds(d);
+    this.renderAdSets(d.adSets);
+    this.renderPipeline(d);
+    this.renderForecast(d.forecast);
+    this.renderHealth(d.health);
+  },
+
+  /* ══════════════ CEO — Today ══════════════ */
+  renderToday(d){
+    const a=d.actions||{},chips=[];
+    if(a.scale)chips.push(`<button class="chip green" onclick="app.showView('ads');app.setAdFilter('SCALE')">🔥 ${a.scale} to scale</button>`);
+    if(a.kill)chips.push(`<button class="chip red" onclick="app.showView('ads');app.setAdFilter('KILL')">🛑 ${a.kill} to kill</button>`);
+    if(a.staleLeads)chips.push(`<button class="chip amber" onclick="app.showView('pipeline')">⏳ ${a.staleLeads} leads going cold</button>`);
+    if(a.test)chips.push(`<button class="chip" onclick="app.showView('ads');app.setAdFilter('TEST')">🧪 ${a.test} still testing</button>`);
+    document.getElementById('actionStrip').innerHTML=chips.length?chips.join(''):'<div class="chip quiet">✓ Nothing needs a decision right now</div>';
+
+    const s=d.stages||{};
+    const leakEl=document.getElementById('leakCallout');
+    if(leakEl){
+      leakEl.innerHTML=s.leak
+        ? `<div class="leak-card" onclick="app.showView('funnel')"><div class="leak-label">Biggest leak</div><div class="leak-step">${this.esc(s.leak.label)}</div><div class="leak-stat"><strong>${this.pctRaw(s.leak.rate)}</strong> converting · <span>${this.num(s.leak.dropped)} people lost</span></div></div>`
+        : (s.leakNote?`<div class="panel quiet-note">${this.esc(s.leakNote)}</div>`:'');
+    }
+
+    const o=d.overview;
+    const cards=[
+      ['Spend',this.money(o.spend),'CPL '+this.money(o.cpl)],
+      ['Leads',this.num(o.leads),'Response '+this.pct(o.responseRate)],
+      ['Booked calls',this.num(o.bookedCalls),'Cost '+this.money(o.costPerBooked)],
+      ['Appointments',this.num(o.appointments),'Show '+this.pct(o.showRate)],
+      ['Qualified',this.num(o.qualified),'Cost '+this.money(o.costPerQualified)],
+      ['Closed',this.num(o.closed),'Cost '+this.money(o.costPerClose)],
+      ['Revenue',this.money(o.revenue),'ROAS '+o.roas.toFixed(2)+'x'],
+      ['CTR',o.ctr.toFixed(2)+'%','Clicks '+this.num(o.clicks)]
+    ];
+    document.getElementById('overviewCards').innerHTML=cards.map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');
+
+    const trend=d.trend||[],max=Math.max(1,...trend.map(x=>x.spend));
+    document.getElementById('trendChart').innerHTML=trend.slice(-60).map(x=>`<div class="trend-col" title="${x.date}: ${this.money(x.spend)}, ${this.num(x.leads)} leads"><div class="trend-bar" style="height:${Math.max(2,x.spend/max*100)}%"></div><div class="trend-lead" style="opacity:${x.leads?1:.15}"></div></div>`).join('');
+    document.getElementById('platformCards').innerHTML=(d.platforms||[]).map(x=>`<div class="platform-card"><div class="row"><h3>${this.esc(x.platform)}</h3><span class="badge ${x.roas>=3?'green':x.roas>0?'amber':''}">${x.roas.toFixed(2)}x ROAS</span></div><div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>CPL</span><strong>${this.money(x.cpl)}</strong></div></div></div>`).join('');
+    document.getElementById('topCampaigns').innerHTML=this.campaignCards((d.campaigns||[]).slice(0,5));
+  },
+
+  campaignCards(rows){
+    return rows.map(x=>`<div class="list-card"><div class="row"><h3>${this.esc(x.campaignName||'Unattributed')}</h3><span class="badge">${this.esc(x.platform||'')}</span></div><div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.newLeads||x.leads)}</strong></div><div><span>CPL</span><strong>${this.money(x.cpl)}</strong></div><div><span>Booked</span><strong>${this.num(x.bookedCalls)}</strong></div><div><span>Qualified</span><strong>${this.num(x.qualified)}</strong></div><div><span>ROAS</span><strong>${(x.roas||0).toFixed(2)}x</strong></div></div></div>`).join('')||'<div class="panel quiet-note">No campaign data for this period.</div>';
+  },
+
+  /* ══════════════ Stage-by-stage conversion + leak ══════════════ */
+  renderStages(d){
+    const s=d.stages,f=d.funnel;
+    if(!s)return;
+
+    document.getElementById('funnelHeadline').innerHTML=[
+      ['New leads',this.num(s.overall.from),'entering pipeline'],
+      ['Closed won',this.num(s.overall.to),'end to end'],
+      ['Lead → Close',this.pctRaw(s.overall.rate),'overall conversion'],
+      ['Revenue',this.money(f.revenue),'in this period']
+    ].map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');
+
+    document.getElementById('leakLegend').innerHTML=s.leak?`Leak = weakest step with ${s.minVolume}+ entering`:'';
+
+    const maxCount=Math.max(1,...s.steps.map(x=>x.fromCount));
+    document.getElementById('stageFlow').innerHTML=s.steps.map((step,i)=>{
+      const isLeak=s.leak&&s.leak.key===step.key;
+      const width=Math.max(12,(step.fromCount/maxCount)*100);
+      const nextWidth=Math.max(8,(step.to/maxCount)*100);
+      const rateCls=!step.readable?'quiet':step.rate>=50?'good':step.rate>=25?'ok':'bad';
+      return `
+      <div class="stage-block${isLeak?' is-leak':''}">
+        <div class="stage-bar" style="width:${width}%"><span class="stage-name">${this.esc(step.from)}</span><span class="stage-count">${this.num(step.fromCount)}</span></div>
+        <div class="stage-link">
+          <span class="stage-arrow">↓</span>
+          <span class="stage-rate ${rateCls}">${step.readable?this.pctRaw(step.rate):'—'}</span>
+          <span class="stage-drop">${step.dropped>0?'−'+this.num(step.dropped)+' lost':''}</span>
+          ${isLeak?'<span class="leak-tag">BIGGEST LEAK</span>':''}
+          ${!step.readable?'<span class="stage-note">too few to read</span>':''}
+        </div>
+        ${i===s.steps.length-1?`<div class="stage-bar final" style="width:${nextWidth}%"><span class="stage-name">Closed Won</span><span class="stage-count">${this.num(step.to)}</span></div>`:''}
+      </div>`;
+    }).join('');
+
+    document.getElementById('stageTable').innerHTML=`
+      <div class="mt-head"><span>Stage transition</span><span>In</span><span>Out</span><span>Rate</span><span>Lost</span></div>
+      ${s.steps.map(x=>`<div class="mt-row${s.leak&&s.leak.key===x.key?' is-leak':''}"><span>${this.esc(x.label)}</span><span>${this.num(x.fromCount)}</span><span>${this.num(x.to)}</span><strong>${x.readable?this.pctRaw(x.rate):'—'}</strong><span>${this.num(x.dropped)}</span></div>`).join('')}`;
+  },
+
+  /* ══════════════ Media buyer — per-ad verdicts ══════════════ */
+  renderAds(d){
+    if(!d)return;
+    const sorts=[['spend','Spend'],['cpl','CPL'],['leads','Leads'],['hookrate','Hook rate']];
+    document.getElementById('adSortRow').innerHTML='<span class="sort-label">Sort</span>'+sorts.map(s=>`<button class="${this.state.adSort===s[0]?'active':''}" onclick="app.setAdSort('${s[0]}')">${s[1]}</button>`).join('');
+
+    let rows=(d.ads||[]).slice();
+    if(this.state.adFilter!=='ALL')rows=rows.filter(a=>a.signal===this.state.adFilter);
+    const key=this.state.adSort;
+    rows.sort((a,b)=>key==='cpl'?(a.cpl||Infinity)-(b.cpl||Infinity):(b[key]||0)-(a[key]||0));
+
+    document.getElementById('adList').innerHTML=rows.map(a=>{
+      const m=SIGNAL_META[a.signal]||SIGNAL_META.TEST;
+      const thumb=a.thumbUrl?`<img class="ad-thumb" src="${this.esc(a.thumbUrl)}" alt="" loading="lazy" onclick="app.openLightbox('${this.esc(a.adId)}')">`:'<div class="ad-thumb empty">◫</div>';
+      return `<div class="ad-card ${m.cls}">
+        ${thumb}
+        <div class="ad-body">
+          <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge ${m.cls}">${m.icon} ${m.label}</span></div>
+          <div class="ad-reason">${this.esc(a.signalReason||'')}</div>
+          <div class="kv five">
+            <div><span>Spend</span><strong>${this.money(a.spend)}</strong></div>
+            <div><span>Leads</span><strong>${this.num(a.leads)}</strong></div>
+            <div><span>CPL</span><strong>${a.leads?this.money(a.cpl):'—'}</strong></div>
+            <div><span>Hook</span><strong>${a.hookrate?a.hookrate.toFixed(1)+'%':'—'}</strong></div>
+            <div><span>CTR</span><strong>${a.ctr.toFixed(2)}%</strong></div>
+          </div>
+          <div class="ad-meta">${this.esc(a.campaignName||'')}${a.adSetName?' · '+this.esc(a.adSetName):''}${a.adPermalink?` · <a href="${this.esc(a.adPermalink)}" target="_blank" rel="noopener">View in Meta ↗</a>`:''}</div>
+        </div></div>`;
+    }).join('')||'<div class="panel quiet-note">No ads match this filter for the selected period.</div>';
+  },
+
+  renderAdSets(rows){
+    document.getElementById('adSetList').innerHTML=(rows||[]).map(x=>{
+      const m=SIGNAL_META[x.signal]||SIGNAL_META.TEST;
+      return `<div class="list-card"><div class="row"><h3>${this.esc(x.adSetName||'Untitled ad set')}</h3><span class="badge ${m.cls}">${m.icon} ${m.label}</span></div>
+      <div class="ad-reason">${this.esc(x.signalReason||'')}</div>
+      <div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>CPL</span><strong>${x.leads?this.money(x.cpl):'—'}</strong></div><div><span>Ads</span><strong>${this.num(x.adCount)}</strong></div><div><span>CTR</span><strong>${x.ctr.toFixed(2)}%</strong></div><div><span>Budget</span><strong>${x.budget?this.money(x.budget):'—'}</strong></div></div>
+      ${x.audience?`<div class="ad-meta">${this.esc(x.audience)}</div>`:''}</div>`;
+    }).join('')||'<div class="quiet-note">No ad set data for this period.</div>';
+  },
+
+  openLightbox(adId){
+    const ad=(this.state.data.ads||[]).find(a=>a.adId===adId);if(!ad)return;
+    document.getElementById('lightboxBody').innerHTML=ad.videoSrc
+      ? `<video src="${this.esc(ad.videoSrc)}" controls autoplay playsinline style="width:100%;border-radius:12px"></video><h3>${this.esc(ad.adName)}</h3>`
+      : `<img src="${this.esc(ad.thumbUrl)}" alt="" style="width:100%;border-radius:12px"><h3>${this.esc(ad.adName)}</h3>`;
+    document.getElementById('lightbox').classList.remove('hidden');
+  },
+  closeLightbox(e,force){if(force||e.target.id==='lightbox'){document.getElementById('lightbox').classList.add('hidden');document.getElementById('lightboxBody').innerHTML='';}},
+
+  /* ══════════════ Agents — follow-up queue ══════════════ */
+  renderPipeline(d){
+    const groups=d.pipeline||[];
+    const total=groups.reduce((n,g)=>n+g.count,0),stale=groups.reduce((n,g)=>n+g.staleCount,0);
+    document.getElementById('pipelineSummary').innerHTML=[
+      ['In pipeline',this.num(total),'excluding closed & lost'],
+      ['Going cold',this.num(stale),'no movement 7+ days'],
+      ['Stages active',this.num(groups.length),'with people in them'],
+      ['Closed won',this.num(d.funnel.closedWon),'this period']
+    ].map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');
+
+    document.getElementById('pipelineGroups').innerHTML=groups.map(g=>`
+      <div class="panel">
+        <div class="panel-head"><h2>${this.esc(g.stage)} <span class="count-pill">${g.count}</span></h2>${g.staleCount?`<span class="badge amber">${g.staleCount} going cold</span>`:''}</div>
+        <div class="card-list">${g.leads.map(l=>`
+          <div class="list-card${l.stale?' stale':''}">
+            <div class="row"><h3>${this.esc(l.name||'Unnamed lead')}</h3><span class="badge ${l.stale?'amber':''}">${l.daysInStage}d</span></div>
+            <div class="kv"><div><span>Source</span><strong>${this.esc(l.platform||'—')}</strong></div><div><span>Quality</span><strong>${this.esc(l.quality||'—')}</strong></div><div><span>Since</span><strong>${this.esc(l.date||'—')}</strong></div></div>
+            <div class="ad-meta">${this.esc(l.sourceAdName||l.campaignName||'Unattributed')}</div>
+          </div>`).join('')}</div>
+        ${g.count>g.leads.length?`<div class="quiet-note">Showing ${g.leads.length} of ${g.count} — oldest first.</div>`:''}
+      </div>`).join('')||'<div class="panel quiet-note">Nobody in the active pipeline for this period.</div>';
+  },
+
+  /* ══════════════ Forecast + health (unchanged behaviour) ══════════════ */
+  renderForecast(f){
+    document.getElementById('forecastScenarioCards').innerHTML=(f.scenarios||[]).map(x=>`<div class="scenario-card"><h3>${this.esc(x.scenarioName)}</h3><div class="big">${this.money(x.collectedRevenue)}</div><div class="sub">Projected collected revenue</div><div class="stats"><div><span>Budget</span><strong>${this.money(x.budget)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>Closings</span><strong>${x.closings.toFixed(1)}</strong></div><div><span>Net contribution</span><strong>${this.money(x.netContribution)}</strong></div></div></div>`).join('');
+    const base=(f.scenarios||[]).find(x=>x.scenarioName==='Base')||{};
+    const fields=[['budget','Budget',base.budget],['cpl','CPL',base.cpl],['responseRate','Response rate',base.responseRate],['bookingRate','Booking rate',base.bookingRate],['showRate','Show rate',base.showRate],['qualificationRate','Qualification rate',base.qualificationRate],['closeRate','Close rate',base.closeRate],['averageCommission','Avg commission',base.averageCommission],['collectionRate','Collection rate',base.collectionRate],['variableCostPerClose','Variable cost / close',base.variableCostPerClose],['forecastDays','Forecast days',base.forecastDays]];
+    document.getElementById('forecastForm').innerHTML=fields.map(x=>`<label><span>${x[1]}</span><input data-forecast="${x[0]}" type="number" step="${x[0].includes('Rate')?'.01':'1'}" value="${x[2]||0}"></label>`).join('');
+  },
+
+  async calculateCustomForecast(){
+    const values={scenarioName:'Custom'};
+    document.querySelectorAll('[data-forecast]').forEach(i=>values[i.dataset.forecast]=Number(i.value));
+    this.loading(true);
+    try{
+      const r=await this.server('saveForecastScenario',{accessKey:this.state.key,name:'Mobile Custom '+new Date().toLocaleDateString('en-SG'),values});
+      document.getElementById('customForecastResult').innerHTML=`<div class="scenario-card" style="margin-top:12px"><h3>Custom result</h3><div class="big">${this.money(r.collectedRevenue)}</div><div class="stats"><div><span>Leads</span><strong>${this.num(r.leads)}</strong></div><div><span>Closings</span><strong>${r.closings.toFixed(1)}</strong></div><div><span>ROAS</span><strong>${r.roas.toFixed(2)}x</strong></div><div><span>Net</span><strong>${this.money(r.netContribution)}</strong></div></div></div>`;
+      this.toast('Scenario saved');
+    }catch(e){this.toast(e.message,true);}finally{this.loading(false);}
+  },
+
+  renderHealth(h){
+    document.getElementById('healthSummary').innerHTML=`<div class="metric"><div class="label">System status</div><div class="value" style="color:${h.overall==='HEALTHY'?'var(--green)':'var(--amber)'}">${this.esc(h.overall)}</div><div class="sub">Checked ${new Date(h.generatedAt).toLocaleString('en-SG')}</div></div>`;
+    document.getElementById('healthList').innerHTML=(h.checks||[]).map(c=>`<div class="list-card"><div class="row"><h3>${this.esc(c.name)}</h3><span class="badge ${c.status==='OK'?'green':c.status==='ERROR'?'red':'amber'}">${this.esc(c.status)}</span></div><div class="sub" style="margin-top:8px;color:var(--muted)">${this.esc(c.detail)}</div></div>`).join('');
+  },
+
+  /* ══════════════ helpers ══════════════ */
+  setStatus(t){document.getElementById('syncStatus').textContent=t;},
+  loading(on){document.getElementById('loading').classList.toggle('hidden',!on);},
+  toast(msg,error){const el=document.getElementById('toast');el.textContent=msg;el.style.background=error?'#ff637d':'#edf4ff';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);},
+  money(n){return new Intl.NumberFormat('en-SG',{style:'currency',currency:'SGD',maximumFractionDigits:0}).format(Number(n||0));},
+  num(n){return new Intl.NumberFormat('en-SG',{maximumFractionDigits:0}).format(Number(n||0));},
+  pct(n){return (Number(n||0)*100).toFixed(1)+'%';},      // for 0–1 fractions
+  pctRaw(n){return Number(n||0).toFixed(1)+'%';},          // for values already 0–100
+  esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+};
+window.addEventListener('DOMContentLoaded',()=>app.init());
 </script>

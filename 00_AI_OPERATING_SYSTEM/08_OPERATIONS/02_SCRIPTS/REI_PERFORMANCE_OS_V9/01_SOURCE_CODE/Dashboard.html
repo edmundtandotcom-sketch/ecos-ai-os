@@ -1,18 +1,96 @@
 <!doctype html>
 <html><head><base target="_top"><meta charset="utf-8"><meta name="theme-color" content="#0b1220"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="REI OS"><?!= include_('Styles'); ?></head>
 <body>
-<div id="app" class="app-shell">
-<header class="topbar"><div><div class="eyebrow">REI METHOD</div><h1>Performance OS</h1></div><div class="top-actions"><span id="syncStatus" class="status-dot">Ready</span><button class="icon-btn" onclick="app.sync()" aria-label="Sync">↻</button></div></header>
+
+<!-- Access gate. This markup was missing in v9.0 — the CSS and the client JS both
+     expected it, so anyone without a cached key hit a blank error screen. -->
+<div id="login" class="login-shell">
+  <div class="login-card">
+    <div class="brand-mark">REI</div>
+    <h1>Performance OS</h1>
+    <p>Enter your access key to continue.</p>
+    <label><span>Access key</span><input id="accessKey" type="password" autocomplete="current-password" placeholder="Access key" onkeydown="if(event.key==='Enter')app.login()"></label>
+    <label class="remember"><input id="remember" type="checkbox" checked>&nbsp;Keep me signed in on this device</label>
+    <button class="primary full" onclick="app.login()">Open dashboard</button>
+    <div id="loginError" class="error-text"></div>
+  </div>
+</div>
+
+<div id="app" class="app-shell hidden">
+<header class="topbar">
+  <div><div class="eyebrow">REI METHOD</div><h1 id="viewTitle">Today</h1></div>
+  <div class="top-actions"><span id="syncStatus" class="status-dot">Ready</span><button class="icon-btn" onclick="app.sync()" aria-label="Sync">↻</button></div>
+</header>
 <div class="range-strip" id="rangeStrip"><button data-range="today">Today</button><button data-range="7d">7D</button><button class="active" data-range="30d">30D</button><button data-range="90d">90D</button><button data-range="all">All</button></div>
 <main>
-<section id="view-overview" class="view active"><div id="overviewCards" class="metric-grid"></div><div class="panel"><div class="panel-head"><h2>Daily pulse</h2><span id="rangeLabel"></span></div><div id="trendChart" class="trend-chart"></div></div><div class="panel"><div class="panel-head"><h2>Channel performance</h2></div><div id="platformCards" class="platform-grid"></div></div><div class="panel"><div class="panel-head"><h2>Top campaigns</h2><button class="link-btn" onclick="app.showView('campaigns')">See all</button></div><div id="topCampaigns"></div></div></section>
-<section id="view-campaigns" class="view"><div class="section-title"><h2>Campaigns</h2><p>Spend, lead quality and downstream economics.</p></div><div id="campaignList" class="card-list"></div></section>
-<section id="view-funnel" class="view"><div class="section-title"><h2>Funnel</h2><p>Where momentum is being gained or lost.</p></div><div id="funnelVisual" class="funnel"></div><div class="panel"><h3>Conversion rates</h3><div id="conversionCards" class="metric-grid compact"></div></div></section>
-<section id="view-leads" class="view"><div class="section-title"><h2>Recent leads</h2><p>PII is intentionally hidden. Update the source record inside GHL.</p></div><div id="leadList" class="card-list"></div></section>
-<section id="view-forecast" class="view"><div class="section-title"><h2>Forecaster</h2><p>Scenario planning, not a promise.</p></div><div id="forecastScenarioCards" class="scenario-grid"></div><div class="panel"><h3>Custom scenario</h3><div class="form-grid" id="forecastForm"></div><button class="primary full" onclick="app.calculateCustomForecast()">Calculate</button><div id="customForecastResult"></div></div></section>
-<section id="view-health" class="view"><div class="section-title"><h2>System health</h2><p>Data freshness, credentials and required tabs.</p></div><div id="healthSummary"></div><div id="healthList" class="card-list"></div></section>
-</main>
-<nav class="bottom-nav"><button class="active" data-view="overview"><span>⌂</span>Overview</button><button data-view="campaigns"><span>◫</span>Ads</button><button data-view="funnel"><span>⇢</span>Funnel</button><button data-view="leads"><span>◎</span>Leads</button><button data-view="forecast"><span>↗</span>Forecast</button><button data-view="health"><span>⚙</span>Health</button></nav>
-<div id="toast" class="toast"></div><div id="loading" class="loading hidden"><div class="spinner"></div><span>Loading</span></div></div>
-<?!= include_('Client'); ?></body></html>
 
+<!-- ══ CEO: the numbers, and what needs a decision ══ -->
+<section id="view-today" class="view active">
+  <div id="actionStrip" class="action-strip"></div>
+  <div id="leakCallout"></div>
+  <div id="overviewCards" class="metric-grid"></div>
+  <div class="panel"><div class="panel-head"><h2>Daily pulse</h2><span id="rangeLabel"></span></div><div id="trendChart" class="trend-chart"></div><div class="chart-legend"><span><i class="dot blue"></i>Spend</span><span><i class="dot green"></i>Leads</span></div></div>
+  <div class="panel"><div class="panel-head"><h2>Channel performance</h2></div><div id="platformCards" class="platform-grid"></div></div>
+  <div class="panel"><div class="panel-head"><h2>Top campaigns</h2><button class="link-btn" onclick="app.showView('ads')">See all ads</button></div><div id="topCampaigns"></div></div>
+</section>
+
+<!-- ══ CEO: stage-by-stage conversion, following the live GHL pipeline ══ -->
+<section id="view-funnel" class="view">
+  <div class="section-title"><h2>Pipeline conversion</h2><p>Every stage of the GHL 1-To-1 pipeline, and where you are losing people.</p></div>
+  <div id="funnelHeadline" class="metric-grid compact"></div>
+  <div class="panel"><div class="panel-head"><h2>Stage by stage</h2><span id="leakLegend"></span></div><div id="stageFlow" class="stage-flow"></div></div>
+  <div class="panel"><div class="panel-head"><h2>Conversion summary</h2></div><div id="stageTable" class="mini-table"></div></div>
+</section>
+
+<!-- ══ MEDIA BUYER: which ad to kill, which to scale ══ -->
+<section id="view-ads" class="view">
+  <div class="section-title"><h2>Ads</h2><p>Per-ad economics with a verdict. Thresholds are tunable in Script Properties.</p></div>
+  <div class="filter-chips" id="adFilters">
+    <button class="active" data-adfilter="ALL">All</button>
+    <button data-adfilter="SCALE">🔥 Scale</button>
+    <button data-adfilter="KILL">🛑 Kill</button>
+    <button data-adfilter="MONITOR">👁 Monitor</button>
+    <button data-adfilter="TEST">🧪 Testing</button>
+  </div>
+  <div id="adSortRow" class="sort-row"></div>
+  <div id="adList" class="card-list wide"></div>
+  <div class="panel"><div class="panel-head"><h2>Ad sets — which audience works</h2></div><div id="adSetList" class="card-list wide"></div></div>
+</section>
+
+<!-- ══ AGENTS: who to follow up, right now ══ -->
+<section id="view-pipeline" class="view">
+  <div class="section-title"><h2>Follow-up queue</h2><p>Live pipeline by stage, oldest first. Update the record in GHL — this view is read-only.</p></div>
+  <div id="pipelineSummary" class="metric-grid compact"></div>
+  <div id="pipelineGroups"></div>
+</section>
+
+<section id="view-forecast" class="view">
+  <div class="section-title"><h2>Forecaster</h2><p>Scenario planning, not a promise.</p></div>
+  <div id="forecastScenarioCards" class="scenario-grid"></div>
+  <div class="panel"><h3>Custom scenario</h3><div class="form-grid" id="forecastForm"></div><button class="primary full" onclick="app.calculateCustomForecast()">Calculate</button><div id="customForecastResult"></div></div>
+</section>
+
+<section id="view-health" class="view">
+  <div class="section-title"><h2>System health</h2><p>Data freshness, credentials and required tabs.</p></div>
+  <div id="healthSummary"></div>
+  <div id="healthList" class="card-list"></div>
+</section>
+
+</main>
+<nav class="bottom-nav">
+  <button class="active" data-view="today"><span>⌂</span>Today</button>
+  <button data-view="funnel"><span>⇢</span>Funnel</button>
+  <button data-view="ads"><span>◫</span>Ads</button>
+  <button data-view="pipeline"><span>◎</span>Follow-up</button>
+  <button data-view="forecast"><span>↗</span>Forecast</button>
+  <button data-view="health"><span>⚙</span>Health</button>
+</nav>
+<div id="toast" class="toast"></div><div id="loading" class="loading hidden"><div class="spinner"></div><span>Loading</span></div>
+</div>
+
+<!-- Creative preview -->
+<div id="lightbox" class="lightbox hidden" onclick="app.closeLightbox(event)">
+  <div class="lightbox-inner"><button class="lightbox-close" onclick="app.closeLightbox(event,true)">✕</button><div id="lightboxBody"></div></div>
+</div>
+
+<?!= include_('Client'); ?></body></html>
