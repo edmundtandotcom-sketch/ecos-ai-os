@@ -39,7 +39,20 @@ That last row is the important one. **You never have to pick correctly.** Descri
 |---|---|---|
 | **Google Drive** `H:\Shared drives\00_E.C.O.S` | The business brain — strategy, decisions, campaigns, approved assets | This is "the workspace." Claude works here by default. |
 | **`E:\` drive** | Heavy things Drive can't hold — Zoom recordings, consult intelligence, video software | Claude reaches it when a task needs it. You don't go here. |
-| **GitHub** (private) | Invisible safety net. Auto-saves the brain every night. | **Never.** It exists so nothing is ever lost. |
+| **GitHub** (all private) | Invisible safety net. Auto-saves the brain every night. | **Never.** It exists so nothing is ever lost. |
+
+<details>
+<summary>The four repos — reference only, you don't touch these</summary>
+
+| Repo | What it is |
+|---|---|
+| `ecos-ai-os` | **The brain.** This Drive's governance + AI OS. Auto-committed nightly. |
+| `ecos-weekly-intelligence` | **The weekly engine.** Runs Monday's RSS collect on GitHub's servers (they can reach news sites; the Claude sandbox can't). Output arrives as a PR for your review. |
+| `ecos-runtime` | **The local software** — voice command centre on `E:\ECOS`. |
+| `sharpcut-studio` | **The video editor** — standalone app, own release cycle. |
+
+Four repos, not one, because each has a different job and lifecycle. Merging them would tangle working automation with your governance records.
+</details>
 
 Client names, phone numbers and case records live in a **separate restricted drive** (`00_E.C.O.S_CLIENTS_PRIVATE`). GoHighLevel remains the live source of truth for contacts.
 

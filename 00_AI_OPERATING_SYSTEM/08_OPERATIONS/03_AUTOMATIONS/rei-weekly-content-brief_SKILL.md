@@ -3,7 +3,7 @@ name: rei-weekly-content-brief
 description: REI Weekly Content Engine — Monday 8:45 AM (articles + YouTube, full production-ready output for all 5 ranked angles — not outlines)
 ---
 
-> **RETIRED 2026-07-30 — Claude Code scheduled task disabled, not the active spec.** The Cloud routine "Weekly Content Intelligence" (claude.ai/code/routines, repo `Property-Business`) is now the single scheduled content-engine system — real YouTube Data API, auto-PR/merge, already running weekly. This file's requirements (merged article+YouTube scan, Format 3B long-form, full word-for-word production for all 5 angles, image-gen prompts, inline citations, Second Property Ladder synthesis) still need to be folded into that Cloud routine's prompt — that rebuild has not happened yet as of Decision 114. Keep this file as the requirements reference until that rebuild is done; do not treat it as something that runs.
+> **RETIRED 2026-07-30 — Claude Code scheduled task disabled, not the active spec.** The Cloud routine "Weekly Content Intelligence" (claude.ai/code/routines, repo `ecos-weekly-intelligence` — renamed from `Property-Business` 2026-07-31) is now the single scheduled content-engine system — real YouTube Data API, auto-PR/merge, already running weekly. This file's requirements (merged article+YouTube scan, Format 3B long-form, full word-for-word production for all 5 angles, image-gen prompts, inline citations, Second Property Ladder synthesis) still need to be folded into that Cloud routine's prompt — that rebuild has not happened yet as of Decision 114. Keep this file as the requirements reference until that rebuild is done; do not treat it as something that runs.
 
 <!--
 AI OS MIGRATION HEADER
