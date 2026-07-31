@@ -1,8 +1,8 @@
 # 00_MASTER_INDEX — E.C.O.S AI OPERATING SYSTEM
-Version: v1.1
+Version: v1.2
 Status: APPROVED MASTER
-Date: 2026-07-18
-Supersedes: v1.0 (2026-07-10) — updates the physical workspace map, Asset Library lifecycle, active-campaign routing, private-client boundary, Marketing OS, Sales OS and controlled-evolution governance.
+Date: 2026-07-30
+Supersedes: v1.1 (2026-07-18) — §9 updated with the results of the scoped reconciliation drift audit: pair 2 resolved, pair 3 closed as stale, pair 1 narrowed to one named violation.
 Sources: root CLAUDE.md v4.5; AI OS CLAUDE.md v4.4; Decision Memory v3.15; current Shared Drive inventory; completed Asset Library guides.
 
 ## 1. What the system is
@@ -117,11 +117,13 @@ Structural improvement is allowed when it solves a real execution, retrieval, co
 
 ## 9. Known reconciliation work
 
-Audit these one at a time before merging or retiring anything:
+Scoped drift audit run 2026-07-30. All three pairs checked against their own stated boundaries. Status below.
 
-1. `05_CONTENT_MARKETING_ENGINE` versus `10_MARKETING_OS`
-2. `03_CLIENT_ADVISORY_OS` versus `11_SALES_OS`
-3. `07_BRAND_AND_PROOF_BANK` versus `01_ASSET_LIBRARY`
+1. `05_CONTENT_MARKETING_ENGINE` versus `10_MARKETING_OS` — **OPEN (narrow).** Both `_INDEX.md` boundaries are correct and mutually consistent; no duplicated content and no contradictions found. One real violation: `10_MARKETING_OS/02_CHANNEL_PLAYBOOKS/CRM_NURTURE.md` and `EMAIL.md` hold live nurture/follow-up operating logic (nurture-state tagging, P1–P4 cadence, banned follow-up phrases) that both systems agree belongs to Sales OS. Self-flagged in-file, unresolved.
+2. `03_CLIENT_ADVISORY_OS` versus `11_SALES_OS` — **RESOLVED 2026-07-30.** Audit found Sales OS owned objection handling by charter but held no field evidence, while the 376-objection corpus sat in Client Advisory's belief-resolution file and the Consult Intelligence OS evidence layer. Closed by adding `11_SALES_OS/02_OBJECTIONS_AND_CLOSING/03_OBJECTION_FIELD_EVIDENCE_v1.0.md` — a citing bridge that duplicates no content. Shared outcome vocabulary (Proceed/Prepare/Nurture/No Fit) verified consistent across both systems. Nothing structural remaining.
+3. `07_BRAND_AND_PROOF_BANK` versus `01_ASSET_LIBRARY` — **CLOSED, no action needed.** Proof Bank holds only lightweight registries (3 live files, 112KB, zero media files), matching the registry-only rule. This flag was stale.
+
+Known minor debt, not blocking: several files across both live pairs use non-standard or missing version headers (rescued-memory frontmatter in `05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/`, `Status: ACTIVE SOURCE OF TRUTH` in `03_CLIENT_ADVISORY_OS/04_TRIGGER_QUESTIONS/`, unheadered `11_SALES_OS/05_TEMPLATES/`). Cosmetic; violates §9 rule 2.
 
 ## 10. Current status
 

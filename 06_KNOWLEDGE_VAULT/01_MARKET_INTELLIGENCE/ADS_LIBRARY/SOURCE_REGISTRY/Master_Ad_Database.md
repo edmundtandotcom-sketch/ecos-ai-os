@@ -222,3 +222,15 @@ Dup pairs (exact creative+text re-runs, second ID not re-downloaded): 3518879601
 US/international coaching-business info-product advertiser ($17 low-ticket → high-ticket ascension: "Rapid
 Ascension System" / "No-Phone Offer Method" / AI-prompt product). Zero SG-property relevance — value is
 funnel-mechanics + hook-craft swipe reference only. Same family as Caleb Sim / Marc Chan / Dan Lok. See ad_breakdown.md.
+
+## CP Homes (DIRECT competitor — decoupling/2nd-property/ABSD) — scanned 2026-07-31 via /rei-ads-scan
+Page view_all_page_id 104268712429679. 1 active ad, sorted by total_impressions (their current spend focus).
+| Library ID | Advertiser | Project/Offer | First seen | Last seen active | Duration | Video/copy path |
+|---|---|---|---|---|---|---|
+| 1006541795527206 | CP Homes | "Decoupling Decoded" free-guide funnel — decouple to own 2 condos, avoid ABSD; presenter Caleb, "$4.9M portfolio" | 2026-07-31 | 2026-07-31 | 1:03 | `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/CP Homes/01_VIDEOS/2026-07-31_1006541795527206.mp4` |
+
+CP Homes: the most on-topic direct competitor scanned — decoupling/second-property/ABSD is exactly the Second
+Property Ladder lane. Hook: "most couples decoupling are doing it wrong, losing hundreds of thousands." 2 named
+mistakes (50-50 split trap; forgotten stamp duty/legal/clawback costs) → free "Decoupling Decoded" guide.
+Gap REI owns: CP Homes teaches decoupling MECHANICS only, not the Know->Move->Own SEQUENCE. HIGH swipe value —
+model the structure, never the copy. See ad_breakdown.md.
