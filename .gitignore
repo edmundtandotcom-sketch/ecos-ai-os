@@ -1,7 +1,28 @@
+# ─────────────────────────────────────────────────────────────
+# E.C.O.S — what Git protects
+#
+# Rule: Git tracks the BRAIN (governance + AI OS markdown) only.
+# Bulk media, backups and archives are deliberately excluded —
+# they live in Drive/Asset Library, which is their proper home.
+# ─────────────────────────────────────────────────────────────
+
+# Ignore everything at the root by default...
+/*
+
+# ...then re-include only what the brain needs:
+!/.gitignore
+!/CLAUDE.md
+!/PROJECT_LOCATIONS.md
+!/START_HERE.md
+!/00_AI_OPERATING_SYSTEM/
+
+# ── Never tracked, anywhere ──
 desktop.ini
 Thumbs.db
 .DS_Store
 *.tmp
+
+# Google Drive placeholder stubs (contain no real content)
 *.gdoc
 *.gsheet
 *.gslides
@@ -9,6 +30,8 @@ Thumbs.db
 *.gdraw
 *.gjam
 *.gmap
+
+# Binary media — belongs in 01_ASSET_LIBRARY, not in Git
 *.mp4
 *.mov
 *.mp3
