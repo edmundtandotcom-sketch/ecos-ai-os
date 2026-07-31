@@ -1,11 +1,18 @@
-Title: Ads Intelligence — Fixed Competitor Watchlist
-Version: v1.0
+Title: Ads Intelligence — Fixed Competitor & Angle-Source Watchlist
+Version: v1.1
 Status: REGISTRY
-Date: 2026-07-29
-Sources: singapore-property-ads-brief_SKILL.md v2.0
+Date: 2026-07-31
+Sources: singapore-property-ads-brief_SKILL.md v2.0; /rei-ads-scan skill; Decision 120
 
 Advertisers checked every weekly run for new/changed active ads (Phase 1A). Add a row when a competitor
-is identified — do not let the automation guess or invent advertiser names.
+OR a strong cross-vertical angle-source is identified — do not let the automation guess or invent names.
+
+> **Cross-vertical is intentional (Decision 120, 2026-07-31).** This list holds two kinds of entries:
+> (1) direct property competitors (track for market intel), and (2) cross-vertical angle sources —
+> sales/marketing/AI/training/coaching/wealth-education advertisers whose hooks and funnel mechanics we
+> repurpose INTO property. Cross-vertical entries are NOT "low priority filler" — a killer story hook from a
+> trading-education ad is prime raw material for a One-Property-Trap ad. When using one, mine the transferable
+> angle and reframe it onto property (cite the source).
 
 | Advertiser (exact Ad Library page name) | Vertical | Added | Notes |
 |---|---|---|---|
@@ -29,7 +36,7 @@ is identified — do not let the automation guess or invent advertiser names.
 | Legacy Advisors Academy By Darren Tan | Cross-vertical reference — financial-advisor B2B coaching (estate/"Legacy Planning" 4th-Pillar → COT/TOT). NOT property; "Legacy Planning" ≠ retired Family Legacy door. | 2026-07-31 | COMPLETE for 2026-07-31 — 8 distinct video scripts downloaded/transcribed. Swipe value: "missing pillar" framing + case-study testimonials. LOW PRIORITY for property. See _ad_breakdown.md. |
 | M H Simon | Cross-vertical reference — lead-gen agency for gyms/clinics/wellness (1clientaday.com). NOT property. | 2026-07-31 | COMPLETE for 2026-07-31 — 2 distinct scripts, 6 video creatives downloaded/transcribed (7 dup IDs logged). Swipe value: long "visibility-problem spiral" Mirror hook + 3-part named-system explainer. LOW PRIORITY. See _ad_breakdown.md. |
 | Frank Kern | Cross-vertical reference (US) — legendary direct-response marketer (oJoy AI tool). NOT property; **top copywriting swipe** in the library. | 2026-07-31 | 29/~86 loaded (pagination ceiling). 5 distinct videos + 6 long-form copywriting text-post lessons captured (5 Stages of Awareness, damaging admission, 20-min sales letter, Intent-Based Branding). Value = the text lessons. See _ad_breakdown.md. |
-| The Freedom Growth Academy (Resh / Modern Wealth Academy) | Cross-vertical reference (SG) — trading/investing wealth-education community ("freedom lifestyle"). NOT property; **top story-hook swipe** in the library; audience overlaps REI's. | 2026-07-31 | 28/~120 loaded (pagination ceiling; distinct scripts, more worth pulling later). 26 distinct story videos downloaded/transcribed — founder fall-and-rise arc + many student case studies. MEDIUM PRIORITY (story craft), flagged for deeper follow-up pull. See _ad_breakdown.md. |
+| The Freedom Growth Academy (Resh / Modern Wealth Academy) | **Cross-vertical ANGLE SOURCE (SG)** — trading/investing wealth-education community ("freedom lifestyle"). Best story-hook bank in the library; audience overlaps REI's. Mine hooks, translate onto property. | 2026-07-31 | DEEP PULL COMPLETE — 106 distinct story videos downloaded/transcribed (110/~120 cards reached via the load-more technique that defeated the pagination ceiling), 4 over-cap logged. HIGH-value angle source (Decision 120). See _ad_breakdown.md. |
 
 ## Checked — no ads found (do not re-investigate without new information)
 | Name searched | Verified page | Date checked | Result |

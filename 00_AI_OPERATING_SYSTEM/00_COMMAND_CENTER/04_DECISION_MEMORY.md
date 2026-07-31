@@ -1,8 +1,8 @@
 # 04_DECISION_MEMORY
-Version: v3.29
-Status: APPROVED MASTER (001–119; detailed person-level execution evidence is private)
+Version: v3.30
+Status: APPROVED MASTER (001–120; detailed person-level execution evidence is private)
 Date: 2026-07-31
-Supersedes: v3.28 (2026-07-30) — adds Decision 119: added a human review gate to both Cloud routines (finished brand-voice creative opens a PR and waits for review, no auto-merge). Also records two verified facts from inspecting the live routines/repo: the Meta-Ads connector is now attached to the ads routine (blocker cleared), and the content routine's NEW full-production output has NOT yet actually been produced (latest repo output is still the old research-report-only run) — flagged as the key open item to verify.
+Supersedes: v3.29 (2026-07-31) — adds Decision 120: cross-vertical angle-sourcing is an explicit, intentional goal of ads intelligence (mine hooks/funnels from sales/marketing/AI/training/wealth-education advertisers and repurpose INTO property), baked into the Cloud ads routine, the `/rei-ads-scan` skill, and the watchlist framing. Also records the load-more technique that defeated the Browser-pane pagination ceiling (110/~120 cards for a deep Freedom Growth Academy pull, 106 videos).
 Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
@@ -1037,6 +1037,26 @@ Both Cloud routines were set to auto-merge/auto-publish output with no human rev
 - Verify the full-production step actually runs (re-run + watch, or read the run's session log) — the pipeline may need code, not just prompt instructions, to write the 6 assets per idea.
 - Confirm the ads run's connector-status line reads "connected."
 - Make `Property-Business` private.
+
+---
+
+## Decision 120 — Cross-Vertical Angle-Sourcing Is Intentional; Pagination Ceiling Defeated
+
+**Status:** APPROVED — Edmund, 2026-07-31 ("when we do any weekly ads extraction, we want to source and research relevant marketing angles we can repurpose into property. They need not be from property industry — can be sales, marketing agency, AI, training, programs, etc.").
+
+### Ruling
+
+1. **Cross-vertical is a feature, not a caveat.** Ads intelligence deliberately sources strong marketing ANGLES, hooks, and funnel mechanics from ANY vertical — sales coaches, marketing agencies, AI tools, trading/wealth-education, high-ticket coaching, training programs — to repurpose INTO property / Second Property Ladder content. A great story hook or belief-reframe from a trading-education ad translates directly to a One-Property-Trap ad. Claude's earlier habit of tagging these "cross-vertical reference, LOW PRIORITY, not property" was the wrong framing and is corrected: cross-vertical entries are prime raw material. Every strong cross-vertical winner must carry a "PROPERTY TRANSLATION" note (what the angle becomes when retargeted at the One-Property-Trap owner), and the ad-production step must translate the angle onto property, cite the source, never copy the copy.
+2. **Load-more technique defeats the Browser-pane pagination ceiling.** Discovered while doing a deep Freedom Growth Academy pull: the pane isn't visually composited, so Facebook's scroll-triggered infinite-load doesn't fire on `window.scrollTo` alone. Looping `dispatchEvent(new Event('scroll'))` + `dispatchEvent(new Event('resize'))` + `scrollTo(bottom)` + clicking the tail "See more" element reached 110 of ~120 cards (vs. 28 stuck before). This beats the ceiling that capped Marc Chan/Dan Lok earlier — those are now revisitable for full coverage.
+
+### Files touched
+
+- Cloud routine `trig_01AKcrpuiXZmbjqhXsrsKsGt` ("Weekly Ads Intelligence") — added the Cross-Vertical Sourcing Goal + "PROPERTY TRANSLATION" note requirement + angle-translation in the production step.
+- `.claude/skills/rei-ads-scan/SKILL.md` — cross-vertical goal + the load-more pagination technique documented.
+- `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/COMPETITOR_WATCHLIST.md` → v1.1 (retitled "Competitor & Angle-Source Watchlist"; cross-vertical reframed as intentional; Freedom Growth deep-pull row updated).
+- `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/ADS_LIBRARY/SOURCE_REGISTRY/Master_Ad_Database.md` — Freedom Growth deep-pull (+80 IDs) appended.
+- Swipe library (Drive-only): Freedom Growth Academy now 106 distinct story videos + transcripts; `_ad_breakdown.md` updated.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.30 (this decision).
 
 ---
 
