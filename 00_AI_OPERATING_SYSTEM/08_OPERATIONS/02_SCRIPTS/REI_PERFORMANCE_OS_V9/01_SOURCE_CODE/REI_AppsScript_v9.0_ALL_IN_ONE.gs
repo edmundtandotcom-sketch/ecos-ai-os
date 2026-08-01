@@ -238,10 +238,23 @@ function getDashboardData(request) {
   assertAccess_(request.accessKey);
   const rangeKey = request.rangeKey || '30d';
   const cacheKey = 'dashboard:' + rangeKey + ':' + safeText_(request.customStart) + ':' + safeText_(request.customEnd);
-  const cached = CacheService.getScriptCache().get(cacheKey);
-  if (cached && !request.force) return JSON.parse(cached);
+  // Cache is an optimisation, never a requirement. CacheService rejects values over
+  // ~100KB with "Argument too large: value", and the v9.1 payload (per-ad rows, ad
+  // sets, pipeline) exceeds that. Previously the failing put() threw AFTER the data
+  // was built, so the whole call failed and the dashboard kept showing the last
+  // payload it managed to receive — which looked exactly like "ranges do nothing".
+  let cached = null;
+  try { cached = CacheService.getScriptCache().get(cacheKey); } catch (e) { cached = null; }
+  if (cached && !request.force) {
+    try { return JSON.parse(cached); } catch (e) { /* corrupt entry — rebuild below */ }
+  }
   const payload = buildDashboardPayload_(rangeKey, request.customStart, request.customEnd);
-  CacheService.getScriptCache().put(cacheKey, JSON.stringify(payload), APP.CACHE_SECONDS);
+  try {
+    const json = JSON.stringify(payload);
+    if (json.length < 90000) CacheService.getScriptCache().put(cacheKey, json, APP.CACHE_SECONDS);
+  } catch (e) {
+    // Too large or cache unavailable — serve uncached rather than fail the request.
+  }
   return payload;
 }
 
