@@ -11,17 +11,33 @@
   <div><div class="eyebrow">REI METHOD</div><h1 id="viewTitle">Today</h1></div>
   <div class="top-actions"><span id="syncStatus" class="status-dot">Ready</span><button class="icon-btn" onclick="app.sync()" aria-label="Sync">↻</button></div>
 </header>
-<div class="range-strip" id="rangeStrip"><button data-range="today">Today</button><button data-range="7d">7D</button><button class="active" data-range="30d">30D</button><button data-range="90d">90D</button><button data-range="all">All</button></div>
+<div class="range-strip" id="rangeStrip"><button data-range="today">Today</button><button data-range="7d">7D</button><button class="active" data-range="30d">30D</button><button data-range="90d">90D</button><button data-range="all">All</button><select id="monthPicker" class="range-select" onchange="app.pickMonth(this.value)"><option value="">Month…</option></select><button id="customToggle" onclick="app.toggleCustom()">Custom</button></div>
+<div id="customRange" class="custom-range hidden"><label><span>From</span><input type="date" id="customStart"></label><label><span>To</span><input type="date" id="customEnd"></label><button class="primary" onclick="app.applyCustom()">Apply</button></div>
 <main>
 
 <!-- ══ CEO: the numbers, and what needs a decision ══ -->
 <section id="view-today" class="view active">
   <div id="actionStrip" class="action-strip"></div>
   <div id="leakCallout"></div>
-  <div id="overviewCards" class="metric-grid"></div>
-  <div class="panel"><div class="panel-head"><h2>Daily pulse</h2><span id="rangeLabel"></span></div><div id="trendChart" class="trend-chart"></div><div class="chart-legend"><span><i class="dot blue"></i>Spend</span><span><i class="dot green"></i>Leads</span></div></div>
-  <div class="panel"><div class="panel-head"><h2>Channel performance</h2></div><div id="platformCards" class="platform-grid"></div></div>
+
+  <!-- Platform split leads, because blended numbers hide which channel is failing -->
+  <div class="panel"><div class="panel-head"><h2>Meta vs Google</h2><span id="rangeLabel"></span></div><div id="segmentCards" class="segment-grid"></div><div id="segmentVerdict"></div></div>
+
+  <div class="panel"><div class="panel-head"><h2>All channels combined</h2></div><div id="overviewCards" class="metric-grid"></div></div>
+
+  <div class="panel"><div class="panel-head"><h2>Cost per lead — is it getting better or worse?</h2><span>by platform</span></div><div id="cplChart" class="line-chart"></div><div class="chart-legend"><span><i class="dot blue"></i>Meta CPL</span><span><i class="dot amber"></i>Google CPL</span><span><i class="dot line-target"></i>Target</span></div></div>
+
+  <div class="panel"><div class="panel-head"><h2>Where the leads come from</h2><span>daily, stacked</span></div><div id="leadsChart" class="trend-chart"></div><div class="chart-legend"><span><i class="dot blue"></i>Meta leads</span><span><i class="dot amber"></i>Google leads</span></div></div>
+
+  <div class="panel"><div class="panel-head"><h2>Month over month</h2><button class="link-btn" onclick="app.showView('months')">Full history</button></div><div id="monthlyMini" class="mini-table"></div></div>
+
   <div class="panel"><div class="panel-head"><h2>Top campaigns</h2><button class="link-btn" onclick="app.showView('ads')">See all ads</button></div><div id="topCampaigns"></div></div>
+</section>
+
+<!-- ══ Month-by-month history ══ -->
+<section id="view-months" class="view">
+  <div class="section-title"><h2>Month over month</h2><p>Every month in the data, newest first, with change against the month before.</p></div>
+  <div id="monthlyTable" class="mini-table"></div>
 </section>
 
 <!-- ══ CEO: stage-by-stage conversion, following the live GHL pipeline ══ -->
@@ -35,12 +51,18 @@
 <!-- ══ MEDIA BUYER: which ad to kill, which to scale ══ -->
 <section id="view-ads" class="view">
   <div class="section-title"><h2>Ads</h2><p>Per-ad economics with a verdict. Thresholds are tunable in Script Properties.</p></div>
+  <div class="panel"><div class="panel-head"><h2>Image vs video</h2><span>which format earns its spend</span></div><div id="formatCards" class="segment-grid"></div></div>
   <div class="filter-chips" id="adFilters">
     <button class="active" data-adfilter="ALL">All</button>
     <button data-adfilter="SCALE">🔥 Scale</button>
     <button data-adfilter="KILL">🛑 Kill</button>
     <button data-adfilter="MONITOR">👁 Monitor</button>
     <button data-adfilter="TEST">🧪 Testing</button>
+  </div>
+  <div class="filter-chips" id="adPlatformFilters">
+    <button class="active" data-adplatform="ALL">All platforms</button>
+    <button data-adplatform="Meta">Meta</button>
+    <button data-adplatform="Google">Google</button>
   </div>
   <div id="adSortRow" class="sort-row"></div>
   <div id="adList" class="card-list wide"></div>
@@ -69,6 +91,7 @@
 </main>
 <nav class="bottom-nav">
   <button class="active" data-view="today"><span>⌂</span>Today</button>
+  <button data-view="months"><span>▦</span>Months</button>
   <button data-view="funnel"><span>⇢</span>Funnel</button>
   <button data-view="ads"><span>◫</span>Ads</button>
   <button data-view="pipeline"><span>◎</span>Follow-up</button>

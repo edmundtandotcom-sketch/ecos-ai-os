@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.1.0',
+  VERSION: '9.2.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -334,6 +334,12 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
   const adSets = safely('adSets', function () { return aggregateAdSets_(perf); }, []);
   const stages = safely('stages', function () { return buildStageConversions_(funnelTotals); }, null);
   const pipeline = safely('pipeline', function () { return buildPipelineByStage_(leads); }, []);
+  // v9.2 segmentation
+  const segments = safely('segments', function () { return buildPlatformBreakdown_(perf, funnel); }, { combined: null, platforms: [] });
+  const monthly = safely('monthly', function () { return buildMonthlyComparison_(12); }, []);
+  const months = safely('months', function () { return availableMonths_(); }, []);
+  const formats = safely('formats', function () { return buildFormatBreakdown_(ads); }, []);
+  const decisionTrend = safely('trend', function () { return buildDecisionTrend_(perf, funnel); }, []);
   if (warnings.length) {
     try { appendErrorLog_(makeRunId_('dash'), 'Dashboard', 'buildDashboardPayload_', 'WARN', warnings.join(' | '), '', '', '', {}, 'webapp'); } catch (ignored) {}
   }
@@ -352,6 +358,11 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
     stages: stages,
     pipeline: pipeline,
     warnings: warnings,
+    segments: segments,
+    monthly: monthly,
+    months: months,
+    formats: formats,
+    decisionTrend: decisionTrend,
     actions: {
       kill: ads.filter(a => a.signal === 'KILL').length,
       scale: ads.filter(a => a.signal === 'SCALE').length,
@@ -880,6 +891,185 @@ function buildPipelineByStage_(leads) {
       leads: rows.slice(0, 25)
     };
   }).filter(g => g.count > 0);
+}
+
+// ==================== 09_Segments.gs (added v9.2, 2026-07-31) ====================
+/**
+ * Platform separation, month-over-month, and creative-format analysis.
+ *
+ * Why platform separation is not optional: Meta and Google behave nothing alike in
+ * this account (Meta ~$96 CPL with attributed revenue; Google ~$515 CPL with none).
+ * A blended number hides that completely and would have you optimising an average
+ * that describes neither channel.
+ *
+ * Read-only. Nothing here writes to Meta, Google or GHL.
+ */
+
+/** Canonical platform buckets. Anything unrecognised lands in Other rather than being
+ *  silently folded into a real channel. */
+function platformOf_(value) {
+  const p = safeText_(value).toLowerCase();
+  if (p.indexOf('meta') >= 0 || p.indexOf('facebook') >= 0 || p.indexOf('instagram') >= 0) return 'Meta';
+  if (p.indexOf('google') >= 0 || p.indexOf('youtube') >= 0) return 'Google';
+  return 'Other';
+}
+
+function emptySegment_(name) {
+  return { platform: name, spend: 0, impressions: 0, clicks: 0, leads: 0,
+           newLeads: 0, responded: 0, bookedCalls: 0, appointments: 0,
+           strategySessions: 0, qualified: 0, closedWon: 0, revenue: 0 };
+}
+
+function finaliseSegment_(x) {
+  x.cpl = x.leads > 0 ? x.spend / x.leads : 0;
+  x.ctr = x.impressions > 0 ? (x.clicks / x.impressions) * 100 : 0;
+  x.cpc = x.clicks > 0 ? x.spend / x.clicks : 0;
+  x.costPerBooked = x.bookedCalls > 0 ? x.spend / x.bookedCalls : 0;
+  x.costPerClose = x.closedWon > 0 ? x.spend / x.closedWon : 0;
+  x.roas = x.spend > 0 ? x.revenue / x.spend : 0;
+  x.leadToBooked = x.leads > 0 ? (x.bookedCalls / x.leads) * 100 : 0;
+  x.leadToClose = x.leads > 0 ? (x.closedWon / x.leads) * 100 : 0;
+  return x;
+}
+
+/** Meta / Google / Other side by side, plus the combined total. */
+function buildPlatformBreakdown_(perf, funnel) {
+  const seg = { Meta: emptySegment_('Meta'), Google: emptySegment_('Google'), Other: emptySegment_('Other') };
+  const all = emptySegment_('All channels');
+
+  perf.forEach(r => {
+    const s = seg[platformOf_(r.platform)];
+    ['spend', 'impressions', 'clicks', 'leads'].forEach(k => {
+      const v = asNumber_(r[k]); s[k] += v; all[k] += v;
+    });
+  });
+  funnel.forEach(r => {
+    const s = seg[platformOf_(r.platform)];
+    [['newLeads','newLeads'],['responded','responded'],['bookedCalls','bookedCalls'],
+     ['appointments','appointments'],['strategySessions','strategySessions'],
+     ['qualified','qualified'],['closedWon','closedWon'],['revenue','revenue']].forEach(p => {
+      const v = asNumber_(r[p[1]]); s[p[0]] += v; all[p[0]] += v;
+    });
+  });
+
+  const list = ['Meta', 'Google', 'Other'].map(k => finaliseSegment_(seg[k])).filter(s => s.spend > 0 || s.leads > 0);
+  return { combined: finaliseSegment_(all), platforms: list };
+}
+
+/**
+ * Month-by-month performance, newest first, with change vs the previous month.
+ * Ignores the selected range deliberately — month-over-month only means something
+ * across the full history, not inside a 7-day window.
+ */
+function buildMonthlyComparison_(maxMonths) {
+  const perf = sheetRowsAsObjects_(APP.TABS.PERFORMANCE);
+  const funnel = sheetRowsAsObjects_(APP.TABS.FUNNEL);
+  const months = {};
+  const monthOf = function (v) {
+    const d = v instanceof Date ? Utilities.formatDate(v, APP.TZ, 'yyyy-MM-dd') : safeText_(v).slice(0, 10);
+    return d.length >= 7 ? d.slice(0, 7) : '';
+  };
+
+  perf.forEach(r => {
+    const m = monthOf(r.date); if (!m) return;
+    if (!months[m]) months[m] = emptySegment_(m);
+    ['spend', 'impressions', 'clicks', 'leads'].forEach(k => months[m][k] += asNumber_(r[k]));
+  });
+  funnel.forEach(r => {
+    const m = monthOf(r.date); if (!m) return;
+    if (!months[m]) months[m] = emptySegment_(m);
+    months[m].newLeads += asNumber_(r.newLeads);
+    months[m].bookedCalls += asNumber_(r.bookedCalls);
+    months[m].appointments += asNumber_(r.appointments);
+    months[m].closedWon += asNumber_(r.closedWon);
+    months[m].revenue += asNumber_(r.revenue);
+  });
+
+  const keys = Object.keys(months).sort().reverse().slice(0, maxMonths || 12);
+  const rows = keys.map(k => { const x = finaliseSegment_(months[k]); x.month = k; return x; });
+
+  // Attach deltas against the following (older) entry.
+  rows.forEach((r, i) => {
+    const prev = rows[i + 1];
+    const pctChange = function (now, was) { return was > 0 ? ((now - was) / was) * 100 : null; };
+    r.change = prev ? {
+      spend: pctChange(r.spend, prev.spend),
+      leads: pctChange(r.leads, prev.leads),
+      cpl: pctChange(r.cpl, prev.cpl),
+      revenue: pctChange(r.revenue, prev.revenue),
+      roas: pctChange(r.roas, prev.roas)
+    } : null;
+  });
+  return rows;
+}
+
+/** Months present in the data, newest first — powers the month picker. */
+function availableMonths_() {
+  const seen = {};
+  sheetRowsAsObjects_(APP.TABS.PERFORMANCE).forEach(r => {
+    const d = r.date instanceof Date ? Utilities.formatDate(r.date, APP.TZ, 'yyyy-MM-dd') : safeText_(r.date).slice(0, 10);
+    if (d.length >= 7) seen[d.slice(0, 7)] = 1;
+  });
+  return Object.keys(seen).sort().reverse();
+}
+
+/**
+ * Image vs video performance. Format comes from the Meta_Ads snapshot; spend and
+ * leads come from the range-filtered daily facts, joined on adId.
+ * Ads whose format is unknown are reported separately rather than guessed at.
+ */
+function buildFormatBreakdown_(ads) {
+  const buckets = {};
+  (ads || []).forEach(a => {
+    const raw = safeText_(a.format).toLowerCase();
+    const key = raw.indexOf('video') >= 0 ? 'Video'
+              : (raw.indexOf('image') >= 0 || raw.indexOf('photo') >= 0) ? 'Image'
+              : a.videoSrc ? 'Video' : (a.thumbUrl ? 'Image' : 'Unknown');
+    if (!buckets[key]) buckets[key] = { format: key, ads: 0, spend: 0, leads: 0, impressions: 0, clicks: 0, hookSum: 0, hookCount: 0 };
+    const b = buckets[key];
+    b.ads++; b.spend += asNumber_(a.spend); b.leads += asNumber_(a.leads);
+    b.impressions += asNumber_(a.impressions); b.clicks += asNumber_(a.clicks);
+    if (asNumber_(a.hookrate) > 0) { b.hookSum += asNumber_(a.hookrate); b.hookCount++; }
+  });
+  return Object.keys(buckets).map(k => {
+    const b = buckets[k];
+    b.cpl = b.leads > 0 ? b.spend / b.leads : 0;
+    b.ctr = b.impressions > 0 ? (b.clicks / b.impressions) * 100 : 0;
+    b.avgHookRate = b.hookCount > 0 ? b.hookSum / b.hookCount : 0;
+    delete b.hookSum; delete b.hookCount;
+    return b;
+  }).sort((a, b) => b.spend - a.spend);
+}
+
+/**
+ * Daily series carrying the metrics a media buyer actually decides on — spend and
+ * leads split by platform, plus CPL. A single blended spend bar (the old "daily
+ * pulse") shows activity but supports no decision.
+ */
+function buildDecisionTrend_(perf, funnel) {
+  const days = {};
+  const dayOf = function (v) { return v instanceof Date ? Utilities.formatDate(v, APP.TZ, 'yyyy-MM-dd') : safeText_(v).slice(0, 10); };
+
+  perf.forEach(r => {
+    const d = dayOf(r.date); if (!d) return;
+    if (!days[d]) days[d] = { date: d, spend: 0, leads: 0, metaSpend: 0, googleSpend: 0, metaLeads: 0, googleLeads: 0, bookedCalls: 0 };
+    const p = platformOf_(r.platform), spend = asNumber_(r.spend), leads = asNumber_(r.leads);
+    days[d].spend += spend; days[d].leads += leads;
+    if (p === 'Meta') { days[d].metaSpend += spend; days[d].metaLeads += leads; }
+    else if (p === 'Google') { days[d].googleSpend += spend; days[d].googleLeads += leads; }
+  });
+  funnel.forEach(r => {
+    const d = dayOf(r.date); if (!d || !days[d]) return;
+    days[d].bookedCalls += asNumber_(r.bookedCalls);
+  });
+
+  return Object.keys(days).sort().map(k => {
+    const x = days[k];
+    x.cpl = x.leads > 0 ? x.spend / x.leads : 0;
+    x.metaCpl = x.metaLeads > 0 ? x.metaSpend / x.metaLeads : 0;
+    x.googleCpl = x.googleLeads > 0 ? x.googleSpend / x.googleLeads : 0;
+    return x;
+  });
 }
 
 // ==================== 07_Setup.gs ====================

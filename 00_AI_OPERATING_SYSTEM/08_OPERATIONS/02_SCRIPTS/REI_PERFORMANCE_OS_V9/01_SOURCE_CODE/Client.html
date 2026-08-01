@@ -1,9 +1,9 @@
 <script>
-const VIEW_TITLES={today:'Today',funnel:'Pipeline conversion',ads:'Ads',pipeline:'Follow-up queue',forecast:'Forecaster',health:'System health'};
+const VIEW_TITLES={today:'Today',months:'Month over month',funnel:'Pipeline conversion',ads:'Ads',pipeline:'Follow-up queue',forecast:'Forecaster',health:'System health'};
 const SIGNAL_META={SCALE:{cls:'green',icon:'🔥',label:'SCALE'},KILL:{cls:'red',icon:'🛑',label:'KILL'},MONITOR:{cls:'amber',icon:'👁',label:'MONITOR'},TEST:{cls:'',icon:'🧪',label:'TESTING'}};
 
 const app={
-  state:{key:'',rangeKey:'30d',data:null,view:'today',adFilter:'ALL',adSort:'spend'},
+  state:{key:'',rangeKey:'30d',data:null,view:'today',adFilter:'ALL',adPlatform:'ALL',adSort:'spend',customStart:'',customEnd:''},
 
   /* Safe DOM write. If an element is missing — which happens when Apps Script serves a
      cached mix of old JS and new HTML — skip it instead of throwing, so one stale
@@ -14,8 +14,31 @@ const app={
     document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>this.setRange(b.dataset.range));
     document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>this.showView(b.dataset.view));
     document.querySelectorAll('[data-adfilter]').forEach(b=>b.onclick=()=>this.setAdFilter(b.dataset.adfilter));
+    document.querySelectorAll('[data-adplatform]').forEach(b=>b.onclick=()=>this.setAdPlatform(b.dataset.adplatform));
     this.load(true);   // no login screen — assertAccess_ runs in direct-link mode
   },
+
+  /* ── range controls ── */
+  pickMonth(m){
+    if(!m){return;}
+    const start=m+'-01';
+    const d=new Date(Number(m.slice(0,4)),Number(m.slice(5,7)),0);   // day 0 of next month = last day of this
+    const end=m+'-'+String(d.getDate()).padStart(2,'0');
+    this.state.customStart=start;this.state.customEnd=end;
+    document.querySelectorAll('[data-range]').forEach(b=>b.classList.remove('active'));
+    this.load(false);
+  },
+  toggleCustom(){document.getElementById('customRange').classList.toggle('hidden');},
+  applyCustom(){
+    const s=document.getElementById('customStart').value,e=document.getElementById('customEnd').value;
+    if(!s||!e){this.toast('Pick both dates',true);return;}
+    if(s>e){this.toast('Start date is after end date',true);return;}
+    this.state.customStart=s;this.state.customEnd=e;
+    const mp=document.getElementById('monthPicker'); if(mp)mp.value='';
+    document.querySelectorAll('[data-range]').forEach(b=>b.classList.remove('active'));
+    this.load(false);
+  },
+  setAdPlatform(p){this.state.adPlatform=p;document.querySelectorAll('[data-adplatform]').forEach(b=>b.classList.toggle('active',b.dataset.adplatform===p));this.renderAds(this.state.data);},
 
   server(name,arg){
     return new Promise((resolve,reject)=>{
@@ -34,7 +57,7 @@ const app={
   async load(force){
     this.loading(true);
     try{
-      const data=await this.server('getDashboardData',{accessKey:this.state.key,rangeKey:this.state.rangeKey,force:!!force});
+      const data=await this.server('getDashboardData',{accessKey:this.state.key,rangeKey:this.state.rangeKey,customStart:this.state.customStart,customEnd:this.state.customEnd,force:!!force});
       this.state.data=data;this.render();
     }catch(e){this.toast(e.message,true);}finally{this.loading(false);}
   },
@@ -48,7 +71,14 @@ const app={
     }catch(e){this.toast(e.message,true);}finally{this.loading(false);}
   },
 
-  setRange(key){this.state.rangeKey=key;document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===key));this.load(false);},
+  setRange(key){
+    // A preset always wins over a month/custom selection, or the server would keep
+    // honouring the custom dates and the buttons would appear to do nothing.
+    this.state.rangeKey=key;this.state.customStart='';this.state.customEnd='';
+    const mp=document.getElementById('monthPicker'); if(mp)mp.value='';
+    document.querySelectorAll('[data-range]').forEach(b=>b.classList.toggle('active',b.dataset.range===key));
+    this.load(false);
+  },
   showView(view){this.state.view=view;document.getElementById('viewTitle').textContent=VIEW_TITLES[view]||'';document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));window.scrollTo({top:0,behavior:'smooth'});},
   setAdFilter(f){this.state.adFilter=f;document.querySelectorAll('[data-adfilter]').forEach(b=>b.classList.toggle('active',b.dataset.adfilter===f));this.renderAds(this.state.data);},
   setAdSort(s){this.state.adSort=s;this.renderAds(this.state.data);},
@@ -62,6 +92,10 @@ const app={
     // and the failure is named in the console instead of blanking the page.
     const sections=[
       ['Today',()=>this.renderToday(d)],
+      ['Platforms',()=>this.renderSegments(d)],
+      ['Charts',()=>this.renderCharts(d)],
+      ['Months',()=>this.renderMonthly(d)],
+      ['Formats',()=>this.renderFormats(d)],
       ['Funnel',()=>this.renderStages(d)],
       ['Ads',()=>this.renderAds(d)],
       ['Ad sets',()=>this.renderAdSets(d.adSets)],
@@ -104,14 +138,100 @@ const app={
     ];
     document.getElementById('overviewCards').innerHTML=cards.map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');
 
-    const trend=d.trend||[],max=Math.max(1,...trend.map(x=>x.spend));
-    document.getElementById('trendChart').innerHTML=trend.slice(-60).map(x=>`<div class="trend-col" title="${x.date}: ${this.money(x.spend)}, ${this.num(x.leads)} leads"><div class="trend-bar" style="height:${Math.max(2,x.spend/max*100)}%"></div><div class="trend-lead" style="opacity:${x.leads?1:.15}"></div></div>`).join('');
-    document.getElementById('platformCards').innerHTML=(d.platforms||[]).map(x=>`<div class="platform-card"><div class="row"><h3>${this.esc(x.platform)}</h3><span class="badge ${x.roas>=3?'green':x.roas>0?'amber':''}">${x.roas.toFixed(2)}x ROAS</span></div><div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>CPL</span><strong>${this.money(x.cpl)}</strong></div></div></div>`).join('');
+    // Populate the month picker once, from months present in the data.
+    const mp=document.getElementById('monthPicker');
+    if(mp&&mp.options.length<=1&&(d.months||[]).length){
+      mp.innerHTML='<option value="">Month…</option>'+d.months.map(m=>`<option value="${m}">${m}</option>`).join('');
+    }
     document.getElementById('topCampaigns').innerHTML=this.campaignCards((d.campaigns||[]).slice(0,5));
   },
 
   campaignCards(rows){
     return rows.map(x=>`<div class="list-card"><div class="row"><h3>${this.esc(x.campaignName||'Unattributed')}</h3><span class="badge">${this.esc(x.platform||'')}</span></div><div class="kv"><div><span>Spend</span><strong>${this.money(x.spend)}</strong></div><div><span>Leads</span><strong>${this.num(x.newLeads||x.leads)}</strong></div><div><span>CPL</span><strong>${this.money(x.cpl)}</strong></div><div><span>Booked</span><strong>${this.num(x.bookedCalls)}</strong></div><div><span>Qualified</span><strong>${this.num(x.qualified)}</strong></div><div><span>ROAS</span><strong>${(x.roas||0).toFixed(2)}x</strong></div></div></div>`).join('')||'<div class="panel quiet-note">No campaign data for this period.</div>';
+  },
+
+  /* ══════════════ Platform separation ══════════════ */
+  renderSegments(d){
+    const seg=d.segments||{};const rows=seg.platforms||[];
+    const target=(d.thresholds&&d.thresholds.targetCpl)||0;
+    this.set('segmentCards',rows.map(p=>{
+      const good=target>0&&p.cpl>0&&p.cpl<=target;
+      const bad=target>0&&p.cpl>target*2;
+      return `<div class="segment-card ${bad?'bad':good?'good':''}">
+        <div class="row"><h3>${this.esc(p.platform)}</h3><span class="badge ${p.roas>=3?'green':p.roas>0?'amber':'red'}">${p.roas.toFixed(2)}x ROAS</span></div>
+        <div class="seg-hero"><div><span>Spend</span><strong>${this.money(p.spend)}</strong></div><div><span>Leads</span><strong>${this.num(p.leads)}</strong></div><div><span>CPL</span><strong class="${bad?'bad':good?'good':''}">${p.leads?this.money(p.cpl):'—'}</strong></div></div>
+        <div class="kv"><div><span>Booked</span><strong>${this.num(p.bookedCalls)}</strong></div><div><span>Closed</span><strong>${this.num(p.closedWon)}</strong></div><div><span>Revenue</span><strong>${this.money(p.revenue)}</strong></div><div><span>Lead→Booked</span><strong>${this.pctRaw(p.leadToBooked)}</strong></div><div><span>Cost/close</span><strong>${p.closedWon?this.money(p.costPerClose):'—'}</strong></div><div><span>CTR</span><strong>${p.ctr.toFixed(2)}%</strong></div></div>
+      </div>`;}).join('')||'<div class="quiet-note">No platform data in this period.</div>');
+
+    // Name the comparison outright rather than leaving it to be inferred from two cards.
+    const meta=rows.find(p=>p.platform==='Meta'),g=rows.find(p=>p.platform==='Google');
+    let verdict='';
+    if(meta&&g&&meta.leads&&g.leads){
+      const cheaper=meta.cpl<=g.cpl?meta:g, dearer=meta.cpl<=g.cpl?g:meta;
+      const mult=cheaper.cpl>0?(dearer.cpl/cheaper.cpl):0;
+      verdict=`<div class="verdict-card"><strong>${this.esc(cheaper.platform)}</strong> is delivering leads at <strong>${this.money(cheaper.cpl)}</strong> vs <strong>${this.esc(dearer.platform)}</strong> at <strong>${this.money(dearer.cpl)}</strong> — ${mult.toFixed(1)}× more expensive.`
+        +(dearer.revenue===0&&dearer.spend>0?` ${this.esc(dearer.platform)} has produced <strong>no attributed revenue</strong> on ${this.money(dearer.spend)} of spend in this period.`:'')
+        +`<div class="verdict-note">Attribution gaps can understate a channel — confirm in the platform's own reporting before cutting budget.</div></div>`;
+    }
+    this.set('segmentVerdict',verdict);
+  },
+
+  /* ══════════════ Decision charts ══════════════ */
+  renderCharts(d){
+    const t=d.decisionTrend||[];
+    const target=(d.thresholds&&d.thresholds.targetCpl)||0;
+    const days=t.slice(-60);
+
+    // CPL over time by platform — the question is "is it getting better or worse".
+    const cplVals=days.flatMap(x=>[x.metaCpl,x.googleCpl]).filter(v=>v>0);
+    const maxCpl=Math.max(target*1.5,...cplVals,1);
+    this.set('cplChart',days.length?days.map(x=>{
+      const h=v=>v>0?Math.max(2,(v/maxCpl)*100):0;
+      return `<div class="lc-col" title="${x.date} — Meta ${x.metaCpl?this.money(x.metaCpl):'n/a'} · Google ${x.googleCpl?this.money(x.googleCpl):'n/a'}">
+        <div class="lc-stack">
+          <div class="lc-dot blue" style="bottom:${h(x.metaCpl)}%"></div>
+          <div class="lc-dot amber" style="bottom:${h(x.googleCpl)}%"></div>
+        </div></div>`;
+    }).join('')+(target>0?`<div class="lc-target" style="bottom:${(target/maxCpl)*100}%"><span>Target ${this.money(target)}</span></div>`:''):'<div class="quiet-note">No daily data in this period.</div>');
+
+    // Leads per day, split by platform — where volume actually comes from.
+    const maxLeads=Math.max(1,...days.map(x=>x.leads));
+    this.set('leadsChart',days.length?days.map(x=>`<div class="trend-col" title="${x.date}: ${this.num(x.metaLeads)} Meta, ${this.num(x.googleLeads)} Google">
+        <div class="trend-bar amber" style="height:${(x.googleLeads/maxLeads)*100}%"></div>
+        <div class="trend-bar" style="height:${(x.metaLeads/maxLeads)*100}%"></div>
+      </div>`).join(''):'<div class="quiet-note">No daily data in this period.</div>');
+  },
+
+  /* ══════════════ Month over month ══════════════ */
+  monthRows(rows,limit){
+    const arrow=c=>c===null||c===undefined?'':(c>0?`<span class="up">▲${Math.abs(c).toFixed(0)}%</span>`:c<0?`<span class="down">▼${Math.abs(c).toFixed(0)}%</span>`:'');
+    // For CPL, down is good — invert the colour meaning rather than the symbol.
+    const arrowCpl=c=>c===null||c===undefined?'':(c>0?`<span class="down">▲${Math.abs(c).toFixed(0)}%</span>`:c<0?`<span class="up">▼${Math.abs(c).toFixed(0)}%</span>`:'');
+    return `<div class="mt-head"><span>Month</span><span>Spend</span><span>Leads</span><span>CPL</span><span>Closed</span><span>Revenue</span></div>`+
+      rows.slice(0,limit||rows.length).map(m=>`<div class="mt-row">
+        <span>${this.esc(m.month)}</span>
+        <span>${this.money(m.spend)} ${m.change?arrow(m.change.spend):''}</span>
+        <span>${this.num(m.leads)} ${m.change?arrow(m.change.leads):''}</span>
+        <span>${m.leads?this.money(m.cpl):'—'} ${m.change?arrowCpl(m.change.cpl):''}</span>
+        <span>${this.num(m.closedWon)}</span>
+        <span>${this.money(m.revenue)} ${m.change?arrow(m.change.revenue):''}</span>
+      </div>`).join('');
+  },
+  renderMonthly(d){
+    const rows=d.monthly||[];
+    if(!rows.length){this.set('monthlyMini','<div class="quiet-note">Not enough history yet.</div>');this.set('monthlyTable','<div class="quiet-note">Not enough history yet.</div>');return;}
+    this.set('monthlyMini',this.monthRows(rows,4));
+    this.set('monthlyTable',this.monthRows(rows));
+  },
+
+  /* ══════════════ Image vs video ══════════════ */
+  renderFormats(d){
+    const rows=d.formats||[];
+    this.set('formatCards',rows.map(f=>`<div class="segment-card">
+      <div class="row"><h3>${this.esc(f.format)}</h3><span class="badge">${this.num(f.ads)} ad${f.ads===1?'':'s'}</span></div>
+      <div class="seg-hero"><div><span>Spend</span><strong>${this.money(f.spend)}</strong></div><div><span>Leads</span><strong>${this.num(f.leads)}</strong></div><div><span>CPL</span><strong>${f.leads?this.money(f.cpl):'—'}</strong></div></div>
+      <div class="kv"><div><span>CTR</span><strong>${f.ctr.toFixed(2)}%</strong></div><div><span>Avg hook</span><strong>${f.avgHookRate?f.avgHookRate.toFixed(1)+'%':'—'}</strong></div><div><span>Clicks</span><strong>${this.num(f.clicks)}</strong></div></div>
+    </div>`).join('')||'<div class="quiet-note">No creative-format data yet — needs a Meta sync.</div>');
   },
 
   /* ══════════════ Stage-by-stage conversion + leak ══════════════ */
@@ -161,6 +281,11 @@ const app={
 
     let rows=(d.ads||[]).slice();
     if(this.state.adFilter!=='ALL')rows=rows.filter(a=>a.signal===this.state.adFilter);
+    if(this.state.adPlatform!=='ALL')rows=rows.filter(a=>{
+      const p=String(a.platform||'').toLowerCase();
+      return this.state.adPlatform==='Meta'?(p.indexOf('meta')>=0||p.indexOf('facebook')>=0||p.indexOf('instagram')>=0)
+           :(p.indexOf('google')>=0||p.indexOf('youtube')>=0);
+    });
     const key=this.state.adSort;
     rows.sort((a,b)=>key==='cpl'?(a.cpl||Infinity)-(b.cpl||Infinity):(b[key]||0)-(a[key]||0));
 
@@ -170,7 +295,7 @@ const app={
       return `<div class="ad-card ${m.cls}">
         ${thumb}
         <div class="ad-body">
-          <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge ${m.cls}">${m.icon} ${m.label}</span></div>
+          <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge-group"><span class="badge plat">${this.esc(a.platform||'—')}</span><span class="badge ${m.cls}">${m.icon} ${m.label}</span></span></div>
           <div class="ad-reason">${this.esc(a.signalReason||'')}</div>
           <div class="kv five">
             <div><span>Spend</span><strong>${this.money(a.spend)}</strong></div>
