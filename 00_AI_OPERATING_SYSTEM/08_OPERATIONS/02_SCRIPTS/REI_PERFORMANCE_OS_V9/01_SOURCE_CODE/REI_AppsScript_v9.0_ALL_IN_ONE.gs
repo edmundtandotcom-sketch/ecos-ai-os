@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.2.1',
+  VERSION: '9.2.2',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -174,9 +174,53 @@ function withScriptLock_(label, waitMs, fn) {
   try { return fn(); } finally { lock.releaseLock(); }
 }
 
-function clearDashboardCache_() {
+/**
+ * Chunked cache. CacheService caps a single value at ~100KB; the dashboard payload is
+ * larger, so it is split across numbered keys with a companion count key. A partial or
+ * expired chunk returns null so the caller rebuilds rather than parsing half a payload.
+ */
+function cachePut_(key, json, seconds) {
+  const CHUNK = 80000, MAX_PARTS = 12;
+  const parts = Math.ceil(json.length / CHUNK);
+  if (parts > MAX_PARTS) return false;                 // implausibly large — skip caching
+  const map = {};
+  for (let i = 0; i < parts; i++) map[key + '::' + i] = json.substr(i * CHUNK, CHUNK);
+  map[key + '::n'] = String(parts);
+  CacheService.getScriptCache().putAll(map, seconds);
+  return true;
+}
+
+function cacheGet_(key) {
   const cache = CacheService.getScriptCache();
-  ['today','7d','30d','90d','all'].forEach(k => cache.remove('dashboard:' + k));
+  const n = cache.get(key + '::n');
+  if (!n) return null;
+  const parts = Number(n);
+  if (!parts || parts < 1) return null;
+  const keys = [];
+  for (let i = 0; i < parts; i++) keys.push(key + '::' + i);
+  const got = cache.getAll(keys);
+  let out = '';
+  for (let i = 0; i < parts; i++) {
+    const piece = got[key + '::' + i];
+    if (piece === undefined || piece === null) return null;   // a chunk expired — rebuild
+    out += piece;
+  }
+  return out;
+}
+
+function clearDashboardCache_() {
+  // Keys are now chunked ("<key>::0", "<key>::n"), and the real key also carries the
+  // custom-date suffix. Dropping the "::n" count key alone is enough to invalidate an
+  // entry, since cacheGet_ returns null without it — the orphaned chunks then expire
+  // on their own TTL.
+  const cache = CacheService.getScriptCache();
+  const keys = [];
+  ['today','7d','30d','90d','all'].forEach(k => {
+    const base = 'dashboard:' + k + '::';
+    keys.push(base + 'n');
+    for (let i = 0; i < 12; i++) keys.push(base + i);
+  });
+  try { cache.removeAll(keys); } catch (e) { /* cache clearing is never fatal */ }
 }
 
 function sheetRowsAsObjects_(sheetName) {
@@ -238,23 +282,18 @@ function getDashboardData(request) {
   assertAccess_(request.accessKey);
   const rangeKey = request.rangeKey || '30d';
   const cacheKey = 'dashboard:' + rangeKey + ':' + safeText_(request.customStart) + ':' + safeText_(request.customEnd);
-  // Cache is an optimisation, never a requirement. CacheService rejects values over
-  // ~100KB with "Argument too large: value", and the v9.1 payload (per-ad rows, ad
-  // sets, pipeline) exceeds that. Previously the failing put() threw AFTER the data
-  // was built, so the whole call failed and the dashboard kept showing the last
-  // payload it managed to receive — which looked exactly like "ranges do nothing".
+  // Cache is an optimisation, never a requirement — a cache failure must never fail the
+  // request. Values are chunked because CacheService rejects anything over ~100KB, and
+  // the v9.1+ payload (per-ad rows, ad sets, pipeline) is well past that. Without
+  // chunking every range switch rebuilt from ~2,800 sheet rows, which is why loading
+  // each period felt slow.
   let cached = null;
-  try { cached = CacheService.getScriptCache().get(cacheKey); } catch (e) { cached = null; }
+  try { cached = cacheGet_(cacheKey); } catch (e) { cached = null; }
   if (cached && !request.force) {
     try { return JSON.parse(cached); } catch (e) { /* corrupt entry — rebuild below */ }
   }
   const payload = buildDashboardPayload_(rangeKey, request.customStart, request.customEnd);
-  try {
-    const json = JSON.stringify(payload);
-    if (json.length < 90000) CacheService.getScriptCache().put(cacheKey, json, APP.CACHE_SECONDS);
-  } catch (e) {
-    // Too large or cache unavailable — serve uncached rather than fail the request.
-  }
+  try { cachePut_(cacheKey, JSON.stringify(payload), APP.CACHE_SECONDS); } catch (e) { /* serve uncached */ }
   return payload;
 }
 
@@ -915,7 +954,10 @@ function buildPipelineByStage_(leads) {
 function backfillMetaHistory() {
   const CHUNK_DAYS = 30;
   const SAFE_MS = 4 * 60 * 1000;               // stop at 4 min; limit is ~6
-  const EARLIEST = prop_('META_BACKFILL_EARLIEST', '2024-01-01');
+  // 2025-09-01: the account's first campaign started 2025-09-06, confirmed against
+  // Edmund's own Meta export (1 Jul 2023 – 1 Aug 2026 pull, 123 campaigns, SGD 79,295).
+  // Reaching further back only burns chunks on empty months.
+  const EARLIEST = prop_('META_BACKFILL_EARLIEST', '2025-09-01');
   const started = new Date();
   const props = PropertiesService.getScriptProperties();
 
