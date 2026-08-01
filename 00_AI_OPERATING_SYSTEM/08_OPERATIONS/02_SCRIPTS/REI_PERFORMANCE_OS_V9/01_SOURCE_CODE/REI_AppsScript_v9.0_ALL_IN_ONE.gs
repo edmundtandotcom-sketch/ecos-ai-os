@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.2.2',
+  VERSION: '9.2.3',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -951,9 +951,23 @@ function buildPipelineByStage_(leads) {
  *
  * Run from the editor: backfillMetaHistory
  */
-function backfillMetaHistory() {
+/**
+ * Dashboard entry point for the backfill, so it can be run from the web app instead of
+ * hunting for a function name in the Apps Script editor's ~100-entry dropdown.
+ * Returns the same status string; the client re-runs until it sees DONE.
+ */
+function runMetaBackfill(request) {
+  request = request || {};
+  assertAccess_(request.accessKey);
+  const message = backfillMetaHistory(true);
+  return { ok: true, done: String(message).indexOf('DONE') === 0, message: message };
+}
+
+function backfillMetaHistory(silent) {
   const CHUNK_DAYS = 30;
-  const SAFE_MS = 4 * 60 * 1000;               // stop at 4 min; limit is ~6
+  // 3 minutes: short enough that a browser call returns comfortably, long enough to
+  // move several chunks per click. The hard platform limit is ~6.
+  const SAFE_MS = 3 * 60 * 1000;
   // 2025-09-01: the account's first campaign started 2025-09-06, confirmed against
   // Edmund's own Meta export (1 Jul 2023 – 1 Aug 2026 pull, 123 campaigns, SGD 79,295).
   // Reaching further back only burns chunks on empty months.
@@ -972,7 +986,8 @@ function backfillMetaHistory() {
       props.setProperty('META_BACKFILL_CURSOR', cursor);
       const msg = 'Paused safely at ' + cursor + ' after ' + chunks + ' chunk(s), ' +
                   rowsWritten + ' rows. Run backfillMetaHistory again to continue.';
-      uiAlert_(msg); return msg;
+      if(!silent) uiAlert_(msg);
+      return msg;
     }
     const end = cursor;
     const start = addDaysIso_(end, -(CHUNK_DAYS - 1));
@@ -986,7 +1001,8 @@ function backfillMetaHistory() {
       appendErrorLog_(runId, 'Meta', 'backfillMetaHistory', 'ERROR', e.message, '', '', e.stack, { from: from, end: end }, 'backfill');
       const msg = 'Stopped at ' + from + ' to ' + end + ': ' + e.message +
                   '\n\nProgress saved — fix the cause and run again to resume.';
-      uiAlert_(msg); return msg;
+      if(!silent) uiAlert_(msg);
+      return msg;
     }
     cursor = addDaysIso_(from, -1);
   }
@@ -1003,7 +1019,8 @@ function backfillMetaHistory() {
   clearDashboardCache_();
   const msg = 'DONE — Meta history backfilled to ' + EARLIEST + '. ' + chunks +
               ' chunk(s), ' + rowsWritten + ' rows written. Reload the dashboard.';
-  uiAlert_(msg); return msg;
+  if(!silent) uiAlert_(msg);
+  return msg;
 }
 
 /** Clear the resume pointer to force the next backfill to start from today again. */

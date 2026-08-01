@@ -49,6 +49,7 @@ const app={
         case 'runManualSync':runner.runManualSync(arg);break;
         case 'saveForecastScenario':runner.saveForecastScenario(arg);break;
         case 'getHealthData':runner.getHealthData(arg);break;
+        case 'runMetaBackfill':runner.runMetaBackfill(arg);break;
         default:reject(new Error('Unsupported server action: '+name));
       }
     });
@@ -377,6 +378,27 @@ const app={
     const warnHtml=warn.length?'<div class="leak-card" style="cursor:default;border-color:rgba(255,189,74,.5)"><div class="leak-label" style="color:var(--amber)">Sections that failed to build</div>'+warn.map(w=>'<div class="leak-stat">'+this.esc(w)+'</div>').join('')+'</div>':'';
     document.getElementById('healthSummary').innerHTML=warnHtml+`<div class="metric"><div class="label">System status</div><div class="value" style="color:${h.overall==='HEALTHY'?'var(--green)':'var(--amber)'}">${this.esc(h.overall)}</div><div class="sub">Checked ${new Date(h.generatedAt).toLocaleString('en-SG')}</div></div>`;
     document.getElementById('healthList').innerHTML=(h.checks||[]).map(c=>`<div class="list-card"><div class="row"><h3>${this.esc(c.name)}</h3><span class="badge ${c.status==='OK'?'green':c.status==='ERROR'?'red':'amber'}">${this.esc(c.status)}</span></div><div class="sub" style="margin-top:8px;color:var(--muted)">${this.esc(c.detail)}</div></div>`).join('');
+  },
+
+  /* One click per chunk. The server stops itself every ~3 minutes and saves its place,
+     so this reports progress and waits for another click rather than looping forever
+     against the execution limit. */
+  async runBackfill(){
+    const btn=document.getElementById('backfillBtn');
+    const out=document.getElementById('backfillStatus');
+    if(btn){btn.disabled=true;btn.textContent='Pulling history… this takes ~3 minutes';}
+    if(out)out.innerHTML='<div class="quiet-note">Running. Do not close this tab.</div>';
+    try{
+      const r=await this.server('runMetaBackfill',{accessKey:this.state.key});
+      const done=r&&r.done;
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default;border-color:'+(done?'rgba(56,211,159,.5)':'rgba(255,189,74,.5)')+'"><div class="leak-label" style="color:var(--'+(done?'green':'amber')+')">'+(done?'Complete':'Paused — click again to continue')+'</div><div class="leak-stat">'+this.esc(r&&r.message||'')+'</div></div>';
+      if(done){this.toast('History loaded — reloading');await this.load(true);}
+    }catch(e){
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default"><div class="leak-label">Failed</div><div class="leak-stat">'+this.esc(e.message)+'</div></div>';
+      this.toast(e.message,true);
+    }finally{
+      if(btn){btn.disabled=false;btn.textContent='Backfill Meta history';}
+    }
   },
 
   /* ══════════════ helpers ══════════════ */

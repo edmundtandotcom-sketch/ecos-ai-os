@@ -84,6 +84,12 @@
 
 <section id="view-health" class="view">
   <div class="section-title"><h2>System health</h2><p>Data freshness, credentials and required tabs.</p></div>
+  <div class="panel">
+    <div class="panel-head"><h2>Load full Meta history</h2></div>
+    <p class="quiet-note">Routine syncs only pull the last 90 days, so older spend was never fetched. This pulls everything back to Sept 2025 in chunks. It stops every ~3 minutes and saves its place — keep clicking until it says DONE. Safe to run repeatedly.</p>
+    <button class="primary full" id="backfillBtn" onclick="app.runBackfill()">Backfill Meta history</button>
+    <div id="backfillStatus"></div>
+  </div>
   <div id="healthSummary"></div>
   <div id="healthList" class="card-list"></div>
 </section>
