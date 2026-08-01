@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.2.0',
+  VERSION: '9.2.1',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -494,7 +494,11 @@ function syncMetaDaily_(runId, days) {
   const accountId = prop_('META_AD_ACCOUNT_ID','act_1467621970951606');
   const apiVersion = prop_('META_API_VERSION','v19.0');
   if(!token) throw new Error('META_ACCESS_TOKEN is missing.');
-  const end=sgtDate_(new Date()); const start=addDaysIso_(end,-Math.max(1,Number(days||APP.DEFAULT_META_DAYS)-1));
+  // Explicit window wins, so the history backfill can walk arbitrary past periods.
+  // Routine syncs stay on the short rolling window to finish inside the 6-minute limit.
+  const end = arguments[3] ? String(arguments[3]) : sgtDate_(new Date());
+  const start = arguments[2] ? String(arguments[2])
+              : addDaysIso_(end, -Math.max(1, Number(days || APP.DEFAULT_META_DAYS) - 1));
   const fields=['date_start','date_stop','account_id','campaign_id','campaign_name','adset_id','adset_name','ad_id','ad_name','objective','spend','impressions','reach','clicks','inline_link_clicks','actions','action_values','ctr','cpc'].join(',');
   const params={level:'ad',time_increment:1,time_range:JSON.stringify({since:start,until:end}),fields:fields,limit:500};
   const url='https://graph.facebook.com/'+apiVersion+'/'+accountId+'/insights';
@@ -893,6 +897,79 @@ function buildPipelineByStage_(leads) {
   }).filter(g => g.count > 0);
 }
 
+// ==================== 10_Backfill.gs (added v9.2, 2026-07-31) ====================
+/**
+ * Historical Meta backfill.
+ *
+ * Routine syncs deliberately pull only a short rolling window (DEFAULT_META_DAYS) so
+ * they finish well inside Apps Script's 6-minute execution limit. That is correct for
+ * a 30-minute trigger, but it means the sheet never contains anything older than that
+ * window — so "All time" was only ever showing the last 90 days of Meta spend.
+ *
+ * This walks backwards in month-sized chunks, writing each chunk as it goes and saving
+ * a resume pointer. It stops before the execution limit rather than dying mid-write.
+ * Re-run it until it reports DONE. Safe to re-run — rows upsert on their natural key.
+ *
+ * Run from the editor: backfillMetaHistory
+ */
+function backfillMetaHistory() {
+  const CHUNK_DAYS = 30;
+  const SAFE_MS = 4 * 60 * 1000;               // stop at 4 min; limit is ~6
+  const EARLIEST = prop_('META_BACKFILL_EARLIEST', '2024-01-01');
+  const started = new Date();
+  const props = PropertiesService.getScriptProperties();
+
+  let cursor = prop_('META_BACKFILL_CURSOR', '');
+  if (!cursor) cursor = sgtDate_(new Date());   // first run starts today, walks back
+
+  const runId = makeRunId_('backfill');
+  let chunks = 0, rowsWritten = 0;
+
+  while (cursor > EARLIEST) {
+    if (new Date() - started > SAFE_MS) {
+      props.setProperty('META_BACKFILL_CURSOR', cursor);
+      const msg = 'Paused safely at ' + cursor + ' after ' + chunks + ' chunk(s), ' +
+                  rowsWritten + ' rows. Run backfillMetaHistory again to continue.';
+      uiAlert_(msg); return msg;
+    }
+    const end = cursor;
+    const start = addDaysIso_(end, -(CHUNK_DAYS - 1));
+    const from = start < EARLIEST ? EARLIEST : start;
+    try {
+      const res = syncMetaDaily_(runId, null, from, end);
+      rowsWritten += asNumber_(res && res.recordsWritten);
+      chunks++;
+    } catch (e) {
+      props.setProperty('META_BACKFILL_CURSOR', cursor);
+      appendErrorLog_(runId, 'Meta', 'backfillMetaHistory', 'ERROR', e.message, '', '', e.stack, { from: from, end: end }, 'backfill');
+      const msg = 'Stopped at ' + from + ' to ' + end + ': ' + e.message +
+                  '\n\nProgress saved — fix the cause and run again to resume.';
+      uiAlert_(msg); return msg;
+    }
+    cursor = addDaysIso_(from, -1);
+  }
+
+  props.deleteProperty('META_BACKFILL_CURSOR');
+
+  // Each chunk overwrites the Meta_Ads / Meta_AdSets snapshot tabs, and this walks
+  // backwards — so without this the snapshot would be left showing the OLDEST period's
+  // creatives. One final current-window sync restores them. (The 30-minute trigger
+  // would also heal this on its own, but not before someone looked at a wrong screen.)
+  try { syncMetaDaily_(runId, APP.DEFAULT_META_DAYS); }
+  catch (e) { appendErrorLog_(runId, 'Meta', 'backfillMetaHistory', 'WARN', 'History written, but the closing snapshot refresh failed: ' + e.message, '', '', e.stack, {}, 'backfill'); }
+
+  clearDashboardCache_();
+  const msg = 'DONE — Meta history backfilled to ' + EARLIEST + '. ' + chunks +
+              ' chunk(s), ' + rowsWritten + ' rows written. Reload the dashboard.';
+  uiAlert_(msg); return msg;
+}
+
+/** Clear the resume pointer to force the next backfill to start from today again. */
+function resetMetaBackfill() {
+  PropertiesService.getScriptProperties().deleteProperty('META_BACKFILL_CURSOR');
+  uiAlert_('Backfill cursor cleared. The next backfillMetaHistory run starts from today.');
+}
+
 // ==================== 09_Segments.gs (added v9.2, 2026-07-31) ====================
 /**
  * Platform separation, month-over-month, and creative-format analysis.
@@ -1074,7 +1151,7 @@ function buildDecisionTrend_(perf, funnel) {
 
 // ==================== 07_Setup.gs ====================
 /** One-time setup, triggers and menu. */
-function onOpen(){SpreadsheetApp.getUi().createMenu('REI Performance OS v9').addItem('Run v9 setup','setupV9').addItem('Store Meta token','storeMetaAccessToken').addItem('Store GHL key','storeGHLApiKey').addSeparator().addItem('Install safe sync triggers','installV9Triggers').addItem('Remove v9 sync triggers','removeV9Triggers').addItem('Run full sync now','runFullSyncFromEditor').addItem('Run health check','runHealthCheckFromEditor').addToUi();}
+function onOpen(){SpreadsheetApp.getUi().createMenu('REI Performance OS v9').addItem('Run v9 setup','setupV9').addItem('Store Meta token','storeMetaAccessToken').addItem('Store GHL key','storeGHLApiKey').addSeparator().addItem('Install safe sync triggers','installV9Triggers').addItem('Remove v9 sync triggers','removeV9Triggers').addItem('Run full sync now','runFullSyncFromEditor').addSeparator().addItem('Backfill Meta history','backfillMetaHistory').addItem('Run health check','runHealthCheckFromEditor').addToUi();}
 
 /**
  * One-time config setter — run once from the editor, then never again.

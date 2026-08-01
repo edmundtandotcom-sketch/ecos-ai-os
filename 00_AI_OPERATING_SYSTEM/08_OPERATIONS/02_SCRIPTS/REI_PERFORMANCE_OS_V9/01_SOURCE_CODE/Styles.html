@@ -79,11 +79,15 @@
 
 /* ═══════════ v9.2 segmentation ═══════════ */
 .range-select{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:8px 12px;font-size:13px}
-.custom-range{display:flex;gap:10px;align-items:flex-end;padding:0 16px 12px;flex-wrap:wrap}
-.custom-range label{margin:0;gap:4px}
+/* Date pickers were being clipped: the parent had no explicit width and the native
+   date input has a wide intrinsic size, so it overflowed the viewport on the left. */
+.custom-range{display:flex;gap:10px;align-items:flex-end;padding:10px 16px 14px;flex-wrap:wrap;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:0 14px 10px}
+.custom-range label{margin:0;gap:4px;flex:1 1 150px;min-width:0}
 .custom-range label span{font-size:10px;text-transform:uppercase;letter-spacing:.07em}
-.custom-range input{padding:9px 11px}
-.custom-range .primary{padding:10px 18px}
+.custom-range input{padding:9px 11px;width:100%;min-width:0;color-scheme:dark}
+.custom-range .primary{padding:10px 20px;flex:0 0 auto}
+@media(min-width:800px){.custom-range{margin-left:204px}}
 
 .segment-grid{display:grid;gap:12px;grid-template-columns:1fr}
 .segment-card{border:1px solid var(--line);background:linear-gradient(150deg,var(--panel2),#0d1727);border-radius:16px;padding:15px}
