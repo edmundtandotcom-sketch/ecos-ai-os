@@ -89,6 +89,9 @@
     <p class="quiet-note">Routine syncs only pull the last 90 days, so older spend was never fetched. This pulls everything back to Sept 2025 in chunks. It stops every ~3 minutes and saves its place — keep clicking until it says DONE. Safe to run repeatedly.</p>
     <button class="primary full" id="backfillBtn" onclick="app.runBackfill()">Backfill Meta history</button>
     <div id="backfillStatus"></div>
+    <p class="quiet-note" style="margin-top:14px">If totals look inflated, rebuild from clean ground first. This removes every Meta row and re-fetches them — Google rows are untouched, and nothing is lost because Meta is the source of truth.</p>
+    <button class="primary full" id="rebuildBtn" style="background:linear-gradient(135deg,#ff637d,#c9455f)" onclick="app.runRebuild()">Wipe &amp; rebuild Meta data</button>
+    <div id="rebuildStatus"></div>
   </div>
   <div class="panel">
     <div class="panel-head"><h2>Meta token</h2></div>

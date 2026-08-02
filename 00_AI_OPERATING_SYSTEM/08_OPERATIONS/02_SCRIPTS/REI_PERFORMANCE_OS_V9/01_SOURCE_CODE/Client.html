@@ -51,6 +51,7 @@ const app={
         case 'getHealthData':runner.getHealthData(arg);break;
         case 'runMetaBackfill':runner.runMetaBackfill(arg);break;
         case 'runTokenRefresh':runner.runTokenRefresh(arg);break;
+        case 'runMetaRebuild':runner.runMetaRebuild(arg);break;
         default:reject(new Error('Unsupported server action: '+name));
       }
     });
@@ -413,6 +414,20 @@ const app={
       if(out)out.innerHTML='<div class="leak-card" style="cursor:default"><div class="leak-label">Failed</div><div class="leak-stat">'+this.esc(e.message)+'</div></div>';
       this.toast(e.message,true);
     }finally{ if(btn){btn.disabled=false;btn.textContent='Refresh Meta token now';} }
+  },
+
+  async runRebuild(){
+    if(!confirm('Remove all Meta rows and re-fetch them from Meta? Google data is untouched, then click Backfill until it says DONE.'))return;
+    const btn=document.getElementById('rebuildBtn'), out=document.getElementById('rebuildStatus');
+    if(btn){btn.disabled=true;btn.textContent='Clearing…';}
+    try{
+      const r=await this.server('runMetaRebuild',{accessKey:this.state.key});
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default;border-color:rgba(255,189,74,.5)"><div class="leak-label" style="color:var(--amber)">Cleared — now click Backfill</div><div class="leak-stat">'+this.esc(r&&r.message||'')+'</div></div>';
+      this.toast('Meta rows cleared — run the backfill next');
+    }catch(e){
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default"><div class="leak-label">Failed</div><div class="leak-stat">'+this.esc(e.message)+'</div></div>';
+      this.toast(e.message,true);
+    }finally{ if(btn){btn.disabled=false;btn.textContent='Wipe & rebuild Meta data';} }
   },
 
   /* ══════════════ helpers ══════════════ */

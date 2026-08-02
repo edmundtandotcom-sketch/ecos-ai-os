@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.3.1',
+  VERSION: '9.3.2',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -101,6 +101,21 @@ function prop_(name, fallback) {
 }
 
 function nowIso_() { return new Date().toISOString(); }
+
+/**
+ * Normalise a date cell to yyyy-MM-dd for use in upsert keys.
+ *
+ * Sheets silently converts an ISO date STRING into a real Date VALUE on write, so the
+ * same row reads back as a Date object. Building an upsert key with safeText_ therefore
+ * produced "2026-07-21" for incoming rows but "Mon Jul 21 2026 00:00:00 GMT+0800..."
+ * for stored ones — the keys never matched, so every re-sync APPENDED duplicates rather
+ * than replacing. That is what inflated total spend (dashboard read $107k against
+ * $79k in Meta's own export) and multiplied lead counts on repeated backfill runs.
+ */
+function dayKey_(value) {
+  if (value instanceof Date) return Utilities.formatDate(value, APP.TZ, 'yyyy-MM-dd');
+  return safeText_(value).slice(0, 10);
+}
 
 /**
  * Context-safe alert. SpreadsheetApp.getUi() only exists when the script is run
@@ -534,7 +549,7 @@ function backfillGoogleDailyFact_() {
   const rows=sheetRowsAsObjects_(APP.TABS.GOOGLE_DAILY); if(!rows.length)return 0;
   const runId=makeRunId_('google-backfill');
   const facts=rows.map(r=>({date:r.date instanceof Date?Utilities.formatDate(r.date,APP.TZ,'yyyy-MM-dd'):safeText_(r.date).slice(0,10),platform:'Google',accountId:prop_('GOOGLE_ADS_CUSTOMER_ID',''),campaignId:safeText_(r.campaignId),campaignName:safeText_(r.campaign),adSetId:'',adSetName:'',adId:'',adName:'',objective:safeText_(r.campaignType),status:safeText_(r.status),spend:asNumber_(r.spend),impressions:asNumber_(r.impressions),reach:0,clicks:asNumber_(r.clicks),linkClicks:asNumber_(r.clicks),leads:asNumber_(r.conversions),conversions:asNumber_(r.conversions),conversionValue:asNumber_(r.conversionValue),ctr:asNumber_(r.ctr),cpc:asNumber_(r.avgCpc),cpl:asNumber_(r.conversions)?asNumber_(r.spend)/asNumber_(r.conversions):0,sourceUpdatedAt:safeText_(r.updatedAt)||nowIso_(),syncRunId:runId}));
-  return upsertObjects_(APP.TABS.PERFORMANCE,TAB_HEADERS.Daily_Performance_Fact,facts,r=>[safeText_(r.date),safeText_(r.platform),safeText_(r.campaignId),safeText_(r.adSetId),safeText_(r.adId)].join('|'));
+  return upsertObjects_(APP.TABS.PERFORMANCE,TAB_HEADERS.Daily_Performance_Fact,facts,r=>[dayKey_(r.date),safeText_(r.platform),safeText_(r.campaignId),safeText_(r.adSetId),safeText_(r.adId)].join('|'));
 }
 
 // ==================== 03_MetaSync.gs ====================
@@ -559,7 +574,7 @@ function syncMetaDaily_(runId, days) {
     const spend=asNumber_(r.spend), leads=extractMetaLeads_(r.actions);
     return {date:safeText_(r.date_start),platform:'Meta',accountId:safeText_(r.account_id)||accountId,campaignId:safeText_(r.campaign_id),campaignName:safeText_(r.campaign_name),adSetId:safeText_(r.adset_id),adSetName:safeText_(r.adset_name),adId:safeText_(r.ad_id),adName:safeText_(r.ad_name),objective:safeText_(r.objective),status:'',spend:spend,impressions:asNumber_(r.impressions),reach:asNumber_(r.reach),clicks:asNumber_(r.clicks),linkClicks:asNumber_(r.inline_link_clicks),leads:leads,conversions:leads,conversionValue:extractMetaAction_(r.action_values,['purchase','omni_purchase']),ctr:asNumber_(r.ctr),cpc:asNumber_(r.cpc),cpl:leads?spend/leads:0,sourceUpdatedAt:now,syncRunId:runId};
   });
-  const written=upsertObjects_(APP.TABS.PERFORMANCE,TAB_HEADERS.Daily_Performance_Fact,facts,r=>[safeText_(r.date),safeText_(r.platform),safeText_(r.campaignId),safeText_(r.adSetId),safeText_(r.adId)].join('|'));
+  const written=upsertObjects_(APP.TABS.PERFORMANCE,TAB_HEADERS.Daily_Performance_Fact,facts,r=>[dayKey_(r.date),safeText_(r.platform),safeText_(r.campaignId),safeText_(r.adSetId),safeText_(r.adId)].join('|'));
   rebuildMetaSnapshotTabs_(facts,start,end);
   appendSyncLog_(runId,'Meta','SUCCESS',started,new Date(),rows.length,written,start,end,'Daily ad insights synced','scheduled');
   return {service:'Meta',recordsRead:rows.length,recordsWritten:written,dateFrom:start,dateTo:end};
@@ -1161,6 +1176,43 @@ function backfillMetaHistory(silent) {
               ' chunk(s), ' + rowsWritten + ' rows written. Reload the dashboard.';
   if(!silent) uiAlert_(msg);
   return msg;
+}
+
+/**
+ * Wipe every Meta row from Daily_Performance_Fact and reset the backfill cursor, so the
+ * next backfill rebuilds Meta history from clean ground.
+ *
+ * Needed once, because rows written before the dayKey_ fix were duplicated (mismatched
+ * upsert keys) and carried inflated lead counts from the old summing extraction.
+ * Correcting the code does not correct rows already on the sheet.
+ *
+ * Only Meta rows are removed. Google rows come from a different source and are left
+ * untouched. Nothing here is irreversible: every removed row is re-fetchable from the
+ * Meta API, which is the whole point of a fact table.
+ */
+function rebuildMetaDataFromScratch() {
+  const rows = sheetRowsAsObjects_(APP.TABS.PERFORMANCE);
+  const kept = rows.filter(r => platformOf_(r.platform) !== 'Meta');
+  const removed = rows.length - kept.length;
+
+  // Re-normalise dates on the way out so the surviving rows key consistently too.
+  kept.forEach(r => { r.date = dayKey_(r.date); });
+  overwriteObjects_(APP.TABS.PERFORMANCE, TAB_HEADERS.Daily_Performance_Fact, kept);
+
+  PropertiesService.getScriptProperties().deleteProperty('META_BACKFILL_CURSOR');
+  clearDashboardCache_();
+
+  const msg = 'Removed ' + removed + ' Meta row(s); ' + kept.length + ' non-Meta row(s) kept. ' +
+              'Backfill cursor reset. Now click "Backfill Meta history" repeatedly until it says DONE.';
+  uiAlert_(msg);
+  return msg;
+}
+
+/** Dashboard entry point for the rebuild. */
+function runMetaRebuild(request) {
+  request = request || {};
+  assertAccess_(request.accessKey);
+  return { ok: true, message: rebuildMetaDataFromScratch() };
 }
 
 /** Clear the resume pointer to force the next backfill to start from today again. */
