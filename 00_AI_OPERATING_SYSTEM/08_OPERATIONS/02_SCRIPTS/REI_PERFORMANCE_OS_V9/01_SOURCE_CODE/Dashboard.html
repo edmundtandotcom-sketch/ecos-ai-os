@@ -64,7 +64,13 @@
     <button data-adplatform="Meta">Meta</button>
     <button data-adplatform="Google">Google</button>
   </div>
+  <div class="filter-chips" id="adStatusFilters">
+    <button class="active" data-adstatus="LIVE">● Live only</button>
+    <button data-adstatus="ALL">Live + paused</button>
+    <button data-adstatus="PAUSED">⏸ Paused only</button>
+  </div>
   <div id="adSortRow" class="sort-row"></div>
+  <div class="sort-row"><label class="inline-check"><input type="checkbox" checked onchange="app.toggleAdGroup()"> Group by campaign</label><span id="adCounts"></span></div>
   <div id="adList" class="card-list wide"></div>
   <div class="panel"><div class="panel-head"><h2>Ad sets — which audience works</h2></div><div id="adSetList" class="card-list wide"></div></div>
 </section>

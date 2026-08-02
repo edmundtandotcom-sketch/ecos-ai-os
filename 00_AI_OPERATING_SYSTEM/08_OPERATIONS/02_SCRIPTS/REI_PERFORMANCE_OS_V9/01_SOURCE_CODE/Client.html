@@ -1,9 +1,12 @@
 <script>
 const VIEW_TITLES={today:'Today',months:'Month over month',funnel:'Pipeline conversion',ads:'Ads',pipeline:'Follow-up queue',forecast:'Forecaster',health:'System health'};
+// Meta's own scenario labels are Conservative/Base/Aggressive; Edmund uses the
+// market convention. Display-only mapping so saved scenario records keep their keys.
+const SCENARIO_LABELS={Conservative:'Bear',Base:'Base',Aggressive:'Bull'};
 const SIGNAL_META={SCALE:{cls:'green',icon:'🔥',label:'SCALE'},KILL:{cls:'red',icon:'🛑',label:'KILL'},MONITOR:{cls:'amber',icon:'👁',label:'MONITOR'},TEST:{cls:'',icon:'🧪',label:'TESTING'}};
 
 const app={
-  state:{key:'',rangeKey:'30d',data:null,view:'today',adFilter:'ALL',adPlatform:'ALL',adSort:'spend',customStart:'',customEnd:''},
+  state:{key:'',rangeKey:'30d',data:null,view:'today',adFilter:'ALL',adPlatform:'ALL',adSort:'spend',adStatus:'LIVE',adGroup:true,customStart:'',customEnd:''},
 
   /* Safe DOM write. If an element is missing — which happens when Apps Script serves a
      cached mix of old JS and new HTML — skip it instead of throwing, so one stale
@@ -15,6 +18,7 @@ const app={
     document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>this.showView(b.dataset.view));
     document.querySelectorAll('[data-adfilter]').forEach(b=>b.onclick=()=>this.setAdFilter(b.dataset.adfilter));
     document.querySelectorAll('[data-adplatform]').forEach(b=>b.onclick=()=>this.setAdPlatform(b.dataset.adplatform));
+    document.querySelectorAll('[data-adstatus]').forEach(b=>b.onclick=()=>this.setAdStatus(b.dataset.adstatus));
     this.load(true);   // no login screen — assertAccess_ runs in direct-link mode
   },
 
@@ -85,6 +89,9 @@ const app={
   showView(view){this.state.view=view;document.getElementById('viewTitle').textContent=VIEW_TITLES[view]||'';document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));window.scrollTo({top:0,behavior:'smooth'});},
   setAdFilter(f){this.state.adFilter=f;document.querySelectorAll('[data-adfilter]').forEach(b=>b.classList.toggle('active',b.dataset.adfilter===f));this.renderAds(this.state.data);},
   setAdSort(s){this.state.adSort=s;this.renderAds(this.state.data);},
+  setAdStatus(v){this.state.adStatus=v;document.querySelectorAll('[data-adstatus]').forEach(b=>b.classList.toggle('active',b.dataset.adstatus===v));this.renderAds(this.state.data);},
+  toggleAdGroup(){this.state.adGroup=!this.state.adGroup;this.renderAds(this.state.data);},
+  isLiveAd(a){return String(a.status||'').toUpperCase()==='ACTIVE';},
 
   render(){
     const d=this.state.data;
@@ -209,7 +216,7 @@ const app={
     const arrow=c=>c===null||c===undefined?'':(c>0?`<span class="up">▲${Math.abs(c).toFixed(0)}%</span>`:c<0?`<span class="down">▼${Math.abs(c).toFixed(0)}%</span>`:'');
     // For CPL, down is good — invert the colour meaning rather than the symbol.
     const arrowCpl=c=>c===null||c===undefined?'':(c>0?`<span class="down">▲${Math.abs(c).toFixed(0)}%</span>`:c<0?`<span class="up">▼${Math.abs(c).toFixed(0)}%</span>`:'');
-    return `<div class="mt-head"><span>Month</span><span>Spend</span><span>Leads</span><span>CPL</span><span>Closed</span><span>Revenue</span></div>`+
+    return `<div class="mt-head"><span>Month</span><span>Spend</span><span>Leads</span><span>CPL</span><span>Closed</span><span>Revenue</span><span>ROAS</span></div>`+
       rows.slice(0,limit||rows.length).map(m=>`<div class="mt-row">
         <span>${this.esc(m.month)}</span>
         <span>${this.money(m.spend)} ${m.change?arrow(m.change.spend):''}</span>
@@ -217,6 +224,7 @@ const app={
         <span>${m.leads?this.money(m.cpl):'—'} ${m.change?arrowCpl(m.change.cpl):''}</span>
         <span>${this.num(m.closedWon)}</span>
         <span>${this.money(m.revenue)} ${m.change?arrow(m.change.revenue):''}</span>
+        <span>${m.spend?m.roas.toFixed(2)+'x':'—'}</span>
       </div>`).join('');
   },
   renderMonthly(d){
@@ -288,16 +296,29 @@ const app={
       return this.state.adPlatform==='Meta'?(p.indexOf('meta')>=0||p.indexOf('facebook')>=0||p.indexOf('instagram')>=0)
            :(p.indexOf('google')>=0||p.indexOf('youtube')>=0);
     });
-    const key=this.state.adSort;
-    rows.sort((a,b)=>key==='cpl'?(a.cpl||Infinity)-(b.cpl||Infinity):(b[key]||0)-(a[key]||0));
+    // Live ads are the only ones you can still act on. Paused ads are history — useful
+    // for reference, but they should never sit above a running ad in the list.
+    if(this.state.adStatus==='LIVE')rows=rows.filter(a=>this.isLiveAd(a));
+    else if(this.state.adStatus==='PAUSED')rows=rows.filter(a=>!this.isLiveAd(a));
 
-    document.getElementById('adList').innerHTML=rows.map(a=>{
+    const key=this.state.adSort;
+    const sortFn=(a,b)=>key==='cpl'?(a.cpl||Infinity)-(b.cpl||Infinity):(b[key]||0)-(a[key]||0);
+    // Live always outranks paused, whatever the sort — then the chosen metric.
+    rows.sort((a,b)=>{const la=this.isLiveAd(a)?0:1,lb=this.isLiveAd(b)?0:1;return la!==lb?la-lb:sortFn(a,b);});
+
+    const liveCount=rows.filter(a=>this.isLiveAd(a)).length;
+    this.set('adCounts',`<span class="count-note"><strong>${this.num(liveCount)}</strong> live · ${this.num(rows.length-liveCount)} paused shown</span>`);
+
+    if(!rows.length){this.set('adList','<div class="panel quiet-note">No ads match these filters for the selected period.</div>');return;}
+
+    const card=a=>{
       const m=SIGNAL_META[a.signal]||SIGNAL_META.TEST;
+      const live=this.isLiveAd(a);
       const thumb=a.thumbUrl?`<img class="ad-thumb" src="${this.esc(a.thumbUrl)}" alt="" loading="lazy" onclick="app.openLightbox('${this.esc(a.adId)}')">`:'<div class="ad-thumb empty">◫</div>';
-      return `<div class="ad-card ${m.cls}">
+      return `<div class="ad-card ${m.cls}${live?'':' paused'}">
         ${thumb}
         <div class="ad-body">
-          <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge-group"><span class="badge plat">${this.esc(a.platform||'—')}</span><span class="badge ${m.cls}">${m.icon} ${m.label}</span></span></div>
+          <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge-group"><span class="badge ${live?'green':''}">${live?'● LIVE':'⏸ PAUSED'}</span><span class="badge plat">${this.esc(a.platform||'—')}</span><span class="badge ${m.cls}">${m.icon} ${m.label}</span></span></div>
           <div class="ad-reason">${this.esc(a.signalReason||'')}</div>
           <div class="kv five">
             <div><span>Spend</span><strong>${this.money(a.spend)}</strong></div>
@@ -306,9 +327,34 @@ const app={
             <div><span>Hook</span><strong>${a.hookrate?a.hookrate.toFixed(1)+'%':'—'}</strong></div>
             <div><span>CTR</span><strong>${a.ctr.toFixed(2)}%</strong></div>
           </div>
-          <div class="ad-meta">${this.esc(a.campaignName||'')}${a.adSetName?' · '+this.esc(a.adSetName):''}${a.adPermalink?` · <a href="${this.esc(a.adPermalink)}" target="_blank" rel="noopener">View in Meta ↗</a>`:''}</div>
+          <div class="ad-meta">${this.esc(a.adSetName||'')}${a.adPermalink?` · <a href="${this.esc(a.adPermalink)}" target="_blank" rel="noopener">View in Meta ↗</a>`:''}</div>
         </div></div>`;
-    }).join('')||'<div class="panel quiet-note">No ads match this filter for the selected period.</div>';
+    };
+
+    if(!this.state.adGroup){ this.set('adList',rows.map(card).join('')); return; }
+
+    // Grouped by campaign: a flat list of 200 ads tells you nothing about which
+    // campaign the spend sits in. Campaigns with a live ad sort first.
+    const groups={};
+    rows.forEach(a=>{const k=a.campaignName||'Unattributed';(groups[k]=groups[k]||[]).push(a);});
+    const ordered=Object.keys(groups).sort((x,y)=>{
+      const gx=groups[x],gy=groups[y];
+      const lx=gx.some(a=>this.isLiveAd(a))?0:1, ly=gy.some(a=>this.isLiveAd(a))?0:1;
+      if(lx!==ly)return lx-ly;
+      return gy.reduce((s,a)=>s+a.spend,0)-gx.reduce((s,a)=>s+a.spend,0);
+    });
+    this.set('adList',ordered.map(name=>{
+      const g=groups[name];
+      const spend=g.reduce((s,a)=>s+a.spend,0), leads=g.reduce((s,a)=>s+a.leads,0);
+      const anyLive=g.some(a=>this.isLiveAd(a));
+      return `<div class="ad-group">
+        <div class="ad-group-head">
+          <div><span class="badge ${anyLive?'green':''}">${anyLive?'● LIVE':'⏸ PAUSED'}</span> <strong>${this.esc(name)}</strong></div>
+          <div class="ad-group-stats">${this.money(spend)} · ${this.num(leads)} leads · CPL ${leads?this.money(spend/leads):'—'}</div>
+        </div>
+        ${g.map(card).join('')}
+      </div>`;
+    }).join(''));
   },
 
   renderAdSets(rows){
@@ -356,15 +402,20 @@ const app={
 
   /* ══════════════ Forecast + health (unchanged behaviour) ══════════════ */
   renderForecast(f){
-    document.getElementById('forecastScenarioCards').innerHTML=(f.scenarios||[]).map(x=>`<div class="scenario-card"><h3>${this.esc(x.scenarioName)}</h3><div class="big">${this.money(x.collectedRevenue)}</div><div class="sub">Projected collected revenue</div><div class="stats"><div><span>Budget</span><strong>${this.money(x.budget)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>Closings</span><strong>${x.closings.toFixed(1)}</strong></div><div><span>Net contribution</span><strong>${this.money(x.netContribution)}</strong></div></div></div>`).join('');
+    document.getElementById('forecastScenarioCards').innerHTML=(f.scenarios||[]).map(x=>`<div class="scenario-card"><h3>${this.esc(SCENARIO_LABELS[x.scenarioName]||x.scenarioName)}</h3><div class="big">${this.money(x.collectedRevenue)}</div><div class="sub">Projected collected revenue</div><div class="stats"><div><span>Budget</span><strong>${this.money(x.budget)}</strong></div><div><span>Leads</span><strong>${this.num(x.leads)}</strong></div><div><span>Closings</span><strong>${x.closings.toFixed(1)}</strong></div><div><span>Net contribution</span><strong>${this.money(x.netContribution)}</strong></div></div></div>`).join('');
     const base=(f.scenarios||[]).find(x=>x.scenarioName==='Base')||{};
-    const fields=[['budget','Budget',base.budget],['cpl','CPL',base.cpl],['responseRate','Response rate',base.responseRate],['bookingRate','Booking rate',base.bookingRate],['showRate','Show rate',base.showRate],['qualificationRate','Qualification rate',base.qualificationRate],['closeRate','Close rate',base.closeRate],['averageCommission','Avg commission',base.averageCommission],['collectionRate','Collection rate',base.collectionRate],['variableCostPerClose','Variable cost / close',base.variableCostPerClose],['forecastDays','Forecast days',base.forecastDays]];
-    document.getElementById('forecastForm').innerHTML=fields.map(x=>`<label><span>${x[1]}</span><input data-forecast="${x[0]}" type="number" step="${x[0].includes('Rate')?'.01':'1'}" value="${x[2]||0}"></label>`).join('');
+    // Rates are stored 0-1 but typed as percentages — 42 is far easier to reason about
+    // than 0.42, and mistyping 0.42 as 42 would silently inflate a forecast 100x.
+    const fields=[['budget','Budget ($)',base.budget,false],['cpl','CPL ($)',base.cpl,false],['responseRate','Response rate (%)',base.responseRate,true],['bookingRate','Booking rate (%)',base.bookingRate,true],['showRate','Show rate (%)',base.showRate,true],['closeRate','Close rate (%)',base.closeRate,true],['averageCommission','Avg commission ($)',base.averageCommission,false],['collectionRate','Collection rate (%)',base.collectionRate,true],['variableCostPerClose','Variable cost / close ($)',base.variableCostPerClose,false],['forecastDays','Forecast days',base.forecastDays,false]];
+    document.getElementById('forecastForm').innerHTML=fields.map(x=>{
+      const shown=x[3]?Math.round((Number(x[2])||0)*1000)/10:(x[2]||0);
+      return `<label><span>${x[1]}</span><input data-forecast="${x[0]}" data-pct="${x[3]?1:0}" type="number" step="${x[3]?'0.1':'1'}" value="${shown}"></label>`;
+    }).join('');
   },
 
   async calculateCustomForecast(){
     const values={scenarioName:'Custom'};
-    document.querySelectorAll('[data-forecast]').forEach(i=>values[i.dataset.forecast]=Number(i.value));
+    document.querySelectorAll('[data-forecast]').forEach(i=>{const v=Number(i.value)||0;values[i.dataset.forecast]=i.dataset.pct==='1'?v/100:v;});
     this.loading(true);
     try{
       const r=await this.server('saveForecastScenario',{accessKey:this.state.key,name:'Mobile Custom '+new Date().toLocaleDateString('en-SG'),values});
