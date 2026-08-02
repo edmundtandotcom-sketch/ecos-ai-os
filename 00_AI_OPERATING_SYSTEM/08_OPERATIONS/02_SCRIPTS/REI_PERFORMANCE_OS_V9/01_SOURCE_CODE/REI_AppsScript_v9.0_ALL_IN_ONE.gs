@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.3.0',
+  VERSION: '9.3.1',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -37,6 +37,18 @@ const APP = Object.freeze({
   })
 });
 
+/**
+ * Internal stage ladder. Order defines rank, so a lead at 'Booked Call' counts as
+ * having passed 'Responded'.
+ *
+ * NOTE — 'Appt Qualified' does NOT exist in the live GHL 1-To-1 Pipeline
+ * (New Lead > Responded > Booked Call > Appointment > Strategy Session > Close >
+ * Nurture > Unqualified). Nothing reaches it except records that are already Closed,
+ * which is why the dashboard reported Qualified and Closed as the same number. It is
+ * retained here only so Daily_Funnel_Fact and the forecaster keep a stable schema, and
+ * is deliberately NOT shown as a headline metric. If a real qualification stage is ever
+ * added in GHL, map it in normaliseStage_ and surface it again.
+ */
 const CANONICAL_STAGES = Object.freeze([
   'New', 'Contacted', 'Responded', 'Booked Call', 'Appointment',
   'Strategy Session', 'Appt Qualified', 'Closed', 'Lost'
@@ -544,7 +556,7 @@ function syncMetaDaily_(runId, days) {
   const rows=metaFetchAll_(url,params,token,runId);
   const now=nowIso_();
   const facts=rows.map(r=>{
-    const spend=asNumber_(r.spend), leads=extractMetaAction_(r.actions,['lead','onsite_conversion.lead_grouped','offsite_conversion.fb_pixel_lead','onsite_web_lead']);
+    const spend=asNumber_(r.spend), leads=extractMetaLeads_(r.actions);
     return {date:safeText_(r.date_start),platform:'Meta',accountId:safeText_(r.account_id)||accountId,campaignId:safeText_(r.campaign_id),campaignName:safeText_(r.campaign_name),adSetId:safeText_(r.adset_id),adSetName:safeText_(r.adset_name),adId:safeText_(r.ad_id),adName:safeText_(r.ad_name),objective:safeText_(r.objective),status:'',spend:spend,impressions:asNumber_(r.impressions),reach:asNumber_(r.reach),clicks:asNumber_(r.clicks),linkClicks:asNumber_(r.inline_link_clicks),leads:leads,conversions:leads,conversionValue:extractMetaAction_(r.action_values,['purchase','omni_purchase']),ctr:asNumber_(r.ctr),cpc:asNumber_(r.cpc),cpl:leads?spend/leads:0,sourceUpdatedAt:now,syncRunId:runId};
   });
   const written=upsertObjects_(APP.TABS.PERFORMANCE,TAB_HEADERS.Daily_Performance_Fact,facts,r=>[safeText_(r.date),safeText_(r.platform),safeText_(r.campaignId),safeText_(r.adSetId),safeText_(r.adId)].join('|'));
@@ -567,10 +579,36 @@ function metaFetchAll_(url, params, token, runId) {
   return all;
 }
 
+/**
+ * Sum the named Meta action types. Correct for genuinely distinct events (e.g. adding
+ * separate purchase types), WRONG for leads — see extractMetaLeads_.
+ */
 function extractMetaAction_(actions, names) {
   const wanted={}; names.forEach(n=>wanted[n]=true); let total=0;
   (actions||[]).forEach(a=>{if(wanted[a.action_type])total+=asNumber_(a.value);});
   return total;
+}
+
+/**
+ * Lead count for one row. Takes the LARGEST single action type, never the sum.
+ *
+ * Meta reports one lead under several action_type labels simultaneously — a lead-form
+ * submission commonly appears as both 'lead' and 'onsite_conversion.lead_grouped', and
+ * a pixel lead as both 'lead' and 'offsite_conversion.fb_pixel_lead'. Summing them
+ * multiplies the count: this account read 1,342 leads against 395 in Meta's own export
+ * (~3.4x), which in turn understated CPL as ~$80 when the true figure is ~$201 — an
+ * error that makes a channel look cheaper than it is.
+ *
+ * The largest single type is the closest match to Meta Ads Manager's own "Leads"
+ * column, because the overlapping labels are views of the same underlying event
+ * rather than separate events.
+ */
+function extractMetaLeads_(actions) {
+  const names=['lead','onsite_conversion.lead_grouped','offsite_conversion.fb_pixel_lead','onsite_web_lead'];
+  const wanted={}; names.forEach(n=>wanted[n]=true);
+  let best=0;
+  (actions||[]).forEach(a=>{ if(wanted[a.action_type]) best=Math.max(best,asNumber_(a.value)); });
+  return best;
 }
 
 function buildUrl_(base, params) {

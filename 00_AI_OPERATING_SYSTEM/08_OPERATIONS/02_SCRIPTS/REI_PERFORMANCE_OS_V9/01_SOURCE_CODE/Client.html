@@ -130,10 +130,9 @@ const app={
     const o=d.overview;
     const cards=[
       ['Spend',this.money(o.spend),'CPL '+this.money(o.cpl)],
-      ['Leads',this.num(o.leads),'Response '+this.pct(o.responseRate)],
+      ['CRM leads',this.num(o.leads),'From GHL — Response '+this.pct(o.responseRate)],
       ['Booked calls',this.num(o.bookedCalls),'Cost '+this.money(o.costPerBooked)],
       ['Appointments',this.num(o.appointments),'Show '+this.pct(o.showRate)],
-      ['Qualified',this.num(o.qualified),'Cost '+this.money(o.costPerQualified)],
       ['Closed',this.num(o.closed),'Cost '+this.money(o.costPerClose)],
       ['Revenue',this.money(o.revenue),'ROAS '+o.roas.toFixed(2)+'x'],
       ['CTR',o.ctr.toFixed(2)+'%','Clicks '+this.num(o.clicks)]
@@ -161,8 +160,8 @@ const app={
       const bad=target>0&&p.cpl>target*2;
       return `<div class="segment-card ${bad?'bad':good?'good':''}">
         <div class="row"><h3>${this.esc(p.platform)}</h3><span class="badge ${p.roas>=3?'green':p.roas>0?'amber':'red'}">${p.roas.toFixed(2)}x ROAS</span></div>
-        <div class="seg-hero"><div><span>Spend</span><strong>${this.money(p.spend)}</strong></div><div><span>Leads</span><strong>${this.num(p.leads)}</strong></div><div><span>CPL</span><strong class="${bad?'bad':good?'good':''}">${p.leads?this.money(p.cpl):'—'}</strong></div></div>
-        <div class="kv"><div><span>Booked</span><strong>${this.num(p.bookedCalls)}</strong></div><div><span>Closed</span><strong>${this.num(p.closedWon)}</strong></div><div><span>Revenue</span><strong>${this.money(p.revenue)}</strong></div><div><span>Lead→Booked</span><strong>${this.pctRaw(p.leadToBooked)}</strong></div><div><span>Cost/close</span><strong>${p.closedWon?this.money(p.costPerClose):'—'}</strong></div><div><span>CTR</span><strong>${p.ctr.toFixed(2)}%</strong></div></div>
+        <div class="seg-hero"><div><span>Spend</span><strong>${this.money(p.spend)}</strong></div><div><span>Ad leads</span><strong>${this.num(p.leads)}</strong></div><div><span>CPL</span><strong class="${bad?'bad':good?'good':''}">${p.leads?this.money(p.cpl):'—'}</strong></div></div>
+        <div class="kv"><div><span>CRM leads</span><strong>${this.num(p.newLeads)}</strong></div><div><span>Booked</span><strong>${this.num(p.bookedCalls)}</strong></div><div><span>Closed</span><strong>${this.num(p.closedWon)}</strong></div><div><span>Revenue</span><strong>${this.money(p.revenue)}</strong></div><div><span>Lead→Booked</span><strong>${this.pctRaw(p.leadToBooked)}</strong></div><div><span>Cost/close</span><strong>${p.closedWon?this.money(p.costPerClose):'—'}</strong></div><div><span>CTR</span><strong>${p.ctr.toFixed(2)}%</strong></div></div>
       </div>`;}).join('')||'<div class="quiet-note">No platform data in this period.</div>');
 
     // Name the comparison outright rather than leaving it to be inferred from two cards.
