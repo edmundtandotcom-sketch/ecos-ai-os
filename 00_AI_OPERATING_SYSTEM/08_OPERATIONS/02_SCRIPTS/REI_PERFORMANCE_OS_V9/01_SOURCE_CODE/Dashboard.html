@@ -90,6 +90,12 @@
     <button class="primary full" id="backfillBtn" onclick="app.runBackfill()">Backfill Meta history</button>
     <div id="backfillStatus"></div>
   </div>
+  <div class="panel">
+    <div class="panel-head"><h2>Meta token</h2></div>
+    <p class="quiet-note">A Meta token lasts 60 days and does not renew itself. Once META_APP_ID and META_APP_SECRET are set in Script Properties, it renews automatically every Monday, so the 60-day limit never bites. Use this button to renew immediately.</p>
+    <button class="primary full" id="tokenBtn" onclick="app.refreshToken()">Refresh Meta token now</button>
+    <div id="tokenStatus"></div>
+  </div>
   <div id="healthSummary"></div>
   <div id="healthList" class="card-list"></div>
 </section>

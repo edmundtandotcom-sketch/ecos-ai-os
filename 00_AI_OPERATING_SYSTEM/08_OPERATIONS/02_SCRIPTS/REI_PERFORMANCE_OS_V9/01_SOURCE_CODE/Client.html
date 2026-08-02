@@ -50,6 +50,7 @@ const app={
         case 'saveForecastScenario':runner.saveForecastScenario(arg);break;
         case 'getHealthData':runner.getHealthData(arg);break;
         case 'runMetaBackfill':runner.runMetaBackfill(arg);break;
+        case 'runTokenRefresh':runner.runTokenRefresh(arg);break;
         default:reject(new Error('Unsupported server action: '+name));
       }
     });
@@ -399,6 +400,20 @@ const app={
     }finally{
       if(btn){btn.disabled=false;btn.textContent='Backfill Meta history';}
     }
+  },
+
+  async refreshToken(){
+    const btn=document.getElementById('tokenBtn'), out=document.getElementById('tokenStatus');
+    if(btn){btn.disabled=true;btn.textContent='Refreshing…';}
+    try{
+      const r=await this.server('runTokenRefresh',{accessKey:this.state.key});
+      const ok=r&&r.ok;
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default;border-color:'+(ok?'rgba(56,211,159,.5)':'rgba(255,99,125,.5)')+'"><div class="leak-label" style="color:var(--'+(ok?'green':'red')+')">'+(ok?'Refreshed':'Failed')+'</div><div class="leak-stat">'+this.esc(r&&r.message||'')+'</div></div>';
+      this.toast(ok?'Token refreshed':'Token refresh failed',!ok);
+    }catch(e){
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default"><div class="leak-label">Failed</div><div class="leak-stat">'+this.esc(e.message)+'</div></div>';
+      this.toast(e.message,true);
+    }finally{ if(btn){btn.disabled=false;btn.textContent='Refresh Meta token now';} }
   },
 
   /* ══════════════ helpers ══════════════ */

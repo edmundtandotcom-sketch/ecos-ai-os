@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.2.3',
+  VERSION: '9.3.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -716,6 +716,18 @@ function buildHealthReport_(light){
     }));
   }catch(e){checks.push({name:'Error-log review',status:'WARN',detail:'Could not read Error_Log: '+(e&&e.message||e)});}
 
+  // Token lifetime, so an expiring credential is visible before it breaks the syncs.
+  try{
+    const days = metaTokenDaysRemaining_();
+    if (days === null) {
+      checks.push({name:'Meta token expiry',status:'WARN',detail:'Unknown — set META_APP_ID and META_APP_SECRET to enable auto-refresh and expiry tracking'});
+    } else if (days === Infinity) {
+      checks.push({name:'Meta token expiry',status:'OK',detail:'Never expires (system user token)'});
+    } else {
+      checks.push({name:'Meta token expiry',status:days>14?'OK':days>3?'WARN':'ERROR',detail:days+' day(s) remaining. Auto-refresh runs weekly; last refresh '+(prop_('META_TOKEN_REFRESHED_AT','')||'never')});
+    }
+  }catch(e){checks.push({name:'Meta token expiry',status:'WARN',detail:'Could not check: '+(e&&e.message||e)});}
+
   // Staleness of the actual data, not of the sync attempt. A sync can report SUCCESS
   // while writing nothing new, so measure the newest fact row instead.
   try{
@@ -934,6 +946,96 @@ function buildPipelineByStage_(leads) {
       leads: rows.slice(0, 25)
     };
   }).filter(g => g.count > 0);
+}
+
+// ==================== 11_TokenRefresh.gs (added v9.3, 2026-08-01) ====================
+/**
+ * Keeps the Meta access token alive indefinitely.
+ *
+ * A long-lived Meta token lasts 60 days and does NOT renew itself. It can, however, be
+ * exchanged for a fresh 60-day token at any point before it expires. Running that
+ * exchange weekly means the clock resets long before it ever runs down, so the token
+ * effectively never expires and nobody has to repeat the Graph Explorer dance.
+ *
+ * What this CANNOT survive, by design: a Facebook password change, the app being
+ * removed, or Meta invalidating the session for security. Those require a new token by
+ * hand — no automation can work around them. The health check surfaces days-remaining
+ * so that case is visible early rather than discovered by empty data.
+ *
+ * Requires META_APP_ID and META_APP_SECRET in Script Properties. Secrets are read from
+ * there and never written into source or logs.
+ */
+function refreshMetaToken() {
+  const appId = prop_('META_APP_ID', '');
+  const appSecret = prop_('META_APP_SECRET', '');
+  const current = prop_('META_ACCESS_TOKEN', '');
+  if (!appId || !appSecret) throw new Error('META_APP_ID and META_APP_SECRET must be set in Script Properties before the token can auto-refresh.');
+  if (!current) throw new Error('META_ACCESS_TOKEN is missing — store a long-lived token first.');
+
+  const url = 'https://graph.facebook.com/' + prop_('META_API_VERSION', 'v19.0') + '/oauth/access_token'
+    + '?grant_type=fb_exchange_token'
+    + '&client_id=' + encodeURIComponent(appId)
+    + '&client_secret=' + encodeURIComponent(appSecret)
+    + '&fb_exchange_token=' + encodeURIComponent(current);
+
+  const res = UrlFetchApp.fetch(url, { method: 'get', muteHttpExceptions: true });
+  const code = res.getResponseCode();
+  let body;
+  try { body = JSON.parse(res.getContentText()); }
+  catch (e) { throw new Error('Token refresh returned non-JSON (HTTP ' + code + ').'); }
+
+  if (code < 200 || code >= 300 || !body.access_token) {
+    // Never echo the token or secret into the log — only Meta's own message.
+    const why = (body && body.error && body.error.message) || ('HTTP ' + code);
+    throw new Error('Token refresh failed: ' + why);
+  }
+
+  PropertiesService.getScriptProperties().setProperties({
+    META_ACCESS_TOKEN: body.access_token,
+    META_TOKEN_REFRESHED_AT: nowIso_()
+  }, false);
+
+  appendSyncLog_(makeRunId_('token'), 'Meta', 'SUCCESS', new Date(), new Date(), 0, 0, '', '',
+    'Access token refreshed — 60-day window reset', 'scheduled');
+  return { ok: true, refreshedAt: nowIso_() };
+}
+
+/** Scheduled wrapper — logs failures rather than throwing into the trigger runner. */
+function scheduledMetaTokenRefresh() {
+  try { refreshMetaToken(); }
+  catch (e) {
+    appendErrorLog_(makeRunId_('token'), 'Meta', 'scheduledMetaTokenRefresh', 'ERROR', e.message, '', '', e.stack, {}, 'scheduled');
+  }
+}
+
+/** Days until the current token expires, via Meta's own debug endpoint. */
+function metaTokenDaysRemaining_() {
+  const appId = prop_('META_APP_ID', ''), appSecret = prop_('META_APP_SECRET', '');
+  const token = prop_('META_ACCESS_TOKEN', '');
+  if (!appId || !appSecret || !token) return null;
+  const url = 'https://graph.facebook.com/' + prop_('META_API_VERSION', 'v19.0') + '/debug_token'
+    + '?input_token=' + encodeURIComponent(token)
+    + '&access_token=' + encodeURIComponent(appId + '|' + appSecret);
+  const res = UrlFetchApp.fetch(url, { method: 'get', muteHttpExceptions: true });
+  if (res.getResponseCode() !== 200) return null;
+  let body; try { body = JSON.parse(res.getContentText()); } catch (e) { return null; }
+  const exp = body && body.data && body.data.expires_at;
+  if (exp === 0) return Infinity;                    // never-expiring (system user) token
+  if (!exp) return null;
+  return Math.round((exp * 1000 - new Date().getTime()) / 86400000);
+}
+
+/** Dashboard entry point so the refresh can be triggered without the script editor. */
+function runTokenRefresh(request) {
+  request = request || {};
+  assertAccess_(request.accessKey);
+  try {
+    refreshMetaToken();
+    const days = metaTokenDaysRemaining_();
+    return { ok: true, message: 'Token refreshed. ' + (days === Infinity ? 'This token does not expire.' : days === null ? 'Expiry unknown.' : 'Valid for about ' + days + ' more days.') };
+  } catch (e) {
+    return { ok: false, message: e.message };
+  }
 }
 
 // ==================== 10_Backfill.gs (added v9.2, 2026-07-31) ====================
@@ -1210,7 +1312,7 @@ function buildDecisionTrend_(perf, funnel) {
 
 // ==================== 07_Setup.gs ====================
 /** One-time setup, triggers and menu. */
-function onOpen(){SpreadsheetApp.getUi().createMenu('REI Performance OS v9').addItem('Run v9 setup','setupV9').addItem('Store Meta token','storeMetaAccessToken').addItem('Store GHL key','storeGHLApiKey').addSeparator().addItem('Install safe sync triggers','installV9Triggers').addItem('Remove v9 sync triggers','removeV9Triggers').addItem('Run full sync now','runFullSyncFromEditor').addSeparator().addItem('Backfill Meta history','backfillMetaHistory').addItem('Run health check','runHealthCheckFromEditor').addToUi();}
+function onOpen(){SpreadsheetApp.getUi().createMenu('REI Performance OS v9').addItem('Run v9 setup','setupV9').addItem('Store Meta token','storeMetaAccessToken').addItem('Store GHL key','storeGHLApiKey').addSeparator().addItem('Install safe sync triggers','installV9Triggers').addItem('Remove v9 sync triggers','removeV9Triggers').addItem('Run full sync now','runFullSyncFromEditor').addSeparator().addItem('Backfill Meta history','backfillMetaHistory').addItem('Refresh Meta token now','refreshMetaToken').addItem('Run health check','runHealthCheckFromEditor').addToUi();}
 
 /**
  * One-time config setter — run once from the editor, then never again.
@@ -1251,8 +1353,8 @@ function setupV9(){
 function seedStageMap_(){const headers=['canonicalStage','rank','countsAsResponded','countsAsBooked','countsAsAppointment','countsAsQualified','countsAsClosed','knownAliases'];const aliases={New:'new lead, new, signup',Contacted:'attempting contact, contacted, nurture',Responded:'responded, replied', 'Booked Call':'booked call, booking, booked appointment, diagnosis call booked',Appointment:'appointment, show, showed','Strategy Session':'strategy session, strategy session booked','Appt Qualified':'implementation opportunity, attended, qualified','Closed':'close, closed, won','Lost':'unqualified, lost'};const rows=CANONICAL_STAGES.map((s,i)=>({canonicalStage:s,rank:i,countsAsResponded:i>=2&&s!=='Lost'?'Y':'',countsAsBooked:i>=3&&s!=='Lost'?'Y':'',countsAsAppointment:i>=4&&s!=='Lost'?'Y':'',countsAsQualified:i>=6&&s!=='Lost'?'Y':'',countsAsClosed:s==='Closed'?'Y':'',knownAliases:aliases[s]||''}));overwriteObjects_(APP.TABS.STAGES,headers,rows);}
 function seedConfigV9_(){const headers=['setting','value','required','description'];const rows=[['Sheet ID',getMasterSheetId_(),'Yes','v9 master spreadsheet'],['Meta API version',prop_('META_API_VERSION','v19.0'),'Yes','Keep configurable; change only after testing'],['Meta history days',APP.DEFAULT_META_DAYS,'No','Daily ad insights lookback'],['GHL sync interval','15 minutes','No','Server trigger only; no browser polling'],['Meta sync interval','30 minutes','No','Server trigger only'],['Web app execute as','User deploying','Yes','Avoids per-viewer Google OAuth'],['Web app access','Anyone','Yes','Direct-link access; no dashboard login gate'],['Mobile mode','Responsive bottom navigation','Yes','Designed for Chrome Android/iOS']].map(r=>({setting:r[0],value:r[1],required:r[2],description:r[3]}));overwriteObjects_(APP.TABS.CONFIG,headers,rows);}
 
-function installV9Triggers(){removeV9Triggers(false);ScriptApp.newTrigger('scheduledMetaSyncV9').timeBased().everyMinutes(30).create();ScriptApp.newTrigger('scheduledGHLSyncV9').timeBased().everyMinutes(15).create();ScriptApp.newTrigger('scheduledHealthCheckV9').timeBased().everyHours(6).create();}
-function removeV9Triggers(showAlert){ScriptApp.getProjectTriggers().forEach(t=>{if(['scheduledMetaSyncV9','scheduledGHLSyncV9','scheduledHealthCheckV9'].indexOf(t.getHandlerFunction())>=0)ScriptApp.deleteTrigger(t);});if(showAlert!==false)uiAlert_('v9 triggers removed.');}
+function installV9Triggers(){removeV9Triggers(false);ScriptApp.newTrigger('scheduledMetaSyncV9').timeBased().everyMinutes(30).create();ScriptApp.newTrigger('scheduledMetaTokenRefresh').timeBased().everyWeeks(1).onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(5).create();ScriptApp.newTrigger('scheduledGHLSyncV9').timeBased().everyMinutes(15).create();ScriptApp.newTrigger('scheduledHealthCheckV9').timeBased().everyHours(6).create();}
+function removeV9Triggers(showAlert){ScriptApp.getProjectTriggers().forEach(t=>{if(['scheduledMetaSyncV9','scheduledGHLSyncV9','scheduledHealthCheckV9','scheduledMetaTokenRefresh'].indexOf(t.getHandlerFunction())>=0)ScriptApp.deleteTrigger(t);});if(showAlert!==false)uiAlert_('v9 triggers removed.');}
 function scheduledMetaSyncV9(){withScriptLock_('Meta scheduled sync',1000,function(){const runId=makeRunId_('meta');try{syncMetaDaily_(runId,APP.DEFAULT_META_DAYS);backfillGoogleDailyFact_();clearDashboardCache_();}catch(e){appendErrorLog_(runId,'Meta','scheduledMetaSyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
 function scheduledGHLSyncV9(){withScriptLock_('GHL scheduled sync',1000,function(){const runId=makeRunId_('ghl');try{syncGHL_(runId);clearDashboardCache_();}catch(e){appendErrorLog_(runId,'GHL','scheduledGHLSyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
 function scheduledHealthCheckV9(){buildHealthReport_(false);}
