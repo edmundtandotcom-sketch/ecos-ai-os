@@ -512,18 +512,36 @@ const app={
   /* One click per chunk. The server stops itself every ~3 minutes and saves its place,
      so this reports progress and waits for another click rather than looping forever
      against the execution limit. */
+  /* Runs chunks back to back until the server reports DONE, so this is one click rather
+     than five. The server still stops itself every ~3 minutes and saves its cursor —
+     this only removes the need to keep pressing. Capped at 20 rounds so a server that
+     never reports DONE cannot spin forever. */
   async runBackfill(){
     const btn=document.getElementById('backfillBtn');
     const out=document.getElementById('backfillStatus');
-    if(btn){btn.disabled=true;btn.textContent='Pulling history… this takes ~3 minutes';}
-    if(out)out.innerHTML='<div class="quiet-note">Running. Do not close this tab.</div>';
+    const MAX=20;
+    let round=0, done=false, lastMsg='';
+    if(btn){btn.disabled=true;}
     try{
-      const r=await this.server('runMetaBackfill',{accessKey:this.state.key});
-      const done=r&&r.done;
-      if(out)out.innerHTML='<div class="leak-card" style="cursor:default;border-color:'+(done?'rgba(56,211,159,.5)':'rgba(255,189,74,.5)')+'"><div class="leak-label" style="color:var(--'+(done?'green':'amber')+')">'+(done?'Complete':'Paused — click again to continue')+'</div><div class="leak-stat">'+this.esc(r&&r.message||'')+'</div></div>';
-      if(done){this.toast('History loaded — reloading');await this.load(true);}
+      while(!done && round<MAX){
+        round++;
+        if(btn)btn.textContent='Loading history \u2014 round '+round+'\u2026';
+        if(out)out.innerHTML='<div class="quiet-note">Round '+round+' running. Keep this tab open \u2014 each round takes about 3 minutes.'+(lastMsg?'<br>Last: '+this.esc(lastMsg):'')+'</div>';
+        const r=await this.server('runMetaBackfill',{accessKey:this.state.key});
+        lastMsg=(r&&r.message)||'';
+        done=!!(r&&r.done);
+        // A round that reports neither DONE nor progress means something is stuck;
+        // stop rather than hammer the API.
+        if(!done && lastMsg.indexOf('Stopped at')===0)break;
+      }
+      const ok=done;
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default;border-color:'+(ok?'rgba(56,211,159,.5)':'rgba(255,189,74,.5)')+'">'
+        +'<div class="leak-label" style="color:var(--'+(ok?'green':'amber')+')">'+(ok?'Complete after '+round+' round'+(round===1?'':'s'):'Stopped \u2014 click again to resume')+'</div>'
+        +'<div class="leak-stat">'+this.esc(lastMsg)+'</div></div>';
+      this.toast(ok?'History loaded \u2014 reloading':'Backfill paused \u2014 see Health',!ok);
+      await this.load(true);
     }catch(e){
-      if(out)out.innerHTML='<div class="leak-card" style="cursor:default"><div class="leak-label">Failed</div><div class="leak-stat">'+this.esc(e.message)+'</div></div>';
+      if(out)out.innerHTML='<div class="leak-card" style="cursor:default"><div class="leak-label">Failed</div><div class="leak-stat">'+this.esc(e.message)+'</div><div class="leak-stat">Progress is saved \u2014 clicking again resumes from where it stopped.</div></div>';
       this.toast(e.message,true);
     }finally{
       if(btn){btn.disabled=false;btn.textContent='Backfill Meta history';}
