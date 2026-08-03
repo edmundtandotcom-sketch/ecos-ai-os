@@ -121,6 +121,34 @@
 .badge-group{display:inline-flex;gap:6px;align-items:center;flex-shrink:0}
 .badge.plat{background:#1c2c46;color:#9fc0e8}
 
+/* Campaign > Ad set > Ad drill-down */
+.lvl{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:rgba(16,27,45,.55);overflow:hidden}
+.lvl>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.lvl>summary::-webkit-details-marker{display:none}
+.lvl>summary::before{content:'\25b6';font-size:9px;color:var(--muted);margin-right:8px;transition:transform .15s;display:inline-block}
+.lvl[open]>summary::before{transform:rotate(90deg)}
+.lvl>summary:hover{background:rgba(74,163,255,.06)}
+.lvl-label{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.lvl-label strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lvl-kind{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:2px 5px}
+.lvl-stats{font-size:11px;color:var(--muted);white-space:nowrap}
+.lvl.campaign{background:rgba(21,34,56,.7)}
+.lvl.campaign>summary{font-size:15px}
+.lvl.adset{margin:0 10px 10px;border-style:dashed}
+.lvl.adset>summary{padding:10px 12px;font-size:13px}
+.lvl-ads{display:grid;gap:10px;padding:0 10px 12px}
+
+/* Hover preview */
+.hover-preview{position:fixed;z-index:80;width:300px;background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;padding:8px;box-shadow:0 20px 60px rgba(0,0,0,.6);opacity:0;pointer-events:none;
+  transform:translateY(6px);transition:opacity .12s,transform .12s}
+.hover-preview.show{opacity:1;transform:translateY(0)}
+.hover-preview img,.hover-preview video{width:100%;border-radius:9px;display:block;max-height:280px;object-fit:contain;background:#0a1220}
+.hp-note{font-size:10px;color:var(--muted);text-align:center;padding-top:6px}
+@media(max-width:640px){.hover-preview{display:none}}
+.ad-thumb{transition:transform .12s,box-shadow .12s}
+.ad-thumb:hover{transform:scale(1.06);box-shadow:0 0 0 2px var(--blue)}
+
 .rule-board{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px}
 .rule-cell{border:1px solid var(--line);background:var(--panel2);border-radius:14px;padding:13px;text-align:left;color:var(--text);cursor:pointer}
 .rule-cell.hot{border-color:rgba(255,99,125,.5);background:rgba(255,99,125,.09)}

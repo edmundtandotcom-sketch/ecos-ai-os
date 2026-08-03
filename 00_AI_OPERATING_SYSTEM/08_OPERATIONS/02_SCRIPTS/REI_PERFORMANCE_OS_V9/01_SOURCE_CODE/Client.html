@@ -333,57 +333,106 @@ const app={
 
     if(!rows.length){this.set('adList','<div class="panel quiet-note">No ads match these filters for the selected period.</div>');return;}
 
+    const money=n=>this.money(n), num=n=>this.num(n);
+    const stat=g=>{const sp=g.reduce((t,a)=>t+a.spend,0),ld=g.reduce((t,a)=>t+a.leads,0);
+      return {spend:sp,leads:ld,cpl:ld?sp/ld:0,live:g.some(a=>this.isLiveAd(a))};};
+
     const card=a=>{
       const m=SIGNAL_META[a.signal]||SIGNAL_META.TEST;
       const live=this.isLiveAd(a);
-      const thumb=a.thumbUrl?`<img class="ad-thumb" src="${this.esc(a.thumbUrl)}" alt="" loading="lazy" onclick="app.openLightbox('${this.esc(a.adId)}')">`:'<div class="ad-thumb empty">◫</div>';
-      return `<div class="ad-card ${m.cls}${live?'':' paused'}">
-        ${thumb}
-        <div class="ad-body">
-          <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge-group"><span class="badge ${live?'green':''}">${live?'● LIVE':'⏸ PAUSED'}</span><span class="badge plat">${this.esc(a.platform||'—')}</span><span class="badge ${m.cls}">${m.icon} ${m.label}</span></span></div>
-          ${(a.rules&&a.rules.length)?`<div class="rule-tags">${a.rules.map(r=>`<span class="rule-tag" title="${this.esc((RULE_LABELS[r.rule]||{}).full||'')}">${this.esc((RULE_LABELS[r.rule]||{}).tag||r.rule)}</span>`).join('')}</div>`:''}
-          <div class="ad-reason">${this.esc(a.signalReason||'')}</div>
-          <div class="kv five">
-            <div><span>Spend</span><strong>${this.money(a.spend)}</strong></div>
-            <div><span>Leads</span><strong>${this.num(a.leads)}</strong></div>
-            <div><span>CPL</span><strong>${a.leads?this.money(a.cpl):'—'}</strong></div>
-            <div><span>CTR</span><strong class="${a.ctr>0&&a.ctr<0.5?'bad':''}">${a.ctr.toFixed(2)}%</strong></div>
-            <div><span>Freq</span><strong class="${a.frequency>=3.5?'bad':''}">${a.frequency?a.frequency.toFixed(1):'—'}</strong></div>
-          </div>
-          <div class="trend-row">
-            ${a.ctrChangePct===null?'<span class="trend-none">CTR trend: not enough history</span>':`<span class="${a.ctrChangePct<=-30?'bad':a.ctrChangePct<0?'warn':'good'}">CTR ${a.ctrChangePct>=0?'▲':'▼'}${Math.abs(Math.round(a.ctrChangePct))}% vs prev 14d</span>`}
-            ${a.cpaChangePct===null?'':`<span class="${a.cpaChangePct>0?'bad':'good'}">CPA ${a.cpaChangePct>=0?'▲':'▼'}${Math.abs(Math.round(a.cpaChangePct))}%</span>`}
-            ${a.isNew?'<span class="new-tag">✨ NEW</span>':''}
-          </div>
-          <div class="ad-meta">${this.esc(a.adSetName||'')}${a.adPermalink?` · <a href="${this.esc(a.adPermalink)}" target="_blank" rel="noopener">View in Meta ↗</a>`:''}</div>
-        </div></div>`;
+      const src=a.videoSrc||a.thumbUrl||'';
+      const kind=a.videoSrc?'video':'image';
+      const thumb=a.thumbUrl
+        ? '<img class="ad-thumb" src="'+this.esc(a.thumbUrl)+'" alt="" loading="lazy"'
+          +' onmouseenter="app.showPreview(event,&quot;'+this.esc(src)+'&quot;,&quot;'+kind+'&quot;)"'
+          +' onmouseleave="app.hidePreview()"'
+          +' onclick="app.hidePreview();app.openLightbox(&quot;'+this.esc(a.adId)+'&quot;)">'
+        : '<div class="ad-thumb empty">\u25eb</div>';
+      return '<div class="ad-card '+m.cls+(live?'':' paused')+'">'
+        +thumb
+        +'<div class="ad-body">'
+        +'<div class="row"><h3>'+this.esc(a.adName||'Untitled ad')+'</h3><span class="badge-group">'
+        +'<span class="badge '+(live?'green':'')+'">'+(live?'\u25cf LIVE':'\u23f8 PAUSED')+'</span>'
+        +'<span class="badge '+m.cls+'">'+m.icon+' '+m.label+'</span></span></div>'
+        +((a.rules&&a.rules.length)?'<div class="rule-tags">'+a.rules.map(r=>'<span class="rule-tag" title="'+this.esc((RULE_LABELS[r.rule]||{}).full||'')+'">'+this.esc((RULE_LABELS[r.rule]||{}).tag||r.rule)+'</span>').join('')+'</div>':'')
+        +'<div class="ad-reason">'+this.esc(a.signalReason||'')+'</div>'
+        +'<div class="kv five">'
+        +'<div><span>Spend</span><strong>'+money(a.spend)+'</strong></div>'
+        +'<div><span>Leads</span><strong>'+num(a.leads)+'</strong></div>'
+        +'<div><span>CPA</span><strong>'+(a.leads?money(a.cpl):'\u2014')+'</strong></div>'
+        +'<div><span>CTR</span><strong class="'+((a.ctr>0&&a.ctr<0.5)?'bad':'')+'">'+a.ctr.toFixed(2)+'%</strong></div>'
+        +'<div><span>Freq</span><strong class="'+((a.frequency>=3.5)?'bad':'')+'">'+(a.frequency?a.frequency.toFixed(1):'\u2014')+'</strong></div>'
+        +'</div>'
+        +'<div class="trend-row">'
+        +(a.ctrChangePct===null?'<span class="trend-none">CTR trend: not enough history</span>'
+            :'<span class="'+(a.ctrChangePct<=-30?'bad':a.ctrChangePct<0?'warn':'good')+'">CTR '+(a.ctrChangePct>=0?'\u25b2':'\u25bc')+Math.abs(Math.round(a.ctrChangePct))+'% vs prev 14d</span>')
+        +(a.cpaChangePct===null?''
+            :'<span class="'+(a.cpaChangePct>0?'bad':'good')+'">CPA '+(a.cpaChangePct>=0?'\u25b2':'\u25bc')+Math.abs(Math.round(a.cpaChangePct))+'%</span>')
+        +(a.isNew?'<span class="new-tag">\u2728 NEW</span>':'')
+        +(a.adPermalink?'<a href="'+this.esc(a.adPermalink)+'" target="_blank" rel="noopener">Open in Meta \u2197</a>':'')
+        +'</div></div></div>';
     };
 
+    // Flat list when grouping is off - useful for "show me every KILL, wherever it lives".
     if(!this.state.adGroup){ this.set('adList',rows.map(card).join('')); return; }
 
-    // Grouped by campaign: a flat list of 200 ads tells you nothing about which
-    // campaign the spend sits in. Campaigns with a live ad sort first.
-    const groups={};
-    rows.forEach(a=>{const k=a.campaignName||'Unattributed';(groups[k]=groups[k]||[]).push(a);});
-    const ordered=Object.keys(groups).sort((x,y)=>{
-      const gx=groups[x],gy=groups[y];
-      const lx=gx.some(a=>this.isLiveAd(a))?0:1, ly=gy.some(a=>this.isLiveAd(a))?0:1;
-      if(lx!==ly)return lx-ly;
-      return gy.reduce((s,a)=>s+a.spend,0)-gx.reduce((s,a)=>s+a.spend,0);
+    // Campaign > Ad set > Ad. Native <details> so open/closed state is the browser's
+    // job, not mine, and campaigns containing a live ad open by default - a paused
+    // campaign should never cost a click on the way to a running one.
+    const byCampaign={};
+    rows.forEach(a=>{const k=a.campaignName||'Unattributed';(byCampaign[k]=byCampaign[k]||[]).push(a);});
+    const campaigns=Object.keys(byCampaign).sort((x,y)=>{
+      const sx=stat(byCampaign[x]),sy=stat(byCampaign[y]);
+      if(sx.live!==sy.live)return sx.live?-1:1;
+      return sy.spend-sx.spend;
     });
-    this.set('adList',ordered.map(name=>{
-      const g=groups[name];
-      const spend=g.reduce((s,a)=>s+a.spend,0), leads=g.reduce((s,a)=>s+a.leads,0);
-      const anyLive=g.some(a=>this.isLiveAd(a));
-      return `<div class="ad-group">
-        <div class="ad-group-head">
-          <div><span class="badge ${anyLive?'green':''}">${anyLive?'● LIVE':'⏸ PAUSED'}</span> <strong>${this.esc(name)}</strong></div>
-          <div class="ad-group-stats">${this.money(spend)} · ${this.num(leads)} leads · CPL ${leads?this.money(spend/leads):'—'}</div>
-        </div>
-        ${g.map(card).join('')}
-      </div>`;
+
+    const head=(label,kindLabel,st,count)=>'<summary>'
+      +'<span class="lvl-label"><span class="badge '+(st.live?'green':'')+'">'+(st.live?'\u25cf':'\u23f8')+'</span> '
+      +'<strong>'+this.esc(label)+'</strong> <span class="lvl-kind">'+kindLabel+'</span></span>'
+      +'<span class="lvl-stats">'+money(st.spend)+' \u00b7 '+num(st.leads)+' leads \u00b7 CPA '+(st.leads?money(st.cpl):'\u2014')+' \u00b7 '+count+' ad'+(count===1?'':'s')+'</span>'
+      +'</summary>';
+
+    this.set('adList',campaigns.map(cname=>{
+      const ads=byCampaign[cname], cs=stat(ads);
+      const bySet={};
+      ads.forEach(a=>{const k=a.adSetName||'No ad set';(bySet[k]=bySet[k]||[]).push(a);});
+      const sets=Object.keys(bySet).sort((x,y)=>{
+        const sx=stat(bySet[x]),sy=stat(bySet[y]);
+        if(sx.live!==sy.live)return sx.live?-1:1;
+        return sy.spend-sx.spend;
+      });
+      return '<details class="lvl campaign"'+(cs.live?' open':'')+'>'
+        +head(cname,'campaign',cs,ads.length)
+        +sets.map(sname=>{
+          const g=bySet[sname], ss=stat(g);
+          return '<details class="lvl adset"'+(ss.live?' open':'')+'>'
+            +head(sname,'ad set',ss,g.length)
+            +'<div class="lvl-ads">'+g.map(card).join('')+'</div>'
+            +'</details>';
+        }).join('')
+        +'</details>';
     }).join(''));
   },
+
+  /* Hover preview: a bigger still for images, a muted autoplaying loop for video, so a
+     creative can be identified without leaving the list. Click still opens the lightbox. */
+  showPreview(ev,src,kind){
+    if(!src)return;
+    let el=document.getElementById('hoverPreview');
+    if(!el){el=document.createElement('div');el.id='hoverPreview';el.className='hover-preview';document.body.appendChild(el);}
+    el.innerHTML = kind==='video'
+      ? '<video src="'+this.esc(src)+'" autoplay muted loop playsinline></video><div class="hp-note">Click for full size</div>'
+      : '<img src="'+this.esc(src)+'" alt=""><div class="hp-note">Click for full size</div>';
+    el.classList.add('show');
+    const r=ev.target.getBoundingClientRect(), w=300, pad=12;
+    // Flip to the left when there is no room on the right, and clamp vertically.
+    let left=r.right+pad; if(left+w>window.innerWidth)left=Math.max(pad,r.left-w-pad);
+    let top=r.top-40; if(top<pad)top=pad;
+    if(top+330>window.innerHeight)top=Math.max(pad,window.innerHeight-330);
+    el.style.left=left+'px'; el.style.top=top+'px';
+  },
+  hidePreview(){const el=document.getElementById('hoverPreview');if(el){el.classList.remove('show');el.innerHTML='';}},
 
   renderAdSets(rows){
     document.getElementById('adSetList').innerHTML=(rows||[]).map(x=>{
