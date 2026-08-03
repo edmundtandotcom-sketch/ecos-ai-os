@@ -47,6 +47,9 @@ Thumbs.db
 # Binary media — belongs in 01_ASSET_LIBRARY, not in Git
 *.mp4
 *.mov
+*.mkv
+*.avi
+*.webm
 *.mp3
 *.wav
 *.png
