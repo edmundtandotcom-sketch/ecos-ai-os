@@ -2,6 +2,8 @@
 const VIEW_TITLES={today:'Today',months:'Month over month',funnel:'Pipeline conversion',ads:'Ads',pipeline:'Follow-up queue',forecast:'Forecaster',health:'System health'};
 // Meta's own scenario labels are Conservative/Base/Aggressive; Edmund uses the
 // market convention. Display-only mapping so saved scenario records keep their keys.
+// Kill rules, Edmund's spec 2026-08-02. Short codes on cards, full text on hover.
+const RULE_LABELS={CPA:{tag:'CPA 2x',full:'CPA at or above 2x target, on at least 2x target spend'},CTR:{tag:'LOW CTR',full:'CTR under 0.5% once impressions pass 1,000'},FREQ:{tag:'SATURATED',full:'Frequency 3.5+ with CPA rising'},FATIGUE:{tag:'FATIGUE',full:'CTR down 30%+ versus the previous 14 days'}};
 const SCENARIO_LABELS={Conservative:'Bear',Base:'Base',Aggressive:'Bull'};
 const SIGNAL_META={SCALE:{cls:'green',icon:'🔥',label:'SCALE'},KILL:{cls:'red',icon:'🛑',label:'KILL'},MONITOR:{cls:'amber',icon:'👁',label:'MONITOR'},TEST:{cls:'',icon:'🧪',label:'TESTING'}};
 
@@ -105,6 +107,7 @@ const app={
       ['Platforms',()=>this.renderSegments(d)],
       ['Charts',()=>this.renderCharts(d)],
       ['Months',()=>this.renderMonthly(d)],
+      ['Rules',()=>this.renderRuleBoard(d)],
       ['Formats',()=>this.renderFormats(d)],
       ['Funnel',()=>this.renderStages(d)],
       ['Ads',()=>this.renderAds(d)],
@@ -125,6 +128,7 @@ const app={
     if(a.kill)chips.push(`<button class="chip red" onclick="app.showView('ads');app.setAdFilter('KILL')">🛑 ${a.kill} to kill</button>`);
     if(a.staleLeads)chips.push(`<button class="chip amber" onclick="app.showView('pipeline')">⏳ ${a.staleLeads} leads going cold</button>`);
     if(a.test)chips.push(`<button class="chip" onclick="app.showView('ads');app.setAdFilter('TEST')">🧪 ${a.test} still testing</button>`);
+    if(a.newAds)chips.push(`<button class="chip" onclick="app.showView('ads');app.setAdStatus('ALL')">✨ ${a.newAds} new this fortnight</button>`);
     document.getElementById('actionStrip').innerHTML=chips.length?chips.join(''):'<div class="chip quiet">✓ Nothing needs a decision right now</div>';
 
     const s=d.stages||{};
@@ -234,6 +238,24 @@ const app={
     this.set('monthlyTable',this.monthRows(rows));
   },
 
+  /* Scoreboard: which rule is doing the killing. If one rule accounts for most of the
+     KILLs, that is a pattern worth acting on at the campaign level, not ad by ad. */
+  renderRuleBoard(d){
+    const by=(d.actions&&d.actions.byRule)||{}, t=d.thresholds||{};
+    const rows=[
+      ['CPA','CPA 2x+','$'+Math.round(t.targetCpa||0)+' target'],
+      ['CTR','Low CTR','under '+(t.ctrFloor||0.5)+'% at 1k+ impressions'],
+      ['FREQ','Saturated','frequency '+(t.freqCeiling||3.5)+'+ and CPA rising'],
+      ['FATIGUE','Fatigue','CTR down '+(t.ctrDeclinePct||30)+'%+ in 14 days']
+    ];
+    this.set('ruleBoard',rows.map(r=>{
+      const n=by[r[0]]||0;
+      return `<button class="rule-cell${n?' hot':''}" onclick="app.showView('ads');app.setAdFilter('KILL')">
+        <div class="rule-count">${this.num(n)}</div><div class="rule-name">${r[1]}</div><div class="rule-sub">${this.esc(r[2])}</div></button>`;
+    }).join(''));
+    this.set('ruleLegend','Thresholds live in Script Properties — TARGET_CPA, KILL_CTR_FLOOR, KILL_FREQUENCY, KILL_CTR_DECLINE_PCT. Change them there, no code edit needed.');
+  },
+
   /* ══════════════ Image vs video ══════════════ */
   renderFormats(d){
     const rows=d.formats||[];
@@ -319,13 +341,19 @@ const app={
         ${thumb}
         <div class="ad-body">
           <div class="row"><h3>${this.esc(a.adName||'Untitled ad')}</h3><span class="badge-group"><span class="badge ${live?'green':''}">${live?'● LIVE':'⏸ PAUSED'}</span><span class="badge plat">${this.esc(a.platform||'—')}</span><span class="badge ${m.cls}">${m.icon} ${m.label}</span></span></div>
+          ${(a.rules&&a.rules.length)?`<div class="rule-tags">${a.rules.map(r=>`<span class="rule-tag" title="${this.esc((RULE_LABELS[r.rule]||{}).full||'')}">${this.esc((RULE_LABELS[r.rule]||{}).tag||r.rule)}</span>`).join('')}</div>`:''}
           <div class="ad-reason">${this.esc(a.signalReason||'')}</div>
           <div class="kv five">
             <div><span>Spend</span><strong>${this.money(a.spend)}</strong></div>
             <div><span>Leads</span><strong>${this.num(a.leads)}</strong></div>
             <div><span>CPL</span><strong>${a.leads?this.money(a.cpl):'—'}</strong></div>
-            <div><span>Hook</span><strong>${a.hookrate?a.hookrate.toFixed(1)+'%':'—'}</strong></div>
-            <div><span>CTR</span><strong>${a.ctr.toFixed(2)}%</strong></div>
+            <div><span>CTR</span><strong class="${a.ctr>0&&a.ctr<0.5?'bad':''}">${a.ctr.toFixed(2)}%</strong></div>
+            <div><span>Freq</span><strong class="${a.frequency>=3.5?'bad':''}">${a.frequency?a.frequency.toFixed(1):'—'}</strong></div>
+          </div>
+          <div class="trend-row">
+            ${a.ctrChangePct===null?'<span class="trend-none">CTR trend: not enough history</span>':`<span class="${a.ctrChangePct<=-30?'bad':a.ctrChangePct<0?'warn':'good'}">CTR ${a.ctrChangePct>=0?'▲':'▼'}${Math.abs(Math.round(a.ctrChangePct))}% vs prev 14d</span>`}
+            ${a.cpaChangePct===null?'':`<span class="${a.cpaChangePct>0?'bad':'good'}">CPA ${a.cpaChangePct>=0?'▲':'▼'}${Math.abs(Math.round(a.cpaChangePct))}%</span>`}
+            ${a.isNew?'<span class="new-tag">✨ NEW</span>':''}
           </div>
           <div class="ad-meta">${this.esc(a.adSetName||'')}${a.adPermalink?` · <a href="${this.esc(a.adPermalink)}" target="_blank" rel="noopener">View in Meta ↗</a>`:''}</div>
         </div></div>`;

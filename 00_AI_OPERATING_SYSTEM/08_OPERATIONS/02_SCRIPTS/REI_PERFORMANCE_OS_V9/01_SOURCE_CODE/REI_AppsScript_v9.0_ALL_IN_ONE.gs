@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.4.0',
+  VERSION: '9.5.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -433,6 +433,13 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
       kill: ads.filter(a => a.signal === 'KILL').length,
       scale: ads.filter(a => a.signal === 'SCALE').length,
       test: ads.filter(a => a.signal === 'TEST').length,
+      newAds: ads.filter(a => a.isNew).length,
+      byRule: {
+        CPA: ads.filter(a => (a.firedRules || []).indexOf('CPA') >= 0).length,
+        CTR: ads.filter(a => (a.firedRules || []).indexOf('CTR') >= 0).length,
+        FREQ: ads.filter(a => (a.firedRules || []).indexOf('FREQ') >= 0).length,
+        FATIGUE: ads.filter(a => (a.firedRules || []).indexOf('FATIGUE') >= 0).length
+      },
       staleLeads: pipeline.reduce((n, g) => n + asNumber_(g.staleCount), 0)
     },
     thresholds: signalThresholds_(),
@@ -816,50 +823,123 @@ function writeHealthSheet_(report){const headers=['check','status','detail','che
  * itself reports.
  */
 
-/** Tunable decision thresholds — Script Properties, so they change without code edits. */
+/**
+ * Kill/scale rules, as specified by Edmund 2026-08-02. All tunable via Script
+ * Properties so the thresholds move without a code change.
+ *
+ * TARGET_CPA is the anchor. Edmund's working band is 150-250; the default sits at the
+ * midpoint. Everything else keys off it.
+ */
 function signalThresholds_() {
   return {
-    targetCpl:     asNumber_(prop_('TARGET_CPL', 80)),
-    minSpend:      asNumber_(prop_('SIGNAL_MIN_SPEND', 100)),
-    minLeads:      asNumber_(prop_('SIGNAL_MIN_LEADS', 3)),
-    killCplMult:   asNumber_(prop_('SIGNAL_KILL_CPL_MULT', 2)),
-    scaleCplMult:  asNumber_(prop_('SIGNAL_SCALE_CPL_MULT', 0.7)),
-    killHookRate:  asNumber_(prop_('SIGNAL_KILL_HOOKRATE', 15)),
-    scaleHookRate: asNumber_(prop_('SIGNAL_SCALE_HOOKRATE', 30))
+    targetCpa:        asNumber_(prop_('TARGET_CPA', prop_('TARGET_CPL', 200))),
+    cpaKillMult:      asNumber_(prop_('KILL_CPA_MULT', 2)),        // CPA >= 2x target
+    killSpendMult:    asNumber_(prop_('KILL_SPEND_MULT', 2)),      // ...and >= 2x target spent
+    ctrFloor:         asNumber_(prop_('KILL_CTR_FLOOR', 0.5)),     // % link CTR
+    ctrMinImpr:       asNumber_(prop_('KILL_CTR_MIN_IMPRESSIONS', 1000)),
+    freqCeiling:      asNumber_(prop_('KILL_FREQUENCY', 3.5)),
+    ctrDeclinePct:    asNumber_(prop_('KILL_CTR_DECLINE_PCT', 30)),
+    trendDays:        asNumber_(prop_('TREND_WINDOW_DAYS', 14)),
+    scaleCpaMult:     asNumber_(prop_('SCALE_CPA_MULT', 0.7)),     // CPA <= 70% of target
+    minLeads:         asNumber_(prop_('SIGNAL_MIN_LEADS', 3))
   };
 }
 
 /**
- * Kill / Scale / Monitor / Test verdict for one ad.
- * TEST is returned whenever there is not enough spend or volume to judge — a low CPL
- * on 1 lead is noise, not a winner. Every verdict carries a plain-English reason so
- * the number is never presented without its justification.
+ * Evaluate one ad against the kill rules. Returns every rule that fired, not just the
+ * first, because "expensive AND saturated AND declining" is a different conversation
+ * from any one of those alone.
+ *
+ * Rules (Edmund's, verbatim intent):
+ *   1. CPA >= 2x target AND spend >= 2x target   — proven expensive, enough spend to trust
+ *   2. CTR < 0.5% once impressions >= 1,000      — creative is not earning the click
+ *   3. Frequency >= 3.5 AND CPA rising           — audience saturated and getting worse
+ *   4. CTR down >= 30% across two windows        — creative fatigue
+ *
+ * A rule needing trend data is skipped rather than guessed at when history is too thin.
  */
-function adSignal_(row, t) {
-  const spend = asNumber_(row.spend), leads = asNumber_(row.leads);
-  const cpl = leads > 0 ? spend / leads : 0;
-  const hook = asNumber_(row.hookrate);
+function evaluateAdRules_(x, t) {
+  const fired = [];
+  const cpa = x.leads > 0 ? x.spend / x.leads : 0;
   const money = function (n) { return '$' + Math.round(n); };
 
-  if (leads === 0 && spend >= t.minSpend * 2)
-    return { signal: 'KILL', reason: money(spend) + ' spent, zero leads' };
-  if (spend < t.minSpend && leads < t.minLeads)
-    return { signal: 'TEST', reason: 'Too early — needs ' + money(t.minSpend) + ' spend or ' + t.minLeads + ' leads' };
-  if (leads >= t.minLeads && cpl >= t.targetCpl * t.killCplMult)
-    return { signal: 'KILL', reason: 'CPL ' + money(cpl) + ' vs ' + money(t.targetCpl) + ' target' };
-  if (hook > 0 && hook < t.killHookRate && spend >= t.minSpend)
-    return { signal: 'KILL', reason: 'Hook rate ' + hook.toFixed(1) + '% — people scroll past' };
-  if (leads >= t.minLeads && cpl > 0 && cpl <= t.targetCpl * t.scaleCplMult)
-    return { signal: 'SCALE', reason: 'CPL ' + money(cpl) + ' vs ' + money(t.targetCpl) + ' target' };
-  if (hook >= t.scaleHookRate && leads >= t.minLeads)
-    return { signal: 'SCALE', reason: 'Hook rate ' + hook.toFixed(1) + '% and converting' };
-  return { signal: 'MONITOR', reason: 'CPL ' + money(cpl) + ' — near target, keep watching' };
+  if (x.leads > 0 && cpa >= t.targetCpa * t.cpaKillMult && x.spend >= t.targetCpa * t.killSpendMult) {
+    fired.push({ rule: 'CPA', text: 'CPA ' + money(cpa) + ' is ' + (cpa / t.targetCpa).toFixed(1) + 'x target on ' + money(x.spend) + ' spent' });
+  }
+  if (x.leads === 0 && x.spend >= t.targetCpa * t.killSpendMult) {
+    fired.push({ rule: 'CPA', text: money(x.spend) + ' spent, zero leads' });
+  }
+  if (x.impressions >= t.ctrMinImpr && x.ctr > 0 && x.ctr < t.ctrFloor) {
+    fired.push({ rule: 'CTR', text: 'CTR ' + x.ctr.toFixed(2) + '% below ' + t.ctrFloor + '% on ' + Math.round(x.impressions).toLocaleString() + ' impressions' });
+  }
+  if (x.frequency >= t.freqCeiling && x.cpaChangePct !== null && x.cpaChangePct > 0) {
+    fired.push({ rule: 'FREQ', text: 'Frequency ' + x.frequency.toFixed(1) + ' and CPA up ' + Math.round(x.cpaChangePct) + '% — audience saturated' });
+  }
+  if (x.ctrChangePct !== null && x.ctrChangePct <= -t.ctrDeclinePct) {
+    fired.push({ rule: 'FATIGUE', text: 'CTR down ' + Math.abs(Math.round(x.ctrChangePct)) + '% vs previous ' + t.trendDays + ' days' });
+  }
+  return { fired: fired, cpa: cpa };
 }
 
-/** Per-ad economics for the selected range, joined to current creative metadata. */
+/**
+ * Verdict for one ad. KILL when any rule fires; SCALE only on proven cheap volume;
+ * TEST while there is not yet enough spend or volume to judge — a good CPA on one lead
+ * is noise, and calling it a winner is how budget gets wasted.
+ */
+function adSignal_(x, t) {
+  const ev = evaluateAdRules_(x, t);
+  x.firedRules = ev.fired.map(f => f.rule);
+
+  if (ev.fired.length) {
+    return { signal: 'KILL', reason: ev.fired.map(f => f.text).join(' · '), rules: ev.fired };
+  }
+  const enoughToJudge = x.spend >= t.targetCpa || x.leads >= t.minLeads;
+  if (!enoughToJudge) {
+    return { signal: 'TEST', reason: 'Too early — under ' + Math.round(t.targetCpa) + ' spent and fewer than ' + t.minLeads + ' leads', rules: [] };
+  }
+  if (x.leads >= t.minLeads && ev.cpa > 0 && ev.cpa <= t.targetCpa * t.scaleCpaMult) {
+    return { signal: 'SCALE', reason: 'CPA $' + Math.round(ev.cpa) + ' vs $' + Math.round(t.targetCpa) + ' target' + (x.ctrChangePct > 0 ? ', CTR still rising' : ''), rules: [] };
+  }
+  return { signal: 'MONITOR', reason: ev.cpa > 0 ? ('CPA $' + Math.round(ev.cpa) + ' — inside tolerance, watching') : 'Spending, no leads yet', rules: [] };
+}
+
+/**
+ * Per-ad economics for the selected range, joined to current creative metadata, plus
+ * the trend signals the kill rules need.
+ *
+ * Trend windows are anchored on TODAY, not on the selected range — "is this ad fatiguing
+ * right now" is a question about the present, and would be meaningless if it drifted
+ * with whatever period happens to be on screen.
+ *
+ * Frequency note: computed as impressions / summed daily reach. Daily reach counts a
+ * person again on each day they are reached, so the sum OVERSTATES unique reach and this
+ * figure therefore UNDERSTATES true period frequency. That error is deliberate in this
+ * direction — it makes the saturation rule fire late rather than early, so no ad is
+ * killed on an overstated number.
+ */
 function aggregateAds_(perf) {
   const t = signalThresholds_(), meta = {};
   sheetRowsAsObjects_(APP.TABS.META_ADS).forEach(a => { if (safeText_(a.metaId)) meta[safeText_(a.metaId)] = a; });
+
+  const today = sgtDate_(new Date());
+  const recentFrom = addDaysIso_(today, -(t.trendDays - 1));
+  const priorFrom = addDaysIso_(today, -(t.trendDays * 2 - 1));
+  const priorTo = addDaysIso_(recentFrom, -1);
+
+  // Trend windows read from the full fact table, independent of the on-screen range.
+  const allRows = sheetRowsAsObjects_(APP.TABS.PERFORMANCE);
+  const win = {};
+  allRows.forEach(r => {
+    const id = safeText_(r.adId); if (!id) return;
+    const d = dayKey_(r.date); if (!d) return;
+    const bucket = (d >= recentFrom && d <= today) ? 'recent' : (d >= priorFrom && d <= priorTo) ? 'prior' : null;
+    if (!win[id]) win[id] = { recent: { impr: 0, clicks: 0, spend: 0, leads: 0 }, prior: { impr: 0, clicks: 0, spend: 0, leads: 0 }, first: d };
+    if (d < win[id].first) win[id].first = d;
+    if (!bucket) return;
+    const b = win[id][bucket];
+    b.impr += asNumber_(r.impressions); b.clicks += asNumber_(r.clicks);
+    b.spend += asNumber_(r.spend); b.leads += asNumber_(r.leads);
+  });
 
   const map = {};
   perf.forEach(r => {
@@ -867,15 +947,17 @@ function aggregateAds_(perf) {
     if (!map[id]) map[id] = {
       adId: id, adName: safeText_(r.adName), adSetId: safeText_(r.adSetId), adSetName: safeText_(r.adSetName),
       campaignId: safeText_(r.campaignId), campaignName: safeText_(r.campaignName), platform: safeText_(r.platform),
-      spend: 0, impressions: 0, clicks: 0, leads: 0
+      spend: 0, impressions: 0, reach: 0, clicks: 0, leads: 0
     };
     const x = map[id];
     x.spend += asNumber_(r.spend); x.impressions += asNumber_(r.impressions);
-    x.clicks += asNumber_(r.clicks); x.leads += asNumber_(r.leads);
+    x.reach += asNumber_(r.reach); x.clicks += asNumber_(r.clicks); x.leads += asNumber_(r.leads);
   });
 
+  const pctChange = function (now, was) { return was > 0 ? ((now - was) / was) * 100 : null; };
+
   return Object.keys(map).map(id => {
-    const x = map[id], m = meta[id] || {};
+    const x = map[id], m = meta[id] || {}, w = win[id];
     x.hookrate = asNumber_(m.hookrate);
     x.status = safeText_(m.status);
     x.format = safeText_(m.format);
@@ -883,11 +965,33 @@ function aggregateAds_(perf) {
     x.videoSrc = safeText_(m.videoSrc);
     x.adPermalink = safeText_(m.adPermalink);
     x.cpl = x.leads > 0 ? x.spend / x.leads : 0;
+    x.cpa = x.cpl;
     x.ctr = x.impressions > 0 ? (x.clicks / x.impressions) * 100 : 0;
     x.cpc = x.clicks > 0 ? x.spend / x.clicks : 0;
     x.cpm = x.impressions > 0 ? (x.spend / x.impressions) * 1000 : 0;
+    x.frequency = x.reach > 0 ? x.impressions / x.reach : 0;
+
+    // Trend comparisons. Null where a window has no data — the rules skip nulls rather
+    // than treating "no history" as "no change".
+    if (w) {
+      const rc = w.recent.impr > 0 ? (w.recent.clicks / w.recent.impr) * 100 : null;
+      const pc = w.prior.impr > 0 ? (w.prior.clicks / w.prior.impr) * 100 : null;
+      x.recentCtr = rc; x.priorCtr = pc;
+      x.ctrChangePct = (rc !== null && pc !== null) ? pctChange(rc, pc) : null;
+
+      const rcpa = w.recent.leads > 0 ? w.recent.spend / w.recent.leads : null;
+      const pcpa = w.prior.leads > 0 ? w.prior.spend / w.prior.leads : null;
+      x.recentCpa = rcpa; x.priorCpa = pcpa;
+      x.cpaChangePct = (rcpa !== null && pcpa !== null) ? pctChange(rcpa, pcpa) : null;
+
+      x.firstSeen = w.first;
+      x.isNew = w.first >= recentFrom;      // launched inside the trend window
+    } else {
+      x.ctrChangePct = null; x.cpaChangePct = null; x.isNew = false;
+    }
+
     const s = adSignal_(x, t);
-    x.signal = s.signal; x.signalReason = s.reason;
+    x.signal = s.signal; x.signalReason = s.reason; x.rules = s.rules || [];
     return x;
   }).sort((a, b) => b.spend - a.spend);
 }
@@ -903,10 +1007,11 @@ function aggregateAdSets_(perf) {
     if (!map[id]) map[id] = {
       adSetId: id, adSetName: safeText_(r.adSetName), campaignId: safeText_(r.campaignId),
       campaignName: safeText_(r.campaignName), platform: safeText_(r.platform),
-      spend: 0, impressions: 0, clicks: 0, leads: 0, adIds: {}
+      spend: 0, impressions: 0, reach: 0, clicks: 0, leads: 0, adIds: {}
     };
     const x = map[id];
     x.spend += asNumber_(r.spend); x.impressions += asNumber_(r.impressions);
+    x.reach += asNumber_(r.reach);
     x.clicks += asNumber_(r.clicks); x.leads += asNumber_(r.leads);
     if (safeText_(r.adId)) x.adIds[safeText_(r.adId)] = 1;
   });
@@ -916,7 +1021,12 @@ function aggregateAdSets_(perf) {
     x.adCount = Object.keys(x.adIds).length; delete x.adIds;
     x.budget = asNumber_(m.budget); x.audience = safeText_(m.audience); x.status = safeText_(m.status);
     x.cpl = x.leads > 0 ? x.spend / x.leads : 0;
+    x.cpa = x.cpl;
     x.ctr = x.impressions > 0 ? (x.clicks / x.impressions) * 100 : 0;
+    x.frequency = x.reach > 0 ? x.impressions / x.reach : 0;
+    // Ad sets are judged on the volume rules only; fatigue and saturation are creative-
+    // level questions, so their trend inputs stay null rather than being faked at 0.
+    x.ctrChangePct = null; x.cpaChangePct = null;
     const s = adSignal_(x, t);
     x.signal = s.signal; x.signalReason = s.reason;
     return x;
