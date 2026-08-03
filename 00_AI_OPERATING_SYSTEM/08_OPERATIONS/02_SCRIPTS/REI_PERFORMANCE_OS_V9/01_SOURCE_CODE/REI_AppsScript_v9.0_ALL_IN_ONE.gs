@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.6.1',
+  VERSION: '9.7.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -637,6 +637,63 @@ function buildUrl_(base, params) {
   return base+'?'+Object.keys(params).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(params[k])).join('&');
 }
 
+/**
+ * Live status and creative metadata for ads, ad sets and campaigns.
+ *
+ * The Insights endpoint returns performance only — it has no notion of whether an ad is
+ * currently running. Status therefore has to come from the entity endpoints, and until
+ * this existed every ad in Meta_Ads carried status:'' — which made the dashboard's
+ * "Live only" filter hide the entire list.
+ *
+ * effective_status is used rather than status, because an ad whose own status is ACTIVE
+ * is still not running if its ad set or campaign is paused. effective_status accounts
+ * for the whole chain, which is what "is this actually live" means.
+ *
+ * Failures here are non-fatal: performance data is the point, and a missing status
+ * should degrade the filter, not break the sync.
+ */
+function fetchMetaEntityMeta_(runId) {
+  const token = prop_('META_ACCESS_TOKEN', '');
+  const accountId = prop_('META_AD_ACCOUNT_ID', 'act_1467621970951606');
+  const apiVersion = prop_('META_API_VERSION', 'v19.0');
+  const out = { ads: {}, adsets: {}, campaigns: {} };
+  if (!token) return out;
+
+  const base = 'https://graph.facebook.com/' + apiVersion + '/' + accountId;
+  try {
+    metaFetchAll_(base + '/ads',
+      { fields: 'id,name,effective_status,creative{id,thumbnail_url,image_url,video_id,object_type},preview_shareable_link', limit: 200 },
+      token, runId).forEach(function (a) {
+        const c = a.creative || {};
+        const objectType = safeText_(c.object_type).toUpperCase();
+        out.ads[safeText_(a.id)] = {
+          status: safeText_(a.effective_status),
+          thumbUrl: safeText_(c.thumbnail_url) || safeText_(c.image_url),
+          imageUrl: safeText_(c.image_url),
+          videoId: safeText_(c.video_id),
+          format: c.video_id ? 'Video' : (objectType.indexOf('VIDEO') >= 0 ? 'Video' : (c.image_url || c.thumbnail_url) ? 'Image' : ''),
+          adPermalink: safeText_(a.preview_shareable_link)
+        };
+      });
+  } catch (e) {
+    appendErrorLog_(runId, 'Meta', 'fetchMetaEntityMeta_', 'WARN', 'Ad metadata unavailable: ' + e.message, '', '', e.stack, {}, 'sync');
+  }
+  try {
+    metaFetchAll_(base + '/adsets', { fields: 'id,name,effective_status,daily_budget,lifetime_budget', limit: 200 }, token, runId)
+      .forEach(function (a) {
+        out.adsets[safeText_(a.id)] = {
+          status: safeText_(a.effective_status),
+          budget: asNumber_(a.daily_budget || a.lifetime_budget) / 100   // Meta returns minor units
+        };
+      });
+  } catch (e) { /* non-fatal */ }
+  try {
+    metaFetchAll_(base + '/campaigns', { fields: 'id,name,effective_status,objective', limit: 200 }, token, runId)
+      .forEach(function (c) { out.campaigns[safeText_(c.id)] = { status: safeText_(c.effective_status) }; });
+  } catch (e) { /* non-fatal */ }
+  return out;
+}
+
 function rebuildMetaSnapshotTabs_(facts,start,end){
   const campaigns={},adsets={},ads={};
   facts.forEach(r=>{
@@ -647,9 +704,18 @@ function rebuildMetaSnapshotTabs_(facts,start,end){
     const dk=r.adId||ak+'|'+normaliseName_(r.adName); if(!ads[dk])ads[dk]={metaId:r.adId,name:r.adName,adsetId:r.adSetId,adsetName:r.adSetName,campaignId:r.campaignId,campaignName:r.campaignName,platform:'Meta',status:'',format:'',thumbUrl:'',videoId:'',imageUrl:'',videoSrc:'',hookrate:0,ctr:0,cpc:0,cpm:0,spend:0,impressions:0,clicks:0,leads:0,cpl:0,p25:0,p50:0,p75:0,p95:0,adPermalink:'',updatedAt:r.sourceUpdatedAt};
     const d=ads[dk];d.spend+=r.spend;d.impressions+=r.impressions;d.clicks+=r.clicks;d.leads+=r.leads;
   });
-  const campArr=Object.keys(campaigns).map(k=>{const x=campaigns[k];x.cpl=x.leads?x.spend/x.leads:0;x.ctr=x.impressions?x.clicks/x.impressions*100:0;return x;});
-  const adsetArr=Object.keys(adsets).map(k=>{const x=adsets[k];x.cpl=x.leads?x.spend/x.leads:0;return x;});
-  const adArr=Object.keys(ads).map(k=>{const x=ads[k];x.cpl=x.leads?x.spend/x.leads:0;x.ctr=x.impressions?x.clicks/x.impressions*100:0;x.cpc=x.clicks?x.spend/x.clicks:0;x.cpm=x.impressions?x.spend/x.impressions*1000:0;return x;});
+  // Status and creative come from the entity endpoints, not from insights.
+  const em = fetchMetaEntityMeta_(makeRunId_('meta-meta'));
+  const campArr=Object.keys(campaigns).map(k=>{const x=campaigns[k];x.cpl=x.leads?x.spend/x.leads:0;x.ctr=x.impressions?x.clicks/x.impressions*100:0;
+    const e=em.campaigns[safeText_(x.metaId)]; if(e)x.status=e.status;
+    return x;});
+  const adsetArr=Object.keys(adsets).map(k=>{const x=adsets[k];x.cpl=x.leads?x.spend/x.leads:0;
+    const e=em.adsets[safeText_(x.metaId)]; if(e){x.status=e.status;x.budget=e.budget;}
+    return x;});
+  const adArr=Object.keys(ads).map(k=>{const x=ads[k];x.cpl=x.leads?x.spend/x.leads:0;x.ctr=x.impressions?x.clicks/x.impressions*100:0;x.cpc=x.clicks?x.spend/x.clicks:0;x.cpm=x.impressions?x.spend/x.impressions*1000:0;
+    const e=em.ads[safeText_(x.metaId)];
+    if(e){x.status=e.status;x.thumbUrl=e.thumbUrl;x.imageUrl=e.imageUrl;x.videoId=e.videoId;x.format=e.format;x.adPermalink=e.adPermalink;}
+    return x;});
   overwriteObjects_(APP.TABS.META_CAMPAIGNS,['metaId','name','platform','objective','status','budget','spend','leads','cpl','impressions','clicks','ctr','reach','updatedAt'],campArr);
   overwriteObjects_(APP.TABS.META_ADSETS,['metaId','name','campaignId','campaignName','platform','status','budget','spend','leads','cpl','audience','updatedAt'],adsetArr);
   overwriteObjects_(APP.TABS.META_ADS,['metaId','name','adsetId','adsetName','campaignId','campaignName','platform','status','format','thumbUrl','videoId','imageUrl','videoSrc','hookrate','ctr','cpc','cpm','spend','impressions','clicks','leads','cpl','p25','p50','p75','p95','adPermalink','updatedAt'],adArr);

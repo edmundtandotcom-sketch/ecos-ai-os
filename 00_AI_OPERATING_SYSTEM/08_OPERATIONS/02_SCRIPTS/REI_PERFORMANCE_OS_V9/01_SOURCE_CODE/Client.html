@@ -94,6 +94,10 @@ const app={
   setAdStatus(v){this.state.adStatus=v;document.querySelectorAll('[data-adstatus]').forEach(b=>b.classList.toggle('active',b.dataset.adstatus===v));this.renderAds(this.state.data);},
   toggleAdGroup(){this.state.adGroup=!this.state.adGroup;this.renderAds(this.state.data);},
   isLiveAd(a){return String(a.status||'').toUpperCase()==='ACTIVE';},
+  /* True when Meta has given us no status at all — before the entity-metadata fetch
+     existed, every ad carried a blank status, and filtering to "live" then produced an
+     empty screen that looked like a broken dashboard rather than missing data. */
+  statusUnknown(rows){return !rows.some(a=>String(a.status||'').trim()!=='');},
 
   render(){
     const d=this.state.data;
@@ -320,8 +324,11 @@ const app={
     });
     // Live ads are the only ones you can still act on. Paused ads are history — useful
     // for reference, but they should never sit above a running ad in the list.
-    if(this.state.adStatus==='LIVE')rows=rows.filter(a=>this.isLiveAd(a));
-    else if(this.state.adStatus==='PAUSED')rows=rows.filter(a=>!this.isLiveAd(a));
+    const unknown=this.statusUnknown(rows);
+    if(!unknown){
+      if(this.state.adStatus==='LIVE')rows=rows.filter(a=>this.isLiveAd(a));
+      else if(this.state.adStatus==='PAUSED')rows=rows.filter(a=>!this.isLiveAd(a));
+    }
 
     const key=this.state.adSort;
     const sortFn=(a,b)=>key==='cpl'?(a.cpl||Infinity)-(b.cpl||Infinity):(b[key]||0)-(a[key]||0);
@@ -329,7 +336,8 @@ const app={
     rows.sort((a,b)=>{const la=this.isLiveAd(a)?0:1,lb=this.isLiveAd(b)?0:1;return la!==lb?la-lb:sortFn(a,b);});
 
     const liveCount=rows.filter(a=>this.isLiveAd(a)).length;
-    this.set('adCounts',`<span class="count-note"><strong>${this.num(liveCount)}</strong> live · ${this.num(rows.length-liveCount)} paused shown</span>`);
+    if(unknown)this.set('adCounts','<span class="count-note warn-note">Live/paused unknown \u2014 run a Meta sync to load ad status. Showing all '+this.num(rows.length)+'.</span>');
+    else this.set('adCounts',`<span class="count-note"><strong>${this.num(liveCount)}</strong> live · ${this.num(rows.length-liveCount)} paused shown</span>`);
 
     if(!rows.length){this.set('adList','<div class="panel quiet-note">No ads match these filters for the selected period.</div>');return;}
 
