@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.7.0',
+  VERSION: '9.10.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -33,7 +33,8 @@ const APP = Object.freeze({
     META_CAMPAIGNS: 'Meta_Campaigns',
     META_ADSETS: 'Meta_AdSets',
     META_ADS: 'Meta_Ads',
-    GOOGLE_DAILY: 'Google_Campaigns_Daily'
+    GOOGLE_DAILY: 'Google_Campaigns_Daily',
+    INVESTMENTS: 'Investments'
   })
 });
 
@@ -51,7 +52,7 @@ const APP = Object.freeze({
  */
 const CANONICAL_STAGES = Object.freeze([
   'New', 'Contacted', 'Responded', 'Booked Call', 'Appointment',
-  'Strategy Session', 'Appt Qualified', 'Closed', 'Lost'
+  'Nurture', 'Strategy Session', 'Appt Qualified', 'Closed', 'Lost'
 ]);
 
 const TAB_HEADERS = Object.freeze({
@@ -77,6 +78,13 @@ const TAB_HEADERS = Object.freeze({
   Audit_Log: [
     'timestamp','actor','action','entityType','entityId','oldValue','newValue','source',
     'requestId','result','version'
+  ],
+  /* Non-advertising money: masterminds, mentorship, coaching. Hand-entered in the sheet
+     rather than through the dashboard, because the web app is deployed to ANYONE_ANONYMOUS
+     and must never be able to write financial records. `date` is optional — an annual
+     mastermind fee has no meaningful single date, so `year` alone is enough. */
+  Investments: [
+    'year','date','category','vendor','description','amount','notes'
   ]
 });
 
@@ -162,7 +170,12 @@ function normaliseStage_(value) {
   const key = safeText_(value).toLowerCase().replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
   const aliases = {
     'new lead':'New','new':'New','signup':'New',
-    'attempting contact':'Contacted','contacted':'Contacted','nurture':'Contacted',
+    'attempting contact':'Contacted','contacted':'Contacted',
+    /* Nurture is a POST-appointment holding bucket: the lead attended, did not move
+       forward, and is kept for future follow-up. Mapping it to 'Contacted' ranked it
+       below Booked Call and quietly erased an attended appointment from the funnel.
+       It sits after Appointment and before Strategy Session, which is where it belongs. */
+    'nurture':'Nurture','nurturing':'Nurture','follow up':'Nurture','followup':'Nurture',
     'responded':'Responded','reply':'Responded','replied':'Responded',
     'booked call':'Booked Call','booked calls':'Booked Call','book call':'Booked Call',
     'call booked':'Booked Call','booking':'Booked Call','booked':'Booked Call',
@@ -400,6 +413,14 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
   const adSets = safely('adSets', function () { return aggregateAdSets_(perf); }, []);
   const stages = safely('stages', function () { return buildStageConversions_(funnelTotals); }, null);
   const pipeline = safely('pipeline', function () { return buildPipelineByStage_(leads); }, []);
+  const census = safely('census', function () { return buildStageCensus_(range); }, null);
+  const investments = safely('investments', function () { return readInvestments_(range); }, { total: 0, byYear: [], count: 0 });
+  /* Ad spend and mentorship stay separate in the maths so CPL/CPA keep meaning ads only,
+     while all-in ROAS answers "what did the whole investment return". */
+  overview.investment = investments.total;
+  overview.totalInvested = asNumber_(overview.spend) + investments.total;
+  overview.roasAllIn = overview.totalInvested ? asNumber_(overview.revenue) / overview.totalInvested : 0;
+  overview.cplAllIn = overview.leads ? overview.totalInvested / overview.leads : 0;
   // v9.2 segmentation
   const segments = safely('segments', function () { return buildPlatformBreakdown_(perf, funnel); }, { combined: null, platforms: [] });
   const monthly = safely('monthly', function () { return buildMonthlyComparison_(12); }, []);
@@ -423,6 +444,8 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
     funnel: funnelTotals,
     stages: stages,
     pipeline: pipeline,
+    census: census,
+    investments: investments,
     warnings: warnings,
     segments: segments,
     monthly: monthly,
@@ -458,17 +481,19 @@ function aggregateOverview_(perf, funnel) {
   const responded = funnel.reduce((s,r) => s + asNumber_(r.responded), 0);
   const booked = funnel.reduce((s,r) => s + asNumber_(r.bookedCalls), 0);
   const appointments = funnel.reduce((s,r) => s + asNumber_(r.appointments), 0);
+  const strategySessions = funnel.reduce((s,r) => s + asNumber_(r.strategySessions), 0);
   const qualified = funnel.reduce((s,r) => s + asNumber_(r.qualified), 0);
   const closed = funnel.reduce((s,r) => s + asNumber_(r.closedWon), 0);
   const revenue = funnel.reduce((s,r) => s + asNumber_(r.revenue), 0);
   const leads = newLeads || adLeads;
   return {
     spend, impressions, clicks, leads, adLeads, responded, bookedCalls: booked,
-    appointments, qualified, closed, revenue,
+    appointments, strategySessions, qualified, closed, revenue,
     cpl: leads ? spend / leads : 0,
     costPerResponded: responded ? spend / responded : 0,
     costPerBooked: booked ? spend / booked : 0,
     costPerAppointment: appointments ? spend / appointments : 0,
+    costPerStrategySession: strategySessions ? spend / strategySessions : 0,
     costPerQualified: qualified ? spend / qualified : 0,
     costPerClose: closed ? spend / closed : 0,
     roas: spend ? revenue / spend : 0,
@@ -520,6 +545,84 @@ function buildDailyTrend_(perf, funnel) {
   return Object.keys(map).sort().map(k=>map[k]);
 }
 
+/**
+ * Head-count of where every lead is standing right now, by pipeline stage.
+ *
+ * This is what GHL's board shows, so the cards and the board can be read side by side.
+ * It is deliberately NOT the funnel total: the funnel counts everyone who ever reached
+ * a stage, so a lead now sitting in Appointment still counts as a booked call there.
+ * Both are true and both are needed — the census answers "who is where", the funnel
+ * answers "where are we leaking". Showing only one of them was the whole confusion.
+ *
+ * Range-filtered on lead creation date, so a narrower range reads as "of the leads that
+ * came in during this period, where are they now". At "All" it matches the board exactly.
+ */
+function buildStageCensus_(range) {
+  const rows = sheetRowsAsObjects_(APP.TABS.GHL).filter(function (r) { return inDateRange_(r.date, range); });
+  const census = {};
+  CANONICAL_STAGES.forEach(function (stage) { census[stage] = 0; });
+  rows.forEach(function (r) {
+    const stage = normaliseStage_(r.stage || r.status);
+    census[stage] = (census[stage] || 0) + 1;
+  });
+  census.total = rows.length;
+  return census;
+}
+
+/** Create the Investments tab with its headers so there is somewhere to type. */
+function ensureInvestmentsTab_() {
+  const sheet = getSheet_(APP.TABS.INVESTMENTS, true);
+  if (safeText_(sheet.getRange(1, 1).getValue()).trim()) return sheet;
+  sheet.getRange(1, 1, 1, TAB_HEADERS.Investments.length).setValues([TAB_HEADERS.Investments]);
+  sheet.setFrozenRows(1);
+  return sheet;
+}
+
+/**
+ * Mentorship and mastermind investment for the selected period.
+ *
+ * Kept out of `spend` on purpose: ad spend buys leads and its CPL/CPA must stay clean,
+ * whereas mentorship is an overhead that changes what the business truly returned. The
+ * dashboard therefore reports both — ROAS on ads alone, and all-in ROAS including this.
+ *
+ * Rows carrying a real date are range-filtered like anything else. Rows with only a year
+ * count whenever the selected range touches that year, since an annual fee cannot be
+ * attributed to one day without inventing a number.
+ */
+function readInvestments_(range) {
+  ensureInvestmentsTab_();
+  const rows = sheetRowsAsObjects_(APP.TABS.INVESTMENTS);
+  const startYear = Number(safeText_(range.start).slice(0, 4));
+  const endYear = Number(safeText_(range.end).slice(0, 4));
+
+  const kept = rows.filter(function (r) {
+    if (!asNumber_(r.amount)) return false;
+    const date = dayKey_(r.date);
+    if (date) return inDateRange_(date, range);
+    const y = Number(safeText_(r.year).slice(0, 4));
+    return y && y >= startYear && y <= endYear;
+  });
+
+  const byYear = {};
+  kept.forEach(function (r) {
+    const y = safeText_(r.year).slice(0, 4) || dayKey_(r.date).slice(0, 4) || 'Unassigned';
+    if (!byYear[y]) byYear[y] = { year: y, amount: 0, items: [] };
+    byYear[y].amount += asNumber_(r.amount);
+    byYear[y].items.push({
+      category: safeText_(r.category) || 'Mentorship',
+      vendor: safeText_(r.vendor),
+      description: safeText_(r.description),
+      amount: asNumber_(r.amount)
+    });
+  });
+
+  return {
+    total: kept.reduce(function (sum, r) { return sum + asNumber_(r.amount); }, 0),
+    byYear: Object.keys(byYear).sort().map(function (y) { return byYear[y]; }),
+    count: kept.length
+  };
+}
+
 function readRecentLeadSummaries_(range, maxRows) {
   const rows = sheetRowsAsObjects_(APP.TABS.GHL).filter(r => inDateRange_(r.date, range));
   rows.sort((a,b)=>safeText_(b.date).localeCompare(safeText_(a.date)));
@@ -539,14 +642,23 @@ function rebuildDailyFunnelFact_(runId) {
     const date=r.date instanceof Date?Utilities.formatDate(r.date,APP.TZ,'yyyy-MM-dd'):safeText_(r.date).slice(0,10); if(!date)return;
     const platform=safeText_(r.platform)||'Other'; const campaign=safeText_(r.campaignName)||'(Unattributed)'; const key=date+'|'+platform+'|'+normaliseName_(campaign);
     if(!map[key])map[key]={date,platform,campaignId:'',campaignName:campaign,newLeads:0,contacted:0,responded:0,bookedCalls:0,appointments:0,strategySessions:0,qualified:0,closedWon:0,closedLost:0,revenue:0,sourceUpdatedAt:nowIso_(),syncRunId:runId||'',attributionConfidence:campaign==='(Unattributed)'?'Low':'Medium',notes:''};
-    const x=map[key], stage=normaliseStage_(r.status); x.newLeads++;
-    if(statusRank_(stage)>=statusRank_('Contacted')&&stage!=='Lost')x.contacted++;
-    if(statusRank_(stage)>=statusRank_('Responded')&&stage!=='Lost')x.responded++;
-    if(statusRank_(stage)>=statusRank_('Booked Call')&&stage!=='Lost')x.bookedCalls++;
-    if(statusRank_(stage)>=statusRank_('Appointment')&&stage!=='Lost')x.appointments++;
-    if(statusRank_(stage)>=statusRank_('Strategy Session')&&stage!=='Lost')x.strategySessions++;
-    if(statusRank_(stage)>=statusRank_('Appt Qualified')&&stage!=='Lost')x.qualified++;
-    if(stage==='Closed'){x.closedWon++;x.revenue+=asNumber_(r.dealValue);} if(stage==='Lost')x.closedLost++;
+    const x=map[key]; x.newLeads++;
+    /* How far a lead got is read from its STAGE, so a lead marked Lost still counts at
+       every stage it genuinely passed through. Rows written before v9.9 have no stage
+       column and fall back to status, which behaves exactly as before until the next
+       sync fills it in. 'Lost' remains excluded from progression because GHL's
+       Unqualified stage normalises to it and carries no position. */
+    const stage=normaliseStage_(r.stage||r.status);
+    const outcome=safeText_(r.outcome).toLowerCase();
+    const live=stage!=='Lost';
+    if(live&&statusRank_(stage)>=statusRank_('Contacted'))x.contacted++;
+    if(live&&statusRank_(stage)>=statusRank_('Responded'))x.responded++;
+    if(live&&statusRank_(stage)>=statusRank_('Booked Call'))x.bookedCalls++;
+    if(live&&statusRank_(stage)>=statusRank_('Appointment'))x.appointments++;
+    if(live&&statusRank_(stage)>=statusRank_('Strategy Session'))x.strategySessions++;
+    if(live&&statusRank_(stage)>=statusRank_('Appt Qualified'))x.qualified++;
+    if(outcome==='won'||stage==='Closed'){x.closedWon++;x.revenue+=asNumber_(r.dealValue);}
+    if(outcome==='lost'||stage==='Lost')x.closedLost++;
   });
   overwriteObjects_(APP.TABS.FUNNEL,TAB_HEADERS.Daily_Funnel_Fact,Object.keys(map).map(k=>map[k]));
   return Object.keys(map).length;
@@ -728,12 +840,10 @@ function syncGHL_(runId) {
   if(!apiKey)throw new Error('GHL_API_KEY is missing.');
   const headers={'Authorization':'Bearer '+apiKey,'Version':prop_('GHL_API_VERSION','2021-07-28'),'Content-Type':'application/json'};
   const contacts=fetchAllGHLContacts_(locationId,headers,runId); const opportunityData=fetchAllGHLOpportunities_(locationId,pipelineId,headers,runId); const stageNames=fetchGHLStageNames_(locationId,pipelineId,headers,runId);
-  const byContact={};
-  opportunityData.forEach(o=>{const cid=safeText_(o.contact&&o.contact.id||o.contactId);if(!cid)return;const stageId=safeText_(o.pipelineStageId||o.pipeline_stage_id||o.stageId||(o.stage&&o.stage.id));const rawName=safeText_(o.stage&&o.stage.name||stageNames[stageId]);const status=safeText_(o.status).toLowerCase()==='won'?'Closed':safeText_(o.status).toLowerCase()==='lost'?'Lost':normaliseStage_(rawName);const entry={status:status,createdAt:safeText_(o.createdAt),stageId:stageId,opportunityId:safeText_(o.id),monetaryValue:asNumber_(o.monetaryValue||o.value)};if(!byContact[cid]||statusRank_(entry.status)>statusRank_(byContact[cid].status))byContact[cid]=entry;});
+  const byContact=indexOpportunitiesByContact_(opportunityData,stageNames);
   const existing=sheetRowsAsObjects_(APP.TABS.GHL), preserved={}; existing.forEach(r=>preserved[safeText_(r.ghlId)]={quality:r.quality,dealValue:r.dealValue,urgencyTimeline:r.urgencyTimeline,notes:r.notes});
   const leads=contacts.filter(c=>c.id&&byContact[c.id]).map(c=>mapGHLContact_(c,byContact[c.id],preserved[c.id]||{}));
-  const headersOut=['ghlId','name','contact','phone','email','sourceAdId','sourceAdName','platform','campaignName','status','quality','proptype','date','responded','appointment','strategySession','qualified','dealValue','urgencyTimeline','tags','source','notes'];
-  overwriteObjects_(APP.TABS.GHL,headersOut,leads);
+  overwriteObjects_(APP.TABS.GHL,GHL_LEAD_HEADERS,leads);
   const funnelRows=rebuildDailyFunnelFact_(runId);
   appendSyncLog_(runId,'GHL','SUCCESS',started,new Date(),contacts.length,leads.length,'','',leads.length+' pipeline leads; '+funnelRows+' daily funnel rows','scheduled');
   return {service:'GHL',contactsRead:contacts.length,opportunitiesRead:opportunityData.length,leadsWritten:leads.length,funnelRows:funnelRows};
@@ -760,7 +870,195 @@ function ghlGetJson_(url,headers,label,runId){const res=fetchWithRetry_(url,{met
 function mapGHLContact_(c,stage,preserved){
   const attrs=c.attributions||[];const attr=attrs.find(a=>a.utmAdId)||attrs[0]||{};const platformRaw=safeText_(attr.utmSource||attr.adSource||attr.medium||c.source).toLowerCase();const status=normaliseStage_(stage.status);const tags=Array.isArray(c.tags)?c.tags:[];const tagText=tags.join(' ').toLowerCase();let proptype='';if(tagText.indexOf('newlaunch')>=0||tagText.indexOf('new launch')>=0)proptype='New Launch';else if(tagText.indexOf('familylegacy')>=0||tagText.indexOf('family legacy')>=0)proptype='Family Legacy';else proptype=safeText_(c.source);
   const date=c.dateAdded?Utilities.formatDate(new Date(c.dateAdded),APP.TZ,'yyyy-MM-dd'):(stage.createdAt?Utilities.formatDate(new Date(stage.createdAt),APP.TZ,'yyyy-MM-dd'):'');
-  return {ghlId:safeText_(c.id),name:safeText_(c.contactName||[c.firstName,c.lastName].filter(Boolean).join(' ')),contact:safeText_(c.email||c.phone),phone:safeText_(c.phone),email:safeText_(c.email),sourceAdId:safeText_(attr.utmAdId),sourceAdName:safeText_(attr.utmContent||attr.utmCampaign),platform:platformRaw.indexOf('google')>=0||platformRaw.indexOf('youtube')>=0?'Google':platformRaw.indexOf('facebook')>=0||platformRaw.indexOf('meta')>=0||attr.utmAdId?'Meta':'Other',campaignName:safeText_(attr.utmCampaign),status:status,quality:safeText_(preserved.quality),proptype:proptype,date:date,responded:status!=='Lost'&&statusRank_(status)>=statusRank_('Responded')?'Y':'',appointment:status!=='Lost'&&statusRank_(status)>=statusRank_('Appointment')?'Booked':'',strategySession:status!=='Lost'&&statusRank_(status)>=statusRank_('Strategy Session')?'Y':'',qualified:status!=='Lost'&&statusRank_(status)>=statusRank_('Appt Qualified')?'Y':'',dealValue:asNumber_(preserved.dealValue)||asNumber_(stage.monetaryValue),urgencyTimeline:safeText_(preserved.urgencyTimeline),tags:tags.join(', '),source:safeText_(c.source),notes:safeText_(preserved.notes)};
+  return {ghlId:safeText_(c.id),name:safeText_(c.contactName||[c.firstName,c.lastName].filter(Boolean).join(' ')),contact:safeText_(c.email||c.phone),phone:safeText_(c.phone),email:safeText_(c.email),sourceAdId:safeText_(attr.utmAdId),sourceAdName:safeText_(attr.utmContent||attr.utmCampaign),platform:platformRaw.indexOf('google')>=0||platformRaw.indexOf('youtube')>=0?'Google':platformRaw.indexOf('facebook')>=0||platformRaw.indexOf('meta')>=0||attr.utmAdId?'Meta':'Other',campaignName:safeText_(attr.utmCampaign),status:status,quality:safeText_(preserved.quality),proptype:proptype,date:date,responded:status!=='Lost'&&statusRank_(status)>=statusRank_('Responded')?'Y':'',appointment:status!=='Lost'&&statusRank_(status)>=statusRank_('Appointment')?'Booked':'',strategySession:status!=='Lost'&&statusRank_(status)>=statusRank_('Strategy Session')?'Y':'',qualified:status!=='Lost'&&statusRank_(status)>=statusRank_('Appt Qualified')?'Y':'',dealValue:asNumber_(preserved.dealValue)||asNumber_(stage.monetaryValue),urgencyTimeline:safeText_(preserved.urgencyTimeline),tags:tags.join(', '),source:safeText_(c.source),notes:safeText_(preserved.notes),stage:normaliseStage_(stage.stage||stage.status),outcome:safeText_(stage.outcome)||'open'};
+}
+
+/** Column order of GHL_Leads. Shared so the full sync and the quick refresh can never
+ *  drift into writing different shapes into the same tab. */
+const GHL_LEAD_HEADERS = Object.freeze(['ghlId','name','contact','phone','email','sourceAdId',
+  'sourceAdName','platform','campaignName','status','quality','proptype','date','responded',
+  'appointment','strategySession','qualified','dealValue','urgencyTimeline','tags','source','notes',
+  'stage','outcome']);
+
+/**
+ * Reduce raw opportunities to one canonical stage per contact.
+ *
+ * A contact can hold more than one opportunity; the furthest-advanced one is what the
+ * funnel should count, hence the statusRank_ comparison. GHL's own won/lost status
+ * overrides the stage name, because an opportunity marked Won while still sitting in
+ * "Appointment" is closed business, not an appointment.
+ */
+function indexOpportunitiesByContact_(opportunities, stageNames) {
+  const byContact = {};
+  (opportunities || []).forEach(function (o) {
+    const cid = safeText_(o.contact && o.contact.id || o.contactId);
+    if (!cid) return;
+    const stageId = safeText_(o.pipelineStageId || o.pipeline_stage_id || o.stageId || (o.stage && o.stage.id));
+    const rawName = safeText_(o.stage && o.stage.name || (stageNames || {})[stageId]);
+    const raw = safeText_(o.status).toLowerCase();
+    const status = raw === 'won' ? 'Closed' : raw === 'lost' ? 'Lost' : normaliseStage_(rawName);
+    const entry = {
+      status: status,
+      /* Pipeline position, recorded separately from the outcome. GHL overwrites the
+         stage with won/lost in `status` above, which erased how far a lost lead had
+         actually got: 5 leads lost at Appointment stage were dropping out of both the
+         booked-call and appointment counts, understating appointments by ~10% and
+         making the dashboard disagree with the GHL board. */
+      stage: normaliseStage_(rawName),
+      outcome: raw || 'open',
+      createdAt: safeText_(o.createdAt), stageId: stageId,
+      opportunityId: safeText_(o.id), monetaryValue: asNumber_(o.monetaryValue || o.value)
+    };
+    if (!byContact[cid] || statusRank_(entry.status) > statusRank_(byContact[cid].status)) byContact[cid] = entry;
+  });
+  return byContact;
+}
+
+/**
+ * Re-stamp an existing lead row from its current pipeline stage.
+ *
+ * Only the stage and the flags derived from it are touched. quality, urgencyTimeline
+ * and notes are hand-maintained in the sheet and must survive a refresh, and the
+ * contact's name/phone/attribution cannot change without a full contact pull anyway.
+ */
+function applyStageToLead_(row, stage) {
+  const status = normaliseStage_(stage.status);
+  const live = function (floor) { return status !== 'Lost' && statusRank_(status) >= statusRank_(floor); };
+  const out = {};
+  GHL_LEAD_HEADERS.forEach(function (h) { out[h] = row[h]; });
+  out.ghlId = safeText_(row.ghlId);
+  out.date = dayKey_(row.date);              // Sheets hands dates back as Date objects
+  out.status = status;
+  out.responded = live('Responded') ? 'Y' : '';
+  out.appointment = live('Appointment') ? 'Booked' : '';
+  out.strategySession = live('Strategy Session') ? 'Y' : '';
+  out.qualified = live('Appt Qualified') ? 'Y' : '';
+  out.dealValue = asNumber_(row.dealValue) || asNumber_(stage.monetaryValue);
+  out.stage = normaliseStage_(stage.stage || stage.status);
+  out.outcome = safeText_(stage.outcome) || 'open';
+  return out;
+}
+
+/**
+ * Quick GHL refresh — pipeline stages only.
+ *
+ * The full sync re-reads every contact in the account (~9,100 records, 45-60s). That is
+ * far too slow to sit inside a page load, and almost all of it is wasted: names and
+ * phone numbers do not change between one dashboard visit and the next. Stage moves do.
+ * There are only ~400 opportunities, so pulling those alone gives the dashboard the
+ * thing that actually changed, in a couple of seconds.
+ *
+ * Contacts appearing for the first time are fetched individually and capped, so a
+ * sudden burst of new leads cannot turn a page load into a full sync. Anything past
+ * the cap lands in the nightly reconciliation instead.
+ */
+function refreshGHLStages_(runId) {
+  const started = new Date();
+  const apiKey = prop_('GHL_API_KEY', '');
+  if (!apiKey) throw new Error('GHL_API_KEY is missing.');
+  const locationId = prop_('GHL_LOCATION_ID', 'cyeYxFVQE1l73kO6S6Lx');
+  const pipelineId = prop_('GHL_PIPELINE_ID', 'BdutTA7xHUrNoPpWc5Nu');
+  const headers = {
+    'Authorization': 'Bearer ' + apiKey,
+    'Version': prop_('GHL_API_VERSION', '2021-07-28'),
+    'Content-Type': 'application/json'
+  };
+
+  const opportunities = fetchAllGHLOpportunities_(locationId, pipelineId, headers, runId);
+  // A partial or empty read would otherwise wipe the tab, since rows without a matching
+  // opportunity are dropped. Refuse to write rather than destroy the pipeline view.
+  if (!opportunities.length) throw new Error('GHL returned no opportunities — refusing to overwrite the pipeline.');
+
+  const stageNames = fetchGHLStageNames_(locationId, pipelineId, headers, runId);
+  const byContact = indexOpportunitiesByContact_(opportunities, stageNames);
+
+  const existing = sheetRowsAsObjects_(APP.TABS.GHL);
+  const rowFor = {};
+  existing.forEach(function (r) { rowFor[safeText_(r.ghlId)] = r; });
+
+  const out = [];
+  let moved = 0;
+  Object.keys(byContact).forEach(function (cid) {
+    const row = rowFor[cid];
+    if (!row) return;
+    const before = normaliseStage_(row.status);
+    const updated = applyStageToLead_(row, byContact[cid]);
+    if (updated.status !== before) moved++;
+    out.push(updated);
+  });
+
+  const missing = Object.keys(byContact).filter(function (cid) { return !rowFor[cid]; });
+  const cap = asNumber_(prop_('FRESHEN_MAX_NEW_CONTACTS', 40));
+  let added = 0;
+  missing.slice(0, cap).forEach(function (cid) {
+    try {
+      const body = ghlGetJson_('https://services.leadconnectorhq.com/contacts/' + encodeURIComponent(cid),
+        headers, 'GHL contact', runId);
+      const contact = body.contact || body;
+      if (contact && contact.id) { out.push(mapGHLContact_(contact, byContact[cid], {})); added++; }
+    } catch (e) { /* one unreadable contact must not sink the whole refresh */ }
+  });
+
+  overwriteObjects_(APP.TABS.GHL, GHL_LEAD_HEADERS, out);
+  const funnelRows = rebuildDailyFunnelFact_(runId);
+  const deferred = Math.max(0, missing.length - cap);
+  const note = out.length + ' pipeline leads; ' + moved + ' stage changes; ' + added + ' new' +
+    (deferred ? '; ' + deferred + ' deferred to the nightly sync' : '');
+  appendSyncLog_(runId, 'GHL-Quick', 'SUCCESS', started, new Date(), opportunities.length, out.length, '', '', note, 'freshen');
+  return { service: 'GHL-Quick', opportunitiesRead: opportunities.length, leadsWritten: out.length,
+           stageChanges: moved, newLeads: added, deferred: deferred, funnelRows: funnelRows };
+}
+
+/**
+ * Pull the latest from Meta and GHL on demand — this is what the dashboard calls on
+ * every page load, so that opening the URL always shows current data.
+ *
+ * Deliberately narrow. Meta gets a short rolling window because older days are settled
+ * and re-reading them costs minutes and trips the Graph API rate limiter (seen as
+ * "There have been too many calls" on 2026-08-05); GHL gets stages only, for the
+ * reasons in refreshGHLStages_. The nightly full sync is what reconciles everything.
+ *
+ * Failures are collected, not thrown: if GHL's token is dead the Meta numbers should
+ * still refresh, and the dashboard should say what broke rather than show nothing.
+ */
+function freshenDashboard(request) {
+  request = request || {};
+  assertAccess_(request.accessKey);
+
+  const props = PropertiesService.getScriptProperties();
+  const now = new Date();
+  const lastIso = prop_('LAST_FRESHEN_AT', '');
+  // Repeated refreshes of the browser tab must not each trigger an API round trip;
+  // both platforms rate-limit, and Meta has already thrown 400s for call volume.
+  const minGap = asNumber_(prop_('FRESHEN_MIN_GAP_SECONDS', 120));
+  if (!request.force && lastIso) {
+    const age = (now.getTime() - new Date(lastIso).getTime()) / 1000;
+    if (age >= 0 && age < minGap) {
+      return { ran: false, reason: 'recent', secondsAgo: Math.round(age), lastFreshenAt: lastIso };
+    }
+  }
+
+  const runId = makeRunId_('freshen');
+  const result = { ran: true, errors: [], meta: null, ghl: null };
+
+  try {
+    result.meta = syncMetaDaily_(runId, asNumber_(prop_('FRESHEN_META_DAYS', 3)));
+  } catch (e) {
+    result.errors.push('Meta: ' + e.message);
+    appendErrorLog_(runId, 'Meta', 'freshenDashboard', 'ERROR', e.message, '', '', e.stack, {}, 'freshen');
+  }
+  try {
+    result.ghl = refreshGHLStages_(runId);
+  } catch (e) {
+    result.errors.push('GHL: ' + e.message);
+    appendErrorLog_(runId, 'GHL', 'freshenDashboard', 'ERROR', e.message, '', '', e.stack, {}, 'freshen');
+  }
+
+  props.setProperty('LAST_FRESHEN_AT', now.toISOString());
+  clearDashboardCache_();
+  result.lastFreshenAt = now.toISOString();
+  result.ok = !result.errors.length;
+  return result;
 }
 
 // ==================== 05_Forecast.gs ====================
@@ -1619,8 +1917,28 @@ function setupV9(){
 function seedStageMap_(){const headers=['canonicalStage','rank','countsAsResponded','countsAsBooked','countsAsAppointment','countsAsQualified','countsAsClosed','knownAliases'];const aliases={New:'new lead, new, signup',Contacted:'attempting contact, contacted, nurture',Responded:'responded, replied', 'Booked Call':'booked call, booking, booked appointment, diagnosis call booked',Appointment:'appointment, show, showed','Strategy Session':'strategy session, strategy session booked','Appt Qualified':'implementation opportunity, attended, qualified','Closed':'close, closed, won','Lost':'unqualified, lost'};const rows=CANONICAL_STAGES.map((s,i)=>({canonicalStage:s,rank:i,countsAsResponded:i>=2&&s!=='Lost'?'Y':'',countsAsBooked:i>=3&&s!=='Lost'?'Y':'',countsAsAppointment:i>=4&&s!=='Lost'?'Y':'',countsAsQualified:i>=6&&s!=='Lost'?'Y':'',countsAsClosed:s==='Closed'?'Y':'',knownAliases:aliases[s]||''}));overwriteObjects_(APP.TABS.STAGES,headers,rows);}
 function seedConfigV9_(){const headers=['setting','value','required','description'];const rows=[['Sheet ID',getMasterSheetId_(),'Yes','v9 master spreadsheet'],['Meta API version',prop_('META_API_VERSION','v19.0'),'Yes','Keep configurable; change only after testing'],['Meta history days',APP.DEFAULT_META_DAYS,'No','Daily ad insights lookback'],['GHL sync interval','15 minutes','No','Server trigger only; no browser polling'],['Meta sync interval','30 minutes','No','Server trigger only'],['Web app execute as','User deploying','Yes','Avoids per-viewer Google OAuth'],['Web app access','Anyone','Yes','Direct-link access; no dashboard login gate'],['Mobile mode','Responsive bottom navigation','Yes','Designed for Chrome Android/iOS']].map(r=>({setting:r[0],value:r[1],required:r[2],description:r[3]}));overwriteObjects_(APP.TABS.CONFIG,headers,rows);}
 
-function installV9Triggers(){removeV9Triggers(false);ScriptApp.newTrigger('scheduledMetaSyncV9').timeBased().everyMinutes(30).create();ScriptApp.newTrigger('scheduledMetaTokenRefresh').timeBased().everyWeeks(1).onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(5).create();ScriptApp.newTrigger('scheduledGHLSyncV9').timeBased().everyMinutes(15).create();ScriptApp.newTrigger('scheduledHealthCheckV9').timeBased().everyHours(6).create();}
-function removeV9Triggers(showAlert){ScriptApp.getProjectTriggers().forEach(t=>{if(['scheduledMetaSyncV9','scheduledGHLSyncV9','scheduledHealthCheckV9','scheduledMetaTokenRefresh'].indexOf(t.getHandlerFunction())>=0)ScriptApp.deleteTrigger(t);});if(showAlert!==false)uiAlert_('v9 triggers removed.');}
+/**
+ * Trigger set.
+ *
+ * The 30-minute Meta poll and 15-minute GHL poll were replaced by one nightly
+ * reconciliation: freshenDashboard now pulls on every page load, so polling around the
+ * clock only burned API quota against a dashboard nobody was looking at — and the GHL
+ * poll in particular was writing a 401 into Error_Log every 15 minutes.
+ *
+ * The nightly run is the one that reads every contact and picks up deletions, so it
+ * stays. 05:00 SGT is after Meta has settled the previous day's spend.
+ */
+function installV9Triggers(){
+  removeV9Triggers(false);
+  ScriptApp.newTrigger('scheduledDailySyncV9').timeBased().atHour(5).everyDays(1).inTimezone(APP.TZ).create();
+  ScriptApp.newTrigger('scheduledMetaTokenRefresh').timeBased().everyWeeks(1).onWeekDay(ScriptApp.WeekDay.MONDAY).atHour(4).create();
+  ScriptApp.newTrigger('scheduledHealthCheckV9').timeBased().everyHours(6).create();
+  uiAlert_('v9 triggers installed: nightly full sync 05:00 SGT, weekly Meta token refresh, 6-hourly health check.');
+}
+
+/** Nightly reconciliation — the full pull, including contacts and deleted records. */
+function scheduledDailySyncV9(){withScriptLock_('Daily sync',1000,function(){const runId=makeRunId_('daily');try{syncAllV9_(runId,'scheduled');clearDashboardCache_();}catch(e){appendErrorLog_(runId,'All','scheduledDailySyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
+function removeV9Triggers(showAlert){ScriptApp.getProjectTriggers().forEach(t=>{if(['scheduledMetaSyncV9','scheduledGHLSyncV9','scheduledHealthCheckV9','scheduledMetaTokenRefresh','scheduledDailySyncV9'].indexOf(t.getHandlerFunction())>=0)ScriptApp.deleteTrigger(t);});if(showAlert!==false)uiAlert_('v9 triggers removed.');}
 function scheduledMetaSyncV9(){withScriptLock_('Meta scheduled sync',1000,function(){const runId=makeRunId_('meta');try{syncMetaDaily_(runId,APP.DEFAULT_META_DAYS);backfillGoogleDailyFact_();clearDashboardCache_();}catch(e){appendErrorLog_(runId,'Meta','scheduledMetaSyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
 function scheduledGHLSyncV9(){withScriptLock_('GHL scheduled sync',1000,function(){const runId=makeRunId_('ghl');try{syncGHL_(runId);clearDashboardCache_();}catch(e){appendErrorLog_(runId,'GHL','scheduledGHLSyncV9','ERROR',e.message,'','',e.stack,{},'scheduled');throw e;}});}
 function scheduledHealthCheckV9(){buildHealthReport_(false);}

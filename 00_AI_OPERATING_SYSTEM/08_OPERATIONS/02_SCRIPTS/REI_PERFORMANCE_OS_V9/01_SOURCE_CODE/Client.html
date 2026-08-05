@@ -21,7 +21,11 @@ const app={
     document.querySelectorAll('[data-adfilter]').forEach(b=>b.onclick=()=>this.setAdFilter(b.dataset.adfilter));
     document.querySelectorAll('[data-adplatform]').forEach(b=>b.onclick=()=>this.setAdPlatform(b.dataset.adplatform));
     document.querySelectorAll('[data-adstatus]').forEach(b=>b.onclick=()=>this.setAdStatus(b.dataset.adstatus));
-    this.load(true);   // no login screen — assertAccess_ runs in direct-link mode
+    /* Two-stage open. The sheet renders immediately so the dashboard is usable in
+       about a second, then freshen() pulls whatever changed in Meta and GHL and
+       re-renders in place. Doing the pull first would leave the user staring at a
+       spinner for the length of an API round trip on every single page load. */
+    this.load(true).then(()=>this.freshen());   // no login screen — assertAccess_ runs in direct-link mode
   },
 
   /* ── range controls ── */
@@ -53,6 +57,7 @@ const app={
         case 'login':runner.login(arg);break;
         case 'getDashboardData':runner.getDashboardData(arg);break;
         case 'runManualSync':runner.runManualSync(arg);break;
+        case 'freshenDashboard':runner.freshenDashboard(arg);break;
         case 'saveForecastScenario':runner.saveForecastScenario(arg);break;
         case 'getHealthData':runner.getHealthData(arg);break;
         case 'runMetaBackfill':runner.runMetaBackfill(arg);break;
@@ -69,6 +74,33 @@ const app={
       const data=await this.server('getDashboardData',{accessKey:this.state.key,rangeKey:this.state.rangeKey,customStart:this.state.customStart,customEnd:this.state.customEnd,force:!!force});
       this.state.data=data;this.render();
     }catch(e){this.toast(e.message,true);}finally{this.loading(false);}
+  },
+
+  /* Live pull on open. Runs quietly: no spinner, because the dashboard is already
+     showing real data and blocking it behind a second load would defeat the point.
+     A dead credential downgrades to a visible note rather than an error toast — the
+     numbers on screen are still valid, just not current. */
+  async freshen(){
+    this.setStatus('Checking for new data…');
+    try{
+      const r=await this.server('freshenDashboard',{accessKey:this.state.key});
+      if(!r.ran){this.stampFreshness(r.lastFreshenAt);return;}
+      if(r.errors&&r.errors.length){
+        this.setStatus('Last saved data — live refresh failed');
+        this.toast(r.errors.join(' · '),true);
+      }
+      await this.load(true);
+      const moved=r.ghl&&r.ghl.stageChanges;
+      if(moved)this.toast(moved+' pipeline stage change'+(moved===1?'':'s')+' picked up');
+    }catch(e){
+      this.setStatus('Last saved data — live refresh unavailable');
+    }
+  },
+
+  stampFreshness(iso){
+    if(!iso)return;
+    const t=new Date(iso).toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'});
+    this.setStatus('Live as of '+t);
   },
 
   async sync(){
@@ -144,16 +176,29 @@ const app={
     }
 
     const o=d.overview;
+    /* The headline number is how many leads are sitting in that GHL stage right now, so
+       a card can be read straight off the GHL board with no mental arithmetic. The
+       sub-line carries the cumulative "ever reached" count, which is what the cost-per
+       and conversion figures are built from — a lead now in Appointment did book a
+       call, and dropping it from the maths would overstate every downstream rate. */
+    const c=d.census||{};
+    const at=(stage,fallback)=>this.num(typeof c[stage]==='number'?c[stage]:fallback);
     const cards=[
       ['Spend',this.money(o.spend),'CPL '+this.money(o.cpl)],
       ['CRM leads',this.num(o.leads),'From GHL — Response '+this.pct(o.responseRate)],
-      ['Booked calls',this.num(o.bookedCalls),'Cost '+this.money(o.costPerBooked)],
-      ['Appointments',this.num(o.appointments),'Show '+this.pct(o.showRate)],
+      ['Booked calls',at('Booked Call',o.bookedCalls),this.num(o.bookedCalls)+' ever reached · '+this.money(o.costPerBooked)+' each'],
+      ['Appointments',at('Appointment',o.appointments),this.num(o.appointments)+' ever reached · '+this.pct(o.showRate)+' show'],
+      ['Strategy sessions',at('Strategy Session',o.strategySessions),this.num(o.strategySessions)+' ever reached · '+this.money(o.costPerStrategySession)+' each'],
+      ['Nurture',at('Nurture',0),'Attended, not moved forward — follow up'],
       ['Closed',this.num(o.closed),'Cost '+this.money(o.costPerClose)],
-      ['Revenue',this.money(o.revenue),'ROAS '+o.roas.toFixed(2)+'x'],
+      ['Mentorship',this.money(o.investment),Number(o.investment||0)?'Masterminds & coaching':'Add rows to the Investments tab'],
+      ['Revenue',this.money(o.revenue),Number(o.investment||0)
+        ? 'ROAS '+o.roas.toFixed(2)+'x ads · '+Number(o.roasAllIn||0).toFixed(2)+'x all-in'
+        : 'ROAS '+o.roas.toFixed(2)+'x'],
       ['CTR',o.ctr.toFixed(2)+'%','Clicks '+this.num(o.clicks)]
     ];
     document.getElementById('overviewCards').innerHTML=cards.map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');
+    try{this.renderInvestments(d);}catch(e){/* one panel must never blank the dashboard */}
 
     // Populate the month picker once, from months present in the data.
     const mp=document.getElementById('monthPicker');
@@ -585,6 +630,26 @@ const app={
   },
 
   /* ══════════════ helpers ══════════════ */
+  /* Year-by-year mentorship spend, with the all-in return underneath. Hidden entirely
+     when nothing has been entered, so the dashboard does not carry an empty panel. */
+  renderInvestments(d){
+    const panel=document.getElementById('investmentPanel');
+    if(!panel)return;
+    const inv=d.investments||{byYear:[],total:0};
+    const years=inv.byYear||[];
+    panel.classList.toggle('hidden',!years.length);
+    if(!years.length)return;
+    const o=d.overview||{};
+    const rows=years.map(y=>{
+      const what=y.items.map(i=>i.vendor||i.category||i.description).filter(Boolean).slice(0,3).join(' · ');
+      return `<div class="trend-row"><span>${this.esc(y.year)}</span><strong>${this.money(y.amount)}</strong><span class="inv-note">${this.esc(what)}</span></div>`;
+    }).join('');
+    this.set('investmentBreakdown',rows+
+      `<div class="trend-row inv-total"><span>Total invested</span><strong>${this.money(o.totalInvested)}</strong>`+
+      `<span class="inv-note">${this.money(o.spend)} ads + ${this.money(inv.total)} mentorship · `+
+      `ROAS ${Number(o.roas||0).toFixed(2)}x ads vs ${Number(o.roasAllIn||0).toFixed(2)}x all-in</span></div>`);
+  },
+
   setStatus(t){document.getElementById('syncStatus').textContent=t;},
   loading(on){document.getElementById('loading').classList.toggle('hidden',!on);},
   toast(msg,error){const el=document.getElementById('toast');el.textContent=msg;el.style.background=error?'#ff637d':'#edf4ff';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);},
