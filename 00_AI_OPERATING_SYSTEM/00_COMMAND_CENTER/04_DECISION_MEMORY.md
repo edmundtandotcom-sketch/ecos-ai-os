@@ -1113,3 +1113,27 @@ A second session (title: "Singapore property video repurposing routine," working
 - `.claude/skills/rei-video-routine/SKILL.md` → path references updated to the new Foundation and watchlist locations; no behavior change.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → v3.24 (this decision).
 - Rollback: `99_ARCHIVE/GOVERNANCE_PRE_ASKFIRSTGATE_2026-07-27/` (pre-edit copies of all three). No file was deleted.
+
+---
+
+## Decision 121 — Batch #2 Ads Extraction (8 Page-ID Links): Two Direct Property Competitors Found
+
+**Status:** LOGGED — 2026-07-31. On-demand `/rei-ads-scan` extraction of 8 Edmund-supplied Facebook Ad Library page-ID links, per the standing cross-vertical sourcing rule (Decision 120).
+
+### What ran
+
+8 page-ID links extracted full (video + image + scripts + posts/CTA) into their respective media-type swipe folders, transcribed, with a `_ad_breakdown.md` per advertiser. Batch totals: **27 videos + 51 images across 8 advertisers.**
+
+**The two highest-value finds are direct property competitors (new to the watchlist as HIGH PRIORITY):**
+- **Jason Evonne Property** (108343127407869) — argues REI's own One-Property-Trap thesis near-verbatim (99-yr lease decay; "same starting line, different balance sheet in 10 years") to REI's exact audience, and already runs an ad on the **15-month HDB wait-out removal** that REI's content routine also scripted. 4 image ads.
+- **Damien Tan Real Estate** (101766852110723) — most sophisticated/data-driven of the batch (1,000+ clients, documented outcomes). Killer myth-bust hooks: "sold out in 12 hours isn't proof it's a good buy", "a neighbour can wipe $300k off your valuation", 3-Filter outskirt strategy. 4 videos + 2 images. Competes on data + entry-timing tactics; REI competes upstream on the Know→Move→Own sequence.
+
+**Six cross-vertical angle sources** (repurpose INTO property per Decision 120): Growth Partners Inc (AI lead-gen, system-vs-hustle), Future Adviser Sg ("hustle cycle that resets every January" + "[X] Trap" naming), Leads SG (speed-to-lead), Raymondlim.rlc ("still closing every case in 10 years?"), Escape Uncertainty (trust-earned-early, agent B2B — lowest value), and Abc Sales AI (already tracked — 4 new English WhatsApp-AI scripts added incrementally to the prior 5 Chinese).
+
+### Files touched
+
+- `01_ASSET_LIBRARY/03_CREATIVE_INTELLIGENCE/03_EXTERNAL_REFERENCE_SWIPES/<advertiser>/` — media + `_ad_breakdown.md` for 8 advertisers (Drive-only per Decision 118; not git-tracked).
+- `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/ADS_LIBRARY/SOURCE_REGISTRY/Master_Ad_Database.md` — batch #2 registry block appended.
+- `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/COMPETITOR_WATCHLIST.md` — 7 new rows (2 HIGH-priority direct competitors + 5 cross-vertical) + Abc Sales AI row updated.
+- `_MASTER_INDEX.md` regenerated (Drive-only).
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` — this decision.
