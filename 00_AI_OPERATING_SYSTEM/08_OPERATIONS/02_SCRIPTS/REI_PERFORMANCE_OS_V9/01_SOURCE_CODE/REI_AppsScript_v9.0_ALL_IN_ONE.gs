@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.12.0',
+  VERSION: '9.13.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -877,10 +877,37 @@ function fetchGHLStageNames_(locationId,pipelineId,headers,runId){
 
 function ghlGetJson_(url,headers,label,runId){const res=fetchWithRetry_(url,{method:'get',headers:headers,muteHttpExceptions:true},label,runId);const code=res.getResponseCode(),text=res.getContentText();let body;try{body=JSON.parse(text);}catch(e){throw new Error(label+' returned non-JSON HTTP '+code+': '+text.slice(0,300));}if(code<200||code>=300)throw new Error(label+' HTTP '+code+': '+safeText_(body.message||text).slice(0,500));return body;}
 
+/**
+ * Which channel actually paid for this lead.
+ *
+ * Order matters, and it used to be wrong. A loose match on the string "google" anywhere
+ * in utmSource / adSource / medium was tested BEFORE the Meta ad id, so a lead carrying
+ * a Meta ad id but a source like "google-contacts ads manual add" was credited to
+ * Google. Roughly 30 Meta-paid leads sat under Google as a result, which is why Google
+ * reported an 83.5% lead-to-booked rate and 35 booked calls against zero revenue.
+ *
+ * The hard signals now outrank the text:
+ *   gclid    — only Google issues one, so it settles the question outright.
+ *   utmAdId  — Meta lead ads populate this; Google Ads does not.
+ * Only when neither is present does the source text get a say, and the Meta words are
+ * checked first so "facebook" cannot lose to an incidental "google" elsewhere in the
+ * same string.
+ */
+function classifyLeadPlatform_(attr, contact) {
+  attr = attr || {};
+  if (safeText_(attr.gclid)) return 'Google';
+  if (safeText_(attr.utmAdId)) return 'Meta';
+  const text = safeText_(attr.utmSource || attr.adSource || attr.medium ||
+                         (contact && contact.source)).toLowerCase();
+  if (text.indexOf('facebook') >= 0 || text.indexOf('instagram') >= 0 || text.indexOf('meta') >= 0) return 'Meta';
+  if (text.indexOf('google') >= 0 || text.indexOf('youtube') >= 0) return 'Google';
+  return 'Other';
+}
+
 function mapGHLContact_(c,stage,preserved){
-  const attrs=c.attributions||[];const attr=attrs.find(a=>a.utmAdId)||attrs[0]||{};const platformRaw=safeText_(attr.utmSource||attr.adSource||attr.medium||c.source).toLowerCase();const status=normaliseStage_(stage.status);const tags=Array.isArray(c.tags)?c.tags:[];const tagText=tags.join(' ').toLowerCase();let proptype='';if(tagText.indexOf('newlaunch')>=0||tagText.indexOf('new launch')>=0)proptype='New Launch';else if(tagText.indexOf('familylegacy')>=0||tagText.indexOf('family legacy')>=0)proptype='Family Legacy';else proptype=safeText_(c.source);
+  const attrs=c.attributions||[];const attr=attrs.find(a=>a.utmAdId)||attrs[0]||{};const status=normaliseStage_(stage.status);const tags=Array.isArray(c.tags)?c.tags:[];const tagText=tags.join(' ').toLowerCase();let proptype='';if(tagText.indexOf('newlaunch')>=0||tagText.indexOf('new launch')>=0)proptype='New Launch';else if(tagText.indexOf('familylegacy')>=0||tagText.indexOf('family legacy')>=0)proptype='Family Legacy';else proptype=safeText_(c.source);
   const date=c.dateAdded?Utilities.formatDate(new Date(c.dateAdded),APP.TZ,'yyyy-MM-dd'):(stage.createdAt?Utilities.formatDate(new Date(stage.createdAt),APP.TZ,'yyyy-MM-dd'):'');
-  return {ghlId:safeText_(c.id),name:safeText_(c.contactName||[c.firstName,c.lastName].filter(Boolean).join(' ')),contact:safeText_(c.email||c.phone),phone:safeText_(c.phone),email:safeText_(c.email),sourceAdId:safeText_(attr.utmAdId),sourceAdName:safeText_(attr.utmContent||attr.utmCampaign),platform:platformRaw.indexOf('google')>=0||platformRaw.indexOf('youtube')>=0?'Google':platformRaw.indexOf('facebook')>=0||platformRaw.indexOf('meta')>=0||attr.utmAdId?'Meta':'Other',campaignName:safeText_(attr.utmCampaign),status:status,quality:safeText_(preserved.quality),proptype:proptype,date:date,responded:status!=='Lost'&&statusRank_(status)>=statusRank_('Responded')?'Y':'',appointment:status!=='Lost'&&statusRank_(status)>=statusRank_('Appointment')?'Booked':'',strategySession:status!=='Lost'&&statusRank_(status)>=statusRank_('Strategy Session')?'Y':'',qualified:status!=='Lost'&&statusRank_(status)>=statusRank_('Appt Qualified')?'Y':'',dealValue:asNumber_(preserved.dealValue)||asNumber_(stage.monetaryValue),urgencyTimeline:safeText_(preserved.urgencyTimeline),tags:tags.join(', '),source:safeText_(c.source),notes:safeText_(preserved.notes),stage:normaliseStage_(stage.stage||stage.status),outcome:safeText_(stage.outcome)||'open'};
+  return {ghlId:safeText_(c.id),name:safeText_(c.contactName||[c.firstName,c.lastName].filter(Boolean).join(' ')),contact:safeText_(c.email||c.phone),phone:safeText_(c.phone),email:safeText_(c.email),sourceAdId:safeText_(attr.utmAdId),sourceAdName:safeText_(attr.utmContent||attr.utmCampaign),platform:classifyLeadPlatform_(attr,c),campaignName:safeText_(attr.utmCampaign),status:status,quality:safeText_(preserved.quality),proptype:proptype,date:date,responded:status!=='Lost'&&statusRank_(status)>=statusRank_('Responded')?'Y':'',appointment:status!=='Lost'&&statusRank_(status)>=statusRank_('Appointment')?'Booked':'',strategySession:status!=='Lost'&&statusRank_(status)>=statusRank_('Strategy Session')?'Y':'',qualified:status!=='Lost'&&statusRank_(status)>=statusRank_('Appt Qualified')?'Y':'',dealValue:asNumber_(preserved.dealValue)||asNumber_(stage.monetaryValue),urgencyTimeline:safeText_(preserved.urgencyTimeline),tags:tags.join(', '),source:safeText_(c.source),notes:safeText_(preserved.notes),stage:normaliseStage_(stage.stage||stage.status),outcome:safeText_(stage.outcome)||'open'};
 }
 
 /** Column order of GHL_Leads. Shared so the full sync and the quick refresh can never
