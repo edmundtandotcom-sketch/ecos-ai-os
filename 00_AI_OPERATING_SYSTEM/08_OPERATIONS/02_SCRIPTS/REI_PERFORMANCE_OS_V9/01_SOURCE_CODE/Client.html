@@ -21,6 +21,7 @@ const app={
     document.querySelectorAll('[data-adfilter]').forEach(b=>b.onclick=()=>this.setAdFilter(b.dataset.adfilter));
     document.querySelectorAll('[data-adplatform]').forEach(b=>b.onclick=()=>this.setAdPlatform(b.dataset.adplatform));
     document.querySelectorAll('[data-adstatus]').forEach(b=>b.onclick=()=>this.setAdStatus(b.dataset.adstatus));
+    document.querySelectorAll('[data-costbasis]').forEach(b=>b.onclick=()=>this.setCostBasis(b.dataset.costbasis));
     /* Two-stage open. The sheet renders immediately so the dashboard is usable in
        about a second, then freshen() pulls whatever changed in Meta and GHL and
        re-renders in place. Doing the pull first would leave the user staring at a
@@ -48,6 +49,17 @@ const app={
     document.querySelectorAll('[data-range]').forEach(b=>b.classList.remove('active'));
     this.load(false);
   },
+  /* Ads-only vs all-in. Defaults to ads-only so CPL and cost-per-booked keep meaning
+     "what the advertising cost to produce this" — the number you judge campaigns on.
+     Switching to all-in rebases every cost and ROAS figure onto ad spend + mentorship,
+     which is the true business return. Purely a client-side rebase: the payload already
+     carries both spend and investment, so no server round trip is needed. */
+  setCostBasis(b){
+    this.state.costBasis=b;
+    document.querySelectorAll('[data-costbasis]').forEach(x=>x.classList.toggle('active',x.dataset.costbasis===b));
+    if(this.state.data)this.render();
+  },
+
   setAdPlatform(p){this.state.adPlatform=p;document.querySelectorAll('[data-adplatform]').forEach(b=>b.classList.toggle('active',b.dataset.adplatform===p));this.renderAds(this.state.data);},
 
   server(name,arg){
@@ -183,18 +195,26 @@ const app={
        call, and dropping it from the maths would overstate every downstream rate. */
     const c=d.census||{};
     const at=(stage,fallback)=>this.num(typeof c[stage]==='number'?c[stage]:fallback);
+    /* Every cost figure is divided out of ONE base, so the toggle can never leave the
+       cards half-rebased — spend saying one thing and cost-per-close another. */
+    const inc=this.state.costBasis==='all';
+    const invTotal=Number(o.investment||0);
+    const base=inc?Number(o.totalInvested||o.spend||0):Number(o.spend||0);
+    const per=n=>Number(n)?this.money(base/Number(n)):'—';
+    const roas=base?Number(o.revenue||0)/base:0;
+    const invYears=((d.investments||{}).byYear||[]).map(y=>y.year).join(' · ');
     const cards=[
-      ['Spend',this.money(o.spend),'CPL '+this.money(o.cpl)],
+      [inc?'Spend (all-in)':'Spend',this.money(base),'CPL '+per(o.leads)+(inc?' incl. mentorship':'')],
       ['CRM leads',this.num(o.leads),'From GHL — Response '+this.pct(o.responseRate)],
-      ['Booked calls',at('Booked Call',o.bookedCalls),this.num(o.bookedCalls)+' ever reached · '+this.money(o.costPerBooked)+' each'],
+      ['Booked calls',at('Booked Call',o.bookedCalls),this.num(o.bookedCalls)+' ever reached · '+per(o.bookedCalls)+' each'],
       ['Appointments',at('Appointment',o.appointments),this.num(o.appointments)+' ever reached · '+this.pct(o.showRate)+' show'],
-      ['Strategy sessions',at('Strategy Session',o.strategySessions),this.num(o.strategySessions)+' ever reached · '+this.money(o.costPerStrategySession)+' each'],
+      ['Strategy sessions',at('Strategy Session',o.strategySessions),this.num(o.strategySessions)+' ever reached · '+per(o.strategySessions)+' each'],
       ['Nurture',at('Nurture',0),'Attended, not moved forward — follow up'],
-      ['Closed',this.num(o.closed),'Cost '+this.money(o.costPerClose)],
-      ['Mentorship',this.money(o.investment),Number(o.investment||0)?'Masterminds & coaching':'Add rows to the Investments tab'],
-      ['Revenue',this.money(o.revenue),Number(o.investment||0)
-        ? 'ROAS '+o.roas.toFixed(2)+'x ads · '+Number(o.roasAllIn||0).toFixed(2)+'x all-in'
-        : 'ROAS '+o.roas.toFixed(2)+'x'],
+      ['Closed',this.num(o.closed),'Cost '+per(o.closed)],
+      ['Mentorship',this.money(invTotal),invTotal
+        ? (invYears||'—')+(inc?' · counted in spend':' · not counted in spend')
+        : 'Add rows to the Investments tab'],
+      ['Revenue',this.money(o.revenue),'ROAS '+roas.toFixed(2)+'x'+(inc?' all-in':' on ads')],
       ['CTR',o.ctr.toFixed(2)+'%','Clicks '+this.num(o.clicks)]
     ];
     document.getElementById('overviewCards').innerHTML=cards.map(c=>`<div class="metric"><div class="label">${c[0]}</div><div class="value">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join('');
