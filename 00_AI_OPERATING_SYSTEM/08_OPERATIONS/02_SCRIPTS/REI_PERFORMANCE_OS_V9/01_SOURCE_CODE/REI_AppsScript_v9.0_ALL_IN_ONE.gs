@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.11.0',
+  VERSION: '9.12.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -559,13 +559,23 @@ function buildDailyTrend_(perf, funnel) {
  */
 function buildStageCensus_(range) {
   const rows = sheetRowsAsObjects_(APP.TABS.GHL).filter(function (r) { return inDateRange_(r.date, range); });
-  const census = {};
-  CANONICAL_STAGES.forEach(function (stage) { census[stage] = 0; });
+  const blank = function () {
+    const o = {};
+    CANONICAL_STAGES.forEach(function (stage) { o[stage] = 0; });
+    o.total = 0;
+    return o;
+  };
+  // Split by platform as well as combined, so the dashboard can be filtered to one
+  // channel without a second server round trip.
+  const census = { all: blank(), Meta: blank(), Google: blank(), Other: blank() };
   rows.forEach(function (r) {
     const stage = normaliseStage_(r.stage || r.status);
-    census[stage] = (census[stage] || 0) + 1;
+    const platform = platformOf_(r.platform);
+    census.all[stage] = (census.all[stage] || 0) + 1;
+    census.all.total++;
+    census[platform][stage] = (census[platform][stage] || 0) + 1;
+    census[platform].total++;
   });
-  census.total = rows.length;
   return census;
 }
 
@@ -1727,6 +1737,11 @@ function finaliseSegment_(x) {
   x.ctr = x.impressions > 0 ? (x.clicks / x.impressions) * 100 : 0;
   x.cpc = x.clicks > 0 ? x.spend / x.clicks : 0;
   x.costPerBooked = x.bookedCalls > 0 ? x.spend / x.bookedCalls : 0;
+  x.costPerAppointment = x.appointments > 0 ? x.spend / x.appointments : 0;
+  x.costPerStrategySession = x.strategySessions > 0 ? x.spend / x.strategySessions : 0;
+  x.leadToAppointment = x.leads > 0 ? (x.appointments / x.leads) * 100 : 0;
+  x.showRate = x.bookedCalls > 0 ? x.appointments / x.bookedCalls : 0;
+  x.responseRate = (x.newLeads || x.leads) > 0 ? x.responded / (x.newLeads || x.leads) : 0;
   x.costPerClose = x.closedWon > 0 ? x.spend / x.closedWon : 0;
   x.roas = x.spend > 0 ? x.revenue / x.spend : 0;
   x.leadToBooked = x.leads > 0 ? (x.bookedCalls / x.leads) * 100 : 0;
@@ -1754,7 +1769,13 @@ function buildPlatformBreakdown_(perf, funnel) {
     });
   });
 
-  const list = ['Meta', 'Google', 'Other'].map(k => finaliseSegment_(seg[k])).filter(s => s.spend > 0 || s.leads > 0);
+  /* Previously this dropped any segment with no ad spend and no ad leads — which hid
+     the "Other" bucket while still counting it in the combined total, so the platform
+     cards never summed to the headline (182 CRM leads combined vs 103 + 72 shown).
+     A segment holding CRM leads is shown even when it carries no ad spend. */
+  const list = ['Meta', 'Google', 'Other']
+    .map(k => finaliseSegment_(seg[k]))
+    .filter(s => s.spend > 0 || s.leads > 0 || s.newLeads > 0);
   return { combined: finaliseSegment_(all), platforms: list };
 }
 

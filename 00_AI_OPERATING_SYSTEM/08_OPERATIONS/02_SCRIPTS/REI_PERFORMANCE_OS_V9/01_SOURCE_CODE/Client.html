@@ -22,6 +22,7 @@ const app={
     document.querySelectorAll('[data-adplatform]').forEach(b=>b.onclick=()=>this.setAdPlatform(b.dataset.adplatform));
     document.querySelectorAll('[data-adstatus]').forEach(b=>b.onclick=()=>this.setAdStatus(b.dataset.adstatus));
     document.querySelectorAll('[data-costbasis]').forEach(b=>b.onclick=()=>this.setCostBasis(b.dataset.costbasis));
+    document.querySelectorAll('[data-platformview]').forEach(b=>b.onclick=()=>this.setPlatformView(b.dataset.platformview));
     /* Two-stage open. The sheet renders immediately so the dashboard is usable in
        about a second, then freshen() pulls whatever changed in Meta and GHL and
        re-renders in place. Doing the pull first would leave the user staring at a
@@ -57,6 +58,16 @@ const app={
   setCostBasis(b){
     this.state.costBasis=b;
     document.querySelectorAll('[data-costbasis]').forEach(x=>x.classList.toggle('active',x.dataset.costbasis===b));
+    if(this.state.data)this.render();
+  },
+
+  /* Restrict the combined panel to one channel. Mentorship is business-wide and cannot
+     be attributed to Meta or Google, so the all-in toggle is hidden while a single
+     platform is selected rather than silently charging one channel for all of it. */
+  setPlatformView(p){
+    this.state.platformView=p;
+    document.querySelectorAll('[data-platformview]').forEach(x=>x.classList.toggle('active',x.dataset.platformview===p));
+    const ct=document.getElementById('costToggle'); if(ct)ct.classList.toggle('hidden',p!=='ALL');
     if(this.state.data)this.render();
   },
 
@@ -187,17 +198,36 @@ const app={
         : (s.leakNote?`<div class="panel quiet-note">${this.esc(s.leakNote)}</div>`:'');
     }
 
-    const o=d.overview;
+    const pv=this.state.platformView||'ALL';
+    const segList=((d.segments||{}).platforms)||[];
+    const seg=pv==='ALL'?null:segList.find(x=>x.platform===pv);
+    /* One channel selected: rebuild the same shape from that segment so every card below
+       reads from a single object and cannot end up mixing one platform's spend with
+       everyone's leads. An unknown platform yields zeros, never the combined figures. */
+    const o=pv==='ALL'?d.overview:(seg?{
+      spend:seg.spend,leads:seg.newLeads||seg.leads,clicks:seg.clicks,ctr:seg.ctr,
+      responded:seg.responded,bookedCalls:seg.bookedCalls,appointments:seg.appointments,
+      strategySessions:seg.strategySessions,closed:seg.closedWon,revenue:seg.revenue,
+      responseRate:seg.responseRate||0,showRate:seg.showRate||0,
+      investment:0,totalInvested:seg.spend,roasAllIn:seg.roas
+    }:{spend:0,leads:0,clicks:0,ctr:0,responded:0,bookedCalls:0,appointments:0,
+       strategySessions:0,closed:0,revenue:0,responseRate:0,showRate:0,
+       investment:0,totalInvested:0,roasAllIn:0});
+    const title=document.getElementById('combinedTitle');
+    if(title)title.textContent=pv==='ALL'?'All channels combined':pv+' only';
     /* The headline number is how many leads are sitting in that GHL stage right now, so
        a card can be read straight off the GHL board with no mental arithmetic. The
        sub-line carries the cumulative "ever reached" count, which is what the cost-per
        and conversion figures are built from — a lead now in Appointment did book a
        call, and dropping it from the maths would overstate every downstream rate. */
-    const c=d.census||{};
-    const at=(stage,fallback)=>this.num(typeof c[stage]==='number'?c[stage]:fallback);
+    /* Census gained a per-platform shape in v9.12; a payload cached from before that
+       is still a flat stage map, so accept both rather than render zeros for 2 minutes. */
+    const cenRoot=(d.census&&d.census.all)?d.census:{all:d.census||{}};
+    const cenv=cenRoot[pv==='ALL'?'all':pv]||{};
+    const at=(stage,fallback)=>this.num(typeof cenv[stage]==='number'?cenv[stage]:fallback);
     /* Every cost figure is divided out of ONE base, so the toggle can never leave the
        cards half-rebased — spend saying one thing and cost-per-close another. */
-    const inc=this.state.costBasis==='all';
+    const inc=pv==='ALL'&&this.state.costBasis==='all';
     const invTotal=Number(o.investment||0);
     const base=inc?Number(o.totalInvested||o.spend||0):Number(o.spend||0);
     const per=n=>Number(n)?this.money(base/Number(n)):'—';
@@ -211,8 +241,9 @@ const app={
       ['Strategy sessions',at('Strategy Session',o.strategySessions),this.num(o.strategySessions)+' ever reached · '+per(o.strategySessions)+' each'],
       ['Nurture',at('Nurture',0),'Attended, not moved forward — follow up'],
       ['Closed',this.num(o.closed),'Cost '+per(o.closed)],
-      ['Mentorship',this.money(invTotal),invTotal
-        ? (invYears||'—')+(inc?' · counted in spend':' · not counted in spend')
+      ['Mentorship',this.money(pv==='ALL'?invTotal:Number((d.overview||{}).investment||0)),
+        pv!=='ALL' ? 'Business-wide — not attributable to one channel'
+        : invTotal ? (invYears||'—')+(inc?' · counted in spend':' · not counted in spend')
         : 'Add rows to the Investments tab'],
       ['Revenue',this.money(o.revenue),'ROAS '+roas.toFixed(2)+'x'+(inc?' all-in':' on ads')],
       ['CTR',o.ctr.toFixed(2)+'%','Clicks '+this.num(o.clicks)]
@@ -235,14 +266,21 @@ const app={
   /* ══════════════ Platform separation ══════════════ */
   renderSegments(d){
     const seg=d.segments||{};const rows=seg.platforms||[];
+    /* Counts come from the same census the headline cards use, so a platform card and
+       the filtered combined panel can never disagree. Rates and cost-per figures stay
+       cumulative — spend divided by the people currently parked in a stage would be
+       meaningless. Counts answer "how many", rates answer "how well". */
+    const cenAll=(d.census&&d.census.all)?d.census:{};
     const target=(d.thresholds&&d.thresholds.targetCpl)||0;
     this.set('segmentCards',rows.map(p=>{
+      const pc=cenAll[p.platform]||{};
+      const cnt=(stage,fallback)=>this.num(typeof pc[stage]==='number'?pc[stage]:fallback);
       const good=target>0&&p.cpl>0&&p.cpl<=target;
       const bad=target>0&&p.cpl>target*2;
       return `<div class="segment-card ${bad?'bad':good?'good':''}">
         <div class="row"><h3>${this.esc(p.platform)}</h3><span class="badge ${p.roas>=3?'green':p.roas>0?'amber':'red'}">${p.roas.toFixed(2)}x ROAS</span></div>
         <div class="seg-hero"><div><span>Spend</span><strong>${this.money(p.spend)}</strong></div><div><span>Ad leads</span><strong>${this.num(p.leads)}</strong></div><div><span>CPL</span><strong class="${bad?'bad':good?'good':''}">${p.leads?this.money(p.cpl):'—'}</strong></div></div>
-        <div class="kv"><div><span>CRM leads</span><strong>${this.num(p.newLeads)}</strong></div><div><span>Booked</span><strong>${this.num(p.bookedCalls)}</strong></div><div><span>Closed</span><strong>${this.num(p.closedWon)}</strong></div><div><span>Revenue</span><strong>${this.money(p.revenue)}</strong></div><div><span>Lead→Booked</span><strong>${this.pctRaw(p.leadToBooked)}</strong></div><div><span>Cost/close</span><strong>${p.closedWon?this.money(p.costPerClose):'—'}</strong></div><div><span>CTR</span><strong>${p.ctr.toFixed(2)}%</strong></div></div>
+        <div class="kv"><div><span>CRM leads</span><strong>${this.num(p.newLeads)}</strong></div><div><span>Appointments</span><strong>${cnt('Appointment',p.appointments)}</strong></div><div><span>Strategy sessions</span><strong>${cnt('Strategy Session',p.strategySessions)}</strong></div><div><span>Closed</span><strong>${this.num(p.closedWon)}</strong></div><div><span>Revenue</span><strong>${this.money(p.revenue)}</strong></div><div><span>Lead→Appt</span><strong>${this.pctRaw(p.leadToAppointment)}</strong></div><div><span>Cost/appt</span><strong>${p.appointments?this.money(p.costPerAppointment):'—'}</strong></div><div><span>Cost/close</span><strong>${p.closedWon?this.money(p.costPerClose):'—'}</strong></div><div><span>CTR</span><strong>${p.ctr.toFixed(2)}%</strong></div></div>
       </div>`;}).join('')||'<div class="quiet-note">No platform data in this period.</div>');
 
     // Name the comparison outright rather than leaving it to be inferred from two cards.
