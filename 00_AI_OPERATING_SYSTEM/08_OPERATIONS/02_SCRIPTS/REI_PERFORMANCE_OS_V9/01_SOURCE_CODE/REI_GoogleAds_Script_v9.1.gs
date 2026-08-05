@@ -51,7 +51,19 @@ function main() {
     Logger.log('account that actually spends, and that HISTORY_START_DATE is early enough.');
     return;
   }
-  bridgeIntoDailyPerformanceFact(ss);
+
+  /* The bridge is reported separately rather than allowed to abort the run. The Google
+     tab is already written by this point, and the dashboard re-reads it on page open,
+     so a bridge failure must not present as "nothing synced" — and must not hide which
+     of the two steps actually broke. */
+  try {
+    bridgeIntoDailyPerformanceFact(ss);
+  } catch (e) {
+    Logger.log('ERROR in bridge: ' + e.message);
+    Logger.log('Google_Campaigns_Daily was written successfully (' + written + ' rows).');
+    Logger.log('Send this whole log on — the failure is in the Daily_Performance_Fact step.');
+    return;
+  }
   Logger.log('=== Sync complete: ' + written + ' campaign-days ===');
 }
 
@@ -171,8 +183,10 @@ function bridgeIntoDailyPerformanceFact(ss) {
     var o = byKey[k];
     out.push(target.map(function (h) { return o[h] === undefined ? '' : o[h]; }));
   });
+  Logger.log('Bridge: ' + (out.length - 1) + ' rows to write (' + values.length + ' Google + the rest Meta)');
 
   fact.clearContents();
+  ensureCapacity(fact, out.length, target.length);
   fact.getRange(1, 1, out.length, target.length).setValues(out);
   fact.setFrozenRows(1);
   Logger.log('Daily_Performance_Fact rebuilt: ' + (out.length - 1) + ' rows');
@@ -203,10 +217,26 @@ function status(s) {
   return s || 'Unknown';
 }
 
+/**
+ * Grow a sheet to fit before writing.
+ *
+ * clearContents() empties cells but does not change the grid, and setValues() throws
+ * if the range runs past the last row or column that actually exists. A tab sized to
+ * yesterday's smaller dataset therefore fails the moment the data grows — which is a
+ * silent trap, because the error names coordinates rather than the cause.
+ */
+function ensureCapacity(sheet, rowsNeeded, colsNeeded) {
+  var extraRows = rowsNeeded - sheet.getMaxRows();
+  if (extraRows > 0) sheet.insertRowsAfter(sheet.getMaxRows(), extraRows);
+  var extraCols = colsNeeded - sheet.getMaxColumns();
+  if (extraCols > 0) sheet.insertColumnsAfter(sheet.getMaxColumns(), extraCols);
+}
+
 function writeTab(ss, tabName, headers, dataRows) {
   var sheet = ss.getSheetByName(tabName) || ss.insertSheet(tabName);
   sheet.clearContents();
   var all = [headers].concat(dataRows || []);
+  ensureCapacity(sheet, all.length, headers.length);
   sheet.getRange(1, 1, all.length, headers.length).setValues(all);
   sheet.setFrozenRows(1);
   sheet.getRange(1, 1, 1, headers.length)
