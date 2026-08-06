@@ -311,3 +311,10 @@ Five folders created by another session were empty (no media). Identified via Me
 - **Cynric Ho** (239864660126575) — 2 videos (oversupply/valuation).
 - **Networth Builders / Gary Lim** (816844411522431) — 5 ads / 1 distinct video (civil-servant niche).
 - **Sarah Lee** — NOT FOUND via SG page-search (no matching advertiser). Parked pending a page-ID link from Edmund.
+
+## 2026-08-06 batch #4 (Edmund 7-URL set + Abc Sales AI ALL-country refresh)
+NEW advertisers:
+- **I Quadrant** (187151448541930) — DIRECT property-education competitor. 65 ads; 40 loaded = 13 distinct videos + 16 statics (~25 unreached, pagination). See _ad_breakdown.md.
+- **FNX Marketing By Finix Group** (1286193024567598) — cross-vertical, realtor client-acquisition agency. 5 static ads.
+- **The Producer Formula / Ryan Yeo** (840716469132393) — cross-vertical, FA referral masterclass. 2 ads / 1 video.
+RE-CHECKS (append-only refresh, Decision 124): Growth Partners Inc (872538235944011), Xccelerate Academy (the-x-tribe.com), Leads SG, Authentic Advisory Systems (100639661930725, grew ~42->55 = re-uploads of the same 2 scripts), Abc Sales AI (460789450460649) — re-scanned; only genuinely-new distinct creatives appended (see per-advertiser note).
