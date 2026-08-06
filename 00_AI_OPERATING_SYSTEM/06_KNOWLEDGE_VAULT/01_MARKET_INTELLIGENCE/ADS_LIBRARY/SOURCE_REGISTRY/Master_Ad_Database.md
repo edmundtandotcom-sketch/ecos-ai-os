@@ -318,3 +318,10 @@ NEW advertisers:
 - **FNX Marketing By Finix Group** (1286193024567598) — cross-vertical, realtor client-acquisition agency. 5 static ads.
 - **The Producer Formula / Ryan Yeo** (840716469132393) — cross-vertical, FA referral masterclass. 2 ads / 1 video.
 RE-CHECKS (append-only refresh, Decision 124): Growth Partners Inc (872538235944011), Xccelerate Academy (the-x-tribe.com), Leads SG, Authentic Advisory Systems (100639661930725, grew ~42->55 = re-uploads of the same 2 scripts), Abc Sales AI (460789450460649) — re-scanned; only genuinely-new distinct creatives appended (see per-advertiser note).
+
+## 2026-08-06 deep refresh results (Decision 124, append-only)
+- **Leads SG** (1851368671745396): +1 NEW video (3432599010249272, 105s, 2 days old) appended. Prior video 1518262926257601 now inactive — RETAINED (not deleted). Now 3 videos + 1 image.
+- **Abc Sales AI** (460789450460649): +7 NEW videos appended (26778991188433170, 1513197027069847, 2412023812558113, 1504649194446271, 989050540443700, 957861177273657, 1504550715020789). Prior IDs 1384969983658656 / 1322617909956228 / 1402525315089987 now inactive — RETAINED. Now 16 videos.
+- **Growth Partners Inc** (872538235944011): 10 videos unchanged; statics 44->46 but the 2 new library IDs (1363924962549043, 792594653917571) are re-uploads of existing creatives (same image files) — logged as dup IDs, not re-downloaded. No new distinct creative.
+- **Authentic Advisory Systems** (100639661930725): refreshed, still the same 2 distinct scripts (23 re-encode variants). No new creative.
+- **Xccelerate Academy**: scanned same-day (2026-08-06) — no change.
