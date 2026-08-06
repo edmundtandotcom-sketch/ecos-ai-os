@@ -303,3 +303,11 @@ Full folder audit found several advertisers had static image ads logged copy-onl
 - **Caleb Sim** (page 106092578729020) — 5 static image ads → 02_IMAGES.
 - **Frank Kern** (page 104803888411711) — 5 static/text-post image creatives → 02_IMAGES.
 All other folders verified: images already present, OR advertiser is genuinely video/story-only (nothing to add).
+
+## 2026-08-06 empty-folder full extraction (Decision 123 cont.)
+Five folders created by another session were empty (no media). Identified via Meta page-search and fully extracted:
+- **Jo Tan Real Estate (Joanna)** (924718830938305) — DIRECT COMPETITOR (decoupling/legacy). 2 videos.
+- **Ernee Ong / Proptiply** (322490897609800) — property-education, 61 ads = 39 distinct videos + 19 statics.
+- **Cynric Ho** (239864660126575) — 2 videos (oversupply/valuation).
+- **Networth Builders / Gary Lim** (816844411522431) — 5 ads / 1 distinct video (civil-servant niche).
+- **Sarah Lee** — NOT FOUND via SG page-search (no matching advertiser). Parked pending a page-ID link from Edmund.
