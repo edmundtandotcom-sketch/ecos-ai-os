@@ -1156,3 +1156,20 @@ Investigated the flagged risk that the Cloud "Weekly Content Intelligence" routi
 ### Files touched
 - Swipe folders for 3 advertisers (media + `_ad_breakdown.md`; Drive-only per Decision 118).
 - `Master_Ad_Database.md` — batch #3 block; `COMPETITOR_WATCHLIST.md` — 3 new rows; `_MASTER_INDEX.md` regenerated (Drive-only); this decision.
+
+---
+
+## Decision 124 — Append-Only Weekly Auto-Refresh of the Ads Swipe Library
+
+**Status:** APPROVED — Edmund, 2026-08-06.
+
+### Ruling
+The ads swipe library is a **growing, append-only archive**. Every advertiser already on the watchlist / in `Master_Ad_Database.md` must be **re-scanned and auto-refreshed on the weekly run** (and whenever a page-ID is re-supplied on demand). On each refresh:
+- Diff the advertiser's current active ad library-IDs against what's already logged; **download + transcribe only the NEW IDs**, adding them to the existing folder.
+- **NEVER delete, overwrite, or re-date previously captured assets.** An ad that has since gone inactive stays in the folder as a historical asset and is marked "no longer active" in the registry — not removed. The library only ever grows.
+- Existing `<date>_<id>` files keep their original first-seen date; newly-found ads get the current date. Report per advertiser: N already had / M new added / K now-inactive-but-retained.
+
+Baked into `.claude/skills/rei-ads-scan/SKILL.md` (§3, "Append-only refresh") and the Cloud "Weekly Ads Intelligence" routine prompt (trig_01AKcrpuiXZmbjqhXsrsKsGt).
+
+### Rationale
+Edmund: "we must always refresh and auto populate on a weekly basis so it auto tabulate existing ads to add on. never delete previous assets also." This makes the library a longitudinal record of each competitor's creative evolution, not a one-time snapshot.
