@@ -1137,3 +1137,22 @@ A second session (title: "Singapore property video repurposing routine," working
 - `06_KNOWLEDGE_VAULT/01_MARKET_INTELLIGENCE/COMPETITOR_WATCHLIST.md` — 7 new rows (2 HIGH-priority direct competitors + 5 cross-vertical) + Abc Sales AI row updated.
 - `_MASTER_INDEX.md` regenerated (Drive-only).
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` — this decision.
+
+---
+
+## Decision 122 — Batch #3 Ads Extraction (3 Page-ID Links); Content-Routine Rename Confirmed Already-Fixed
+
+**Status:** LOGGED — 2026-08-06.
+
+### 1. Ads batch #3
+On-demand `/rei-ads-scan` of 3 Edmund-supplied page-ID links. All three are cross-vertical angle sources (no direct property competitors this batch). **4 videos + 8 images across 3 advertisers**, transcribed, one `_ad_breakdown.md` each.
+- **Erik Hoffmann** (619905461807712) — high-ticket coaching "Reward Funnel." Swipe = the "It replaced X… with Y" anaphora + "they chase the reward, not you."
+- **Success Resources** (550751965021284) — "Sales Mastery: The Closing Framework." Swipe = "'let me think about it' — they just go quiet; it's a trust gap, not a price/script problem" + "system not script."
+- **Xccelerate Academy** (102308099542618) — FA "Portfolio Optimization Workshop" (fresh 5-Aug campaign, fast-iterating). **Strongest lift of the batch:** "You don't need new leads — re-run the numbers on the clients you already have" = a near-perfect One-Property-Trap audit hook feeding Know→Move→Own. Videos are Malay despite English ad copy (auto-detect used, per skill rule).
+
+### 2. Content-routine repo rename — no action needed
+Investigated the flagged risk that the Cloud "Weekly Content Intelligence" routine (trig_01GySosBGNzK4ruNkhnbNzdy) hardcodes the old `Property-Business` repo path. **It does not** — the routine was already patched 2026-07-31: its bootstrap resolves the repo root dynamically (`cd "$(git rev-parse --show-toplevel)"`), explicitly notes the rename to `ecos-weekly-intelligence`, and relies on GitHub's redirect for the existing remote. No edit made — a cosmetic change would add risk without benefit. The earlier open-question flag is now closed.
+
+### Files touched
+- Swipe folders for 3 advertisers (media + `_ad_breakdown.md`; Drive-only per Decision 118).
+- `Master_Ad_Database.md` — batch #3 block; `COMPETITOR_WATCHLIST.md` — 3 new rows; `_MASTER_INDEX.md` regenerated (Drive-only); this decision.
