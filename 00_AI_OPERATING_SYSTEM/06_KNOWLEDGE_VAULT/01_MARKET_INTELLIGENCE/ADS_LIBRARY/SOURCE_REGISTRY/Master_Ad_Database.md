@@ -294,3 +294,12 @@ Batch totals: 27 videos + 51 images across 8 advertisers (2 direct property comp
 - **Success Resources** (550751965021284) — cross-vertical angle source (events/education co.; "Sales Mastery: The Closing Framework" free Zoom 12 Aug). 5 ads / 3 distinct static-image creatives (no video): 2036657090289062, 1027048020160109, 2136391647291884. Villain = the memorized script; "gap between pitch and ask." See _ad_breakdown.md.
 - **Xccelerate Academy** (102308099542618) — cross-vertical angle source (FA B2B training; "Portfolio Optimization Workshop" paid $97 event 25 Aug, Shayne Teo / finexis / the-x-tribe). 9 ads all launched 5 Aug (fresh, fast-iterating). 2 distinct videos (English) + 5 distinct statics. Video IDs: 2529090504201738 (58s), 1046172018108156 (22s). Video dups: 1641182234235910 (=2529), 1054457590309288 (=1046). Static IDs: 1558560445764012, 1609049450641238, 1273149641453018, 1965581387472296, 1349544603452420. Best angle: "don't chase new leads — re-run the numbers on the clients you already have." See _ad_breakdown.md.
 Batch totals: 4 videos + 8 images across 3 advertisers (all cross-vertical angle sources; no direct property competitors this batch).
+
+## 2026-08-06 image backfill audit (Decision 123)
+Full folder audit found several advertisers had static image ads logged copy-only (old policy) and never downloaded. Re-visited each live page and backfilled the static creatives (folder date = original first-seen):
+- **Denise Tan** (page 107119960679980) — 16 static PS3 image ads → 02_IMAGES.
+- **Thomas Yap** (page 1041859785668291) — campaign grew to 33 static image ads (was 10 logged) → 02_IMAGES.
+- **Colin Ee** (page 102418822374465) — 4 static/link-preview creatives → 02_IMAGES.
+- **Caleb Sim** (page 106092578729020) — 5 static image ads → 02_IMAGES.
+- **Frank Kern** (page 104803888411711) — 5 static/text-post image creatives → 02_IMAGES.
+All other folders verified: images already present, OR advertiser is genuinely video/story-only (nothing to add).
