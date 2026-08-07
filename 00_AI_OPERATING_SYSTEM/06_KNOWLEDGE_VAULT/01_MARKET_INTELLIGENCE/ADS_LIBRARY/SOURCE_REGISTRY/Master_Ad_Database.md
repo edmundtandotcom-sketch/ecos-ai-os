@@ -332,3 +332,17 @@ RE-CHECKS (append-only refresh, Decision 124): Growth Partners Inc (872538235944
 
 ## 2026-08-06 Marc Chan Phase 2/3 deep pull COMPLETE (Decision 124)
 Marc Chan (442189845653421): deferred deep pull done. 55 active ads = 32 distinct videos + 23 distinct images. **+31 new videos + 23 new images** appended (now 35 videos + 23 images). Prior 3 Phase-1 videos inactive, retained. See _ad_breakdown.md.
+
+## 2026-08-06 Cloud-scaffold media fill (10 advertisers) + folder-wide transcript repair
+The Cloud Ads Intelligence routine had created 10 metadata-only scaffold folders (page-ID + headlines, no media — the cloud container is network-blocked from facebook.com). All 10 now media-filled via the Browser pane (30 videos + 69 images total):
+- **Adrian Lee** (2008367132748627) — DIRECT competitor, longest-running creative (~8mo). 4 videos.
+- **Patricia Ang Real Estate** (533704976500523) — DIRECT competitor. 2 videos.
+- **Real Estate Mentor** (1018912674640670) — DIRECT competitor (readiness quiz). 3 images.
+- **The Investor Realtor** (108170522131032) — DIRECT competitor (closest to REI, "11 factors"/contrarian-correction). 11 videos + 14 images.
+- **Sarah Lee** (615849231608268) — 5 videos (was the unfindable-by-name folder; page ID from Cloud scan).
+- **Allan Khazak** (1190372650834809) — cross-vertical (agent CRM). 6 images.
+- **Beyond Realtors Club** (1159884363865127) — agent training ("Stop chasing. Start closing."). 8 videos.
+- **Eddy Miranda** (663968926972914) — cross-vertical (ad copywriting). 18 images.
+- **Entrepedia** (110261508293707) — cross-vertical (business book funnel). 22 images.
+- **Issac Liu** (1052372747963934) — cross-vertical (business valuation). 6 images.
+Also: folder-wide transcript repair — ~73 earlier videos across 13 folders were missing transcripts (lost in the media-type folder reorg); regenerated from retained mp4s. All thumbnails verified present.
