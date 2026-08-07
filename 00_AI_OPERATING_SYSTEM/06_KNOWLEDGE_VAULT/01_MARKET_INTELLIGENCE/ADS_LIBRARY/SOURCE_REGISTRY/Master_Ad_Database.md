@@ -325,3 +325,7 @@ RE-CHECKS (append-only refresh, Decision 124): Growth Partners Inc (872538235944
 - **Growth Partners Inc** (872538235944011): 10 videos unchanged; statics 44->46 but the 2 new library IDs (1363924962549043, 792594653917571) are re-uploads of existing creatives (same image files) — logged as dup IDs, not re-downloaded. No new distinct creative.
 - **Authentic Advisory Systems** (100639661930725): refreshed, still the same 2 distinct scripts (23 re-encode variants). No new creative.
 - **Xccelerate Academy**: scanned same-day (2026-08-06) — no change.
+
+## 2026-08-06 deep refresh #2 (Decision 124) — Caleb Sim + Peng Joon
+- **Caleb Sim** (106092578729020): major drop, 8 -> 46 distinct videos. **+38 new videos** downloaded/transcribed (now 48 in folder). Over-cap logged only: 1999792224075095 (19:06). Prior 27655628117455747 inactive, retained. 5 statics unchanged.
+- **Peng Joon** (143408239118491): was historical/inactive; now ~160 ACTIVE ads (launched 6 Aug) = **2 new videos + 36 new image creatives** downloaded ("The 5-Part AI Engine" AI-content webinar). Prior 2 videos + 2 images retained. Promoted from "Checked-no-ads" to active watchlist.
