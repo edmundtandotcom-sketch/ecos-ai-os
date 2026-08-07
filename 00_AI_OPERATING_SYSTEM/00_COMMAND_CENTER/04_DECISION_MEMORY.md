@@ -1214,3 +1214,26 @@ No numeric self-grading loops. No every-message ritual — this is scoped to sub
 
 ### Files touched
 - `00_AI_OPERATING_SYSTEM/00_COMMAND_CENTER/11_OPERATING_AGREEMENT.md` — v1.3, rule 64 added.
+
+---
+
+## Decision 125 — Weekly Full-Library Sweep + Cloud→Browser Media-Fill Handoff
+
+**Status:** APPROVED — Edmund, 2026-08-06 ("make sure each weekly ads intelligence will also do such scan of all current folders to extract all new updates and any relevant new advertisers to go thru the process. lock this in").
+
+### The constraint that shapes this
+The Cloud "Weekly Ads Intelligence" routine runs in a container that is **network-blocked from facebook.com** (confirmed 403 via two tools). It can only use the Meta Ad Library API (metadata: page IDs, headlines, library-IDs) — it CANNOT download videos/images or transcribe. That is exactly why 10 advertiser folders existed as metadata-only scaffolds with no media. So the weekly job is split across two halves that must stay wired together.
+
+### Ruling — the weekly cycle is now two connected halves
+1. **Cloud half (Meta API, Monday, automatic)** — updated (trig_01AKcrpuiXZmbjqhXsrsKsGt): every week it (a) re-scans EVERY existing advertiser in the library for newly-active library-IDs (append-only, Decision 124), (b) scaffolds any NEW relevant advertiser found — property competitor OR cross-vertical angle source (Decision 120) — as a metadata folder/registry row marked "media not yet downloaded" with page_id + headline + IDs, and (c) ends its report with a **MEDIA FILL QUEUE**: every advertiser (name + page_id) and the specific new library-IDs needing media.
+2. **Browser half (`/rei-ads-scan` full-library sweep, on-demand, run weekly after the Cloud run)** — new §4 in the skill: walk every folder, diff each advertiser's live page vs the folder, download+transcribe only NEW distinct creatives (append-only); fill every "media not yet downloaded" scaffold; pull the Cloud MEDIA FILL QUEUE / new-advertiser list and extract each; **integrity repair every sweep** (every mp4 gets a thumbnail + transcript — regenerating any lost in past folder moves; no leftover .wav); regenerate `_MASTER_INDEX.md`; commit registry/watchlist.
+
+Net effect: existing advertisers auto-accumulate new ads weekly, newly-relevant advertisers automatically enter the pipeline, and no folder is ever left half-extracted or missing transcripts. The browser half is the only place media/transcription can happen given the network block — so it is a required weekly step, not optional.
+
+### Why not fully automate the browser half
+The media download + Whisper transcription need the in-app Browser pane + local ffmpeg/faster-whisper, which the network-blocked Cloud container and headless scheduled tasks don't have. So the browser sweep stays a session-triggered action (this environment). The Cloud→queue handoff makes that trigger a mechanical "run the queue," not a re-discovery.
+
+### Files touched
+- `.claude/skills/rei-ads-scan/SKILL.md` → new §4 "Weekly full-library sweep" + §5 output (Drive-only; .claude is gitignored).
+- Cloud "Weekly Ads Intelligence" routine prompt (trig_01AKcrpuiXZmbjqhXsrsKsGt) → MEDIA-FILL HANDOFF clause + step-7 MEDIA FILL QUEUE deliverable.
+- `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → this decision.
