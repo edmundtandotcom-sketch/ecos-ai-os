@@ -329,3 +329,6 @@ RE-CHECKS (append-only refresh, Decision 124): Growth Partners Inc (872538235944
 ## 2026-08-06 deep refresh #2 (Decision 124) — Caleb Sim + Peng Joon
 - **Caleb Sim** (106092578729020): major drop, 8 -> 46 distinct videos. **+38 new videos** downloaded/transcribed (now 48 in folder). Over-cap logged only: 1999792224075095 (19:06). Prior 27655628117455747 inactive, retained. 5 statics unchanged.
 - **Peng Joon** (143408239118491): was historical/inactive; now ~160 ACTIVE ads (launched 6 Aug) = **2 new videos + 36 new image creatives** downloaded ("The 5-Part AI Engine" AI-content webinar). Prior 2 videos + 2 images retained. Promoted from "Checked-no-ads" to active watchlist.
+
+## 2026-08-06 Marc Chan Phase 2/3 deep pull COMPLETE (Decision 124)
+Marc Chan (442189845653421): deferred deep pull done. 55 active ads = 32 distinct videos + 23 distinct images. **+31 new videos + 23 new images** appended (now 35 videos + 23 images). Prior 3 Phase-1 videos inactive, retained. See _ad_breakdown.md.
