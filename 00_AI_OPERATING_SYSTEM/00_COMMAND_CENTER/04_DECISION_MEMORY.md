@@ -1,9 +1,9 @@
 # 04_DECISION_MEMORY
-Version: v3.30
-Status: APPROVED MASTER (001–120; detailed person-level execution evidence is private)
-Date: 2026-07-31
-Supersedes: v3.29 (2026-07-31) — adds Decision 120: cross-vertical angle-sourcing is an explicit, intentional goal of ads intelligence (mine hooks/funnels from sales/marketing/AI/training/wealth-education advertisers and repurpose INTO property), baked into the Cloud ads routine, the `/rei-ads-scan` skill, and the watchlist framing. Also records the load-more technique that defeated the Browser-pane pagination ceiling (110/~120 cards for a deep Freedom Growth Academy pull, 106 videos).
-Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20
+Version: v3.31
+Status: APPROVED MASTER (001–126; detailed person-level execution evidence is private)
+Date: 2026-08-07
+Supersedes: v3.30 (2026-07-31) — adds Decision 125 (One Brain: staged relocation from H: Drive sync to local SSD, AI-HQ parallel-vault idea rejected; Phase A now, Phase B later on separate decision) and Decision 126 (Pre-Answer Guidelines Adapted: ranked ask-first + stated assumptions, primary-source verification, one honest critique pass on major deliverables — every-message ritual footer rejected; extends Decision 110; codified as Operating Agreement rule 64).
+Sources: 00_BRAIN 04_DECISION_MEMORY v2.4; AI_OS_REBUILD_SPEC v1.0; Approval Rounds 1–3 + decision-memory cleanup pass + contact-cleanup session, 2026-07-11; REI/VIP labelling session, 2026-07-13; Phase 2 contact-labelling sweep (Stacked, Webinar, Ads/VSL/Meta, YT/Referral/App/X, Insider/PWP/PWP Attend/Consult) + final cleanup pass + master reconciliation against fresh Google Contacts export, 2026-07-16/17; new-CSV taxonomy + execution + full pile closure across 12 batches, 2 clusters, and final lost-sheep audit, 2026-07-18/19; live Operations/Marketing/Sales Drive audit and authorized structural cleanup, 2026-07-20; live Active Campaigns/Artifacts/.claude audit and authorized cleanup, 2026-07-20; Decision 125; Decision 126
 
 > Check this file before reopening old debates, changing structure, renaming folders, moving files, or recommending a new direction. If a decision is important but not saved here, it is not part of the operating system. Decisions 001–025 are carried as historical record; 026–050 are ruled and APPROVED (015 superseded by 027).
 
@@ -1173,3 +1173,44 @@ Baked into `.claude/skills/rei-ads-scan/SKILL.md` (§3, "Append-only refresh") a
 
 ### Rationale
 Edmund: "we must always refresh and auto populate on a weekly basis so it auto tabulate existing ads to add on. never delete previous assets also." This makes the library a longitudinal record of each competitor's creative evolution, not a one-time snapshot.
+
+---
+
+## Decision 125 — One Brain: Staged Relocation, AI-HQ Rejected
+
+**Status:** APPROVED — Edmund, in chat, 2026-08-07.
+
+### Ruling
+A ChatGPT-authored "AI-HQ" parallel-vault assignment is **REJECTED as a structure.** Standing up a second vault/brain alongside the existing repo would create a duplicate brain and violate one-fact-one-home (Operating Agreement rule 37). The existing `ecos-ai-os` repo (canonical working copy at `H:\Shared drives\00_E.C.O.S`, remote `https://github.com/edmundtandotcom-sketch/ecos-ai-os.git`) **IS** the canonical brain. No second brain gets built.
+
+**Approved staged plan:**
+- **Phase A (now, 2026-08-07):** GitHub remote kept current (push after every material change); independent backups taken OFF Google Drive (git bundles to `E:\ECOS_BACKUPS` and a copy in `_BACKUPS\ECOS_BACKUPS`); git identity/credential hygiene (`gh auth setup-git`); ChatGPT reads the brain via its GitHub connector pointed at the private repo (read-only); Obsidian installed as an optional local viewer over a local clone. No files move.
+- **Phase B (later, separate decision required):** move the active working copy from the H: Drive sync to a local SSD (`E:`) and demote Google Drive to asset-warehouse + backup target only. Not authorized yet — requires its own in-chat ruling before execution.
+
+Google Drive is never the brain's long-term home (per constitution §14, code portability rule) but remains the permanent asset warehouse — GitHub cannot and should not hold bulk media.
+
+### Files touched
+- `00_AI_OPERATING_SYSTEM/00_COMMAND_CENTER/11_OPERATING_AGREEMENT.md` — v1.3 (rule 65 restates Fable-orchestration; rule 63 blunt-truth default).
+- `00_AI_OPERATING_SYSTEM/00_COMMAND_CENTER/14_BRAIN_PORTABILITY.md` — new: setup on a new machine, recovery levels, ChatGPT access rule.
+- `00_AI_OPERATING_SYSTEM/00_COMMAND_CENTER/12_ECOS_INBOX/CHATGPT_HANDOFF_TEMPLATE.md` — new: structured template for reconciling ChatGPT session outputs back into the brain.
+- `E:\ECOS_BRAIN` — fresh local clone (viewer/seed only, not yet the canonical working copy).
+- `E:\ECOS_BACKUPS\ecos-ai-os\` and `_BACKUPS\ECOS_BACKUPS\` — new verified git bundle alongside the existing 2026-07-11 bundle.
+
+---
+
+## Decision 126 — Pre-Answer Guidelines (Adapted)
+
+**Status:** APPROVED — Edmund, in chat, 2026-08-07. Extends Decision 110 (The Ask-First Gate).
+
+### Ruling
+An every-message ritual footer (always ask 3 questions / always research online first / always self-grade to 10-10 before answering) is **REJECTED as output-degrading theater.** It adds friction and token spend without reliably improving quality, and turns judgment into a checklist.
+
+**Adopted instead — a 3-part adapted rule, now Operating Agreement rule 64:**
+1. For substantive/decision-bearing work, ask ranked clarifying questions first (most important first) and state the assumption that will be used if a question goes unanswered — this restates and operationalizes Decision 110's Ask-First Gate, not a new mechanism.
+2. External factual claims must be verified against primary sources before being asserted.
+3. Major deliverables get one honest critique pass before handover — weaknesses named, fixable ones fixed on the spot, remaining ones disclosed to Edmund.
+
+No numeric self-grading loops. No every-message ritual — this is scoped to substantive/decision work and major deliverables, not casual Q&A (consistent with rule 33 and the existing Ask-First Gate carve-out).
+
+### Files touched
+- `00_AI_OPERATING_SYSTEM/00_COMMAND_CENTER/11_OPERATING_AGREEMENT.md` — v1.3, rule 64 added.

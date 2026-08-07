@@ -1,9 +1,9 @@
 # _INDEX — 00_COMMAND_CENTER
-Version: v1.2
+Version: v1.3
 Status: APPROVED MASTER
-Date: 2026-07-18
-Supersedes: v1.1 (2026-07-12) — reconciles the live folder after the Asset Library rebuild, Controlled Hybrid migration, no-freeze ruling, and completed cleanup-record archival.
-Sources: AI OS CLAUDE.md v4.4; root CLAUDE.md v4.5; Decision Memory v3.15 through Decision 105; current folder inventory; completed Asset Library guides.
+Date: 2026-08-07
+Supersedes: v1.2 (2026-07-18) — adds `14_BRAIN_PORTABILITY.md` (Decision 125).
+Sources: AI OS CLAUDE.md v4.7; root CLAUDE.md v4.6; Decision Memory v3.31 through Decision 126; current folder inventory; completed Asset Library guides.
 
 ## Purpose
 
@@ -39,6 +39,7 @@ Load the other files only when the task requires them.
 | `11_OPERATING_AGREEMENT.md` | APPROVED MASTER | How Edmund and Claude work together |
 | `12_ECOS_INBOX/` | LIVE INBOX | Unprocessed voice or quick-capture inputs; process to zero |
 | `13_INTERACTIVE_BUILD_STANDARDS.md` | APPROVED MASTER | Locked criteria for any quiz, diagnostic or gamified funnel build — sales-instrument framing, result-reveal requirements, interactivity bar, mandatory real-screenshot QA. Load via `/build-interactive`. |
+| `14_BRAIN_PORTABILITY.md` | APPROVED MASTER | The brain = this repo + its GitHub remote; new-machine setup, 3-level recovery (GitHub → bundle → validate), large-assets-never-in-repo rule, read-only ChatGPT GitHub-connector access |
 | `_INDEX.md` | APPROVED MASTER | This file |
 
 ## What does not belong here
