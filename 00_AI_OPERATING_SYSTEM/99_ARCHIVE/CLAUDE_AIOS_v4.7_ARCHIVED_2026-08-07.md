@@ -1,8 +1,8 @@
 # CLAUDE.md — AI OPERATING SYSTEM CONSTITUTION
-Version: v4.8
+Version: v4.7
 Status: APPROVED MASTER
-Date: 2026-08-07
-Supersedes: v4.7 — updates the §4 Operating Agreement reference from 62 to 65 rules (v1.3): rules 63–65 added 2026-08-07 under Decisions 125/126 (blunt-truth default; adapted pre-answer guidelines; Fable-orchestrates restatement). No other section changed.
+Date: 2026-07-27
+Supersedes: v4.6 — adds Decision 110, The Ask-First Gate (rules 61/62): problem-first input and a pre-work clarify-or-flag-assumption gate for substantive/decision-bearing work. No positioning name changed. Orchestrator lock (§12) stays a separate rule.
 Sources: root CLAUDE.md v4.5; Command Center masters; Decision Memory v3.15; `01_E.C.O.S/00_TEAM_ROSTER.md` v2.0; `01_E.C.O.S/09_CLAUDE_CAPABILITY_MAP.md` v2.0; Business Positioning v1.4; Mechanism v1.7; Decision 095.
 
 ---
@@ -94,7 +94,7 @@ Before major work, read from `00_AI_OPERATING_SYSTEM\00_COMMAND_CENTER\`:
 2. `02_OPERATING_RULES.md` — how you operate
 3. `03_CURRENT_PRIORITIES.md` — what to protect focus around
 4. `04_DECISION_MEMORY.md` — decisions already made (do not reopen)
-5. `11_OPERATING_AGREEMENT.md` — how Claude & Edmund work together (65 rules, v1.3 — Decision 090 + rule 60 the 3-Question Filter (Decision 109) + rules 61-62 the Ask-First Gate (Decision 110) + rules 63-65 blunt-truth default, adapted pre-answer guidelines, and Fable-orchestrates restatement (Decisions 125/126))
+5. `11_OPERATING_AGREEMENT.md` — how Claude & Edmund work together (62 rules — Decision 090 + rule 60 the 3-Question Filter (Decision 109) + rules 61-62 the Ask-First Gate (Decision 110))
 
 Then load per task:
 - Positioning / category / naming → `01_BUSINESS_POSITIONING.md`
