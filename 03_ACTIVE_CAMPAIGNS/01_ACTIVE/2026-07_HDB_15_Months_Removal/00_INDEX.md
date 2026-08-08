@@ -1,7 +1,13 @@
 # Campaign Index — HDB 15-Month Wait-Out Removal (YouTube weekly video)
 
 Date: 2026-08-07
-Status: IN PRODUCTION — draft edit assembled, awaiting Edmund's review pass
+Status: v10 RENDERED (2026-08-08 pm) — PRIMARY: `HDB_15Months_FULL_v10_1.1x.mp4`
+(11:05, 1.1x/33fps, Edmund's chosen format). Reference: `..._v10.mp4` (12:12
+natural). v9 pair superseded, kept for comparison — can be deleted after review.
+Local masters in `E:\REMOTION\out`. v10 adds: side-aware framing (head shifts
+away from panels), clickbait hook stack, 8 punchlines, comment-box + end-screen
+CTAs, social logo bars, bigger circle PIP, echo-reduced voice, subtitle
+missing-words fix + corrections.
 
 ## Objective
 Weekly YouTube long-form video reacting to the removal of the 15-month wait-out

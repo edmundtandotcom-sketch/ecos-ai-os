@@ -57,6 +57,10 @@ Thumbs.db
 *.jpeg
 *.psd
 
+# Archives — bulk media bundles (e.g. Canva/Meta ad exports). Same rule as
+# above: the archive's home is the Asset Library, not Git history.
+*.zip
+
 # Extension-less Word document (verified: "Microsoft Word 2007+" by content).
 # Excluded because it is a binary, not text. NOTE FOR EDMUND: this file has lost
 # its .docx extension so nothing opens it by double-click — it should be renamed
