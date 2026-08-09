@@ -1,7 +1,23 @@
 # Campaign Index — HDB 15-Month Wait-Out Removal (YouTube weekly video)
 
 Date: 2026-08-07
-Status: v10 RENDERED (2026-08-08 pm) — PRIMARY: `HDB_15Months_FULL_v10_1.1x.mp4`
+Status: v13 RENDERED (2026-08-09) — SPEED A/B pending Edmund's pick:
+`HDB_15Months_FULL_v13_1.1x.mp4` (11:07) vs `..._v13_1.25x.mp4` (9:47);
+natural `..._v13.mp4` is the master. v13: five timestamped fixes (Co-chairman
+subtitle via phrase-pass, smeared-"facing" duplicate cut, bias→buyers,
+strategy-session CTA graphic, HDB-vs-condo duo tags), shift-with-zoom
+reframing (no black bars), tighter punches, classic subscribe click anim+SFX.
+Edmund's renamed `COACH EDMUND TAN- LONG FORM.mp4` = old v12 1.1x, untouched.
+(superseded) v12 — PRIMARY was: `HDB_15Months_FULL_v12_1.1x.mp4`
+(11:09). v12: per-question synced comment bubbles, article-behind-cutout fixed
+by construction, automatic band/panel collision pass, badges/profile sequencing,
+outro card + music & picture fade-out, last-word breathing room.
+(superseded) v11 — PRIMARY was: `HDB_15Months_FULL_v11_1.1x.mp4`
+(11:05). v11 adds: BREAKING cold-open slam sequence, real platform logo SVGs,
+reply-bubble question restates, SFX cleanup (pops removed), 15 punch bands,
+mid-video retention stack, collision-free subscribe pills, duplicate-clip fix.
+Older status below for history:
+(superseded) v10 — PRIMARY was: `HDB_15Months_FULL_v10_1.1x.mp4`
 (11:05, 1.1x/33fps, Edmund's chosen format). Reference: `..._v10.mp4` (12:12
 natural). v9 pair superseded, kept for comparison — can be deleted after review.
 Local masters in `E:\REMOTION\out`. v10 adds: side-aware framing (head shifts
