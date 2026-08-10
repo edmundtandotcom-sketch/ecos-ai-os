@@ -1,7 +1,15 @@
 # Campaign Index — HDB 15-Month Wait-Out Removal (YouTube weekly video)
 
 Date: 2026-08-07
-Status: v13 RENDERED (2026-08-09) — SPEED A/B pending Edmund's pick:
+Status: COMPLETE (2026-08-10) — ready to publish.
+- LONG-FORM FINAL: `COACH EDMUND TAN- LONG FORM.mp4` (10:55, 1.15x + outro)
+- REELS/: 11 finals in Edmund-approved reference style (3 summary A/B/C +
+  8 topic), all 1.15x, header-free layout, cutaway inserts, cyan-keyword
+  captions, CTA-with-captions endings
+- Outro master: `REI_Method_Outro_v3.mp4` · Upload kit delivered in chat
+- Cleanup pending Edmund's OK: superseded v9-v14 draft files in this folder
+Prior status for history:
+(superseded) v13 — SPEED A/B was pending:
 `HDB_15Months_FULL_v13_1.1x.mp4` (11:07) vs `..._v13_1.25x.mp4` (9:47);
 natural `..._v13.mp4` is the master. v13: five timestamped fixes (Co-chairman
 subtitle via phrase-pass, smeared-"facing" duplicate cut, bias→buyers,
