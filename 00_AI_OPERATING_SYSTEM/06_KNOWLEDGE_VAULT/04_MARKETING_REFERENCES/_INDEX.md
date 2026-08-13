@@ -1,8 +1,8 @@
 # _INDEX — 04_MARKETING_REFERENCES
-Version: v2.1
+Version: v2.2
 Status: APPROVED MASTER
-Date: 2026-08-12
-Supersedes: v2.0 (2026-07-19) — adds the Taki Moore mentor-model set and the elevated MENTOR MODEL reference tier.
+Date: 2026-08-13
+Supersedes: v2.1 (2026-08-12) — the Taki Moore material is consolidated into the `TAKI_MOORE_MODEL/` sub-folder; the three same-day standalone `REF_TakiMoore_*` drafts are removed and their content carried forward in full.
 
 ## Purpose
 
@@ -14,18 +14,18 @@ These are swipes and analytical references—not REI authority. Use them for str
 
 ## Reference tiers
 
-- **Cross-check reference** (default) — consulted per task.
-- **MENTOR MODEL** (elevated) — a standing structural reference for a named engine. Still subordinate to Command Center, Decision Memory and the edition OS masters.
+- **Cross-check reference** (default, single `REF_*` file) — consulted per task.
+- **STANDING MODEL** (elevated, own sub-folder) — a full reference model held for ongoing use across more than one desk.
 
-## Taki Moore set — Agent Edition mentor model
+## Standing models
 
-| File | Role |
+| Folder | Role |
 |---|---|
-| `REF_TakiMoore_Deep_Dive_v1.md` | MENTOR MODEL. Full business diagnosis — ladder, 9 Accelerators, workshop architecture, teaching method, voice, brand system, naming collisions. |
-| `REF_TakiMoore_Brand_And_Communication_Kit_v1.md` | Operable style system — framework design rules, naming rules, spine test, voice spec, presenting rules, video format. |
-| `REF_TakiMoore_Adoption_Blueprint_v1_PROPOSAL.md` | **PROPOSAL, not doctrine.** How the model maps onto `04_AGENT_EDITION_OS`, the 6-phase rebuild sequence, and decisions D1–D6 awaiting Edmund's ruling. |
+| `TAKI_MOORE_MODEL/` | Full reference model of Taki Moore's business — model and two eras, complete framework library, teaching & explaining method, end-to-end systems walkthrough, application index. Held for Agent Edition curriculum **and** for consult/video/demo delivery craft. See its own `_INDEX.md`. |
 
-**Standing constraint:** `Boardroom`, `Black Belt`, `Triage Call`, `The 3 Timeframes`, `Four Forces` and `Clients 3.0` are his trade names. `The Boardroom` is currently live in the Agent Edition locked public spine and must be renamed (Decision D1). Take structure and sequence; never take names.
+**Standing constraint:** `Million Dollar Coach`, `Black Belt`, `Boardroom`, `Triage Call`, `The 3 Timeframes`, `The 6 Magic Pills`, `The Gameplan`, `Signature System`, `Four Forces`, `Clients 3.0`, `Sherpa`, `Brandwidth`, `The Big Easy` and `Magic Model` are his trade names. Take structure and sequence; never take names.
+
+⚠️ `The Boardroom` is currently live in the Agent Edition locked public spine — flagged for Edmund.
 
 ## Version note
 
