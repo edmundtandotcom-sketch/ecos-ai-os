@@ -1237,3 +1237,40 @@ The media download + Whisper transcription need the in-app Browser pane + local 
 - `.claude/skills/rei-ads-scan/SKILL.md` → new §4 "Weekly full-library sweep" + §5 output (Drive-only; .claude is gitignored).
 - Cloud "Weekly Ads Intelligence" routine prompt (trig_01AKcrpuiXZmbjqhXsrsKsGt) → MEDIA-FILL HANDOFF clause + step-7 MEDIA FILL QUEUE deliverable.
 - `00_COMMAND_CENTER/04_DECISION_MEMORY.md` → this decision.
+
+---
+
+## Decision 127 — Agent Edition™ Replaces The Market Maker Method
+
+**Status:** APPROVED — Edmund, in chat, 2026-08-13 ("upgrade everything of the latest pasted information").
+
+### Context
+Edmund had been developing Agent Edition's business architecture in a separate AI tool across two threads (a VSL-blueprint thread and a Boardroom-redesign thread), captured as the "Agent Edition™ Agent Multiplier Programme Design Bible v1.0." That material was pasted into this session on 2026-08-12/13. It conflicted substantially with the then-APPROVED MASTER Market Maker Method doctrine — different brand name, different spine, different offer ladder, different pricing, and it never referenced Decision 046's locked 10-asset set. Per CLAUDE.md §6 ("flag conflict before proceeding, do not silently merge"), the conflict was surfaced in chat with a full comparison table before any action was taken. Edmund ruled: adopt the new material as governing.
+
+### Ruling
+**The Market Maker Method is retired.** Agent Edition™ is now the governing Agent Edition brand, spine and offer ladder.
+
+**Reconciliation calls made in executing this instruction** (the source material itself had unresolved internal inconsistencies — these are the calls made to produce one coherent doctrine, not separately re-litigated with Edmund):
+1. **Spine:** the source material used two unreconciled spines — Attract·Convert·Deliver (the fuller architecture) and Create·Convert·Control (a later VSL-copy simplification). **Attract·Convert·Deliver, powered by Command, is now the one governing spine**; Create/Control are permitted marketing synonyms only, never a competing internal framework.
+2. **"Boardroom" collision:** the source material named its own 3-day flagship event "Boardroom," which collided both with Taki Moore's mastermind trade name (see `TAKI_MOORE_MODEL/`) and with the retired Market Maker continuity tier of the same name. **Renamed to The Multiplier Install.**
+3. **Decision 046's 10-asset set (Millionaire Map, Business X-Ray, Millionaire Math, One-Liner, Client X-Ray, Roadmap Conversation, Five Doors, Attract Engine, Co-Pilot Library, 90-Day Climb) is RETIRED**, superseded by the Nine Agent Multipliers™ and their named supporting frameworks. It does not appear anywhere in the new material.
+4. **Buyer income threshold:** the source material itself drifted between S$250K+ and S$100K+ GCI across the two threads. **S$100K+ GCI adopted** as the more recent and more specific figure.
+5. **Front-door hook line:** flagged PENDING, not locked — the source material's own hook lines were VSL-specific and not a settled brand tagline; a placeholder is proposed in the Brand & Naming master but requires Edmund's explicit sign-off before use in any public asset.
+6. **Pricing:** carried forward as working ranges from the source material (S$197 Intensive / S$4.8–6.8K Install / S$15–24K Year 1 Foundation), explicitly flagged as not yet confirmed for live sale.
+
+**What was NOT re-skinned in this pass** (flagged for a follow-up marketing-desk session, not silently left inconsistent): the Villain Doctrine, Marketing Intelligence OS, Cold Market Conversion Model, Core Message Architecture, and all live campaign ad angles/landing pages/HTML tools in `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_AgentEdition_MarketMaker_Build/` still carry Market Maker branding. These must not be treated as current until updated.
+
+### Files touched
+- `00_AI_OPERATING_SYSTEM/CLAUDE.md` → v4.9, §2 Business North Star Agent Edition row.
+- `00_COMMAND_CENTER/01_BUSINESS_POSITIONING.md` → v1.5, §3 Engine 2 full rewrite, §4 cross-reference fixes.
+- `04_AGENT_EDITION_OS/_INDEX.md` → v3.0, locked public spine section.
+- `04_AGENT_EDITION_OS/00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md` → new, supersedes `01_MARKET_MAKER_BRAND_AND_NAMING_v1.1.md` (archived).
+- `04_AGENT_EDITION_OS/00_POSITIONING/02_AGENT_EDITION_BIG_IDEA_POSITIONING_v2.0.md` → new, supersedes `02_MARKET_MAKER_BIG_IDEA_POSITIONING_v1.2.md` (archived).
+- `04_AGENT_EDITION_OS/00_POSITIONING/03_AGENT_EDITION_DEEP_BUYER_PROFILE_v2.0.md` → brand-alignment note added, content otherwise unchanged.
+- `04_AGENT_EDITION_OS/00_POSITIONING/_INDEX.md` → v3.0.
+- `04_AGENT_EDITION_OS/01_PROGRAM_ARCHITECTURE/01_THE_MULTIPLIER_INSTALL_EXPERIENCE_DESIGN_v4.0.md` → new, supersedes `01_MARKET_MAKER_LIVE_EXPERIENCE_DESIGN_v3.0.md` (archived). Architecture-level only — a timed run sheet is still open work.
+- `04_AGENT_EDITION_OS/01_PROGRAM_ARCHITECTURE/02_PROGRAM_GOVERNANCE_AND_OFFER_LADDER_v2.0.md` → new, supersedes v1.0 (archived).
+- `04_AGENT_EDITION_OS/01_PROGRAM_ARCHITECTURE/_INDEX.md` → v3.0.
+- `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_AgentEdition_MarketMaker_Build/01_OFFER_AND_PROGRAM/05_AGENT_EDITION_DESIGN_BIBLE_v1.0_DRAFT_UNRECONCILED.md` and `06_CONFLICTS_WITH_APPROVED_MASTER.md` → source capture and conflict flag from the prior session; conflicts now resolved by this decision, superseded in authority (not deleted) by the new OS masters above.
+- `06_KNOWLEDGE_VAULT/04_MARKETING_REFERENCES/TAKI_MOORE_MODEL/_INDEX.md` → Boardroom flag marked resolved.
+- Four old Market Maker masters archived to `04_AGENT_EDITION_OS/99_ARCHIVE/*_ARCHIVED_2026-08-13.md`.

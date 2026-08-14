@@ -1,8 +1,8 @@
 # _INDEX — 00_COMMAND_CENTER
-Version: v1.3
+Version: v1.4
 Status: APPROVED MASTER
-Date: 2026-08-07
-Supersedes: v1.2 (2026-07-18) — adds `14_BRAIN_PORTABILITY.md` (Decision 125).
+Date: 2026-08-13
+Supersedes: v1.3 (2026-08-07) — terminology fix: Market Maker Method reference replaced with Agent Edition™ per Decision 127.
 Sources: AI OS CLAUDE.md v4.7; root CLAUDE.md v4.6; Decision Memory v3.31 through Decision 126; current folder inventory; completed Asset Library guides.
 
 ## Purpose
@@ -26,7 +26,7 @@ Load the other files only when the task requires them.
 | Item | Status | What it controls |
 |---|---|---|
 | `00_MASTER_INDEX.md` | APPROVED MASTER | Whole workspace and AI OS map; retrieval guide |
-| `01_BUSINESS_POSITIONING.md` | APPROVED MASTER | Second Property Ladder™ and Market Maker Method direction |
+| `01_BUSINESS_POSITIONING.md` | APPROVED MASTER | Second Property Ladder™ and Agent Edition™ direction |
 | `02_OPERATING_RULES.md` | APPROVED MASTER | Behaviour, versioning, file, asset, campaign and structural rules |
 | `03_CURRENT_PRIORITIES.md` | APPROVED MASTER | Revenue-first priorities and current focus |
 | `04_DECISION_MEMORY.md` | APPROVED MASTER | Approved decisions and supersession history; do not reopen settled calls |

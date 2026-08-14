@@ -1,9 +1,9 @@
 # CLAUDE.md — AI OPERATING SYSTEM CONSTITUTION
-Version: v4.8
+Version: v4.9
 Status: APPROVED MASTER
-Date: 2026-08-07
-Supersedes: v4.7 — updates the §4 Operating Agreement reference from 62 to 65 rules (v1.3): rules 63–65 added 2026-08-07 under Decisions 125/126 (blunt-truth default; adapted pre-answer guidelines; Fable-orchestrates restatement). No other section changed.
-Sources: root CLAUDE.md v4.5; Command Center masters; Decision Memory v3.15; `01_E.C.O.S/00_TEAM_ROSTER.md` v2.0; `01_E.C.O.S/09_CLAUDE_CAPABILITY_MAP.md` v2.0; Business Positioning v1.4; Mechanism v1.7; Decision 095.
+Date: 2026-08-13
+Supersedes: v4.8 — §2 Business North Star, Agent Edition row: The Market Maker Method retired, replaced by Agent Edition™ (Attract·Convert·Deliver, powered by Command; Producer→Advisor→Business Owner→Multiplier) per Edmund's direct instruction and Decision 127. No other section changed.
+Sources: root CLAUDE.md v4.5; Command Center masters; Decision Memory v3.32; `01_E.C.O.S/00_TEAM_ROSTER.md` v2.0; `01_E.C.O.S/09_CLAUDE_CAPABILITY_MAP.md` v2.0; Business Positioning v1.5; Mechanism v1.7; Decision 095; Decision 127.
 
 ---
 
@@ -49,7 +49,7 @@ Your job is not to produce more words. Your job is to produce the best usable ou
 | Engine | Audience | Positioning |
 |---|---|---|
 | **Client Advisory** | Singapore property owners / climbers | Second Property Ladder™ / MAS Client OS |
-| **Agent Edition** | Other Singapore property agents | **The Market Maker Method** — "Stop chasing the market. Start making it." (LOCKED 2026-07-06) |
+| **Agent Edition** | Other Singapore property agents | **Agent Edition™** — Attract · Convert · Deliver, powered by Command. Producer → Advisor → Business Owner → Multiplier. (Retired: The Market Maker Method — superseded 2026-08-13, Decision 127) |
 
 Never blend the two engines in one asset. Full positioning: `00_COMMAND_CENTER/01_BUSINESS_POSITIONING.md`.
 
@@ -118,7 +118,7 @@ For any non-trivial task, **route to the right desk first**, then work as that d
 | Property diagnosis and advisory methodology | `01_E.C.O.S/02_CLIENT_ADVISORY_DESK.md` |
 | YouTube, reels and organic content | `01_E.C.O.S/03_CONTENT_STUDIO.md` |
 | Paid campaigns, funnels and marketing performance | `01_E.C.O.S/04_MARKETING_ADS_DESK.md` |
-| Market Maker, workshop, agent recruitment and coaching | `01_E.C.O.S/05_AGENT_EDITION_DESK.md` |
+| Agent Edition, workshop, agent recruitment and coaching | `01_E.C.O.S/05_AGENT_EDITION_DESK.md` |
 | Market research, competitor intelligence and buyer psychology | `01_E.C.O.S/06_RESEARCH_INTELLIGENCE_DESK.md` |
 | CRM, GHL, tracking, scripts and automations | `01_E.C.O.S/07_OPERATIONS_DESK.md` |
 | Qualification, appointments, objections, closing, follow-up and referrals | `01_E.C.O.S/08_SALES_CONVERSION_DESK.md` |

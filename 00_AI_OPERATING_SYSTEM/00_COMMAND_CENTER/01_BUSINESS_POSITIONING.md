@@ -1,9 +1,9 @@
 # 01_BUSINESS_POSITIONING — THE 10–15 YEAR DIRECTION
-Version: v1.4
+Version: v1.5
 Status: APPROVED MASTER
-Date: 2026-07-19
-Supersedes: v1.3 — aligns Move 4 with Decision 069 and Mechanism v1.7, and updates the diagnostic entry point to the approved Second Property Readiness Check™ strategy.
-Sources: Decision Memory v3.15; `02_POSITIONING_AND_IP\SECOND_PROPERTY_LADDER\00_CATEGORY_AND_IP_FOUNDATION\Second_Property_Ladder_Mechanism_v1.7.md`; approved Phase 1 Marketing Foundation v1.1; Market Maker positioning masters.
+Date: 2026-08-13
+Supersedes: v1.4 — §3 Engine 2: The Market Maker Method retired, replaced by Agent Edition™ per Decision 127 (Edmund's direct instruction, 2026-08-13).
+Sources: Decision Memory v3.32; `02_POSITIONING_AND_IP\SECOND_PROPERTY_LADDER\00_CATEGORY_AND_IP_FOUNDATION\Second_Property_Ladder_Mechanism_v1.7.md`; approved Phase 1 Marketing Foundation v1.1; `04_AGENT_EDITION_OS/00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md`.
 
 > This is the summary spine. The full masters live in `02_POSITIONING_AND_IP/` (client) and `04_AGENT_EDITION_OS/00_POSITIONING/` (agent). When they conflict, the full masters win on detail; this file governs direction. **One positioning house, two engines. Everything traces back here.**
 
@@ -65,36 +65,40 @@ Walked the talk since 2009 · owns the sequence not a tactic · exit planned bef
 
 ---
 
-## 3. ENGINE 2 — AGENT EDITION · The Market Maker Method
+## 3. ENGINE 2 — AGENT EDITION™
 
-**Status: APPROVED MASTER — LOCKED 2026-07-06. This engine is ACTIVE, not parked.** (Corrects the old "Agent Edition parked" rule — see `04_DECISION_MEMORY.md` Decision 028.)
+**Status: APPROVED MASTER — retired The Market Maker Method 2026-08-13, Decision 127 (Edmund's direct instruction: "upgrade everything of the latest pasted information"). This engine is ACTIVE, not parked.** (Corrects the old "Agent Edition parked" rule — see `04_DECISION_MEMORY.md` Decision 028.)
 
 ### The position in one paragraph
-Most Singapore agents are **Market Takers** — they wait for the market to hand them leads and blame the market when it doesn't. We turn them into **Market Makers**: agents who make their own market, attract instead of chase, and guide clients up the property ladder for life. The front door sells the *identity* (become a Market Maker); the room installs the *business* behind it. **Talent is not transferable — technique is.**
+Established Singapore agents (S$100K+ GCI) already know how to sell — that's not the gap. The gap is a business underneath the licence. Agent Edition installs it: **Attract, Convert, Deliver**, run on **Command**, moving a **Producer** to an **Advisor**, a **Business Owner**, then a **Multiplier** whose systems produce beyond personal capacity. Income doesn't multiply because you generate more activity — it multiplies when more of what's already entering the business turns into productive outcomes.
 
 ### The locked spine
 | Element | Locked value |
 |---|---|
-| Hero brand / front door | **The Market Maker Method** |
-| Flagship event | **Market Maker Live — the 3-Day Install** |
-| Identity | **Market Maker** ("I'm not an agent. I'm a Market Maker.") |
-| Tribe / movement | **The Market Makers** (Certified Market Maker on Day 3) |
-| Core reframe / villain | **Market Taker → Market Maker** |
-| Deep promise | **You need a business, not just a license.** |
-| Front-door hook | **Stop chasing the market. Start making it.** |
-| Doctrine | **Talent is not transferable. Technique is.** |
-| 3 pillars (Triple-A) | **Authority · Advisory · Amplify** |
-| The 3 days | **Own Your Market · Own the Trust · Own Your Freedom** |
-| Continuity | **The Market Makers' Circle** → inner tier **The Boardroom** |
+| Hero brand / front door | **Agent Edition™** |
+| Flagship event | **The Multiplier Install** — 3-day live implementation event |
+| Identity | **Agent Multiplier** |
+| Core reframe | **Producer → Advisor → Business Owner → Multiplier** |
+| Deep promise | **You need a business, not just a licence.** |
+| Front-door hook | **PENDING sign-off** — not yet locked; see `04_AGENT_EDITION_OS/00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md` |
+| Doctrine | **Diagnose before you prescribe. Install, don't just teach.** |
+| 3 pillars | **Attract · Convert · Deliver**, powered by **Command** |
+| Diagnostic universe | **The Nine Agent Multipliers™** — a map, not a curriculum; members work on 2 of 9 (the 3-2-1 mechanism: diagnose 3, choose 2, install 1) |
+| Journey | **Year 1 Foundation → Year 2 Acceleration → Year 3 Multiplication** |
+
+**"The Boardroom" is retired as a name** — it is Taki Moore's mastermind trade name and was also the prior continuity tier's name. Never reused.
 
 ### Why-now (the AI anchor)
 AI just killed the cost of building an agency-grade business solo — no team, no S$50K of vendors. The window is open now. **AI is the bait and the turbo, never the curriculum.** Enemy: the *prompt-collector* who mistakes AI busywork for a business.
 
 ### The offer ladder
-Free **Market Maker Scorecard** → S$287 **Preview** (build 3 live components) → S$7,000 **Market Maker Live (3-Day)** → **The Market Makers' Circle / Boardroom.**
+Free **Agent Business Multiplier Score™** → S$197 **Agent Income Multiplier Live Intensive** (2.5hr) → S$4,800–S$6,800 **The Multiplier Install** (or bundled into) → S$15,000–S$24,000/yr **Year 1 Foundation** → Year 2 Acceleration → Year 3 Multiplication. Pricing is a working range, not yet confirmed for live sale — see `04_AGENT_EDITION_OS/01_PROGRAM_ARCHITECTURE/02_PROGRAM_GOVERNANCE_AND_OFFER_LADDER_v2.0.md`.
 
 ### Guardrails (retired — never use)
-Command · Battlefield · Property CEO · In-Demand · Category King / category-of-one (Caleb's) · Top 1% / trusted expert (KS Tan's). Un-Caleb wedge: we sell a **property BUSINESS you own**, SG-specific and relational, not a one-call-close method. Lineage line: *"His training made me $400K. Then I built the business AI he doesn't teach — for Singapore property agents."*
+Command (as an old codename) · Battlefield · Property CEO · In-Demand · Category King / category-of-one (Caleb's) · Top 1% / trusted expert (KS Tan's) · Market Taker/Market Maker · The Market Maker Method · The Boardroom. No guaranteed-income claims. No fake urgency. AI never replaces professional judgement or makes client recommendations.
+
+### Open re-skin work (not done in the 2026-08-13 reconciliation pass)
+The villain doctrine, marketing intelligence OS, cold-market conversion model, core message architecture, and all live campaign ad/funnel/landing-page copy in `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_AgentEdition_MarketMaker_Build/` still carry old Market Maker branding. Flagged for the next marketing-desk session — do not treat as current until re-skinned.
 
 ---
 
@@ -103,9 +107,9 @@ Command · Battlefield · Property CEO · In-Demand · Category King / category-
 Both engines share the same physics: a **Ladder** the client climbs, an **advisor** who has already climbed it, and a **sequence** that beats guesswork.
 
 - **Client Advisory:** the client climbs the *property* ladder (their next 3 moves).
-- **Agent Edition:** the agent climbs the *income* ladder ($100K → $1M GCI) by installing the same advisory business.
+- **Agent Edition:** the agent climbs from Producer to Multiplier ($100K+ GCI entry) by installing Attract/Convert/Deliver, run on Command.
 
-The Second Property Ladder™ is the customer-facing category. The Market Maker Method teaches agents to run a Ladder-style advisory business of their own. **Never blend them in one asset** — different audience, different funnel, different copy.
+The Second Property Ladder™ is the customer-facing category. Agent Edition™ teaches agents to run an advisory business of their own, using the same underlying physics (a ladder to climb, an advisor who's already climbed it, a sequence that beats guesswork) but its own spine and vocabulary. **Never blend them in one asset** — different audience, different funnel, different copy.
 
 ---
 
@@ -135,5 +139,5 @@ Category-creation potential scored 74/100 (June 2026). Category naming / public 
 
 - Load this before any positioning, category, naming, campaign, or brand-identity task, in either engine.
 - Enforce: advisor not agent; the ladder is NAV not door-count; market the upside / deliver the safety; never blend the two engines; BNTTS is a filter only.
-- For full detail, route to `02_POSITIONING_AND_IP/` (client spine) or `04_AGENT_EDITION_OS/00_POSITIONING/` (Market Maker).
-- If a new idea doesn't trace to the Second Property Ladder™ (client) or the Market Maker Method (agent) — challenge it or send it to `06_PARKING_LOT.md`.
+- For full detail, route to `02_POSITIONING_AND_IP/` (client spine) or `04_AGENT_EDITION_OS/00_POSITIONING/` (Agent Edition).
+- If a new idea doesn't trace to the Second Property Ladder™ (client) or Agent Edition™ (agent) — challenge it or send it to `06_PARKING_LOT.md`.

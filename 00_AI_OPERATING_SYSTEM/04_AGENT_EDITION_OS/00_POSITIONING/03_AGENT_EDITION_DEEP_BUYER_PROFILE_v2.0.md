@@ -1,10 +1,12 @@
-﻿# MAS Agent Edition Deep Buyer Profile v2.0
+﻿# Agent Edition Deep Buyer Profile v2.0
 
 **Version:** v2.0
-**Status:** APPROVED MASTER — Edmund 2026-07-11 (converted from .docx, fidelity verified)
+**Status:** APPROVED MASTER — Edmund 2026-07-11 (converted from .docx, fidelity verified); brand-alignment note added 2026-08-13
 **Date:** 2026-07-10
 **Supersedes:** none
 **Sources:** H:\Shared drives\00_E.C.O.S\01_PROPERTY_BUSINESS\02_AGENT_EDITION\01_MAS_AGENT_OS\MAS_AgentEdition_DeepBuyerProfile_v2.0.docx
+
+**▌ 2026-08-13 BRAND-ALIGNMENT NOTE:** *"MAS Agent Edition" in this document now reads as **Agent Edition™** per `01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md` — the Market Maker brand this document predates is retired. This document's own GCI stage model (S$120K–S$500K+, Stage 2 "Primary Target" starting at S$80K) sits close enough to the new S$100K+ GCI entry threshold that no content rewrite is required — treat S$100K+ as the confirmed public-facing floor going forward. The audience psychology, stages and villain content below remain the working intelligence source; only the outer brand wrapper has changed.*
 
 ---
 

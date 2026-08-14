@@ -1,9 +1,9 @@
 # 04_AGENT_EDITION_OS — _INDEX
-Version: v2.0
+Version: v3.0
 Status: APPROVED MASTER
-Date: 2026-07-19
-Supersedes: v1.4 — separates reusable Agent Edition doctrine from active programme, funnel and app production; replaces Agent Recruitment routing with the full Agent Edition Desk; resolves legacy approved-looking files that still used retired Command/MAS naming.
-Sources: AI OS CLAUDE.md v4.5; Decision Memory v3.16; Decisions 028 and 046; Current Priorities; E.C.O.S Agent Edition Desk; physical folder audit 2026-07-19.
+Date: 2026-08-13
+Supersedes: v2.0 (2026-07-19) — Market Maker Method brand, spine, offer ladder and 3-day experience design retired and replaced by Agent Edition™ per Edmund's direct instruction ("upgrade everything of the latest pasted information," 2026-08-13). Decision 046's 10-asset set retired, superseded by the Nine Agent Multipliers.
+Sources: AI OS CLAUDE.md v4.9; Decision Memory v3.32 (Decision 127); `00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md`; Agent Edition Design Bible v1.0.
 
 ## Purpose
 
@@ -54,15 +54,19 @@ A draft campaign file cannot rename or override an approved OS decision.
 
 ## Locked public spine
 
-- Hero brand: **The Market Maker Method**
-- Identity: **Market Maker**
-- Reframe: **Market Taker → Market Maker**
-- Front-door line: **Stop chasing the market. Start making it.**
-- Flagship: **Market Maker Live**
-- Pillars: **Authority · Advisory · Amplify**
-- Days: **Own Your Market · Own the Trust · Own Your Freedom**
-- Free diagnostic: **The Market Maker Scorecard**
-- Continuity: **The Market Makers’ Circle → The Boardroom**
+**Updated 2026-08-13 — Market Maker Method retired, superseded per Edmund’s direct instruction ("upgrade everything of the latest pasted information"). Full reconciliation: `00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md`.**
+
+- Hero brand: **Agent Edition™**
+- Identity: **Agent Multiplier**
+- Reframe: **Producer → Advisor → Business Owner → Multiplier**
+- Front-door line: **PENDING sign-off** — not yet locked, see Brand & Naming master
+- Flagship: **The Multiplier Install** (3-day live event; formerly and elsewhere unrelated to "Boardroom" — see naming-collision note below)
+- Pillars: **Attract · Convert · Deliver**, powered by **Command**
+- Diagnostic universe: **The Nine Agent Multipliers™** (3 per pillar) — a diagnostic map, not a curriculum; members work on 2 of 9 (the 3-2-1 mechanism)
+- Free diagnostic: **The Agent Business Multiplier Score™**
+- Journey: **Year 1 Foundation → Year 2 Acceleration → Year 3 Multiplication**
+
+**Naming-collision note:** "The Boardroom" is never used anywhere in Agent Edition. It is Taki Moore’s mastermind trade name (`TAKI_MOORE_MODEL/01_THE_BUSINESS.md` §10) and was also the retired Market Maker continuity tier’s name — both reasons it stays retired.
 
 ## Operating boundaries
 

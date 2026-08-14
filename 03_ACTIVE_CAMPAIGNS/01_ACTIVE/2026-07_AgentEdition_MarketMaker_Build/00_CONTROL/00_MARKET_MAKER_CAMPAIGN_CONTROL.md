@@ -1,6 +1,6 @@
 ﻿# CMP-20260706-MARKETMAKER-AGENTS-001 — Market Maker Message-Validation Test
 Version: v1.0
-Status: DRAFT
+Status: DRAFT — **brand superseded 2026-08-13 (Decision 127): the Market Maker Method this test validates is retired, replaced by Agent Edition™.** This test, its brief and its angles all need re-skinning before any further work — do not launch as-is. Current doctrine: `04_AGENT_EDITION_OS/00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md`.
 Date: 2026-07-11
 Owner: Marketing & Ads Desk (approval authority: Edmund / Cindior)
 Source of truth: `04_AGENT_EDITION_OS/02_MARKETING/MAS_Campaign_Brief_MM_ValidationTest_v1.0_DRAFT.md` (thin pointer record — this file does not restate the brief)

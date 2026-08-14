@@ -1,8 +1,8 @@
 # _INDEX — TAKI_MOORE_MODEL
-Version: v1.0
+Version: v1.1
 Status: REFERENCE RESOURCE
 Date: 2026-08-13
-Supersedes: `REF_TakiMoore_Deep_Dive_v1.md`, `REF_TakiMoore_Brand_And_Communication_Kit_v1.md`, `REF_TakiMoore_Adoption_Blueprint_v1_PROPOSAL.md` (all 2026-08-12, unapproved same-day drafts — content carried forward in full, originals removed to avoid parallel sources of truth).
+Supersedes: v1.0 (2026-08-13, same day) — Boardroom collision flag marked RESOLVED per Decision 127. Originally superseded `REF_TakiMoore_Deep_Dive_v1.md`, `REF_TakiMoore_Brand_And_Communication_Kit_v1.md`, `REF_TakiMoore_Adoption_Blueprint_v1_PROPOSAL.md` (2026-08-12 unapproved same-day drafts — content carried forward in full, originals removed to avoid parallel sources of truth).
 Sources: public articles, podcasts, blog and book listings, captured 2026-08-12/13. Full source lists at the foot of each file.
 
 ## Purpose
@@ -19,7 +19,7 @@ Held for two uses:
 
 **Names are not transferable.** Structure, sequence and principle are learnable from anyone; trade names are not. Anything adopted ships under our own name. Full collision list in `01_THE_BUSINESS.md` §10.
 
-⚠️ **Standing flag for Edmund:** `The Boardroom` is Taki Moore's mastermind name and is currently live in the Agent Edition locked public spine (`The Market Makers' Circle → The Boardroom`).
+✅ **RESOLVED 2026-08-13 (Decision 127):** `The Boardroom` collision is closed. The Market Maker Method (which used "The Boardroom" as its continuity tier) is retired. Agent Edition™'s own 3-day flagship event was independently also named "Boardroom" in a separate development thread — renamed to **The Multiplier Install** during reconciliation. "The Boardroom" is not used anywhere in current Agent Edition doctrine. See `04_AGENT_EDITION_OS/00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md`.
 
 ## Files
 

@@ -1,8 +1,8 @@
 # 00_MASTER_INDEX — E.C.O.S AI OPERATING SYSTEM
-Version: v1.2
+Version: v1.3
 Status: APPROVED MASTER
-Date: 2026-07-30
-Supersedes: v1.1 (2026-07-18) — §9 updated with the results of the scoped reconciliation drift audit: pair 2 resolved, pair 3 closed as stale, pair 1 narrowed to one named violation.
+Date: 2026-08-13
+Supersedes: v1.2 (2026-07-30) — terminology fix: Market Maker Method references replaced with Agent Edition™ per Decision 127.
 Sources: root CLAUDE.md v4.5; AI OS CLAUDE.md v4.4; Decision Memory v3.15; current Shared Drive inventory; completed Asset Library guides.
 
 ## 1. What the system is
@@ -43,7 +43,7 @@ Old material never silently overrides a current approved decision.
 | `01_E.C.O.S` | Specialist AI desk charters and task routing |
 | `02_POSITIONING_AND_IP` | Second Property Ladder™ category and IP spine |
 | `03_CLIENT_ADVISORY_OS` | Client diagnosis, consultation and advisory-delivery system |
-| `04_AGENT_EDITION_OS` | Market Maker Method, recruitment, workshop and coaching engine |
+| `04_AGENT_EDITION_OS` | Agent Edition™, recruitment, workshop and coaching engine |
 | `05_CONTENT_MARKETING_ENGINE` | Reusable content-production rules and content systems |
 | `06_KNOWLEDGE_VAULT` | Research, buyer psychology and reusable intelligence |
 | `07_BRAND_AND_PROOF_BANK` | Legacy AI OS brand/proof registries pending reconciliation with Asset Library |
@@ -77,7 +77,7 @@ Old material never silently overrides a current approved decision.
 | Major decision, priority or sequencing | `00_COMMAND_CENTER` |
 | Category, naming, mechanism or positioning | `02_POSITIONING_AND_IP` |
 | Client consultation/advisory method | `03_CLIENT_ADVISORY_OS` |
-| Agent Edition / Market Maker | `04_AGENT_EDITION_OS` |
+| Agent Edition | `04_AGENT_EDITION_OS` |
 | Content creation system | `05_CONTENT_MARKETING_ENGINE` |
 | Research/evidence | `06_KNOWLEDGE_VAULT` |
 | CRM/process/automation | `08_OPERATIONS` |

@@ -1,9 +1,9 @@
 # 03_CURRENT_PRIORITIES
-Version: v3.7
-Status: APPROVED MASTER — CLOSURE TARGET 2026-07-20
-Date: 2026-07-20
-Supersedes: v3.6 — records the Active Campaigns, generated-artifact and Claude configuration cleanup.
-Sources: v3.6; Decision Memory through 108; live Drive audit 2026-07-20.
+Version: v3.8
+Status: APPROVED MASTER
+Date: 2026-08-13
+Supersedes: v3.7 (2026-07-20) — Priority 3 rewritten: Market Maker Method retired, Agent Edition™ reconciliation (Decision 127) sequence replaces the Decision-046 task list.
+Sources: v3.7; Decision Memory through 127; live Drive audit 2026-07-20.
 
 > Read this before starting any new work session. The foundation is operational; the next 90 days remain revenue-focused.
 
@@ -23,18 +23,19 @@ Sources: v3.6; Decision Memory through 108; live Drive audit 2026-07-20.
 - Pull proof and creative from `01_ASSET_LIBRARY`.
 - Marketing OS may govern campaign strategy but must not become a second production home.
 
-## Priority 3 — Agent Edition · Market Maker Method
+## Priority 3 — Agent Edition™
 
-Active workbench: `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_AgentEdition_MarketMaker_Build/`
+**Brand and architecture reconciled 2026-08-13 (Decision 127) — The Market Maker Method retired, Decision 046's asset names retired, superseded by Agent Edition™ / the Nine Agent Multipliers.** Full doctrine: `04_AGENT_EDITION_OS/00_POSITIONING/01_AGENT_EDITION_BRAND_AND_NAMING_v2.0.md`.
+
+Active workbench: `03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_AgentEdition_MarketMaker_Build/` (folder name is legacy; contents governed by current doctrine regardless)
 
 Immediate sequence:
-1. reconcile the 3-day run-of-show to Decision 046;
-2. finalise and pilot the Preview;
-3. integrate Scorecard and Profiler;
-4. replace legacy Command/MAS copy and unverified proof;
+1. re-skin the Villain Doctrine, Marketing Intelligence OS, Cold Market Conversion Model and Core Message Architecture to Agent Edition branding — not done in the 2026-08-13 reconciliation pass;
+2. re-skin all live ad angles, landing pages and HTML tools (`02_FUNNEL_AND_COPY/`, `03_TOOLS_AND_APPS/`) to the new brand;
+3. build the fully timed Multiplier Install run sheet (architecture is locked; block-by-block minutes are not yet written — see `01_THE_MULTIPLIER_INSTALL_EXPERIENCE_DESIGN_v4.0.md` Part 7);
+4. confirm the front-door hook line and final pricing (both flagged PENDING);
 5. confirm proof and event terms;
 6. complete Sales and Operations handoffs.
-7. keep the superseded MAS Agent Command Score artifact archived; it is not a current tool.
 
 ## Priority 4 — Revenue-system handoffs
 
