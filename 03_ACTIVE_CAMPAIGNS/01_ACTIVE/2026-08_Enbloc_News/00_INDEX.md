@@ -46,7 +46,12 @@ CTA = comment "REALITY" + Second Property Strategy Session (second opinion).
 ## Deliverables
 - `ENBLOC_DRAFT_v1_1.15x.mp4` — review copy (1.15× + branded outro)
 - `ENBLOC_DRAFT_v1_natural.mp4` — natural-speed master
-- Reels: NOT yet built (Edmund chose long-form first; script maps Reel 1/2/3)
+- Reels: 7 approved (pilot v3 passed 2026-08-16) → `REELS/` —
+  Reels V2 house format (neon intro / SEE-YOU-IN-THE-NEXT-ONE outro, strict
+  copy of the editor examples), speech-complete endings, gold hot-word
+  captions, all 1.15x. Composition `EbReel1..7`, generator
+  `work/enbloc/build_eb_reels.py`. Review tool: REVIEW_STUDIO.html (this
+  folder) or https://claude.ai/code/artifact/3a55b1ff-2d59-4d0c-ade4-cb03f4dc8155
 
 ## Definition of done
 1. Edmund reviews with timestamps + subtitle corrections

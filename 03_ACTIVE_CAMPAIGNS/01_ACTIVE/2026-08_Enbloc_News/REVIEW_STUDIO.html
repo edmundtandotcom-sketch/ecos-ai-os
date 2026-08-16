@@ -1,0 +1,409 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<title>REI Review Studio</title>
+<style>
+  :root {
+    --navy: #0a1628; --navy2: #101f38; --panel: #16263f;
+    --gold: #F5B942; --red: #E5484D; --green: #3fbf7f;
+    --text: #eef2f8; --dim: #8fa2bd; --line: #22375a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--navy); color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 10px 16px; background: var(--navy2);
+    border-bottom: 2px solid var(--gold);
+  }
+  header h1 { font-size: 16px; letter-spacing: 1px; white-space: nowrap; }
+  header h1 span { color: var(--gold); }
+  header .file { color: var(--dim); font-size: 13px; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 120px; }
+  .btn {
+    background: var(--panel); color: var(--text); border: 1px solid #2a3f61;
+    padding: 7px 13px; border-radius: 8px; cursor: pointer; font-size: 13px;
+    transition: 0.15s;
+  }
+  .btn:hover, .btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+  .btn.gold { background: var(--gold); color: var(--navy); font-weight: 700; border: none; }
+  .btn.gold:hover { filter: brightness(1.1); color: var(--navy); }
+  main { flex: 1; display: flex; min-height: 0; }
+  .stage { flex: 1; display: flex; flex-direction: column; min-width: 0;
+    padding: 12px; gap: 10px; }
+  .videowrap {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    background: #000; border-radius: 12px; min-height: 0; position: relative;
+  }
+  video { max-width: 100%; max-height: 100%; border-radius: 12px; }
+  .drop {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+    color: var(--dim); font-size: 15px; text-align: center; padding: 30px;
+  }
+  .drop b { color: var(--gold); font-size: 21px; }
+  .timeline { position: relative; height: 34px; flex-shrink: 0; }
+  .track { position: absolute; left: 0; right: 0; top: 13px; height: 8px;
+    background: var(--panel); border-radius: 4px; cursor: pointer; }
+  .played { position: absolute; left: 0; top: 13px; height: 8px;
+    background: var(--gold); border-radius: 4px 0 0 4px; pointer-events: none; }
+  .marker { position: absolute; top: 4px; width: 4px; height: 26px;
+    border-radius: 2px; background: var(--red); cursor: pointer;
+    transform: translateX(-2px); }
+  .marker.done { background: var(--green); }
+  .marker:hover { filter: brightness(1.4); }
+  .controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    flex-shrink: 0; }
+  .time { font-variant-numeric: tabular-nums; font-size: 14px;
+    color: var(--gold); min-width: 128px; }
+  .speeds { display: flex; gap: 4px; }
+  .speeds .btn.on { background: var(--gold); color: var(--navy); font-weight: 700; }
+  .hint { color: var(--dim); font-size: 11.5px; margin-left: auto; }
+  kbd { background: var(--panel); border: 1px solid #2a3f61; border-radius: 4px;
+    padding: 1px 6px; font-size: 11px; }
+  aside { width: 360px; background: var(--navy2);
+    border-left: 1px solid var(--line);
+    display: flex; flex-direction: column; min-height: 0; }
+  aside .head { padding: 12px 14px; display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--line); }
+  aside .head b { flex: 1; font-size: 14px; }
+  aside .head .count { color: var(--gold); }
+  .overall { padding: 10px 12px; border-bottom: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 6px; }
+  .overall label { font-size: 12px; color: var(--gold); font-weight: 700;
+    letter-spacing: 0.5px; }
+  .overall textarea { min-height: 56px; font-size: 13px; }
+  .comments { flex: 1; overflow-y: auto; padding: 10px; display: flex;
+    flex-direction: column; gap: 8px; }
+  .comment { background: var(--panel); border-radius: 10px; padding: 10px 12px;
+    border-left: 4px solid var(--red); cursor: pointer; }
+  .comment.done { border-left-color: var(--green); opacity: 0.65; }
+  .comment .row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .comment .ts { color: var(--gold); font-weight: 700; font-size: 13px;
+    font-variant-numeric: tabular-nums; }
+  .comment .del, .comment .ok { background: none; border: none;
+    color: var(--dim); cursor: pointer; font-size: 14px; padding: 2px 6px; }
+  .comment .del { margin-left: auto; }
+  .comment .del:hover { color: var(--red); }
+  .comment .ok:hover { color: var(--green); }
+  .comment p { font-size: 13.5px; line-height: 1.45; white-space: pre-wrap; }
+  .composer { padding: 12px; border-top: 1px solid var(--line); display: none;
+    flex-direction: column; gap: 8px; }
+  .composer.show { display: flex; }
+  .composer .at { color: var(--gold); font-size: 13px; font-weight: 700; }
+  textarea { background: var(--panel); border: 1px solid #2a3f61;
+    color: var(--text); border-radius: 8px; padding: 10px; font-size: 14px;
+    resize: vertical; min-height: 70px; font-family: inherit; }
+  textarea:focus { outline: none; border-color: var(--gold); }
+  .composer .actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .toast { position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%); background: var(--gold); color: var(--navy);
+    font-weight: 700; padding: 10px 22px; border-radius: 24px; opacity: 0;
+    transition: 0.3s; pointer-events: none; z-index: 20; }
+  .toast.show { opacity: 1; }
+  /* export dialog — artifacts can't download files, so show copyable text */
+  .sheet { position: fixed; inset: 0; background: rgba(4,10,20,0.8);
+    display: none; align-items: center; justify-content: center; z-index: 15;
+    padding: 24px; }
+  .sheet.show { display: flex; }
+  .sheet .card { background: var(--navy2); border: 1px solid var(--line);
+    border-radius: 14px; padding: 18px; width: min(640px, 100%);
+    display: flex; flex-direction: column; gap: 12px; }
+  .sheet h2 { font-size: 15px; }
+  .sheet textarea { min-height: 200px; font-size: 13px;
+    font-variant-numeric: tabular-nums; }
+  @media (max-width: 760px) {
+    main { flex-direction: column; }
+    aside { width: 100%; max-height: 45%; border-left: none;
+      border-top: 1px solid var(--line); }
+  }
+</style>
+
+<header>
+  <h1>REI <span>REVIEW</span> STUDIO</h1>
+  <div class="file" id="fileName">no video loaded</div>
+  <button class="btn" id="btnOpen">Open video</button>
+  <button class="btn" id="btnExport">Copy feedback for Claude</button>
+  <button class="btn gold" id="btnAdd">+ Comment (C)</button>
+</header>
+<main>
+  <div class="stage">
+    <div class="videowrap" id="videowrap">
+      <video id="video" playsinline></video>
+      <div class="drop" id="drop">
+        <b>Drop a video here</b>
+        <div>or click "Open video" — MP4 from any folder.<br>
+        Nothing uploads anywhere; it plays straight from your disk.<br><br>
+        <kbd>Space</kbd> play/pause &nbsp; <kbd>C</kbd> comment &nbsp;
+        <kbd>←</kbd><kbd>→</kbd> ±5s &nbsp; <kbd>,</kbd><kbd>.</kbd> frame step</div>
+      </div>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="track" id="track"></div>
+      <div class="played" id="played"></div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="btnPlay">▶</button>
+      <span class="time" id="time">0:00.0 / 0:00.0</span>
+      <div class="speeds" id="speeds">
+        <button class="btn" data-s="0.5">0.5×</button>
+        <button class="btn on" data-s="1">1×</button>
+        <button class="btn" data-s="1.5">1.5×</button>
+        <button class="btn" data-s="2">2×</button>
+      </div>
+      <span class="hint">comments save automatically per file · red = open · green = done</span>
+    </div>
+  </div>
+  <aside>
+    <div class="head">
+      <b>Comments <span class="count" id="count">0</span></b>
+      <button class="btn" id="btnClear">Clear all</button>
+    </div>
+    <div class="overall">
+      <label for="overallText">OVERALL COMMENTS (whole video)</label>
+      <textarea id="overallText"
+        placeholder="Big-picture feedback — pacing, style, direction…"></textarea>
+    </div>
+    <div class="comments" id="comments"></div>
+    <div class="composer" id="composer">
+      <div class="at" id="composerAt">at 0:00</div>
+      <textarea id="composerText" placeholder="What should change here? (Enter = save, Esc = cancel)"></textarea>
+      <div class="actions">
+        <button class="btn" id="btnCancel">Cancel</button>
+        <button class="btn gold" id="btnSave">Save comment</button>
+      </div>
+    </div>
+  </aside>
+</main>
+<input type="file" id="filePick" accept="video/*" hidden>
+<div class="toast" id="toast"></div>
+<div class="sheet" id="sheet">
+  <div class="card">
+    <h2>Feedback ready — select all &amp; copy, then paste to Claude</h2>
+    <textarea id="sheetText" readonly></textarea>
+    <div class="actions" style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" id="sheetClose">Close</button>
+      <button class="btn gold" id="sheetCopy">Copy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const video = $("video");
+let fileKey = null;
+let comments = [];
+let composerTime = 0;
+let editIndex = -1;   // >= 0 while editing an existing comment
+
+const fmt = (s, decis) => {
+  const m = Math.floor(s / 60);
+  const sec = s - m * 60;
+  return decis
+    ? `${m}:${sec.toFixed(1).padStart(4, "0")}`
+    : `${m}:${String(Math.floor(sec)).padStart(2, "0")}`;
+};
+
+function toast(msg) {
+  $("toast").textContent = msg;
+  $("toast").classList.add("show");
+  setTimeout(() => $("toast").classList.remove("show"), 1800);
+}
+
+function store() {
+  try {
+    if (!fileKey) return;
+    localStorage.setItem("rei-review::" + fileKey, JSON.stringify(comments));
+    localStorage.setItem("rei-review-overall::" + fileKey, $("overallText").value);
+  } catch (e) { /* storage unavailable — session-only mode */ }
+}
+function loadStored() {
+  try {
+    comments = JSON.parse(localStorage.getItem("rei-review::" + fileKey) || "[]");
+    $("overallText").value = localStorage.getItem("rei-review-overall::" + fileKey) || "";
+  } catch (e) { comments = []; }
+}
+$("overallText") && ($("overallText").oninput = store);
+
+function loadFile(file) {
+  if (!file || !file.type.startsWith("video")) return;
+  fileKey = file.name;
+  $("fileName").textContent = file.name;
+  video.src = URL.createObjectURL(file);
+  $("drop").style.display = "none";
+  loadStored();
+  render();
+}
+$("btnOpen").onclick = () => $("filePick").click();
+$("filePick").onchange = (e) => loadFile(e.target.files[0]);
+document.addEventListener("dragover", (e) => e.preventDefault());
+document.addEventListener("drop", (e) => {
+  e.preventDefault();
+  loadFile(e.dataTransfer.files[0]);
+});
+
+$("btnPlay").onclick = togglePlay;
+$("videowrap").onclick = (e) => { if (e.target === video) togglePlay(); };
+function togglePlay() {
+  if (!video.src) { $("filePick").click(); return; }
+  video.paused ? video.play() : video.pause();
+}
+video.onplay = () => ($("btnPlay").textContent = "⏸");
+video.onpause = () => ($("btnPlay").textContent = "▶");
+video.ontimeupdate = () => {
+  $("time").textContent = `${fmt(video.currentTime, true)} / ${fmt(video.duration || 0, true)}`;
+  $("played").style.width = ((video.currentTime / (video.duration || 1)) * 100) + "%";
+};
+video.ondurationchange = renderMarkers;
+
+$("speeds").onclick = (e) => {
+  const b = e.target.closest("[data-s]");
+  if (!b) return;
+  video.playbackRate = parseFloat(b.dataset.s);
+  document.querySelectorAll("#speeds .btn").forEach((x) => x.classList.remove("on"));
+  b.classList.add("on");
+};
+
+$("track").onclick = (e) => {
+  const r = $("track").getBoundingClientRect();
+  video.currentTime = ((e.clientX - r.left) / r.width) * (video.duration || 0);
+};
+
+function openComposer(existingIndex) {
+  if (!video.src) return;
+  video.pause();
+  editIndex = typeof existingIndex === "number" ? existingIndex : -1;
+  if (editIndex >= 0) {
+    composerTime = comments[editIndex].t;
+    $("composerText").value = comments[editIndex].text;
+    $("composerAt").textContent = "editing " + fmt(composerTime, true);
+  } else {
+    composerTime = video.currentTime;
+    $("composerText").value = "";
+    $("composerAt").textContent = "at " + fmt(composerTime, true);
+  }
+  $("composer").classList.add("show");
+  $("composerText").focus();
+}
+function closeComposer() { $("composer").classList.remove("show"); editIndex = -1; }
+function saveComment() {
+  const text = $("composerText").value.trim();
+  if (!text) { closeComposer(); return; }
+  if (editIndex >= 0) comments[editIndex].text = text;
+  else comments.push({ t: composerTime, text, done: false });
+  comments.sort((a, b) => a.t - b.t);
+  store(); render(); closeComposer();
+}
+$("btnAdd").onclick = openComposer;
+$("btnSave").onclick = saveComment;
+$("btnCancel").onclick = closeComposer;
+$("composerText").onkeydown = (e) => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); saveComment(); }
+  if (e.key === "Escape") closeComposer();
+};
+
+function render() {
+  const box = $("comments");
+  box.innerHTML = "";
+  comments.forEach((c, i) => {
+    const el = document.createElement("div");
+    el.className = "comment" + (c.done ? " done" : "");
+    el.innerHTML = `
+      <div class="row">
+        <span class="ts">${fmt(c.t, true)}</span>
+        <button class="ok" title="mark done">✓</button>
+        <button class="edit" title="edit" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px;padding:2px 6px">✎</button>
+        <button class="del" title="delete">✕</button>
+      </div>
+      <p></p>`;
+    el.querySelector("p").textContent = c.text;
+    el.onclick = (e) => {
+      if (e.target.classList.contains("del")) {
+        comments.splice(i, 1); store(); render(); return;
+      }
+      if (e.target.classList.contains("ok")) {
+        c.done = !c.done; store(); render(); return;
+      }
+      if (e.target.classList.contains("edit")) {
+        openComposer(i); return;
+      }
+      video.currentTime = Math.max(0, c.t - 1.5);
+      video.play();
+    };
+    box.appendChild(el);
+  });
+  $("count").textContent = comments.length;
+  renderMarkers();
+}
+
+function renderMarkers() {
+  document.querySelectorAll(".marker").forEach((m) => m.remove());
+  if (!video.duration) return;
+  comments.forEach((c) => {
+    const m = document.createElement("div");
+    m.className = "marker" + (c.done ? " done" : "");
+    m.style.left = (c.t / video.duration) * 100 + "%";
+    m.title = fmt(c.t, true) + " — " + c.text;
+    m.onclick = () => { video.currentTime = Math.max(0, c.t - 1.5); };
+    $("timeline").appendChild(m);
+  });
+}
+
+$("btnClear").onclick = () => {
+  if (comments.length && confirm("Delete all comments for this video?")) {
+    comments = []; store(); render();
+  }
+};
+
+function exportText() {
+  const lines = comments.map(
+    (c) => `${fmt(c.t)}${c.done ? " [done]" : ""} - ${c.text.replace(/\n/g, " / ")}`
+  );
+  const overall = $("overallText").value.trim();
+  let out = `Feedback for ${fileKey}:\n`;
+  if (overall) out += `\nOVERALL:\n${overall}\n\nTIMESTAMPED:\n`;
+  return out + lines.join("\n");
+}
+$("btnExport").onclick = () => {
+  if (!comments.length && !$("overallText").value.trim()) { toast("No comments yet"); return; }
+  const out = exportText();
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(out).then(
+      () => toast("Copied — paste it straight to Claude"),
+      () => showSheet(out)
+    );
+  } else showSheet(out);
+};
+function showSheet(out) {
+  $("sheetText").value = out;
+  $("sheet").classList.add("show");
+  $("sheetText").select();
+}
+$("sheetClose").onclick = () => $("sheet").classList.remove("show");
+$("sheetCopy").onclick = () => {
+  $("sheetText").select();
+  document.execCommand("copy");
+  toast("Copied");
+};
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "TEXTAREA") return;
+  if (e.code === "Space") { e.preventDefault(); togglePlay(); }
+  else if (e.key === "c" || e.key === "C") openComposer(-1);
+  else if (e.key === "ArrowLeft") video.currentTime -= e.shiftKey ? 1 : 5;
+  else if (e.key === "ArrowRight") video.currentTime += e.shiftKey ? 1 : 5;
+  else if (e.key === ",") { video.pause(); video.currentTime -= 1 / 30; }
+  else if (e.key === ".") { video.pause(); video.currentTime += 1 / 30; }
+});
+</script>
+
+</body>
+</html>
