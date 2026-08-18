@@ -346,3 +346,6 @@ The Cloud Ads Intelligence routine had created 10 metadata-only scaffold folders
 - **Entrepedia** (110261508293707) — cross-vertical (business book funnel). 22 images.
 - **Issac Liu** (1052372747963934) — cross-vertical (business valuation). 6 images.
 Also: folder-wide transcript repair — ~73 earlier videos across 13 folders were missing transcripts (lost in the media-type folder reorg); regenerated from retained mp4s. All thumbnails verified present.
+
+## 2026-08-13 KS Tan refresh (Decision 124, page 110637458587684)
+KS TAN - Real Estate Strategist: +3 NEW videos (1973714376623550, 1571690574651850, 1034030986170830; launched 13-14 Aug, Lucerne Grand/Thomson Reserve exit-planning). Folder now 5 videos + 10 images. Prior 2 videos (1061827746195503, 837174999331033) now inactive, retained. See _ad_breakdown.md.
