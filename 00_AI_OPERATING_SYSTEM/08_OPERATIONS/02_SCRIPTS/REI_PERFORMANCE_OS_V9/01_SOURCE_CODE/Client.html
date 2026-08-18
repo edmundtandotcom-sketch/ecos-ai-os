@@ -215,16 +215,24 @@ const app={
        investment:0,totalInvested:0,roasAllIn:0});
     const title=document.getElementById('combinedTitle');
     if(title)title.textContent=pv==='ALL'?'All channels combined':pv+' only';
-    /* The headline number is how many leads are sitting in that GHL stage right now, so
-       a card can be read straight off the GHL board with no mental arithmetic. The
-       sub-line carries the cumulative "ever reached" count, which is what the cost-per
-       and conversion figures are built from — a lead now in Appointment did book a
-       call, and dropping it from the maths would overstate every downstream rate. */
+    /* The headline number is now the CUMULATIVE count — everyone who ever reached this
+       stage — because the cards sit in a row and are read as a sequence whether or not
+       they are meant to be. Showing the live stage head-count as the headline invited
+       exactly the wrong reading: "120 booked calls, of which 45 became appointments",
+       when in truth those 120 are the ones that have NOT had an appointment yet. The
+       cumulative numbers do chain (392 > 234 > 179 > 59 > 13 > 5), so the row now means
+       what it looks like it means.
+       The GHL board figure is not lost: it moves to the sub-line as "still here", where
+       "still here + moved on = the headline" holds at every stage, which makes the
+       relationship self-evident instead of something to be explained. */
     /* Census gained a per-platform shape in v9.12; a payload cached from before that
        is still a flat stage map, so accept both rather than render zeros for 2 minutes. */
     const cenRoot=(d.census&&d.census.all)?d.census:{all:d.census||{}};
     const cenv=cenRoot[pv==='ALL'?'all':pv]||{};
-    const at=(stage,fallback)=>this.num(typeof cenv[stage]==='number'?cenv[stage]:fallback);
+    const rawAt=(stage,fallback)=>typeof cenv[stage]==='number'?cenv[stage]:fallback;
+    const at=(stage,fallback)=>this.num(rawAt(stage,fallback));
+    /* "still here · moved on" — the two halves of the headline. */
+    const split=(stage,movedOn)=>at(stage,0)+' still here · '+this.num(movedOn)+' moved on';
     /* Every cost figure is divided out of ONE base, so the toggle can never leave the
        cards half-rebased — spend saying one thing and cost-per-close another. */
     const inc=pv==='ALL'&&this.state.costBasis==='all';
@@ -235,12 +243,13 @@ const app={
     const invYears=((d.investments||{}).byYear||[]).map(y=>y.year).join(' · ');
     const cards=[
       [inc?'Spend (all-in)':'Spend',this.money(base),'CPL '+per(o.leads)+(inc?' incl. mentorship':'')],
-      ['CRM leads',this.num(o.leads),'From GHL — Response '+this.pct(o.responseRate)],
-      ['Booked calls',at('Booked Call',o.bookedCalls),this.num(o.bookedCalls)+' ever reached · '+per(o.bookedCalls)+' each'],
-      ['Appointments',at('Appointment',o.appointments),this.num(o.appointments)+' ever reached · '+this.pct(o.showRate)+' show'],
-      ['Strategy sessions',at('Strategy Session',o.strategySessions),this.num(o.strategySessions)+' ever reached · '+per(o.strategySessions)+' each'],
+      ['1. Leads in',this.num(o.leads),split('New',o.responded)],
+      ['2. Responded',this.num(o.responded),split('Responded',o.bookedCalls)+' · '+this.pct(o.responseRate)],
+      ['3. Booked a call',this.num(o.bookedCalls),split('Booked Call',o.appointments)+' · '+per(o.bookedCalls)+' each'],
+      ['4. Appointments',this.num(o.appointments),split('Appointment',o.strategySessions)+' · '+per(o.appointments)+' each'],
+      ['5. Strategy sessions',this.num(o.strategySessions),split('Strategy Session',o.closed)+' · '+per(o.strategySessions)+' each'],
+      ['6. Closed won',this.num(o.closed),'Cost '+per(o.closed)],
       ['Nurture',at('Nurture',0),'Attended, not moved forward — follow up'],
-      ['Closed',this.num(o.closed),'Cost '+per(o.closed)],
       ['Mentorship',this.money(pv==='ALL'?invTotal:Number((d.overview||{}).investment||0)),
         pv!=='ALL' ? 'Business-wide — not attributable to one channel'
         : invTotal ? (invYears||'—')+(inc?' · counted in spend':' · not counted in spend')
