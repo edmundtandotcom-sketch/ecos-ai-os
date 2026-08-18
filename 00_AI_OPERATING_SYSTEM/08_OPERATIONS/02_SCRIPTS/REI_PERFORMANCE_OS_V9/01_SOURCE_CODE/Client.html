@@ -194,7 +194,7 @@ const app={
     const leakEl=document.getElementById('leakCallout');
     if(leakEl){
       leakEl.innerHTML=s.leak
-        ? `<div class="leak-card" onclick="app.showView('funnel')"><div class="leak-label">Biggest leak</div><div class="leak-step">${this.esc(s.leak.label)}</div><div class="leak-stat"><strong>${this.pctRaw(s.leak.rate)}</strong> converting · <span>${this.num(s.leak.dropped)} people lost</span></div></div>`
+        ? `<div class="leak-card" onclick="app.showView('funnel')"><div class="leak-label">Biggest leak</div><div class="leak-step">${this.esc(s.leak.label)}</div><div class="leak-stat"><strong>${this.pctRaw(s.leak.rate)}</strong> converting · <span>${this.num(s.leak.waiting)} waiting to be worked${s.leak.dropped>0?', '+this.num(s.leak.dropped)+' dropped':''}</span></div></div>`
         : (s.leakNote?`<div class="panel quiet-note">${this.esc(s.leakNote)}</div>`:'');
     }
 
@@ -399,7 +399,7 @@ const app={
         <div class="stage-link">
           <span class="stage-arrow">↓</span>
           <span class="stage-rate ${rateCls}">${step.readable?this.pctRaw(step.rate):'—'}</span>
-          <span class="stage-drop">${step.dropped>0?'−'+this.num(step.dropped)+' lost':''}</span>
+          <span class="stage-drop">${step.waiting>0?'<b>'+this.num(step.waiting)+'</b> still waiting':''}${step.waiting>0&&step.dropped>0?' · ':''}${step.dropped>0?'<b class="really-lost">'+this.num(step.dropped)+'</b> dropped':''}</span>
           ${isLeak?'<span class="leak-tag">BIGGEST LEAK</span>':''}
           ${!step.readable?'<span class="stage-note">too few to read</span>':''}
         </div>
@@ -408,8 +408,8 @@ const app={
     }).join('');
 
     document.getElementById('stageTable').innerHTML=`
-      <div class="mt-head"><span>Stage transition</span><span>In</span><span>Out</span><span>Rate</span><span>Lost</span></div>
-      ${s.steps.map(x=>`<div class="mt-row${s.leak&&s.leak.key===x.key?' is-leak':''}"><span>${this.esc(x.label)}</span><span>${this.num(x.fromCount)}</span><span>${this.num(x.to)}</span><strong>${x.readable?this.pctRaw(x.rate):'—'}</strong><span>${this.num(x.dropped)}</span></div>`).join('')}`;
+      <div class="mt-head"><span>Stage transition</span><span>In</span><span>Out</span><span>Rate</span><span>Still waiting</span><span>Dropped</span></div>
+      ${s.steps.map(x=>`<div class="mt-row${s.leak&&s.leak.key===x.key?' is-leak':''}"><span>${this.esc(x.label)}</span><span>${this.num(x.fromCount)}</span><span>${this.num(x.to)}</span><strong>${x.readable?this.pctRaw(x.rate):'—'}</strong><span>${this.num(x.waiting)}</span><span class="${x.dropped>0?'really-lost':''}">${this.num(x.dropped)}</span></div>`).join('')}`;
   },
 
   /* ══════════════ Media buyer — per-ad verdicts ══════════════ */

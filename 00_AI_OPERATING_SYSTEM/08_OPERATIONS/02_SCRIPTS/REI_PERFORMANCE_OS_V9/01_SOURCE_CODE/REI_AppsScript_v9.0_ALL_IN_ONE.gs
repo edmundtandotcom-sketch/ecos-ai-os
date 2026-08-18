@@ -8,7 +8,7 @@
  * Mobile-first, account-neutral Apps Script web app.
  */
 const APP = Object.freeze({
-  VERSION: '9.13.0',
+  VERSION: '9.15.0',
   NAME: 'REI Performance OS',
   TZ: 'Asia/Singapore',
   MASTER_SHEET_ID: '167C_gZsN5RtImBFArt5hXcUqMAHlfJFqX52f0rN_pWk',
@@ -411,9 +411,9 @@ function buildDashboardPayload_(rangeKey, customStart, customEnd) {
   };
   const ads = safely('ads', function () { return aggregateAds_(perf); }, []);
   const adSets = safely('adSets', function () { return aggregateAdSets_(perf); }, []);
-  const stages = safely('stages', function () { return buildStageConversions_(funnelTotals); }, null);
   const pipeline = safely('pipeline', function () { return buildPipelineByStage_(leads); }, []);
   const census = safely('census', function () { return buildStageCensus_(range); }, null);
+  const stages = safely('stages', function () { return buildStageConversions_(funnelTotals, census); }, null);
   const investments = safely('investments', function () { return readInvestments_(range); }, { total: 0, byYear: [], count: 0 });
   /* Ad spend and mentorship stay separate in the maths so CPL/CPA keep meaning ads only,
      while all-in ROAS answers "what did the whole investment return". */
@@ -563,6 +563,12 @@ function buildStageCensus_(range) {
     const o = {};
     CANONICAL_STAGES.forEach(function (stage) { o[stage] = 0; });
     o.total = 0;
+    /* Split by whether the lead is still workable. The funnel used to report every
+       non-advancing lead as "lost", which read as a catastrophic leak when nearly all of
+       them are simply sitting in the stage waiting to be worked: 120 people at Booked
+       Call were reported lost, while only ~10 leads in the whole pipeline are truly dead. */
+    o.live = {}; o.dead = {};
+    CANONICAL_STAGES.forEach(function (stage) { o.live[stage] = 0; o.dead[stage] = 0; });
     return o;
   };
   // Split by platform as well as combined, so the dashboard can be filtered to one
@@ -571,10 +577,14 @@ function buildStageCensus_(range) {
   rows.forEach(function (r) {
     const stage = normaliseStage_(r.stage || r.status);
     const platform = platformOf_(r.platform);
+    const outcome = safeText_(r.outcome).toLowerCase();
+    const bucket = (outcome === 'lost' || outcome === 'abandoned') ? 'dead' : 'live';
     census.all[stage] = (census.all[stage] || 0) + 1;
     census.all.total++;
+    census.all[bucket][stage] = (census.all[bucket][stage] || 0) + 1;
     census[platform][stage] = (census[platform][stage] || 0) + 1;
     census[platform].total++;
+    census[platform][bucket][stage] = (census[platform][bucket][stage] || 0) + 1;
   });
   return census;
 }
@@ -1442,19 +1452,42 @@ function aggregateAdSets_(perf) {
  * The "leak" is the weakest step by conversion rate, ignoring steps whose entry
  * volume is too small to read (a 0% step with 1 lead in it is noise, not a leak).
  */
-function buildStageConversions_(f) {
+/**
+ * Stage-to-stage conversion, splitting the gap into people still being worked and
+ * people genuinely gone.
+ *
+ * fromCount - to is NOT a loss. Someone who reached Booked Call and has not yet reached
+ * Appointment is usually sitting in Booked Call right now, live and workable. Reporting
+ * that as "lost" turned a 120-person follow-up list into what looked like a 120-person
+ * haemorrhage. stayStages names the stages a lead occupies while stalled at a step, so
+ * waiting + dropped reconciles exactly to the gap.
+ */
+function buildStageConversions_(f, census) {
   const minVolume = asNumber_(prop_('LEAK_MIN_VOLUME', 5));
   const pct = function (num, den) { return den > 0 ? (num / den) * 100 : 0; };
 
+  const c = (census && census.all) ? census.all : (census || {});
+  const live = c.live || {}, dead = c.dead || {};
+  const sum = function (map, keys) {
+    return keys.reduce(function (n, k) { return n + asNumber_(map[k]); }, 0);
+  };
+
+  /* GHL's Unqualified stage normalises to 'Lost' and carries no pipeline position, so a
+     lead parked there loses its history and can only be accounted for at entry. */
   const steps = [
-    { key: 'lead_responded',      label: 'New Lead → Responded',           from: 'New Leads',        fromCount: f.newLeads,         to: f.responded },
-    { key: 'responded_booked',    label: 'Responded → Booked Call',        from: 'Responded',        fromCount: f.responded,        to: f.bookedCalls },
-    { key: 'booked_appointment',  label: 'Booked Call → Appointment',      from: 'Booked Calls',     fromCount: f.bookedCalls,      to: f.appointments },
-    { key: 'appointment_session', label: 'Appointment → Strategy Session', from: 'Appointments',     fromCount: f.appointments,     to: f.strategySessions },
-    { key: 'session_closed',      label: 'Strategy Session → Closed',      from: 'Strategy Sessions', fromCount: f.strategySessions, to: f.closedWon }
+    { key: 'lead_responded',      label: 'New Lead → Responded',           from: 'New Leads',        fromCount: f.newLeads,         to: f.responded,        stayStages: ['New', 'Contacted', 'Lost'] },
+    { key: 'responded_booked',    label: 'Responded → Booked Call',        from: 'Responded',        fromCount: f.responded,        to: f.bookedCalls,      stayStages: ['Responded'] },
+    { key: 'booked_appointment',  label: 'Booked Call → Appointment',      from: 'Booked Calls',     fromCount: f.bookedCalls,      to: f.appointments,     stayStages: ['Booked Call'] },
+    { key: 'appointment_session', label: 'Appointment → Strategy Session', from: 'Appointments',     fromCount: f.appointments,     to: f.strategySessions, stayStages: ['Appointment', 'Nurture'] },
+    { key: 'session_closed',      label: 'Strategy Session → Closed',      from: 'Strategy Sessions', fromCount: f.strategySessions, to: f.closedWon,        stayStages: ['Strategy Session'] }
   ].map(s => {
     s.rate = pct(s.to, s.fromCount);
-    s.dropped = Math.max(0, s.fromCount - s.to);
+    s.gap = Math.max(0, s.fromCount - s.to);
+    s.waiting = sum(live, s.stayStages);
+    s.dropped = sum(dead, s.stayStages);
+    /* Never report more than the gap allows, and never silently lose a person: any
+       remainder the census cannot explain stays visible as still-waiting. */
+    if (s.waiting + s.dropped !== s.gap) s.waiting = Math.max(0, s.gap - s.dropped);
     s.readable = s.fromCount >= minVolume;
     return s;
   });
@@ -1467,7 +1500,7 @@ function buildStageConversions_(f) {
 
   return {
     steps: steps,
-    leak: leak ? { key: leak.key, label: leak.label, rate: leak.rate, dropped: leak.dropped } : null,
+    leak: leak ? { key: leak.key, label: leak.label, rate: leak.rate, dropped: leak.dropped, waiting: leak.waiting, gap: leak.gap } : null,
     leakNote: leak ? null : 'Not enough volume yet to identify a leak (needs ' + minVolume + '+ entering a stage).',
     overall: { rate: pct(f.closedWon, f.newLeads), from: f.newLeads, to: f.closedWon },
     minVolume: minVolume
