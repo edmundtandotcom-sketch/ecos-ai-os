@@ -1,7 +1,7 @@
 # Campaign Index — Amberwood at Holland (YouTube video #3, launch review)
 
-Date: 2026-08-18
-Status: BUILD — first QA stills in review; draft render next
+Date: 2026-08-20
+Status: BUILD — v2 (round-1 review applied) rendering; QA stills passed
 Deadline: publish before preview day (Fri 11 Sep 2026); launch 26 Sep
 
 ## Objective
@@ -13,29 +13,38 @@ D4P/D5P, Luxe 48/50/52, D6P-vs-D7L) → verdict scorecard → Strategy Session C
 ## Source of record
 - Script: `Script with resources supports-....docx` (cues [CHART]/[TABLE]/
   [SCREEN]/(Picture N) + cross-check map in `cross check resources.md`)
-- Footage: 9 multi-cam scenes (masters + B-angles; scenes 4–8 also have the
-  raw iPad display captures NC used as timing reference only)
-- Displays rebuilt at full quality from `floor plan.pdf` (18 pp), E-Book v2.3,
-  Architect Briefing (144 pp), Pictures 1–25
+- Footage: 9 multi-cam scenes; scenes 4–8 iPad captures (C files) are the
+  LIVE display layer, per round-1 review
+- Round-1 review (~70 items) captured via REVIEW_STUDIO 2026-08-20 — all
+  applied in v2
 
 ## Production (runtime local: E:\REMOTION)
 - Composition `AmberwoodReview` · generator `work/amberwood/build_amberwood.py`
 - **Style Variant C — Clean White premium** (A=HDB, B=En Bloc; rotation rule)
-- **Multi-cam**: angle blocks ~14s, audio-sync verified (offsets ≤0.07s)
-- **New v5 components**: PlanStage (hi-res plan pan/zoom + speech-anchored
-  callout rings mirroring Edmund's iPad annotations), PlanVS (floor-plan duel)
-- Auto-restart detection with AUDITED whitelist (13 false positives kept as
-  real content — presentation speech repeats phrases legitimately)
-- Gate: `verify_amberwood.py` — 8 checks, all passing
-- Current cut: 26:26 natural → 22:59 at 1.15x (target 18–22, trim in review)
+- **Foundation rules locked by round-1 review (apply to all future videos):**
+  - Talk scenes = front camera only (no B-angle alternation)
+  - Layout/site-plan showcases = Edmund's recorded iPad presentations (C
+    files) full-frame, rendered per-clip so dead-air cuts keep stage+voice
+    in sync; head in circular gold-ring PIP bottom-right
+  - Every spoken number/price gets an on-screen punchline/display
+  - Money/number tokens never split across subtitle cues (glue rule +
+    verify check)
+  - Transition style rotates per scene (fade/wipe/slide)
+  - Subscribe reminders seeded through the mid-stretch
+  - Music: original synthesized beds only (`audio/rei_*`) — YouTube-safe,
+    not Content-ID-claimable
+- Gate: `verify_amberwood.py` — 10 checks, all passing
+- v2 cut: 25:24 natural → 22:05 at 1.15x
+- Review Studio v3: A/B/C comment categories + paste support, grouped export
 
 ## Open items (Edmund)
 - Type D6P block number: script says Block 40, cross-check flags 44(?) —
   on-screen graphic currently says Block 40
 - CPF OA rate on yield graphic: using 2.5%
 
-## Deliverables (planned)
-- `AMBERWOOD_DRAFT_v1_1.15x.mp4` → review via REVIEW_STUDIO → final + outro
+## Deliverables
+- `AMBERWOOD_DRAFT_v1_1.15x.mp4` — reviewed (round 1 done)
+- `AMBERWOOD_DRAFT_v2_1.15x.mp4` — rendering
 - Reels batch (Reels V2 format) after long-form approval
 - Upload kit on request
 

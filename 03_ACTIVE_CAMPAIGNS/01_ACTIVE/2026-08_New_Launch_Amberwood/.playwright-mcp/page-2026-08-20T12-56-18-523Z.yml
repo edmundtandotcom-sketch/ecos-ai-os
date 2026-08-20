@@ -1,0 +1,312 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e6]:
+      - link [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "ERA Real Estate - Trusted by Generations" [ref=e9]
+      - list [ref=e11]:
+        - listitem [ref=e12]:
+          - link "Property Portal" [ref=e14] [cursor=pointer]:
+            - /url: https://propertyportal.era.com.sg
+        - listitem [ref=e16]:
+          - link "Agent" [ref=e18] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e20]:
+          - link "Consumer Events" [ref=e21] [cursor=pointer]:
+            - /url: https://events.era.com.sg/
+        - listitem [ref=e22]:
+          - link "Property Insights" [ref=e24] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e26]:
+          - link "About Us" [ref=e28] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e30]:
+          - link "ERA VIP" [ref=e31] [cursor=pointer]:
+            - /url: https://vip.era.com.sg/
+      - link "Login" [ref=e34] [cursor=pointer]:
+        - /url: https://my.era.com.sg/
+  - main [ref=e35]:
+    - generic [ref=e36]:
+      - link [ref=e38] [cursor=pointer]:
+        - /url: https://events.era.com.sg/
+        - img "Turn Insights Into Wealth" [ref=e39]
+      - generic [ref=e42]:
+        - heading "Bukit Timah Turf City – A New Housing Chapter for the Central Region" [level=1] [ref=e43]
+        - list [ref=e44]:
+          - listitem [ref=e45]:
+            - generic [ref=e47]: ERA Singapore
+          - listitem [ref=e48]: 7 min read
+          - listitem [ref=e50]:
+            - generic [ref=e52]: Blog
+          - listitem [ref=e53]: 9 Jul 2026
+        - list [ref=e55]:
+          - listitem [ref=e56]: "Share Via:"
+          - listitem [ref=e57]:
+            - link [ref=e58] [cursor=pointer]:
+              - /url: https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+          - listitem [ref=e60]:
+            - link [ref=e61] [cursor=pointer]:
+              - /url: https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+          - listitem [ref=e63]:
+            - link [ref=e64] [cursor=pointer]:
+              - /url: https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region&description=Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20
+          - listitem [ref=e66]:
+            - link [ref=e67] [cursor=pointer]:
+              - /url: https://t.me/share/url?url=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region&text=Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20
+          - listitem [ref=e69]:
+            - link [ref=e70] [cursor=pointer]:
+              - /url: https://wa.me/?text=Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20%20https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+          - listitem [ref=e72]:
+            - link [ref=e73] [cursor=pointer]:
+              - /url: mailto:?subject=Check%20out%3A%20Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20&body=I%20thought%20you%20might%20be%20interested%20in%20this%20article%3A%20Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20%0A%0Ahttps%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+        - img "Bukit Timah Turf City – A New Housing Chapter for the Central Region" [ref=e76]
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: Bukit Timah is traditionally known to be a prime residential area located within the Core Central Region (CCR), with a housing landscape consisting predominantly luxury private condominiums and landed homes. However, this is set to gradually change over the next 20 to 30 years.
+          - paragraph [ref=e79]: First announced by the Urban Redevelopment Authority (URA) and Housing & Development Board (HDB) in May 2024, Bukit Timah Turf City will be redeveloped into a new residential estate that is expected to yield 15,000 to 20,000 public and private homes.
+          - 'figure "Source: URA" [ref=e80]'
+          - paragraph [ref=e83]: "Today, this transformation has started to move from planning to implementation, with two Government Land Sales (GLS) sites tendered at Dunearn Road, bringing more private homes into the pipeline. This raises a key question: what does Turf City’s redevelopment mean for those looking to live in Bukit Timah?"
+          - paragraph [ref=e84]: Here is what you need to know about this upcoming estate.
+          - heading "From Horse Racing to Homes" [level=2] [ref=e85]
+          - paragraph [ref=e86]: Spanning 176 hectares, Bukit Timah Turf City was once home to Singapore’s prestigious turf club from 1933 to 1999.
+          - paragraph [ref=e87]: Upon the Singapore Turf Club’s relocation to Kranji in 1999, the site has been largely zoned for residential use since 1998. It continued to be leased out for lifestyle and recreational uses until the end of 2023. This included The Grandstand, which was a shopping complex that served the immediate residents and visitors in the area. The area also hosted recreational offerings such as a go-karting arena, mountain biking courses and The Premier Pitch for soccer matches.
+          - heading "What Makes Bukit Timah Turf City Attractive?" [level=2] [ref=e88]
+          - paragraph [ref=e89]
+          - paragraph [ref=e91]: More often than not, Bukit Timah’s appeal has been tied to its greenery. Located near the Central Catchment Nature Reserve, the area boasts a lush environment, which has shaped its lower-density planning over the years. With green spaces such as the Rail Corridor, Bukit Timah Nature Reserve and Singapore Botanic Gardens just a few MRT stops away, the area offers future residents a more tranquil lifestyle while still being close to the central region.
+          - 'figure "Source: NParks" [ref=e92]'
+          - paragraph [ref=e95]: There are plans to form a new nature park of up to 40 hectares in Turf City. It will connect both Eng Neo Avenue Forest and Bukit Tinggi through a 100m-wide green corridor to enable wildlife movement. More nature trails and boardwalks will be introduced, bringing nature closer to future homes.
+          - 'figure "Source: URA" [ref=e96]'
+          - paragraph [ref=e99]: Bukit Timah Turf City’s future residential enclaves will also retain links to its racecourse history. A total of 22 buildings that represent the former Turf Club’s distinct character are slated for conservation within Bukit Timah Turf City, including the iconic grandstand that once hosted Singapore’s horse racing culture.
+          - paragraph [ref=e100]: "At the same time, the Turf City will have four distinct neighbourhoods with names that reflect the site’s heritage: Racecourse Neighbourhood, Stables Commune, Saddle Club Knolls and Tinggi Hills. This will help preserve Turf’City’s history while integrating it into the new residential enclaves."
+          - paragraph [ref=e101]: Other amenities under study could include recreational spaces, sports facilities and retail options, that will bring convenience to users and support the influx of homes in the area. The future developments will be built around the former racecourse grandstand and the current oval shaped open space will be retained for recreational purposes.
+          - figure "Artist impression of Turf City MRT station (Source LTA)" [ref=e102]
+          - heading "The Future of Homes in Turf City" [level=2] [ref=e105]
+          - paragraph [ref=e106]: The area is currently served by Sixth Avenue MRT Station on the Downtown Line (DTL). The upcoming Turf City MRT Station on the Cross Island Line is expected to be completed in 2032. Residents will be within a 10-minute walk from either MRT station, supplemented by buses. Additionally, Bukit Timah Turf City is planned to be car-lite, and pedestrian-friendly neighbourhood that is well-served by public transport. A new bus interchange may also be added, increasing connectivity between Bukit Timah Turf City to other existing amenities in the neighbourhood, as well as other parts of the island.
+          - 'figure "Source: URA" [ref=e107]'
+          - paragraph [ref=e110]: Road improvement works will also be carried out along Dunearn Road, Bukit Timah Road and Eng Neo Avenue to accommodate an anticipated increase in traffic to and from future developments at Bukit Timah Turf City. Concurrently, a study is being conducted on the technical feasibility and impact of implementing a new exit ramp from the Pan Island Expressway (PIE) towards Tuas.
+          - figure [ref=e111]:
+            - strong [ref=e114]: "Map of primary schools within 2km of Bukit Timah Turf City (Source: OneMap)"
+          - paragraph [ref=e115]: Parents with school-going children will also be eyeing future properties in Bukit Timah Turf City in hopes of securing a placement in one of the numerous popular schools in the vicinity.
+          - paragraph [ref=e116]:
+            - strong [ref=e117]: "Table 1: List of schools within 2km of Bukit Timah Turf City"
+          - 'figure "Source: OneMap" [ref=e118]'
+          - paragraph [ref=e121]: Beyond lifestyle and connectivity, the median resale prices in Bukit Timah has increased steadily, which highlights sustained demand in the area.
+          - paragraph [ref=e122]:
+            - strong [ref=e123]: "Chart 1: Chart 1: Median non-landed residential resale prices in Bukit Timah Planning Area vs CCR (2021 to 2025)"
+          - 'figure "Source: URA as at 7 July 2026, ERA Research and Market Intelligence" [ref=e124]'
+          - paragraph [ref=e127]: Bukit Timah planning area is largely dominated by landed and freehold homes. There is a limited stock of 99-year leasehold homes in the area, with only around 3,402 units launched since 2010. Furthermore, the last 99-year leasehold projects launched were in 2018, signifying a prolonged period of no new leasehold homes in Bukit Timah.
+          - paragraph [ref=e128]: Despite this, from 2021 to 2025, median resale prices in Bukit Timah planning area rose by 38.5% from $1,419 psf to $1,966 psf. This pace of growth is faster than the growth in the CCR region at 16.3%. This suggests that the resale market in Bukit Timah has remained resilient compared to its broader regional counterpart, reflecting underlying demand for 99-year leasehold homes and reinforcing Bukit Timah’s appeal as a prime residential neighbourhood.
+          - heading "What Can We Expect with the Upcoming Estate" [level=2] [ref=e129]
+          - paragraph [ref=e130]: Today, Bukit Timah is slated for a big transformation, with the upcoming Bukit Timah Turf City expected to yield 15,000 to 20,000 residential homes, both private and public. Through integrating public and private housing, this will foster inclusivity among people of different financial background.
+          - paragraph [ref=e131]: According to URA, Bukit Timah Turf City is envisioned to become a high-density yet thoughtfully planned housing estate, with future homes sensitively integrated with heritage elements, lush greenery and public spaces.
+          - paragraph [ref=e132]: To push this transformation forward and grow the housing supply, URA has released two Dunearn Road GLS sites, both of which have since closed and been awarded.
+          - paragraph [ref=e133]:
+            - strong [ref=e134]: "Table 2: List of projects/ GLS sites in Bukit Timah Turf City"
+          - 'figure "Source: URA" [ref=e135]'
+          - 'figure "Dunearn House (Source: ERApro, Frasers Property, CSC Land Group and Sekisui House)" [ref=e138]'
+          - paragraph [ref=e141]: Developed on the first Dunearn Road GLS site, Dunearn House will be the first private condominium to be sold in the emerging Bukit Timah Turf City precinct. It will be within a 4-minute walk to Sixth Avenue MRT Station and a 7-minute walk to the upcoming Turf City MRT Station which is slated for completion in 2032. The private condominium is expected to be launched this month.
+          - 'figure "Source: URA Space" [ref=e142]'
+          - paragraph [ref=e145]: Located beside Dunearn House, the second Dunearn Road GLS site was released under the 2H 2025 GLS Programme and awarded on 4 May 2026. The site can yield up to 1,400 sqm of commercial space and 335 residential units, adding more retail options and amenities for future residents.
+          - paragraph [ref=e146]: The strong participation and competitive bidding for these GLS sites highlight developers’ confidence in the underlying housing demand in Bukit Timah. Dunearn House will be the first 99-year leasehold private condominium launch in the area since Fourth Avenue Residences in 2018. This could lead to some pent-up demand from buyers who are waiting to buy a property in the area.
+          - paragraph [ref=e147]: Besides, the projects could appeal to HDB upgraders from nearby mature towns such as Queenstown and Bukit Merah. With a sizeable amount of 888 million-dollar HDB resale transactions recorded from 2021 to 2025 in these estates, households may have accumulated sufficient housing equity to upgrade to a private property in this area. This provides a rare opportunity for HDB upgraders to move into a prime estate like Bukit Timah.
+          - heading "In Closing" [level=2] [ref=e148]
+          - paragraph [ref=e149]: With more developments in the pipeline, both current and new residents can look forward to the improved convenience, from the new amenities and public transport links that could connect to the rest of the island via public transport links.
+          - paragraph [ref=e150]: For buyers, the appeal lies in entering the precinct at an early stage. Beyond convenience, the redevelopment of the former Singapore Turf Club marks a new chapter for Bukit Timah Turf City. What was once a vast racecourse is set to become a residential precinct, shaped by its history, greenery and reputation as a prime residential address in the CCR.
+          - paragraph [ref=e151]: So, would you consider making Bukit Timah Turf City your next home?
+        - generic [ref=e152]:
+          - separator [ref=e153]
+          - generic [ref=e154]:
+            - generic [ref=e155]: Disclaimer
+            - generic [ref=e156]:
+              - text: This information is provided solely on a goodwill basis and does not relieve parties of their responsibility to verify the information from the relevant sources and/or seek appropriate advice from relevant professionals such as valuers, financial advisers, bankers and lawyers. For avoidance of doubt, ERA Realty Network and its salesperson accepts no responsibility for the accuracy, reliability and/or completeness of the information provided. Copyright in this publication is owned by ERA and this publication may not be reproduced or transmitted in any form or by any means, in whole or in part, without prior written approval.
+              - paragraph [ref=e157]:
+                - text: I confirm that I have read the
+                - link "privacy policy" [ref=e158] [cursor=pointer]:
+                  - /url: https://www.era.com.sg/privacy-policy/
+                - text: and allow my information to be shared with this agent who may contact me later.
+          - generic [ref=e159]:
+            - img "ERA Realty Network Pte Ltd" [ref=e160]
+            - generic [ref=e161]: ERA Realty Network Pte Ltd
+            - generic [ref=e162]: Estate Agent License No. L3002382K
+        - list [ref=e164]:
+          - listitem [ref=e165]: "Share Via:"
+          - listitem [ref=e166]:
+            - link [ref=e167] [cursor=pointer]:
+              - /url: https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+          - listitem [ref=e169]:
+            - link [ref=e170] [cursor=pointer]:
+              - /url: https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+          - listitem [ref=e172]:
+            - link [ref=e173] [cursor=pointer]:
+              - /url: https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region&description=Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20
+          - listitem [ref=e175]:
+            - link [ref=e176] [cursor=pointer]:
+              - /url: https://t.me/share/url?url=https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region&text=Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20
+          - listitem [ref=e178]:
+            - link [ref=e179] [cursor=pointer]:
+              - /url: https://wa.me/?text=Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20%20https%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+          - listitem [ref=e181]:
+            - link [ref=e182] [cursor=pointer]:
+              - /url: mailto:?subject=Check%20out%3A%20Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20&body=I%20thought%20you%20might%20be%20interested%20in%20this%20article%3A%20Bukit%20Timah%20Turf%20City%20%E2%80%93%20A%20New%20Housing%20Chapter%20for%20the%20Central%20Region%20%0A%0Ahttps%3A%2F%2Fwww.era.com.sg%2Fblogs%2Fbukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+      - link [ref=e185] [cursor=pointer]:
+        - /url: https://events.era.com.sg/
+        - img "Turn Insights Into Wealth" [ref=e186]
+      - generic [ref=e187]:
+        - heading "You May Also Like" [level=2] [ref=e188]
+        - generic [ref=e189]:
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - link "Singapore’s Emerging Estates Could Shape the Next Phase of Housing":
+                - /url: /blogs/singapores-emerging-estates-could-shape-the-next-phase-of-housing
+                - img "Singapore’s Emerging Estates Could Shape the Next Phase of Housing" [ref=e192] [cursor=pointer]
+            - heading [level=3] [ref=e193] [cursor=pointer]:
+              - link "Singapore’s Emerging Estates Could Shape the Next Phase of Housing" [ref=e194]:
+                - /url: /blogs/singapores-emerging-estates-could-shape-the-next-phase-of-housing
+            - generic [ref=e195]:
+              - generic [ref=e196]: 6 min read
+              - generic [ref=e198]: 12 Aug 2026
+            - paragraph [ref=e200]: Dream home locations have long been synonymous with centrality in Singapore, but that definition is evolving. As connectivity improves across the island and new precincts mature under URA's Master Plan, these emerging areas are presenting growth potential that was previously harder to find outside the CCR.
+            - link "Read more" [ref=e202] [cursor=pointer]:
+              - /url: /blogs/singapores-emerging-estates-could-shape-the-next-phase-of-housing
+          - generic [ref=e205]:
+            - generic [ref=e206]:
+              - 'link "The 15-Month Wait-Out Period Has Been Removed: What Does This Mean for Private Property Right-Sizers?"':
+                - /url: /blogs/15-month-wait-out-period-removed
+                - 'img "The 15-Month Wait-Out Period Has Been Removed: What Does This Mean for Private Property Right-Sizers?" [ref=e207] [cursor=pointer]'
+            - heading [level=3] [ref=e208] [cursor=pointer]:
+              - 'link "The 15-Month Wait-Out Period Has Been Removed: What Does This Mean for Private Property Right-Sizers?" [ref=e209]':
+                - /url: /blogs/15-month-wait-out-period-removed
+            - generic [ref=e210]:
+              - generic [ref=e211]: 5 min read
+              - generic [ref=e213]: 3 Aug 2026
+            - paragraph [ref=e215]: The 15-month wait-out period for eligible private property owners buying HDB resale flats has been removed. Find out who qualifies, what remains unchanged and how the policy could affect Singapore’s housing market.
+            - link "Read more" [ref=e217] [cursor=pointer]:
+              - /url: /blogs/15-month-wait-out-period-removed
+          - generic [ref=e220]:
+            - generic [ref=e221]:
+              - link "Bukit Timah Turf City – A New Housing Chapter for the Central Region":
+                - /url: /blogs/bukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+                - img "Bukit Timah Turf City – A New Housing Chapter for the Central Region" [ref=e222] [cursor=pointer]
+            - heading [level=3] [ref=e223] [cursor=pointer]:
+              - link "Bukit Timah Turf City – A New Housing Chapter for the Central Region" [ref=e224]:
+                - /url: /blogs/bukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+            - generic [ref=e225]:
+              - generic [ref=e226]: 7 min read
+              - generic [ref=e228]: 9 Jul 2026
+            - paragraph [ref=e230]: First announced by the Urban Redevelopment Authority (URA) and Housing & Development Board (HDB) in May 2024, Bukit Timah Turf City will be redeveloped into a new residential estate that is expected to yield 15,000 to 20,000 public and private homes.
+            - link "Read more" [ref=e232] [cursor=pointer]:
+              - /url: /blogs/bukit-timah-turf-city-a-new-housing-chapter-for-the-central-region
+  - contentinfo [ref=e235]:
+    - generic [ref=e237]:
+      - img "ERA VIP" [ref=e239]
+      - heading "Register as an ERA VIP to get the latest updates" [level=3] [ref=e241]
+      - link "SIGN UP FOR VIP" [ref=e243] [cursor=pointer]:
+        - /url: https://vip.era.com.sg/register
+    - generic [ref=e244]:
+      - generic [ref=e245]:
+        - link [ref=e247] [cursor=pointer]:
+          - /url: /
+          - img "ERA Real Estate - Trusted by Generations" [ref=e248]
+        - list [ref=e249]:
+          - listitem [ref=e250]:
+            - generic [ref=e251] [cursor=pointer]
+            - generic [ref=e252]:
+              - generic [ref=e253]: ERA APAC Centre, 450 Lorong 6 Toa Payoh, Singapore 319394
+              - link "View directions" [ref=e255] [cursor=pointer]:
+                - /url: https://www.google.com/maps?q=ERA+APAC+Centre+450+Lorong+6+Toa+Payoh,+Singapore+319394
+          - listitem [ref=e258]:
+            - generic [ref=e259] [cursor=pointer]
+            - link "+65 6226 2000" [ref=e261] [cursor=pointer]:
+              - /url: tel:+6562262000
+          - listitem [ref=e262]:
+            - generic [ref=e263] [cursor=pointer]
+            - link "era@era.com.sg" [ref=e265] [cursor=pointer]:
+              - /url: mailto:era@era.com.sg
+        - list [ref=e266]:
+          - listitem [ref=e267]:
+            - link "Follow us on TikTok" [ref=e268] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@erasgofficial
+          - listitem [ref=e270]:
+            - link "Follow us on Instagram" [ref=e271] [cursor=pointer]:
+              - /url: https://www.instagram.com/erasgofficial/
+          - listitem [ref=e273]:
+            - link "Follow us on Facebook" [ref=e274] [cursor=pointer]:
+              - /url: https://www.facebook.com/ERASGOfficial
+          - listitem [ref=e276]:
+            - link "Follow us on Youtube" [ref=e277] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/ERARealtyNetwork
+          - listitem [ref=e279]:
+            - link "Follow us on Linkedin" [ref=e280] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/erasg?originalSubdomain=sg
+      - generic [ref=e282]:
+        - heading "Our Company" [level=3] [ref=e283]
+        - list [ref=e284]:
+          - listitem [ref=e285]:
+            - link "ERA Singapore" [ref=e286] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e289]:
+            - link "Our Services" [ref=e290] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e293]:
+            - link "Be an ERA Agent" [ref=e294] [cursor=pointer]:
+              - /url: https://joinus.era.com.sg/
+          - listitem [ref=e297]:
+            - link "Corporate Careers" [ref=e298] [cursor=pointer]:
+              - /url: /corporate-careers
+          - listitem [ref=e301]:
+            - link "ERA Asia Pacific" [ref=e302] [cursor=pointer]:
+              - /url: /era-asia-pacific
+          - listitem [ref=e305]:
+            - link "ERA Global" [ref=e306] [cursor=pointer]:
+              - /url: https://www.era.com/
+          - listitem [ref=e309]:
+            - link "Our ESG" [ref=e310] [cursor=pointer]:
+              - /url: /esg
+          - listitem [ref=e313]:
+            - link "Contact Us" [ref=e314] [cursor=pointer]:
+              - /url: /contact-us
+      - generic [ref=e317]:
+        - heading "Properties" [level=3] [ref=e318]
+        - list [ref=e319]:
+          - listitem [ref=e320]:
+            - link "New Launches" [ref=e321] [cursor=pointer]:
+              - /url: https://propertyportal.era.com.sg/new-launches
+          - listitem [ref=e324]:
+            - link "Resale" [ref=e325] [cursor=pointer]:
+              - /url: https://propertyportal.era.com.sg/property/buy
+          - listitem [ref=e328]:
+            - link "Rental" [ref=e329] [cursor=pointer]:
+              - /url: https://propertyportal.era.com.sg/property/rent
+          - listitem [ref=e332]:
+            - link "Auction" [ref=e333] [cursor=pointer]:
+              - /url: /auction
+      - generic [ref=e336]:
+        - heading "Consumer Resources" [level=3] [ref=e337]
+        - list [ref=e338]:
+          - listitem [ref=e339]:
+            - link "Blogs" [ref=e340] [cursor=pointer]:
+              - /url: /blogs
+          - listitem [ref=e343]:
+            - link "Research Articles" [ref=e344] [cursor=pointer]:
+              - /url: /research-articles
+          - listitem [ref=e347]:
+            - link "Press Release" [ref=e348] [cursor=pointer]:
+              - /url: /press-release
+          - listitem [ref=e351]:
+            - link "RealtyWatch" [ref=e352] [cursor=pointer]:
+              - /url: /realtywatch
+          - listitem [ref=e355]:
+            - link "Fees & Commission Guides" [ref=e356] [cursor=pointer]:
+              - /url: /fees-commission-guidelines
+          - listitem [ref=e359]:
+            - link "Security Advisory" [ref=e360] [cursor=pointer]:
+              - /url: /security-advisory
+          - listitem [ref=e363]:
+            - link "Terms and Conditions" [ref=e364] [cursor=pointer]:
+              - /url: /terms-and-conditions
+    - generic [ref=e368]:
+      - paragraph [ref=e369]: Copyright 2026 ERA Realty Network Pte Ltd. (CEA Licence No. L3002382K). All Rights Reserved. Each office is independently owned and operated. You may contact the Data Protection Officer at dpo@era.com.sg if you have any questions on DNC and/or data protection matters.
+      - paragraph [ref=e370]:
+        - link "Privacy Policy" [ref=e371] [cursor=pointer]:
+          - /url: https://www.era.com.sg/privacy-policy/
+        - text: "| Copyright © 2026 ERA Realty Network Pte Ltd. All rights reserved."
+    - img "Trusted by Generations" [ref=e373]
