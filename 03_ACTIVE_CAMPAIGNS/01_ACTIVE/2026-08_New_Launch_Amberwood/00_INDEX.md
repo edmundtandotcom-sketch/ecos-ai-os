@@ -1,7 +1,12 @@
 # Campaign Index — Amberwood at Holland (YouTube video #3, launch review)
 
-Date: 2026-08-20
-Status: BUILD — v2 (round-1 review applied) rendering; QA stills passed
+Date: 2026-08-21
+Status: BUILD — v3 (round-2 review + VA-reference grammar) rendering
+v3 additions: talk scenes composited onto studio backdrop (E:\BACKDROP);
+fullscreen map plates w/ animated pins (Holland/Turf City/Lentor/Pasir
+Ris/D10 resale); CRL rail diagram; axis charts; exit-window ribbon; verdict
+boards w/ evidence thumbs; verified WhatsApp QR CTAs; VA-style subtitles;
+single-button end CTA; persistent stage chips; per-window bubble control
 Deadline: publish before preview day (Fri 11 Sep 2026); launch 26 Sep
 
 ## Objective
