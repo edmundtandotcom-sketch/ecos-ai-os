@@ -67,3 +67,9 @@ Thumbs.db
 # or (better, per constitution §9 rule 1) converted to markdown, after which this
 # line can be deleted.
 03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_LegacyLaunch_Meta_Wave1/01_CREATIVE/Scripts_Library/ANGLE_05_PORTFOLIO_SEQUENCE/1-LL_ANGLE1_OWNERSHIP_LIABILITY_v1
+
+# Oversized PDF: 198MB, above GitHub's hard 100MB per-file limit — the push is
+# rejected outright. THE SERRA ICB DECK_compressed.pdf (7.6MB) is tracked in its
+# place and carries the same content. Per constitution §9 rule 7, the full-res
+# original's home is the Asset Library, not Git.
+03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA ICB DECK.pdf

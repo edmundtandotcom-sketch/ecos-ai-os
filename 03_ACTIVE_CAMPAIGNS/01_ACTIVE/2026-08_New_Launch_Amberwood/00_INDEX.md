@@ -1,12 +1,17 @@
 # Campaign Index — Amberwood at Holland (YouTube video #3, launch review)
 
-Date: 2026-08-21
-Status: BUILD — v3 (round-2 review + VA-reference grammar) rendering
-v3 additions: talk scenes composited onto studio backdrop (E:\BACKDROP);
-fullscreen map plates w/ animated pins (Holland/Turf City/Lentor/Pasir
-Ris/D10 resale); CRL rail diagram; axis charts; exit-window ribbon; verdict
-boards w/ evidence thumbs; verified WhatsApp QR CTAs; VA-style subtitles;
-single-button end CTA; persistent stage chips; per-window bubble control
+Date: 2026-08-22
+Status: REVIEW — v5 delivered (rounds 3+4 feedback combined; v4 was
+superseded mid-render and never delivered)
+v5 = v3 grammar + composite quality (erode-7 halo fix, hi-res sharpened
+backdrop, colour-match 0.45, ALL head cams composited incl. bubbles) +
+VA1 dynamic layer (fullscreen navy question interstitials, navy data
+cards, info cards w/ real imagery, URA/Lentor/Peck Hay plates cropped
+from the VA reference, TikTok animated captions, money rain, speed-line
+shout, white subscribe pill) + price-only gold caption rule + v2 navy-bar
+subtitles + horizontal QR + Review Studio v5 (A/B/C/D categories,
+subtitle direct-edit loop via subs_manifest/subtitle_overrides, per-comment
+asset + effect tags)
 Deadline: publish before preview day (Fri 11 Sep 2026); launch 26 Sep
 
 ## Objective
