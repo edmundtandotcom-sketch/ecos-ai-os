@@ -107,6 +107,8 @@ Axes (vary these):
 
 ## 9. Open items
 
-- **Motion-frame verification:** a helper session (`claude/ad-style-frames` branch) is capturing frames + cut-timing from 12 published Meta finals (80_R1/R2, Hook 1/2/8, Cindior Story, Property @ 1.5M, Condos, 5 Steps, 68% closings, APJ Hook 7, R1+CTA A). When it lands, verify §4 and §6 against measured cuts-per-second and update to v1.1. It is paused awaiting Edmund's one-click authorization in that session.
-- The June-2026 Drive finals (LL hooks, FL Dad-Daughter, FL Event/Selfie) are the newest-generation motion references; they are >10MB and private, so cloud cannot read their pixels today. Desktop can: run the same frame-extraction there when convenient and drop contact sheets into the campaign folder.
+- **Motion-frame verification — must run on DESKTOP.** Cloud capture was attempted 2026-08-25 and is confirmed impossible: Drive video finals exceed the connector's 10MB download cap, and the org egress policy 403-blocks every Facebook host in **all** cloud environments (verified in both), so the published Meta finals are unreachable too. The desktop machine sees the newest June-2026 finals directly on `H:\`. One-command recipe per video (needs ffmpeg):
+  `ffmpeg -i IN.mp4 -vf "select='gt(scene,0.24)',metadata=print" -an -f null - 2>&1 | findstr pts_time > IN_cuts.txt` (cut timestamps) and
+  `ffmpeg -i IN.mp4 -vf "fps=1/3,scale=640:-2" -q:v 2 frames_%03d.jpg` plus full-res frames at t=0/1/2/3/5s (hook anatomy).
+  Priority set: 3–4 LL post-launch hooks + `Body1`/`Body6` + FL `Selfie Ads` + `The Birthday Reveal` + 2 verticals from `CONTENT_SERIES_16`. Drop outputs into the owning campaign folder; then verify §4/§6 against measured cuts-per-second and promote this file to v1.1.
 - Palette hexes for Family A sampled visually from finals; confirm against the brand pack if a formal palette file exists.
