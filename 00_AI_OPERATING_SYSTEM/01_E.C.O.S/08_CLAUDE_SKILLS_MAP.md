@@ -14,6 +14,7 @@ Committed, portable skills in `ecos-ai-os/.claude/skills/` — identical behavio
 | `/rei-video-routine` | Content desk | Long-form YouTube/VSL/project-review script generation. Stops at a locked script — does not render. |
 | `/rei-reels-routine` | Content desk | Reel script generation — persona ad reels (Legacy Launch G-codes) or organic topical-breakdown reels cut from a long-form. Stops at a script/breakdown — does not cut. |
 | `/video-produce` | Content desk | Routes a locked script/breakdown to the right production tier (Backdrop Studio, SharpCut Studio, or the Remotion composite build) and is explicit about which tiers are desktop-only. |
+| `/rei-ads-routine` | Marketing/Ads desk | Art-directs the EDIT of a paid ad reel (effects, transitions, graphics, captions, fonts, colors, pacing) into a timestamped Edit Direction Brief, with a variation engine so no two ads present the same. Governed by `REI_Ad_Reel_Edit_Style_Bible_v1.0.md`. Added 2026-08-25. |
 
 **Production tier note (2026-08-25 audit):** only the cut/caption/export tier (SharpCut Studio, `edmundtandotcom-sketch/sharpcut-studio`) is actually portable — it's a browser app with no backend, deployed on Cloudflare Pages. Background replacement (`E:\BACKDROP`) and the Remotion composite build (`E:\REMOTION`) are desktop-only and not backed up in any of the 4 git repos checked (`ecos-ai-os`, `sharpcut-studio`, `ecos-runtime`, `property-business`). Full breakdown: `video-produce`'s `SKILL.md`.
 

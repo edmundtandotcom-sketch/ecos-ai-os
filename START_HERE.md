@@ -25,6 +25,7 @@ The folder structure exists for the *system* to stay clean — not for you to me
 | Pull a competitor's live Meta ads (real copy, video, transcript) | `/rei-ads-scan` + advertiser name |
 | Write a long-form YouTube script | `/rei-video-routine` + topic |
 | Write reel scripts / break a long-form into reels | `/rei-reels-routine` + campaign name |
+| Design the edit of a video ad (look, effects, captions) | `/rei-ads-routine` + campaign + assets |
 | Build a quiz, diagnostic, or calculator | `/build-interactive` |
 | Check the system for drift, duplicates, mess | `/os-audit` |
 | End a working session cleanly | `/session-close` |
