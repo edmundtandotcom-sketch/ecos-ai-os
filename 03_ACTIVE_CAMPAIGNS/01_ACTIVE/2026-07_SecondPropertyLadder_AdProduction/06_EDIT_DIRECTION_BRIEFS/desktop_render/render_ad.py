@@ -49,6 +49,26 @@ CROP_OVERRIDE = None
 # If auto-framing makes the head too large, the source is scaled down inside the
 # 9:16 canvas over a blurred fill rather than cropping tighter.
 
+# Measured framing override, for sources shot tighter than the head-size target.
+# Cropping can only make a head BIGGER, so the only fix is to pull the whole
+# picture back and fill the surround with a blurred copy of itself (EDB S3:
+# "pull back the crop - add letterbox/blur-fill"). Values are SOURCE pixels,
+# read off a real frame. Leave None to use the automatic Haar measurement.
+#   head_top    - top of the hair (crown)
+#   head_bottom - bottom of the chin
+#   eye_y       - pupil centre
+FIT_OVERRIDE = dict(head_top=55, head_bottom=428, eye_y=238)
+
+# Where in the 12-16% band to aim.
+TARGET_HEAD_PCT = 0.15
+# What surrounds the picture once it is scaled back: "navy" (flat brand navy,
+# matching the graphics cards) or "blur" (blurred copy of the frame). Navy reads
+# as designed letterbox; blur at this magnification is just a smear of face.
+FILL_MODE = "navy"
+# Haar's frontal-face box is forehead-to-chin and misses the hair; multiply to
+# approximate true crown-to-chin when auto-measuring.
+HAAR_TO_HEAD = 1.30
+
 # Palette — Family B, REI Core (EDB §1)
 NAVY      = (11, 16, 32)
 NAVY_CARD = (20, 27, 51)
@@ -56,8 +76,21 @@ BLUE      = (0, 92, 230)
 YELLOW    = (255, 232, 0)
 WHITE     = (255, 255, 255)
 
-# Whisper model for word timings. "base" is fine; "small" is more accurate.
-WHISPER_MODEL = "base"
+# Whisper model for word timings. Captions are burned from this transcript, so
+# mishearings ship on screen - accuracy is worth the extra minutes.
+WHISPER_MODEL = "medium"
+# Force the language. Auto-detect put the first ~55s of the body take into
+# Malay and produced pure gibberish, which also broke every beat anchor in it.
+WHISPER_LANG = "en"
+# Bias the decoder towards this angle's vocabulary. Without it "S&P 500" comes
+# back as "SMP 500", "stamp duty" as "stem beauty", "walkaway price" as "work
+# away price".
+WHISPER_PROMPT = (
+    "Singapore property investment. Terms used: the S&P 500, stamp duty, "
+    "ABSD, CPF, mortgage, agent fees, legal fees, return on equity, "
+    "walkaway price, entry price, exit price, usable equity, new launch, "
+    "the New Launch Ladder, show flat, cooling measures, net asset value."
+)
 
 # Voice normalisation target
 LOUDNORM_I = -16
@@ -82,7 +115,7 @@ BEATS = [
     dict(id="chip2",   kind="lower", asset="g5_chip2.png",
          start=("year mortgage", -0.8), end=("+", 5.0)),
     dict(id="chip3",   kind="lower", asset="g5_chip3.png",
-         start=("wait four years", -0.3), end=("+", 3.5)),
+         start=("wait 4 years", -0.3), end=("+", 3.5)),
 
     dict(id="chart",   kind="full",  asset="g1_chart.png", flash=True,
          start=("that same money", -0.2), end=("beating the s&p", 1.2)),
@@ -113,7 +146,7 @@ BEATS = [
          start=("new launch ladder", -0.3), end=("+", 9.0)),
 
     dict(id="punch2",  kind="lower", asset="g7_enough.png",
-         start=("i made money", -0.4), end=("+", 4.0)),
+         start=("money is no longer", -0.4), end=("+", 4.0)),
 ]
 
 # CTA chip runs across the whole CTA clip; end card is appended after.
@@ -121,9 +154,17 @@ CTA_CHIP_ASSET = "g9_cta.png"
 ENDCARD_ASSET = "g10_endcard.png"
 ENDCARD_SECONDS = 3.0
 
-# Phrases that mark dead air to trim at the head/tail of each clip
-TRIM_SILENCE_DB = -35
-TRIM_SILENCE_MIN = 0.5
+# Pause removal. Both takes are teleprompter reads: 57% of the body clip is
+# dead air, in 31 gaps of up to 12s. Untightened the ad runs ~7.5 minutes.
+# Every internal pause is capped at PAD_OUT + PAD_IN seconds; head and tail
+# dead air goes entirely. Set MAX_GAP = None to keep the raw pacing.
+MAX_GAP = 0.38
+PAD_OUT = 0.24          # kept after the last word before a cut
+PAD_IN = 0.14           # kept before the first word after a cut
+
+# Which CTA to ship. The CTA take contains all three variants read back to
+# back, each announced "Call to Action 1 / 2 / 3"; only this one is used.
+CTA_VARIANT = "C"
 
 # ----------------------------------------------------------------------------
 
@@ -189,7 +230,9 @@ def stage_transcribe():
             continue
         print(f"  {label}: transcribing… (several minutes)")
         segments, _ = model.transcribe(str(clip), word_timestamps=True,
-                                       vad_filter=True)
+                                       vad_filter=True,
+                                       language=WHISPER_LANG,
+                                       initial_prompt=WHISPER_PROMPT)
         words = []
         for seg in segments:
             for w in (seg.words or []):
@@ -215,49 +258,187 @@ def load_words(label):
 
 
 def norm(s):
-    return re.sub(r"[^a-z0-9 ]", "", s.lower())
+    return re.sub(r"[^a-z0-9]", "", s.lower())
 
 
-def find_phrase(words, phrase):
-    """Fuzzy-find a phrase in word list. Returns (start, end) or None."""
-    target = norm(phrase).split()
+def _flatten(words):
+    """Whole transcript as one normalised string + char->word-index map.
+
+    Matching on a spaceless string means "S&P", "S &P" and "S & P" all collapse
+    to "sp", so an anchor phrase does not have to guess Whisper's spacing.
+    """
+    flat, owner = [], []
+    for i, w in enumerate(words):
+        t = norm(w["w"])
+        flat.append(t)
+        owner.extend([i] * len(t))
+    return "".join(flat), owner
+
+
+def find_phrase(words, phrase, after_word=0):
+    """Find a phrase at or after word index `after_word`.
+
+    Returns (start, end, first_word_index) or None. Searching forward from a
+    cursor is what keeps repeated lines - "your future buyer" is said twice -
+    anchored to the right occurrence.
+    """
+    target = norm(phrase)
     if not target:
         return None
-    toks = [norm(w["w"]) for w in words]
-    n = len(target)
-    for i in range(len(toks) - n + 1):
-        window = [t for t in toks[i:i + n] if t]
-        if len(window) == n and window == target:
-            return words[i]["s"], words[i + n - 1]["e"]
-    # looser: match on first+last token of the phrase within a small span
-    for i, t in enumerate(toks):
-        if t == target[0]:
-            for j in range(i + 1, min(i + n + 4, len(toks))):
-                if toks[j] == target[-1]:
-                    return words[i]["s"], words[j]["e"]
-    return None
+    flat, owner = _flatten(words)
+    lo = 0
+    while lo < len(owner) and owner[lo] < after_word:
+        lo += 1
+    pos = flat.find(target, lo)
+    if pos < 0:
+        return None
+    i = owner[pos]
+    j = owner[min(pos + len(target) - 1, len(owner) - 1)]
+    return words[i]["s"], words[j]["e"], i
 
 
 def resolve_beats(words, offset=0.0):
-    """Turn BEATS phrase anchors into concrete (start, end) seconds."""
+    """Turn BEATS phrase anchors into concrete (start, end) seconds.
+
+    Anchors resolve in script order: each search starts where the previous
+    beat's anchor was found, so a phrase repeated later in the take cannot
+    steal an earlier beat (or vice versa).
+    """
     resolved, misses = [], []
+    cursor = 0
     for b in BEATS:
         ph, off = b["start"]
-        hit = find_phrase(words, ph)
+        hit = find_phrase(words, ph, cursor)
         if not hit:
             misses.append((b["id"], ph))
             continue
+        cursor = hit[2]
         start = hit[0] + off + offset
         e = b["end"]
         if e[0] == "+":
             end = start + e[1]
         else:
-            hit2 = find_phrase(words, e[0])
+            hit2 = find_phrase(words, e[0], cursor)
             end = (hit2[1] if hit2 else start + 4.0) + e[1] + offset
         if end <= start:
             end = start + 2.0
         resolved.append({**b, "t0": round(start, 2), "t1": round(end, 2)})
     return resolved, misses
+
+
+# ----------------------------------------------------------------------------
+# Pause removal
+# ----------------------------------------------------------------------------
+
+def cta_variant_range(words, variant):
+    """(t_lo, t_hi) covering just one CTA variant of a multi-variant take.
+
+    The take reads all three CTAs back to back, each slated "Call to Action N".
+    Returns the span after variant N's slate and before the next one.
+    """
+    want = {"A": "1", "B": "2", "C": "3"}[variant.upper()]
+    slates = [(i, norm(words[i + 1]["w"]))
+              for i in range(len(words) - 1)
+              if norm(words[i]["w"]) == "action" and norm(words[i + 1]["w"]).isdigit()]
+    if not slates:
+        print("  ! no 'Call to Action N' slates found - using the whole CTA clip")
+        return words[0]["s"], words[-1]["e"]
+    mine = [k for k, (i, d) in enumerate(slates) if d == want]
+    if not mine:
+        sys.exit(f"ERROR: CTA variant {variant} (slate '{want}') not in the take")
+    k = mine[0]
+    t_lo = words[slates[k][0] + 1]["e"] + 0.25
+    t_hi = (words[slates[k + 1][0]]["s"] - 0.25 if k + 1 < len(slates)
+            else words[-1]["e"])
+    print(f"  CTA variant {variant.upper()}: using {t_lo:.2f}-{t_hi:.2f}s "
+          f"of {len(slates)} variants in the take")
+    return t_lo, t_hi
+
+
+def plan_segments(words, t_lo, t_hi):
+    """Speech runs to keep, with every internal pause capped at MAX_GAP."""
+    ws = [w for w in words if w["e"] > t_lo and w["s"] < t_hi]
+    if not ws:
+        return [(t_lo, t_hi)]
+    segs = []
+    cs = max(t_lo, ws[0]["s"] - PAD_IN)
+    prev = ws[0]
+    for cur in ws[1:]:
+        if cur["s"] - prev["e"] > MAX_GAP:
+            segs.append((cs, min(t_hi, prev["e"] + PAD_OUT)))
+            cs = max(t_lo, cur["s"] - PAD_IN)
+        prev = cur
+    segs.append((cs, min(t_hi, prev["e"] + PAD_OUT)))
+    # snap to whole frames so each piece is a whole number of frames long
+    return [(round(a * FPS) / FPS, round(b * FPS) / FPS)
+            for a, b in segs if b - a > 1.0 / FPS]
+
+
+def tighten_clip(src, segs, dest, work):
+    """Cut `segs` out of `src` and join them. Returns the real durations.
+
+    Each piece is encoded on its own so ffmpeg keeps it in sync, then they are
+    stream-copied together - no drift accumulates across 30-odd cuts. The
+    measured durations come back so word timings can be remapped against what
+    was actually written rather than what was requested.
+    """
+    work.mkdir(parents=True, exist_ok=True)
+    for old in work.glob("seg*.mp4"):
+        old.unlink()
+    parts, durs = [], []
+    for i, (a, b) in enumerate(segs):
+        q = work / f"seg{i:03d}.mp4"
+        run(["ffmpeg", "-y", "-loglevel", "error",
+             "-ss", f"{a:.3f}", "-to", f"{b:.3f}", "-i", str(src),
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16",
+             "-pix_fmt", "yuv420p", "-r", str(FPS),
+             "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+             "-video_track_timescale", "90000", str(q)])
+        parts.append(q)
+        durs.append(float(ffprobe(q, "stream=duration")["streams"][0]["duration"]))
+    lst = work / "concat.txt"
+    lst.write_text("".join(f"file '{q.resolve().as_posix()}'\n" for q in parts),
+                   encoding="utf-8")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
+         "-i", str(lst), "-c", "copy", str(dest)])
+    return durs
+
+
+def remap_words(words, segs, durs):
+    """Move word timings onto the tightened timeline."""
+    out, base = [], 0.0
+    for (a, b), d in zip(segs, durs):
+        for w in words:
+            if a - 0.001 <= w["s"] < b:
+                out.append(dict(w=w["w"],
+                                s=round(base + max(0.0, w["s"] - a), 3),
+                                e=round(base + min(d, max(0.0, w["e"] - a)), 3)))
+        base += d
+    return out
+
+
+def tighten(label, clip, words, t_lo, t_hi):
+    """Tighten one clip. Returns (path, words on the new timeline)."""
+    if MAX_GAP is None:
+        return clip, words
+    segs = plan_segments(words, t_lo, t_hi)
+    dest = OUT_DIR / f"_tight_{label}.mp4"
+    work = OUT_DIR / f"_tight_{label}"
+    plan = json.dumps(segs)
+    stamp = OUT_DIR / f"_tight_{label}.json"
+    if dest.exists() and stamp.exists() and stamp.read_text(encoding="utf-8") == plan:
+        durs = [float(ffprobe(q, "stream=duration")["streams"][0]["duration"])
+                for q in sorted(work.glob("seg*.mp4"))]
+        print(f"  {label}: tightened cut cached ({len(segs)} segments)")
+    else:
+        print(f"  {label}: cutting {len(segs)} speech segments out of "
+              f"{t_hi - t_lo:.1f}s")
+        durs = tighten_clip(clip, segs, dest, work)
+        stamp.write_text(plan, encoding="utf-8")
+    kept = sum(durs)
+    print(f"  {label}: {t_hi - t_lo:.1f}s -> {kept:.1f}s "
+          f"({(1 - kept / (t_hi - t_lo)) * 100:.0f}% dead air removed)")
+    return dest, remap_words(words, segs, durs)
 
 
 # ----------------------------------------------------------------------------
@@ -289,6 +470,20 @@ def stage_frame():
         print("  (opencv not installed — using centred fallback;"
               " pip install opencv-python for auto-framing)")
 
+    if FIT_OVERRIDE:
+        fit = compute_fit(sw, sh, **FIT_OVERRIDE)
+        geom = {"crop": None, "fit": fit}
+        print("  using FIT_OVERRIDE (measured crown/chin)")
+        print(f"  picture {fit['vw']}x{fit['vh']} at +{fit['x']}+{fit['y']}"
+              f" over {FILL_MODE} fill")
+        print(f"  head = {fit['head_pct']*100:.1f}% of frame height "
+              f"(target {HEAD_PCT_MIN*100:.0f}-{HEAD_PCT_MAX*100:.0f}%)")
+        print(f"  eye-line = {fit['eye_pct']*100:.1f}% "
+              f"(target {EYELINE_PCT*100:.0f}%)")
+        _write_geom(geom)
+        _proof(geom)
+        return
+
     if CROP_OVERRIDE:
         cx, cy, cw, ch = CROP_OVERRIDE
         scale = 1.0
@@ -314,8 +509,20 @@ def stage_frame():
         print(f"  head ≈ {scale*100:.1f}% of output height "
               f"(target {HEAD_PCT_MIN*100:.0f}–{HEAD_PCT_MAX*100:.0f}%)")
         if scale > HEAD_PCT_MAX:
-            print("  ! head still too large — widening crop to full source height")
-            ch = sh; cw = int(sh * W / H); cx = max(0, min(sw - cw, int((fx+fw/2) - cw/2))); cy = 0
+            # Cropping cannot make a head smaller - the widest a crop can go is
+            # the whole source. Scale the picture back instead and blur-fill.
+            print("  ! head too large for any crop - scaling back over blurred fill")
+            head = fh * HAAR_TO_HEAD
+            fit = compute_fit(sw, sh,
+                              head_top=(fy + fh / 2) - head / 2,
+                              head_bottom=(fy + fh / 2) + head / 2,
+                              eye_y=fy + fh * 0.42)
+            geom = {"crop": None, "fit": fit}
+            print(f"  head = {fit['head_pct']*100:.1f}% of frame height, "
+                  f"eye-line = {fit['eye_pct']*100:.1f}%")
+            _write_geom(geom)
+            _proof(geom)
+            return
     else:
         ch = sh
         cw = int(sh * W / H)
@@ -324,16 +531,50 @@ def stage_frame():
         print(f"  fallback centre crop: {cw}x{ch}+{cx}+{cy}")
 
     if cw > sw:
-        # Source narrower than 9:16 — pillar it over a blurred fill instead.
+        # Source narrower than 9:16 - pillar it over a blurred fill instead.
         crop = None
-        print("  source narrower than 9:16 → blurred-fill pillarbox")
+        print("  source narrower than 9:16 -> blurred-fill pillarbox")
     else:
         crop = (int(cx), int(cy), int(cw), int(ch))
 
-    (OUT_DIR / "crop.json").write_text(json.dumps({"crop": crop}), encoding="utf-8")
+    geom = {"crop": crop, "fit": None}
+    _write_geom(geom)
+    _proof(geom)
 
-    # Proof frame with the spec guides drawn on
-    vf = build_geometry_vf(crop) + (
+
+def _even(n):
+    n = int(round(n))
+    return n - (n % 2)
+
+
+def compute_fit(sw, sh, head_top, head_bottom, eye_y):
+    """Scale the whole source into the 9:16 canvas so the head hits spec.
+
+    For sources framed tighter than the head-size target. Never upscales and
+    never exceeds the canvas width, so the head can only come out at or below
+    the target - an over-tight face is the failure mode this exists to prevent.
+    """
+    head_src = float(head_bottom) - float(head_top)
+    s = min((TARGET_HEAD_PCT * H) / head_src, W / sw, 1.0)
+    vw, vh = _even(sw * s), _even(sh * s)
+    s_eff = vw / sw
+    y = int(round(EYELINE_PCT * H - eye_y * s_eff))
+    if vh <= H:
+        y = max(0, min(H - vh, y))
+    else:
+        y = 0
+    return dict(vw=vw, vh=vh, x=_even((W - vw) / 2), y=y,
+                head_pct=head_src * s_eff / H,
+                eye_pct=(y + eye_y * s_eff) / H)
+
+
+def _write_geom(geom):
+    (OUT_DIR / "crop.json").write_text(json.dumps(geom), encoding="utf-8")
+
+
+def _proof(geom):
+    """Write the framing proof frame with the spec guides drawn over it."""
+    vf = build_geometry_vf(geom) + (
         f",drawbox=y=0:h={int(H*0.10)}:t=fill:color=blue@0.18"
         f",drawbox=y={int(H*0.83)}:h={int(H*0.17)}:t=fill:color=blue@0.18"
         f",drawbox=y={int(H*EYELINE_PCT)}:h=3:t=fill:color=yellow@0.9"
@@ -342,16 +583,27 @@ def stage_frame():
     proof = OUT_DIR / "frame_framing_check.png"
     run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "5", "-i", str(BODY_CLIP),
          "-frames:v", "1", "-vf", vf, str(proof)])
-    print(f"\n  → LOOK AT {proof}")
+    print(f"\n  -> LOOK AT {proof}")
     print("    Yellow line = eye-line target. Blue bands = keep face clear.")
-    print("    Wrong? set CROP_OVERRIDE in CONFIG and re-run --stage frame.")
+    print("    Wrong? set FIT_OVERRIDE/CROP_OVERRIDE and re-run --stage frame.")
 
 
-def build_geometry_vf(crop):
+def build_geometry_vf(geom):
     """Crop/scale/pad the source into the 9:16 canvas."""
+    crop = geom.get("crop") if isinstance(geom, dict) else geom
+    fit = geom.get("fit") if isinstance(geom, dict) else None
     if crop:
         x, y, w, h = crop
         return (f"crop={w}:{h}:{x}:{y},scale={W}:{H}:flags=lanczos,setsar=1")
+    if fit:
+        if FILL_MODE == "navy":
+            navy = "0x%02X%02X%02X" % NAVY
+            return (f"scale={fit['vw']}:{fit['vh']}:flags=lanczos,"
+                    f"pad={W}:{H}:{fit['x']}:{fit['y']}:color={navy},setsar=1")
+        return (f"split[a][b];[b]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                f"crop={W}:{H},boxblur=40:2[bg];"
+                f"[a]scale={fit['vw']}:{fit['vh']}:flags=lanczos[fg];"
+                f"[bg][fg]overlay={fit['x']}:{fit['y']},setsar=1")
     # blurred-fill pillarbox
     return (f"split[a][b];[b]scale={W}:{H}:force_original_aspect_ratio=increase,"
             f"crop={W}:{H},boxblur=40:2[bg];"
@@ -633,48 +885,30 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 # Stage: render
 # ----------------------------------------------------------------------------
 
-def detect_trim(clip):
-    """Return (start, end) trimming leading/trailing silence."""
-    out = subprocess.run(
-        ["ffmpeg", "-i", str(clip), "-af",
-         f"silencedetect=n={TRIM_SILENCE_DB}dB:d={TRIM_SILENCE_MIN}",
-         "-f", "null", "-"],
-        capture_output=True, text=True).stderr
-    dur = float(ffprobe(clip, "stream=duration")["streams"][0].get("duration") or 0)
-    start, end = 0.0, dur
-    starts = re.findall(r"silence_start: ([\d.]+)", out)
-    ends = re.findall(r"silence_end: ([\d.]+)", out)
-    if ends and float(ends[0]) < dur * 0.5:
-        start = max(0.0, float(ends[0]) - 0.15)
-    if starts and float(starts[-1]) > dur * 0.5:
-        end = min(dur, float(starts[-1]) + 0.30)
-    return start, end
-
-
 def stage_render():
     print("\n== RENDER ==")
     g = OUT_DIR / "graphics"
     if not (g / "g1_chart.png").exists():
         sys.exit("ERROR: graphics missing — run --stage graphics")
-    crop = json.loads((OUT_DIR / "crop.json").read_text(encoding="utf-8"))["crop"]
+    crop = json.loads((OUT_DIR / "crop.json").read_text(encoding="utf-8"))
 
     body_words = load_words("body")
     cta_words = load_words("cta")
 
-    b0, b1 = detect_trim(BODY_CLIP)
-    c0, c1 = detect_trim(CTA_CLIP)
-    body_len = b1 - b0
-    print(f"  body trim {b0:.2f}→{b1:.2f} ({body_len:.1f}s)")
-    print(f"  cta  trim {c0:.2f}→{c1:.2f} ({c1-c0:.1f}s)")
+    body_clip, body_words = tighten(
+        "body", BODY_CLIP, body_words,
+        body_words[0]["s"], body_words[-1]["e"])
+    c_lo, c_hi = cta_variant_range(cta_words, CTA_VARIANT)
+    cta_clip, cta_words = tighten("cta", CTA_CLIP, cta_words, c_lo, c_hi)
 
-    beats, misses = resolve_beats(body_words, offset=-b0)
+    beats, misses = resolve_beats(body_words)
     print(f"  beats resolved: {len(beats)}/{len(BEATS)}")
     for bid, ph in misses:
-        print(f"  ! MISSED anchor '{ph}' (beat {bid}) — overlay skipped")
+        print(f"  ! MISSED anchor '{ph}' (beat {bid}) - overlay skipped")
 
     # captions
-    n1 = build_ass(body_words, OUT_DIR / "caps_body.ass", offset=-b0)
-    n2 = build_ass(cta_words, OUT_DIR / "caps_cta.ass", offset=-c0)
+    n1 = build_ass(body_words, OUT_DIR / "caps_body.ass")
+    n2 = build_ass(cta_words, OUT_DIR / "caps_cta.ass")
     print(f"  captions: {n1} body cues, {n2} cta cues")
 
     grade = ("eq=contrast=1.06:brightness=0.012:saturation=1.07,"
@@ -682,7 +916,7 @@ def stage_render():
 
     # ---- pass 1: body ----
     filt = [f"[0:v]{build_geometry_vf(crop)},{grade},fps={FPS}[base]"]
-    inputs = ["-ss", f"{b0}", "-to", f"{b1}", "-i", str(BODY_CLIP)]
+    inputs = ["-i", str(body_clip)]
     idx = 1
     last = "base"
     for b in beats:
@@ -731,7 +965,7 @@ def stage_render():
              f"[v]ass='{ass_cta}':fontsdir='{fontsdir}'[vout]"]
     part_cta = OUT_DIR / "_part_cta.mp4"
     run(["ffmpeg", "-y", "-loglevel", "error", "-stats",
-         "-ss", f"{c0}", "-to", f"{c1}", "-i", str(CTA_CLIP),
+         "-i", str(cta_clip),
          "-i", str(cta_chip),
          "-filter_complex", ";".join(cfilt),
          "-map", "[vout]", "-map", "0:a",
