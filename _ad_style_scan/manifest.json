@@ -1,0 +1,30 @@
+{
+  "scan": "ad_style_scan",
+  "purpose": "Hook anatomy + cut-timing capture from 12 owned Facebook page ad finals",
+  "generated_utc": "2026-08-25T11:11:00Z",
+  "status": "manifest_only",
+  "blocking_reason": "Facebook is unreachable from this session's network. The organization egress policy returns HTTP 403 on CONNECT for every Facebook host (both the video domain www.facebook.com / facebook.com and the CDN scontent-*.xx.fbcdn.net). Per the agent-proxy policy, 403 policy denials must not be retried or routed around. No videos or thumbnails could be downloaded, so no frames, scene-cut, or silence data could be produced.",
+  "tools": {
+    "ffmpeg": "not installed (skipped — no media to process)",
+    "yt-dlp": "not installed (skipped — no media to process)"
+  },
+  "network_probe": [
+    {"host": "scontent-ord5-2.xx.fbcdn.net", "result": "403 CONNECT tunnel failed (egress policy denial)"},
+    {"host": "www.facebook.com", "result": "403 CONNECT tunnel failed (egress policy denial)"},
+    {"host": "facebook.com", "result": "403 CONNECT tunnel failed (egress policy denial)"}
+  ],
+  "videos": [
+    {"id": "1302895431080061", "title": "80_R1", "page_id": "120207245736870413", "permalink": "https://www.facebook.com/120207245736870413/videos/1302895431080061/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "1587049558893292", "title": "80_R2", "page_id": "120207245736870413", "permalink": "https://www.facebook.com/120207245736870413/videos/1587049558893292/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "877332517642359", "title": "Cindior Story", "page_id": "120207245736870413", "permalink": "https://www.facebook.com/120207245736870413/videos/877332517642359/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "749972857248766", "title": "Property @ 1.5M", "page_id": "120207245736870413", "permalink": "https://www.facebook.com/120207245736870413/videos/749972857248766/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "392909260214259", "title": "Condos", "page_id": "120207245736870413", "permalink": "https://www.facebook.com/120207245736870413/videos/392909260214259/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "1945848252555411", "title": "68% of new launch closings", "page_id": "120207245736870413", "permalink": "https://www.facebook.com/120207245736870413/videos/1945848252555411/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "8217185055051405", "title": "Hook 1 Square", "page_id": "23851218702590431", "permalink": "https://www.facebook.com/23851218702590431/videos/8217185055051405/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "1349183713103084", "title": "Hook 2 Square", "page_id": "23851218702590431", "permalink": "https://www.facebook.com/23851218702590431/videos/1349183713103084/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "1584955982159109", "title": "Hook 8 Square", "page_id": "23851218702590431", "permalink": "https://www.facebook.com/23851218702590431/videos/1584955982159109/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "875907837835558", "title": "APJ Hook 7 Subs", "page_id": "23851218702590431", "permalink": "https://www.facebook.com/23851218702590431/videos/875907837835558/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "9370119909685312", "title": "R1 + CTA A", "page_id": "23851218702590431", "permalink": "https://www.facebook.com/23851218702590431/videos/9370119909685312/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"},
+    {"id": "1034059137713095", "title": "5 Steps", "page_id": "23851218702590431", "permalink": "https://www.facebook.com/23851218702590431/videos/1034059137713095/", "length_s": null, "downloaded": false, "n_frames": 0, "cuts_per_second_overall": null, "cuts_per_second_first_3s": null, "notes": "facebook.com blocked by egress policy (403)"}
+  ]
+}
