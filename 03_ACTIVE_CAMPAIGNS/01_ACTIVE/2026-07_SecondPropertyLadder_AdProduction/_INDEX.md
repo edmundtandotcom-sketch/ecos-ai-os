@@ -29,11 +29,14 @@ Produce, record and validate Second Property Ladder™ creative across formats �
 | `02_SCRIPT_LIBRARY/` | Current locked scripts, VSLs and benchmark rewrite |
 | `03_RECORDING_OUTPUTS/` | Dated raw-recording batches and their supporting notes |
 | `04_YOUTUBE_CONTENT_ENGINE/` | Standing YouTube long-form script framework and checklist (added 2026-07-29) — governs organic long-form production for this campaign, referenced by the `/yt-second-property-script` skill |
+| `06_EDIT_DIRECTION_BRIEFS/` | `/rei-ads-routine` output (added 2026-08-25) — Edit Direction Briefs + this campaign's Variation Register |
 | `99_ARCHIVE/` | Earlier matrices, duplicate-named version exports and superseded scripts |
 
 ## Current recording batch
 
 `03_RECORDING_OUTPUTS/2026-07-19_A123_B123_Raw_Recordings/` contains the A01–A03 and B01–B03 raw recording output. It is part of this campaign, not a separate campaign.
+
+**Also current (2026-08-23):** `03_RECORDING_OUTPUTS/10-S&P Angle/` — DSLR/Webcam/main takes of the NL01 "Can It Beat the S&P 500?" script (New Launch Ladder™ content — see the register-mismatch flag in `06_EDIT_DIRECTION_BRIEFS/EDB_SP-Benchmark_NL01_v1.md`). Not yet reconciled into this index's folder-map description of "current batch" beyond this line.
 
 ## Boundaries
 

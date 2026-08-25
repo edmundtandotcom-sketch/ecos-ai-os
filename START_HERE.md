@@ -1,8 +1,8 @@
 # START HERE
-Version: v1.0
+Version: v1.1
 Status: APPROVED MASTER
-Date: 2026-07-31
-Supersedes: `START HERE — E.C.O.S.gdoc` (Google Doc — retire it; Claude cannot read .gdoc files, which is why the old front door never worked)
+Date: 2026-08-25
+Supersedes: v1.0 (2026-07-31) — added the reels-routine row now that video creation has portable, committed skills (see `01_E.C.O.S/08_CLAUDE_SKILLS_MAP.md`)
 
 **This is the only file you need to open. Ever.**
 
@@ -24,6 +24,8 @@ The folder structure exists for the *system* to stay clean — not for you to me
 | Capture a new idea or a change of direction | `/new-idea` + the idea |
 | Pull a competitor's live Meta ads (real copy, video, transcript) | `/rei-ads-scan` + advertiser name |
 | Write a long-form YouTube script | `/rei-video-routine` + topic |
+| Write reel scripts / break a long-form into reels | `/rei-reels-routine` + campaign name |
+| Design the edit of a video ad (look, effects, captions) | `/rei-ads-routine` + campaign + assets |
 | Build a quiz, diagnostic, or calculator | `/build-interactive` |
 | Check the system for drift, duplicates, mess | `/os-audit` |
 | End a working session cleanly | `/session-close` |
