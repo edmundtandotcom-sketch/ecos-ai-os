@@ -109,6 +109,29 @@ never ends up oversized.
 
 ---
 
+## 3b. Config knobs that matter — set from the real takes (2026-08-25)
+
+These were tuned against the actual S&P footage on the desktop. If you point the
+script at *different* footage, revisit them.
+
+| Knob | Set to | Why |
+|---|---|---|
+| `WHISPER_MODEL` | `medium` | Captions burn from this transcript, so a mishearing ships on screen. Worth the extra minutes. |
+| `WHISPER_LANG` | `"en"` | Auto-detect put the first ~55s of the body take into **Malay** and produced gibberish — which also broke every beat anchor inside it. |
+| `WHISPER_PROMPT` | domain vocab | Without it: "S&P 500"→"SMP 500", "stamp duty"→"stem beauty", "walkaway price"→"work away price". |
+| `FIT_OVERRIDE` | measured crown/chin/eye | This footage is framed **tighter** than the 12–16% target. Cropping can only make a head *bigger*, so the fix is to scale the whole picture back inside the canvas. |
+| `FILL_MODE` | `"navy"` | What surrounds the scaled-back picture. Navy reads as designed letterbox; blur at this magnification is just a smear of face. |
+| `MAX_GAP` | `0.38` | **57% of the body clip is dead air**, in 31 gaps of up to 12s. Untightened the ad runs ~7.5 minutes. |
+| `CTA_VARIANT` | `"C"` | The CTA take contains **all three** variants read back to back, each slated "Call to Action 1 / 2 / 3". The script finds the slates and uses only the one you name. |
+
+**On the framing knob specifically.** `FIT_OVERRIDE` takes three numbers you read
+off a real frame in any image viewer: `head_top` (top of the hair), `head_bottom`
+(bottom of the chin), `eye_y` (pupil centre), in source pixels. The script then
+scales so the head lands at `TARGET_HEAD_PCT` and the eyes land on the eye-line.
+It never upscales and never exceeds canvas width — so the head can only come out
+at or under target. An over-tight face is the failure mode this exists to
+prevent.
+
 ## 4. How the timing works
 
 Overlays are anchored to **spoken phrases**, not fixed timestamps. The `BEATS`
@@ -131,11 +154,25 @@ phrase in `BEATS` to match what he actually said — the transcript is at
   no licence for.
 - **Karaoke is per-word via ASS `\k`.** Rendering depends on libass being built
   into your FFmpeg (it is, in standard Windows builds).
-- **Head measurement uses a Haar cascade**, which finds forehead-to-chin rather
-  than true crown-to-chin — it lands within a couple of percent, which is inside
-  the spec band, but the proof frame is there so you confirm with your own eyes.
+- **Auto head measurement uses a Haar cascade**, which finds forehead-to-chin and
+  misses the hair (`HAAR_TO_HEAD` compensates). On this footage it's bypassed
+  entirely by `FIT_OVERRIDE`, which uses numbers measured by eye — more reliable.
+  Either way the proof frame is there so you confirm visually.
+- **Pause removal re-encodes each speech segment**, then stream-copies them
+  together, so no sync drift accumulates across ~30 cuts. It costs render time
+  but it's the reason the audio stays locked to picture.
 - **9:16 only.** 1:1 and 4:5 crops are a re-run away (change `W`/`H` and the
   caption anchor) but weren't part of this brief.
+
+## 5b. If a beat anchor misses
+
+The render prints `! MISSED anchor '<phrase>'` and skips just that overlay.
+Whisper transcribes numbers as digits, so an anchor written `"wait four years"`
+will not match `"wait 4 years"` — two anchors needed exactly that fix on this
+take. Open `out/words_body.json`, find how the line was actually transcribed, and
+edit the phrase in `BEATS` to match. Anchors resolve in script order from a
+moving cursor, so a phrase said twice (e.g. "your future buyer") anchors to the
+right occurrence rather than the first.
 
 ---
 
