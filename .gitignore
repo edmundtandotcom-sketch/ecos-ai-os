@@ -17,6 +17,16 @@
 !/00_AI_OPERATING_SYSTEM/
 !/03_ACTIVE_CAMPAIGNS/
 
+# .claude: technical config (constitution §8). Track skills only, so desktop
+# and cloud sessions run identical video-creation (and other) skills — never
+# settings.json/settings.local.json, which can carry machine-local permission
+# grants and must never carry credentials per §8 rule 1.
+!/.claude/
+!/.claude/skills/
+!/.claude/skills/**
+.claude/settings.json
+.claude/settings.local.json
+
 # ── 03_ACTIVE_CAMPAIGNS: track the strategy layer, not the media ──
 # Campaign markdown/html is ~1.5MB and worth full version history.
 # Campaign video is ~4.9GB and is NOT — its home is the Asset Library
