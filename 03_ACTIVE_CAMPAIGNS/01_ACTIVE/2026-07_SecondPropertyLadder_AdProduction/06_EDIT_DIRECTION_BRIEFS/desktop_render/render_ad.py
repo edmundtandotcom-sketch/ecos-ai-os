@@ -19,6 +19,7 @@ Run them individually while iterating, e.g. `--stage frame` to re-check framing.
 
 import argparse
 import json
+import math
 import os
 import re
 import shutil
@@ -45,7 +46,11 @@ HEAD_PCT_MIN, HEAD_PCT_MAX = 0.12, 0.16   # crown-to-chin as fraction of frame h
 EYELINE_PCT = 0.40                         # eye-line, fraction down from top
 
 # Manual crop override. Leave None for auto. Format: (x, y, w, h) in SOURCE pixels.
-CROP_OVERRIDE = None
+# Full-bleed 9:16, the way a reel is normally framed - the picture fills the
+# canvas, no letterbox. 405x720 is the widest 9:16 window the 1280x720 source
+# holds, so this is the most pulled-back a full-frame crop can be; x is centred
+# on the speaker (face centre sits at 663 +/- 40 across both takes).
+CROP_OVERRIDE = (460, 0, 405, 720)
 # If auto-framing makes the head too large, the source is scaled down inside the
 # 9:16 canvas over a blurred fill rather than cropping tighter.
 
@@ -57,7 +62,23 @@ CROP_OVERRIDE = None
 #   head_top    - top of the hair (crown)
 #   head_bottom - bottom of the chin
 #   eye_y       - pupil centre
-FIT_OVERRIDE = dict(head_top=55, head_bottom=428, eye_y=238)
+# Letterboxed alternative, kept for reference: this is what hits the EDB's
+# 12-16% head-size spec, at the cost of a small picture in a navy surround.
+# Set CROP_OVERRIDE = None to use it.
+FIT_OVERRIDE = None
+
+# Overlay bands, in pixels of the 1080x1920 canvas. With a full-bleed close-up
+# there is no empty margin, so these are measured off the speaker rather than
+# guessed. He leans in and out across the take, so the band is set by the
+# DEEPEST his chin ever gets, not by one reference frame: sampling every 7s
+# put the chin at y=1181 worst case in the body and 1192 in the CTA.
+LOWER_TOP = 1210
+# The caption line starts around y=1560 (64px text bottom-anchored at 85.5%),
+# so anything taller than this gap gets scaled down rather than sitting on the
+# subtitles. The 340-360px data cards are just over it.
+LOWER_MAX_H = 335
+# The hook rides at the very top, over hair and background only.
+UPPER_Y = 0.005
 
 # Where in the 12-16% band to aim.
 TARGET_HEAD_PCT = 0.15
@@ -118,7 +139,7 @@ BEATS = [
          start=("wait 4 years", -0.3), end=("+", 3.5)),
 
     dict(id="chart",   kind="full",  asset="g1_chart.png", flash=True,
-         start=("that same money", -0.2), end=("beating the s&p", 1.2)),
+         start=("so the benchmark", -0.3), end=("beating the s&p", 1.2)),
 
     dict(id="punch1",  kind="lower", asset="g7_gain.png",
          start=("easy test", -1.5), end=("+", 3.5)),
@@ -170,6 +191,7 @@ CTA_VARIANT = "C"
 
 def run(cmd, **kw):
     """Run a command, streaming output, raising on failure."""
+    sys.stdout.flush()
     if isinstance(cmd, str):
         printable = cmd
     else:
@@ -322,8 +344,18 @@ def resolve_beats(words, offset=0.0):
             end = (hit2[1] if hit2 else start + 4.0) + e[1] + offset
         if end <= start:
             end = start + 2.0
-        resolved.append({**b, "t0": round(start, 2), "t1": round(end, 2)})
-    return resolved, misses
+        # Clamp to zero: an anchor with a negative lead-in lands before the
+        # clip starts, and ffmpeg rejects a negative fade start outright.
+        resolved.append({**b, "t0": round(max(0.0, start), 2),
+                         "t1": round(end, 2)})
+
+    # Lower-thirds all sit at the same y, so an overrun would draw the next
+    # card on top of the previous one with its edges still poking out. Retire
+    # each card just before its successor arrives.
+    lowers = [b for b in resolved if b["kind"] == "lower"]
+    for cur, nxt in zip(lowers, lowers[1:]):
+        cur["t1"] = round(min(cur["t1"], nxt["t0"] - 0.08), 2)
+    return [b for b in resolved if b["t1"] > b["t0"]], misses
 
 
 # ----------------------------------------------------------------------------
@@ -369,8 +401,10 @@ def plan_segments(words, t_lo, t_hi):
             cs = max(t_lo, cur["s"] - PAD_IN)
         prev = cur
     segs.append((cs, min(t_hi, prev["e"] + PAD_OUT)))
-    # snap to whole frames so each piece is a whole number of frames long
-    return [(round(a * FPS) / FPS, round(b * FPS) / FPS)
+    # Snap to whole frames, always outwards - rounding to nearest would shave
+    # the leading consonant off a segment's first word (it ate the "Is" of
+    # "Is this your...", which then lost the hook overlay its anchor).
+    return [(math.floor(a * FPS) / FPS, math.ceil(b * FPS) / FPS)
             for a, b in segs if b - a > 1.0 / FPS]
 
 
@@ -885,6 +919,36 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 # Stage: render
 # ----------------------------------------------------------------------------
 
+def overlay_stream(t0, t1, fade_out=True):
+    """Turn a still PNG input into a timed, fading overlay stream.
+
+    Two traps here, both silent:
+
+    A PNG decodes to exactly ONE frame at t=0, so fading it directly leaves
+    that single frame at alpha 0 - and overlay's default eof_action=repeat
+    then holds the transparent frame for the whole beat, compositing every
+    graphic completely invisibly. The frame has to be looped first to give
+    the fade a real timeline to work against.
+
+    But the loop must be COUNTED, not infinite: overlay ends when all its
+    inputs end, so an endless still keeps the graph alive long after the
+    footage runs out (a 209s body ran past 302s and climbing). Looping just
+    far enough to cover the beat, then shifting the stream to start at t0,
+    bounds the graph and keeps the fades on wall-clock time - and means each
+    still is only composited over its own beat instead of the whole ad.
+    """
+    hold = max(0.1, t1 - t0)
+    d_in = min(0.22, hold / 3)
+    d_out = min(0.20, hold / 3)
+    n = int(math.ceil(hold * FPS)) + 4
+    chain = (f"loop=loop={n}:size=1,fps={FPS},"
+             f"setpts=PTS-STARTPTS+{max(0.0, t0):.3f}/TB,"
+             f"fade=t=in:st={max(0.0, t0):.2f}:d={d_in:.2f}:alpha=1")
+    if fade_out:
+        chain += f",fade=t=out:st={t1 - d_out:.2f}:d={d_out:.2f}:alpha=1"
+    return chain
+
+
 def stage_render():
     print("\n== RENDER ==")
     g = OUT_DIR / "graphics"
@@ -895,9 +959,8 @@ def stage_render():
     body_words = load_words("body")
     cta_words = load_words("cta")
 
-    body_clip, body_words = tighten(
-        "body", BODY_CLIP, body_words,
-        body_words[0]["s"], body_words[-1]["e"])
+    body_dur = float(ffprobe(BODY_CLIP, "stream=duration")["streams"][0]["duration"])
+    body_clip, body_words = tighten("body", BODY_CLIP, body_words, 0.0, body_dur)
     c_lo, c_hi = cta_variant_range(cta_words, CTA_VARIANT)
     cta_clip, cta_words = tighten("cta", CTA_CLIP, cta_words, c_lo, c_hi)
 
@@ -924,22 +987,25 @@ def stage_render():
         if not asset.exists():
             print(f"  ! missing asset {asset.name} — skipping {b['id']}")
             continue
-        inputs += ["-i", str(asset)]
+        # -framerate matters: loop counts frames at the INPUT rate, and a PNG
+        # defaults to 25fps, so a loop sized in 30fps frames came out 20%
+        # long and left the CTA holding a frozen frame past its audio.
+        inputs += ["-framerate", str(FPS), "-i", str(asset)]
         t0, t1 = b["t0"], b["t1"]
-        fade = f"fade=t=in:st=0:d=0.22:alpha=1"
+        chain = overlay_stream(t0, t1)
+        if b["kind"] == "lower":
+            from PIL import Image as _Img
+            if _Img.open(asset).height > LOWER_MAX_H:
+                chain += f",scale=-2:{LOWER_MAX_H}"
+        filt.append(f"[{idx}:v]{chain}[o{idx}]")
         if b["kind"] == "full":
-            filt.append(f"[{idx}:v]{fade},setpts=PTS-STARTPTS[o{idx}]")
-            expr = f"enable='between(t,{t0},{t1})'"
-            filt.append(f"[{last}][o{idx}]overlay=0:0:{expr}[v{idx}]")
+            xy = "0:0"
         elif b["kind"] == "lower":
-            filt.append(f"[{idx}:v]{fade}[o{idx}]")
-            y = int(H * 0.60)
-            filt.append(f"[{last}][o{idx}]overlay=(W-w)/2:{y}:"
-                        f"enable='between(t,{t0},{t1})'[v{idx}]")
+            xy = f"(W-w)/2:{LOWER_TOP}"
         else:  # upper
-            filt.append(f"[{idx}:v]{fade}[o{idx}]")
-            filt.append(f"[{last}][o{idx}]overlay=(W-w)/2:{int(H*0.11)}:"
-                        f"enable='between(t,{t0},{t1})'[v{idx}]")
+            xy = f"(W-w)/2:{int(H * UPPER_Y)}"
+        filt.append(f"[{last}][o{idx}]overlay={xy}:"
+                    f"enable='between(t,{t0},{t1})'[v{idx}]")
         last = f"v{idx}"
         idx += 1
 
@@ -953,36 +1019,54 @@ def stage_render():
          "-map", "[vout]", "-map", "0:a",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
          "-pix_fmt", "yuv420p", "-r", str(FPS),
-         "-c:a", "aac", "-b:a", "192k", str(part_body)])
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+         "-video_track_timescale", "90000", str(part_body)])
     print(f"  body rendered → {part_body.name}")
 
     # ---- pass 2: cta ----
     cta_chip = g / CTA_CHIP_ASSET
     ass_cta = str(OUT_DIR / "caps_cta.ass").replace("\\", "/").replace(":", "\\:")
+    cta_dur = float(ffprobe(cta_clip, "stream=duration")["streams"][0]["duration"])
     cfilt = [f"[0:v]{build_geometry_vf(crop)},{grade},fps={FPS}[base]",
-             f"[1:v]fade=t=in:st=0:d=0.25:alpha=1[chip]",
-             f"[base][chip]overlay=(W-w)/2:{int(H*0.62)}[v]",
+             f"[1:v]{overlay_stream(0.30, cta_dur, fade_out=False)}[chip]",
+             f"[base][chip]overlay=(W-w)/2:{LOWER_TOP}[v]",
              f"[v]ass='{ass_cta}':fontsdir='{fontsdir}'[vout]"]
     part_cta = OUT_DIR / "_part_cta.mp4"
     run(["ffmpeg", "-y", "-loglevel", "error", "-stats",
          "-i", str(cta_clip),
-         "-i", str(cta_chip),
+         "-framerate", str(FPS), "-i", str(cta_chip),
          "-filter_complex", ";".join(cfilt),
          "-map", "[vout]", "-map", "0:a",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
          "-pix_fmt", "yuv420p", "-r", str(FPS),
-         "-c:a", "aac", "-b:a", "192k", str(part_cta)])
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+         "-video_track_timescale", "90000", str(part_cta)])
     print(f"  cta rendered → {part_cta.name}")
 
     # ---- pass 3: end card ----
+    # The still is held with the tpad filter, not "-loop 1". Looping the PNG
+    # at the demuxer makes ffmpeg 8.1.2 concatenate the file into itself until
+    # the parser overflows ("Failed to reallocate parser buffer to -2147483081")
+    # and it eats memory until killed - neither -t nor -frames:v bounds it,
+    # because the runaway happens before either applies. Decoding the frame
+    # once and cloning it in the filter graph is bounded by construction.
     part_end = OUT_DIR / "_part_end.mp4"
+    end_frames = int(round(ENDCARD_SECONDS * FPS))
     run(["ffmpeg", "-y", "-loglevel", "error",
-         "-loop", "1", "-t", str(ENDCARD_SECONDS), "-i", str(g / ENDCARD_ASSET),
-         "-f", "lavfi", "-t", str(ENDCARD_SECONDS), "-i",
+         "-i", str(g / ENDCARD_ASSET),
+         "-f", "lavfi", "-i",
          "anullsrc=channel_layout=stereo:sample_rate=48000",
-         "-vf", f"fade=t=in:st=0:d=0.4,fps={FPS},format=yuv420p",
+         "-filter_complex",
+         f"[0:v]fps={FPS},"
+         f"tpad=stop_mode=clone:stop_duration={ENDCARD_SECONDS},"
+         f"trim=duration={ENDCARD_SECONDS},setpts=PTS-STARTPTS,"
+         f"fade=t=in:st=0:d=0.4,format=yuv420p[v];"
+         f"[1:a]atrim=duration={ENDCARD_SECONDS},asetpts=PTS-STARTPTS[a]",
+         "-map", "[v]", "-map", "[a]",
+         "-frames:v", str(end_frames), "-r", str(FPS),
          "-c:v", "libx264", "-preset", "medium", "-crf", "20",
-         "-c:a", "aac", "-b:a", "192k", "-shortest", str(part_end)])
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
+         "-video_track_timescale", "90000", str(part_end)])
 
     # ---- join ----
     lst = OUT_DIR / "_concat.txt"
@@ -997,8 +1081,11 @@ def stage_render():
          "-af", f"loudnorm=I={LOUDNORM_I}:TP=-1.5:LRA=11",
          "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", str(final)])
 
-    for p in (part_body, part_cta, part_end, joined, lst):
-        p.unlink(missing_ok=True)
+    for q in (part_body, part_cta, part_end):
+        d = float(ffprobe(q, "stream=duration")["streams"][0]["duration"])
+        print(f"  part {q.stem:12} {d:7.2f}s")
+    for q in (joined, lst):
+        q.unlink(missing_ok=True)
 
     dur = float(ffprobe(final, "stream=duration")["streams"][0].get("duration") or 0)
     mb = final.stat().st_size / 1e6
@@ -1019,11 +1106,32 @@ def stage_qc():
         sys.exit("ERROR: no render found — run --stage render")
     qc = OUT_DIR / "qc"
     qc.mkdir(exist_ok=True)
-    run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(final),
-         "-vf", "fps=1/5,scale=320:-2,tile=6x5", str(qc / "contact_sheet.jpg")])
     dur = float(ffprobe(final, "stream=duration")["streams"][0].get("duration") or 0)
+
+    # Size the grid to the actual runtime. A fixed 6x5 silently covered only
+    # the first 150s, and without -frames:v 1 the muxer refuses the second
+    # sheet rather than writing one.
+    cols, every = 6, 5.0
+    rows = max(1, math.ceil(dur / every / cols))
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(final),
+         "-vf", f"fps=1/{every},scale=320:-2,tile={cols}x{rows}",
+         "-frames:v", "1", str(qc / "contact_sheet.jpg")])
     print(f"  duration: {dur:.1f}s")
-    print(f"  → {qc / 'contact_sheet.jpg'}")
+    print(f"  contact sheet: {cols}x{rows} tiles, one every {every:.0f}s")
+    print(f"  -> {qc / 'contact_sheet.jpg'}")
+
+    # Full-resolution stills on each beat, where a 320px tile is too small to
+    # judge whether a card is clean and its caption legible.
+    bp = OUT_DIR / "beats_resolved.json"
+    if bp.exists():
+        shots = qc / "beats"
+        shots.mkdir(exist_ok=True)
+        for b in json.loads(bp.read_text(encoding="utf-8")):
+            t = (b["t0"] + b["t1"]) / 2
+            run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{t:.2f}",
+                 "-i", str(final), "-frames:v", "1",
+                 str(shots / f"{b['t0']:07.2f}_{b['id']}.png")])
+        print(f"  -> {shots} (one full-size still per beat)")
     print("\n  CHECK BY EYE:")
     for line in ("no overlay ever covers the face",
                  "captions legible, inside frame, never clipped",

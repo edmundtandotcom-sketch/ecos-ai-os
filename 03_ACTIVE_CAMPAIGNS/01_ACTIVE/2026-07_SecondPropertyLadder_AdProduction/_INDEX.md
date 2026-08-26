@@ -38,6 +38,30 @@ Produce, record and validate Second Property Ladder™ creative across formats �
 
 **Also current (2026-08-23):** `03_RECORDING_OUTPUTS/10-S&P Angle/` — DSLR/Webcam/main takes of the NL01 "Can It Beat the S&P 500?" script (New Launch Ladder™ content — see the register-mismatch flag in `06_EDIT_DIRECTION_BRIEFS/EDB_SP-Benchmark_NL01_v1.md`). Not yet reconciled into this index's folder-map description of "current batch" beyond this line.
 
+## Rendered deliverables — NL01 "Can It Beat the S&P 500?" (9:16)
+
+Built on desktop from `03_RECORDING_OUTPUTS/10-S&P Angle/Raw Assets/S&P-DSLR.mp4`
++ `S&P CTA-DSLR.mp4`. Output in `06_EDIT_DIRECTION_BRIEFS/desktop_render/out/`.
+
+| Version | Duration | Size | Status | Built to |
+|---|---|---|---|---|
+| `SP_BENCHMARK_9x16_v1.mp4` | 224.6s | 114.5 MB | **Superseded** | DRAFT `EDB_SP-Benchmark_NL01_v1.md` only. Logged as a rejection entry in `E:\REMOTION\ADS_PLAYBOOK.md` §11 — off the reference norms on framing, caption position, pace and palette. |
+| `SP_BENCHMARK_9x16_v2.mp4` | 224.2s | 100.5 MB | **Current test creative** | `E:\REMOTION\ADS_PLAYBOOK.md` v1.0, grammar B. 58 shots / 16.7 cuts-min, captions ALL CAPS with one accent word, 5 full-bleed evidence plates, red-frame CTA, 2.6s end card. |
+
+**CTA variant shipped: C** — "click the link below, tell me the project you're
+looking at and I'll show you whether it can beat the S&P 500." The raw CTA take
+contains all three variants slated "Call to Action 1/2/3"; only C is used
+(70.5–83.3s of the take).
+
+**Known deviation, both versions:** speaker head is ~51% of frame height against
+a measured reference band of 17–32% (ADS_PLAYBOOK §4). A 9:16 crop can only
+magnify, so this is not fixable in post — the take is framed too tight. Accepted
+deliberately for this test; a wider reshoot per ADS_PLAYBOOK §7 is the fix.
+Captions consequently sit at 67% rather than the reference 55%, to clear the face.
+
+**Also pending:** caption face is Impact (stand-in). Anton / Archivo Black are
+the playbook faces and need downloading as local TTFs for ffmpeg.
+
 ## Boundaries
 
 - No named client/contact evidence.
