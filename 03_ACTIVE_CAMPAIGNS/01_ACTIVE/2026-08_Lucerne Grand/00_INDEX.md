@@ -33,6 +33,61 @@ RULES: never grade/overlay the speaker's pixels; judge every look change on
 30-60s of MOTION, never on a still.
 
 
+## ROUND-2 QA (2026-08-27) — found on the finished 36:45 render
+The 22:53 render passed all ten gate rules and still shipped four defects that
+only frames could show. All four are fixed and now gated (rules 11-12) or
+written into `EDITING_PLAYBOOK.md` (rules 16-19):
+1. **Gold figure pops landing on displays.** `$190,000` sat across a navy bar
+   chart that already read `+$190k`; `570 UNITS` covered two rows of the CDL
+   project-information page that already printed "570 residential units";
+   `$2,300 PSF` sat on the Sora chart. Text matching could never catch these
+   ($190k vs $190,000; a figure printed inside a screenshot). Now geometric:
+   a gold pop overlapping a full-frame display in TIME is dropped. 3 removed.
+2. **Raw screen recordings.** 17 minutes of iPad stage carried the device
+   status bar, the app toolbar, a 238px black pillarbox, and the developer's
+   "Strictly private and confidential. Not for circulation and sales purposes."
+   banner on every page. `crop_ipad.ps1` crops all four away and sits the page
+   on the plate navy. **Edmund: those deck pages are stamped not-for-
+   circulation — the banner is now cropped, but the pages themselves are still
+   CDL's confidential material. Confirm you are clear to publish them.**
+3. **Stills sheared by the Ken Burns push.** `contain` fitted them, then the
+   container push scaled the edges off-frame: the URA land-sale table lost its
+   entire value column (site area, GFA, highest bid $psf), the Sora panel lost
+   its LOWEST/AVERAGE/HIGHEST labels. Stills now push inside a safe inset.
+4. **Section chips on document headers.** The top-centre chip parked straight
+   on the centred page title it was introducing. Chips moved to the left margin.
+Known and accepted: an "Ask Gemini" pill appears for a few seconds inside the
+take-6 capture. It overlaps a section bar, so cropping it would cut real
+content. Flag if you want that segment re-recorded.
+
+## ROUND-3 REVIEW (2026-08-27) — Edmund's full pass on the 36:45 cut
+Seven subtitle corrections, thirteen display/caption fixes, five confirmed
+retakes and five new Drive assets. What changed structurally:
+- **Retakes are now caught mechanically, before rendering.** `audio_check.py`
+  rebuilds the audio the carved timeline will actually ship, transcribes it and
+  reports adjacent repeats — ~25 minutes against a 3-hour render. It judges
+  what a viewer HEARS, not what the timeline claims. Two traps it exposed:
+  ffmpeg's concat demuxer silently ignores inpoint/outpoint on these files (the
+  first pass analysed 81 minutes of raw takes and reported 196 phantom
+  repeats), and whisper hides a fumble inside ONE stretched token, so a drop
+  can land mid-fumble and leave the wrong figure in. Both are now asserted.
+- **`headPos` / `headScale` were never wired.** The renderer declared and used
+  them but never read them off the overlay, so every bubble placement written
+  into a timeline since round 1 was silently discarded. That is why "move the
+  speaker bubble" and "make it bigger" kept coming back. Fixed, and gated.
+- **Fixed-pitch layout replaced with flow + auto-fit** in NavyBars and
+  InfoCard. A label that wrapped used to collide with the row below — the
+  "VELA BAY over the Chuan Park bar" and "overlapping of text" notes. Plates
+  now scale to the height they have, at any row count or label length.
+- **Image plates hug their picture** instead of floating it in a fixed box.
+- Point dividers hold 3.2s minimum (two were being clipped to 0.9s), pops take
+  the corner away from the head bubble, the subscribe pill sits above the
+  bubble rather than over the chart, and the QR prefills the house sentence
+  "Hi Coach Edmund, I'd like a Second Property Strategy Session (<Project>)" —
+  decode-verified at the 210px it actually renders at.
+All of it is written up as rules 20-26 in `E:\REMOTION\EDITING_PLAYBOOK.md`
+and enforced by `verify_lucerne.py` (12 checks), which aborts the render.
+
 ## Objective
 Full pre-launch review of Lucerne Grand (CDL, D22, 570 units, beside
 Lakeside MRT — first launch beside the MRT in 10 years). Structure: hook
