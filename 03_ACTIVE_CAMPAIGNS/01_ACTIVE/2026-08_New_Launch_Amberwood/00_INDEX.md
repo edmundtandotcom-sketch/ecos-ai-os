@@ -73,6 +73,29 @@ A SECOND, standalone YouTube video cut from the back half of the review
   (I=-14, LRA=7, TP=-1.5) in the render script. The per-segment pass alone
   left a 6 dB spread because level drifts INSIDE a long segment.
 
+### Round 3 (2026-08-28)
+- PIP is a CIRCLE bubble (420px, ivory ring + brand halo), not a rectangle.
+  The C recordings fill the frame edge to edge (4C x 256-1665, 6C x 84-1831,
+  8C x 0-1785) so there is no dead margin — the v7 side-swap is what keeps it
+  off the half he is annotating.
+- **PIP source: DSLR — corrected by Edmund 2026-08-28.** I had inferred the
+  1280x720 `A`/`AH` files were a webcam from their resolution and front-on
+  framing; they are not. Both `A` and `B` are DSLR angles, so there is no
+  webcam feed in this shoot to switch to and the round-3 cut uses the best
+  available angle. Do not re-argue this from file resolution.
+- **Shoot-side item for future recordings:** if the PIP should have him
+  talking straight to camera during layout walkthroughs, a webcam feed needs
+  to be RECORDED alongside the DSLR and iPad capture. Nothing in post fixes
+  an angle that was never shot.
+- Subscribe is a proper YouTube button (cursor taps, pill flips to
+  SUBSCRIBED, bell rings) — full size at 0:29 and 1:15, micro at 4:23, 6:51,
+  9:19, 11:03.
+- Key-dates card at 0:50 (preview 11 Sep / launch 26 Sep) with the QR under it.
+- **Open: `carve()` only cuts ffmpeg-detected SILENCE, so pauses with breath
+  over them survive** (this is what the 2:31 flag was). Cutting on WORD GAPS
+  instead would clear all of them, but it re-times the video and shifts every
+  review timestamp. Edmund's call.
+
 ### Render-host rules (learned the hard way 2026-08-26)
 - Remotion copies ALL of `public/` into a fresh bundle on EVERY invocation.
   `public/` is ~25 GB; this video needs ~1 GB. Always render with
