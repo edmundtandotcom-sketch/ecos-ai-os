@@ -65,3 +65,29 @@ OR a strong cross-vertical angle-source is identified — do not let the automat
 | Name searched | Verified page | Date checked | Result |
 |---|---|---|---|
 | Peng Joon | facebook.com/pengjoon personal page (page ID 100044344993321) | 2026-07-30 | Zero ads on file, active or inactive, any country — confirmed via `view_all_page_id`. **CORRECTED 2026-07-30**: he has a SEPARATE business page (page ID 143408239118491, Malaysia, same display name "Peng Joon") with 5 historical ads — all now INACTIVE (last activity 7 Mar 2026, most were 4hr test kills). "Multiply Clone LIVE" AI-clone campaign. See `01_ASSET_LIBRARY/.../Peng Joon/ad_breakdown.md`. **UPDATED 2026-08-06: NOW ACTIVE** — see the live Peng Joon row above (160-ad '5-Part AI Engine' campaign launched 6 Aug). Keyword search for "peng joon"/"pengjoon" still only surfaces third-party mentions (SVO.ai etc.) — page-ID lookup remains the only reliable method for his own ads. |
+
+## 2026-08-28 — Weekly refresh sweep (append-only, Decision 124; age-filtered delta method)
+Browser MEDIA-FILL pass across the top active advertisers. Method upgrade: extract the live active set, decode each asset's `asset_age_days` from the signed-URL `efg` param, and download ONLY assets launched since the last pull (age < 35 days). This captures the true new-creative delta without re-downloading the existing on-disk set — fixes the library-ID-rotation duplication noted on the Caleb row. All existing assets retained; new files dated 2026-08-28.
+
+| Advertiser | Page ID | Live active | New (<35d) downloaded | Note |
+|---|---|---|---|---|
+| Marc Chan | 442189845653421 | ~61 / 46 distinct vid | **+30 videos** (age 16–21d, 27–35s) | Fresh creative wave since 6 Aug. Folder 35→65 videos. Unicode-bold-hook / length-ladder family continues. |
+| Denise Tan | 107119960679980 | ~36 / 19 distinct vid | **+11 videos** (age 14–30d, 62–129s) | New long-form wave. Folder 10→21. SG property advisor. |
+| Damien Tan Real Estate | 101766852110723 | ~8 / 6 distinct vid | **+6 videos** (age 3–25d) | Folder 4→10. |
+| Ernee Ong (Proptiply) | 322490897609800 | ~58 / 40 distinct vid | **+4 videos** (age 4–7d) | 36 older assets already on disk (correctly skipped). Folder 39→43. |
+| Growth Partners Inc | 872538235944011 | ~50 (image-heavy) / 4 vid | **+4 videos** (2 brand-new age 0) | Folder 10→14. Statics not refreshed this pass (see media note). |
+| The Investor Realtor | 108170522131032 | ~24 / 13 distinct vid | **+2 videos** (age 8d, 85–92s) | Folder 11→13. |
+| I Quadrant | 187151448541930 | ~53 / 12 distinct vid loaded | **+1 video** (age 31d, 144s) | Folder 13→14. |
+| The Right Move | 166518753916616 | ~9 / 9 distinct vid | 0 new (all >35d) | No delta — already current. |
+| Peng Joon | 143408239118491 | **0 active** (country=ALL) | 0 | **Campaign ENDED** — the 6 Aug 160-ad "5-Part AI Engine" wave is fully inactive now. On-disk retained. Back to dormant (see Checked table). |
+| Thomas Yap | 2270869307018514 | **0 active** (country=ALL) | 0 | **Campaign ENDED.** On-disk (4v/33i) retained. |
+| Caleb Sim | 106092578729020 | 62 / 42 distinct vid | +42 (this session, non-age-filtered — see Caleb row) | Folder 48→90. Duplication caveat noted on its row. |
+| King Kong Co. | 562378543780840 | 47 / 30 distinct vid | +9 short (NEW advertiser) | 21 >10min VSLs logged-only. See its row + _ad_breakdown.md. |
+
+**Sweep total: +58 new videos across 7 media-bearing competitors + King Kong (9) + Caleb (42).** All transcribed (en) this session.
+
+**Page-ID gaps flagged for the automation to resolve (my breakdown docs stored an ad-archive-id, not a page-id, so the SG lookup returned no advertiser):** Stella Thio (folder has 10v), Colin Ee (6v). Their real `view_all_page_id` needs re-capturing from the live page before they can be refreshed.
+
+**Media-coverage note:** this pass refreshed VIDEO deltas only. Static-image deltas were NOT pulled — in this non-composited browser the ad-preview images serialize at 60×60 thumbnail size (full-res needs the visually-composited/automation runner). Image refresh remains queued for the weekly cloud media-fill (Decision 125).
+
+**Scope note:** the library has 238 swipe folders; 49 hold media, ~189 are Cloud metadata-only scaffolds. This manual sweep covered the ~12 highest-value active competitors. The remaining media folders' long tail + all scaffold first-fills stay on the locked-in weekly automation cadence.
