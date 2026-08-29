@@ -1,7 +1,7 @@
 # Campaign Index — Lucerne Grand (YouTube video #4, launch review)
 
-Date: 2026-08-22
-Status: FINAL BUILD — look LOCKED 2026-08-24.
+Date: 2026-08-22 (last updated 2026-08-29)
+Status: FINAL BUILD — look LOCKED 2026-08-24. Companion at round 2.
 
 ## THE LOOK (FINAL — locked 2026-08-24, do not revisit)
 **The ORIGINAL room footage, UNGRADED.** No cutout, no synthetic backdrop,
@@ -111,8 +111,13 @@ Strategy Session CTA.
 
 ## Production (runtime local: E:\REMOTION)
 - Composition `LucerneReview` · generator `work/lucerne/build_full.py`
-- **Speed: 1.15x** (locked). Branded outro `REI_Method_Outro_v3` concatenated
-  at natural speed. Finishing: `work/lucerne/finish_full.ps1`.
+- **Speed: 1.15x** (locked). Branded outro **`REI_Method_Outro_SAFE`** — the
+  bed is synthesised by `work/enbloc/make_music.py`, so Content ID has nothing
+  to match. `_v3` carries a licensed track and is what got the first Lucerne
+  uploads claimed and demonetised (2026-08-29). Never `_v3`, on any campaign.
+  The SAFE cut is 6 LU quieter than the programme, so the Lucerne outro is the
+  loudness-normalised `REI_Method_Outro_SAFE_n.mp4` (-15.5 LUFS, 34.5fps).
+  Finishing: `work/lucerne/finish_full.ps1`.
 - 11 scenes · 616 clips · 127 overlays · 1,322 subtitle cues ·
   **43:07 natural -> 37:29 at 1.15x**
 - Style **Variant D - Cinematic Paper** (theme D + PaperKit: torn-paper
@@ -135,8 +140,36 @@ Strategy Session CTA.
 - The busy CDL marketing map is retired; the clean white connectivity map
   (Picture 28) is used where a map earns its place.
 
+## COMPANION VIDEO — "The site plan & the 3 layouts" (round 2, 2026-08-29)
+`LUCERNE_LAYOUTS_1080p.mp4` — **16:03**, 1920x1080, 34.5fps (30fps render at
+1.15x). Composition `LucerneLong` · generator `work/lucerne/build_companion.py`
+· finisher `work/lucerne/finish_companion.ps1`. Built by splicing the review's
+own Coach Edmund intro, micro-CTA and scorecard tail into the companion body.
+Round-2 changes, all verified on the rendered file by `verify_delivery.py`:
+- outro swapped to the SAFE cut and loudness-matched (body -14.4 LUFS vs
+  outro -15.9; the raw SAFE asset would have dropped 6 LU)
+- captions: "position"->"possession", "20-30 december"->"2030 December"
+- the 456 carpark line: two abandoned takes dropped, and because whisper had
+  collapsed all three into ONE 4.62s token the WORD LIST was repaired so the
+  caption matches the audio ("THERE ARE TOTAL 456 CARPARK LOTS")
+- cold open now hands straight to the review's intro + micro-CTA
+- PIP bubble solved geometrically to bottom-left (y640-980, clear of the
+  caption band x400-1520 and the section chips at y990)
+- the 13:30 cut-off now finishes on "...expand into multi-generation homes."
+- **two splice defects found by envelope measurement and fixed**: the hook
+  split sat 60ms inside the decay tail of "...calling it a study" (truncating
+  it AND replaying the same 40ms after the micro-CTA), and `$SCORE_FROM`
+  2041.4 — inherited untouched from round 1, so it SHIPPED — sat mid-word in
+  "...this whole risk map turns on". Now frame 448 and frame 70443, both
+  centred in a measured silence floor. Playbook rules 50-51.
+All five joins verified: clean decode, picture-to-picture at every cut, no
+clipped speech, body/outro within 1.5 LU.
+
 ## Deliverables
 - `LUCERNE_GRAND_FULL_1.15x_with_outro.mp4` - the full ~37:29 launch review
+  (superseded by `Lucerne Grand Final (safe outro).mp4` — same programme,
+  bit-exact body, SAFE outro remuxed on)
+- `LUCERNE_LAYOUTS_1080p.mp4` - the 16:03 site-plan & layouts companion
 - `subtitles_review.txt` + `subs_manifest.json` for the REVIEW_STUDIO
   subtitle editor (round-1 review)
 - Reels batch after long-form approval
