@@ -111,8 +111,13 @@ Strategy Session CTA.
 
 ## Production (runtime local: E:\REMOTION)
 - Composition `LucerneReview` · generator `work/lucerne/build_full.py`
-- **Speed: 1.15x** (locked). Branded outro `REI_Method_Outro_v3` concatenated
-  at natural speed. Finishing: `work/lucerne/finish_full.ps1`.
+- **Speed: 1.15x** (locked). Branded outro **`REI_Method_Outro_SAFE`** - the
+  bed is synthesised by `work/enbloc/make_music.py`, so Content ID has nothing
+  to match. `_v3` carries a licensed track and is what got the first Lucerne
+  uploads claimed and demonetised (2026-08-29). Never `_v3`, on any campaign.
+  The SAFE cut is 6 LU quieter than the programme, so the Lucerne outro is the
+  loudness-normalised `REI_Method_Outro_SAFE_n.mp4` (-15.5 LUFS, 34.5fps).
+  Finishing: `work/lucerne/finish_full.ps1`.
 - 11 scenes · 616 clips · 127 overlays · 1,322 subtitle cues ·
   **43:07 natural -> 37:29 at 1.15x**
 - Style **Variant D - Cinematic Paper** (theme D + PaperKit: torn-paper
@@ -135,11 +140,140 @@ Strategy Session CTA.
 - The busy CDL marketing map is retired; the clean white connectivity map
   (Picture 28) is used where a map earns its place.
 
+## COMPANION VIDEO - "The site plan & the 3 layouts" (round 2, 2026-08-29)
+`LUCERNE_LAYOUTS_1080p.mp4` - **16:03**, 1920x1080, 34.5fps (30fps render at
+1.15x). Composition `LucerneLong` - generator `work/lucerne/build_companion.py`
+- finisher `work/lucerne/finish_companion.ps1`. Built by splicing the review's
+own Coach Edmund intro, micro-CTA and scorecard tail into the companion body.
+Round-2 changes, all verified on the rendered file by `verify_delivery.py`:
+- outro swapped to the SAFE cut and loudness-matched (body -14.4 LUFS vs
+  outro -15.9; the raw SAFE asset would have dropped 6 LU)
+- captions: "position"->"possession", "20-30 december"->"2030 December"
+- the 456 carpark line: two abandoned takes dropped, and because whisper had
+  collapsed all three into ONE 4.62s token the WORD LIST was repaired so the
+  caption matches the audio ("THERE ARE TOTAL 456 CARPARK LOTS")
+- cold open now hands straight to the review's intro + micro-CTA
+- PIP bubble solved geometrically to bottom-left (y640-980, clear of the
+  caption band x400-1520 and the section chips at y990)
+- the 13:30 cut-off now finishes on "...expand into multi-generation homes."
+- **two splice defects found by envelope measurement and fixed**: the hook
+  split sat 60ms inside the decay tail of "...calling it a study" (truncating
+  it AND replaying the same 40ms after the micro-CTA), and `$SCORE_FROM`
+  2041.4 - inherited untouched from round 1, so it SHIPPED - sat mid-word in
+  "...this whole risk map turns on". Now frame 448 and frame 70443, both
+  centred in a measured silence floor. Playbook rules 50-51.
+All five joins verified: clean decode, picture-to-picture at every cut, no
+clipped speech, body/outro within 1.5 LU.
+
+## REELS BATCH (2026-08-30) - 12 reels, 9:23 delivered
+Tier 3, Remotion, desktop only. `/video-produce` -> reels mode, NOT SharpCut.
+Machinery `work/lucerne/build_reels.py` (a port of Amberwood's; carve / chop /
+caption / loudness code is IDENTICAL on purpose), editorial specs
+`reels_lucerne.py`, joined by `emit_reels.py` -> `src/timelines/lucerne_reels.ts`,
+rendered by `render_all_reels.ps1`, checked by `verify_reels.py`.
+
+**The look is a SIBLING of Amberwood, not a clone.** `src/reelSkin.ts` is new:
+the reel system had no per-campaign skin at all (the long-form has had
+`theme.ts` variants A/B/C/D/F since day one), so every campaign's reels came
+out identical by construction. Amberwood's look is now the named default and
+its 14 delivered reels are untouched.
+
+Lucerne runs skin **"Deep Lake"**: Lake Teal `#1E7A8C` leads (taken from the
+project - Jurong Lake - not invented), Volt Lime affirms, indigo/black-led
+grounds, flat card with a teal hairline instead of the tilted orange slab, and
+an underline instead of the marker circle.
+
+**Vermilion is RESERVED for risk.** A `Section` marked `risk=True` turns every
+emphatic surface red, routed through ONE `useAccent()` hook so it cannot drift
+at any of the twenty call sites. It fires in four sections only: 07 THE TRAP,
+08 THE TEST, 09 STRETCHED, 12 THE WAVE. Everywhere else is teal, so across the
+series red means Edmund is warning you and nothing else.
+
+Sources: every boundary comes off `sentences.py`, which rebuilds true sentence
+edges from the word stream - whisper's own segments break on decoder windows
+here and routinely start mid-clause. Ten retakes dropped; three needed
+word-level drops because he self-corrects INSIDE a sentence (the $2,300 Sora
+figure superseded by $2,360; "45% HDB" by "45.8%"; the abandoned "I don't want
+to use the word" restarted 5s later).
+
+**Two evidence corrections, applied deliberately:**
+1. He says LakeGarden averages "around $2,300"; his own screenshot (Picture 37)
+   reads **S$2,203**. A caption must match the audio, so rather than caption a
+   number his own evidence contradicts, the LakeGarden AVERAGE is not a claim
+   in this batch. Sora's $2,360 matches Picture 36 exactly and carries reel 03.
+2. "Sora and LakeGarden 746 combined units still absorbing" overstates it:
+   Picture 10 shows LakeGarden **99.02% sold, three units left**. Reel 12 makes
+   the defensible version - Sora alone still has ~209 unsold, plus more GLS.
+
+**Still open for Edmund:** the floor-plan slides carry the developer's DRAFT
+watermark, and the deck pages remain CDL confidential material - the same
+question this index already carries against the long-form. The printed
+"not for circulation" footer IS cropped off every plate.
+
+### ROUND 2 (2026-08-30) - Edmund's pass on all 12
+22 asset swaps, 9 caption fixes, 6 clip removals, 2 new visual treatments.
+Every Drive link was resolved by file id through the Drive MCP and OPENED
+before use; 11 were new, 8 were existing `Picture N` files.
+
+New tooling this round:
+- `at_reel.py` - feedback arrives as DELIVERED timestamps but the specs are in
+  SOURCE seconds and visuals are a ROTATION across a segment's shots. This maps
+  a timestamp back to "segment N, slot k of its rotation" so the right shot
+  gets changed. `emit_reels.py` now writes `reels_map.json` to feed it.
+- `ArrowPoint` (BrandKit) - the animated pointer Edmund asked for on reel 06.
+  Coordinates are fractions of the CARD, so the arrow travels with a crop
+  instead of needing re-measurement every time the box moves.
+- `_WORD_REPAIRS` (build_reels) - see below.
+
+**FOUR RETAKES THAT HAD SHIPPED.** All four were invisible in the transcript:
+- reel 03: "at the moment Sora's actually averaging" is said TWICE. whisper
+  collapsed the pair into one span.
+- reel 10: same collapse, and the abandoned take states the WRONG FIGURE -
+  "89" against the "88.9" he keeps.
+- reel 09: "buying for yield or a near exit" abandoned and restarted.
+- reel 11: the CRL line said twice - and here the usual rule INVERTS. Take 1 is
+  the whole sentence; take 2 re-states only the tail. The last take is a
+  fragment, not a replacement, so the complete sentence is the keeper.
+  **whisper's VAD dropped take 2 from the transcript entirely** - it is not in
+  the word stream at any timing, so no transcript-based check could ever see
+  it. Found by measuring the energy envelope (clear speech at -13 dB where the
+  transcript says silence) and re-running whisper with `vad_filter=False`.
+
+**AND THE CAPTION TRAP BEHIND THEM.** whisper does not transcribe a retake
+twice - it STITCHES take-1 word times onto the take-2 continuation. Cut to the
+surviving take and the captions then describe words no longer in the audio:
+reel 10 opened on a bare "% SINGAPOREANS". Fixed by repairing the WORD LIST
+(`_WORD_REPAIRS`, asserted so a transcript change fails loudly), which is the
+same remedy as the companion's 456-carpark line - EDITING_PLAYBOOK rule 48.
+
+Delivered 8:58 across 12. `verify_reels.py`: ALL CHECKS PASS, loudness spread
+0.3 LU. Every cut re-transcribed from the delivered file to confirm the retake
+is gone and the surviving sentence is whole.
+
+RULED 2026-08-30, nothing open. The reel 06 pointer stays RED, even though it
+sits against the Deep Lake rule that red means risk (reel 06 is not a risk
+reel) - the arrow points at the thing he is criticising. The CDL DRAFT
+watermark on the plan plates stays as-is; the printed "not for circulation"
+footer IS cropped from every plate. Do not re-raise either next round.
+
+The reel CTA question is also settled: Edmund rewrote `YOUTUBE_REELS_PACK.md`
+himself with a link to the long-form, a `DM us: "LUCERNE" or "SECOND
+PROPERTY"` block over `bit.ly/WhatsappCoachEdmundNow`, and a six-tag set -
+applied to all 12. The on-card `DM "LUCERNE"` now MATCHES the description, so
+no re-render is needed. His pass reverted reel 11's heading to 1:07; the
+delivered file is 1:05.
+
 ## Deliverables
 - `LUCERNE_GRAND_FULL_1.15x_with_outro.mp4` - the full ~37:29 launch review
+  (superseded by `Lucerne Grand Final (safe outro).mp4` - same programme,
+  bit-exact body, SAFE outro remuxed on)
+- `LUCERNE_LAYOUTS_1080p.mp4` - the 16:03 site-plan & layouts companion
+- `REELS/LUCERNE_REEL_01..12_*.mp4` - the 12-reel short-form batch (8:58 after
+  round 2; the round-1 batch was 9:23)
+- `YOUTUBE_LAYOUTS_PACK.md` / `YOUTUBE_REELS_PACK.md` - titles, descriptions
+  and (layouts) 17 timestamp chapters mapped through the splice
 - `subtitles_review.txt` + `subs_manifest.json` for the REVIEW_STUDIO
   subtitle editor (round-1 review)
-- Reels batch after long-form approval
 - Superseded (kept for history): LOOK_VARIATIONS/, GRADE_OPTIONS/,
   BACKDROP_OPTIONS/, the LUCERNE_LOOK_DEMO_* and LUCERNE_DEMO_* files
 

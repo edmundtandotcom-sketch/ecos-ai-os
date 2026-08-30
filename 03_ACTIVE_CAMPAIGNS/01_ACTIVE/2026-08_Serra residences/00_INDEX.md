@@ -1,8 +1,10 @@
 # Campaign Index — The Serra Residences (YouTube video #5, launch review)
 
 Date: 2026-08-24
-Status: BUILD — look LOCKED (see Locked decisions); full-script build in progress
-Deadline: publish before Preview day (Fri 19 Sep 2026); booking day 3 Oct
+Status: REVIEW — v3 delivered 2026-08-30 12:13 (20:41 at 1.15x, SAFE outro)
+Deadline: publish before Preview day. DATES REVISED (Edmund, 2026-08-29):
+preview 2 Oct, launch day 17 Oct — supersedes the 19 Sep / 3 Oct dates
+spoken in the recording, which the on-screen timeline now corrects.
 
 ## Objective
 Full pre-launch review of The Serra Residences (Far East Organization, D11
@@ -102,8 +104,80 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   corrected re-render: the "6 YEARS" slam repeated the spoken line instead
   of adding to it, and "per square foot" printed long in the subtitles
   instead of "psf".
-- Full 16:9 long-form after the look + speed decision
-- Reels batch after long-form approval
+- **SUPERSEDED** `SERRA_DRAFT_v1_1.15x.mp4` (21:00) + `DELIVERY_QA.jpg` —
+  first full cut, 2026-08-29. Reviewed by Edmund; kept for comparison only.
+  Note: this render used a bundle three days older than the component fixes
+  it needed, so several defects in it were already fixed in source and had
+  simply never reached the render.
+- **SUPERSEDED** `SERRA_DRAFT_v2_1.15x.mp4` (20:41) — review round 2
+  applied; superseded by v3 below.
+- **DELIVERED** `SERRA_DRAFT_v3_1.15x.mp4` (20:41, 650 MB) +
+  `DELIVERY_QA_v3.jpg`. Review round 3 (Edmund, 2026-08-30):
+  - lower third raised clear of the subtitle bar (1:28)
+  - ProTrend gap chart now FULL-FRAME with the pip pinned top-right
+    ON the image — an explicit `headOver` opt-out from the layout
+    rule, declared per plate rather than by weakening the gate (11:36)
+  - harmonisation diagram given the whole frame; its three points
+    follow as their own plate (13:51)
+  - Neu floor-plan card 240px -> 310px, a column row merged to free
+    the space (14:16)
+  - the $1,865,000 moved BELOW the transaction table, table widened
+    (14:29)
+  - two right-hand charts held longer: 8.0->11.5s and 7.0->10.5s
+  - a full-frame plate now hides the section chip (it was printing
+    onto the white diagram)
+  - Edmund's tennis-court photo placed at 15:06, shown at native
+    682x318 rather than upscaled into softness
+  Re-rendered with `work/lib/repatch.py`: the tennis image touched
+  1 of 20 parts, so it cost 13 minutes instead of 100.
+- v2 detail, retained for the record: +
+  `DELIVERY_QA_v2.jpg` (11 frames sampled across the fixes) +
+  `subtitles_review.txt` (re-indexed; timecodes are on the v2 file).
+  363 clips · 155 displays · 344 subtitle cues. Edmund's full v1 review
+  applied:
+  - **Layout is solved, not nominated.** `work/lib/layout_gate.py` places the
+    head bubble geometrically and FAILS THE BUILD on any overlap. The section
+    chip no longer sits under the channel logo; plate copy no longer runs
+    under the subtitle bar; the QR no longer covers the CTA card.
+  - **The Serra QR was Amberwood's**, byte for byte. Regenerated and
+    decode-verified at its 210px display size.
+  - **Nine bar/line charts** for the gains and rentals that were caption-only
+    — Pavilion 11, The Ansley, Zedge, 8 Bassein, Neu — plus a real x/y psf
+    chart for Neu across the period.
+  - **Three-ring OCR/RCR/CCR diagram** with the prices counting up.
+  - **Six of Edmund's assets placed**: the ProTrend gap chart (held, head
+    pinned top-right), the Peck Hay and Vela Bay articles, the GFA
+    harmonisation diagram, the Neu floor plan under its compare column, and
+    the Neu transaction table with the price animating over it.
+  - **Nine subtitle corrections** applied verbatim, plus two more of the same
+    phrase found by sweep ("Neu @ Novena" throughout, "within 1KM",
+    "being in CCR", "harmonized").
+  - **Nine clip removals**, converted from delivered timecodes to source with
+    `work/lib/final_to_src.py` — never by eye.
+  - **Launch dates corrected on the display**: preview 2 Oct, launch day
+    17 Oct, flagged "UPDATED · LATEST DATES" over what the speaker says.
+  - **Subscribe/CTA cadence** raised from 3 prompts to 19 across the runtime.
+  - All audio is synthesised in-house (`work/enbloc/make_music.py`); no code
+    path anywhere still references the track YouTube claimed.
+  - CLOSED: tennis-court image — Edmund supplied one 2026-08-30; it is in
+    v3 at 15:06.
+- **PILOT DELIVERED** `REELS/SERRA_REEL_01_THE_NEIGHBOUR_THAT_DIDNT_PAY.mp4`
+  (1:01, 1080x1920, -15.0 LUFS / LRA 2.0 LU) + `REELS/REEL01_QA.jpg`.
+  Topic list derived from the 337-sentence transcript dump; 12 candidates cut
+  to 11 on Edmund's "quality over count" (09 ONLY 13% FREEHOLD folded into 11
+  SCARCITY - a statistic, not a teaching point).
+  NEW LOOK - skin `serraPrime` in `src/reelSkin.ts`: gold leads, cyan affirms,
+  vermilion RESERVED for risk beats; -0.8 counter-tilt, new `ring` card
+  treatment and new `bracket` stat mark that echoes the long-form GapBar.
+  Pipeline: `work/serra/build_reels.py` (machinery) + `reels_serra.py`
+  (specs) + `emit_reels.py` + `render_all_reels.ps1`, rendered from the
+  pre-built bundle with `--public-dir=public_serra`.
+- Remaining 10 reels on approval of the pilot
+- **OPEN DEFECT (long-form v3, 11:24):** the subtitle reads "a huge gap, 43%
+  more expensive". The correct figure from Edmund's own ProTrend chart (p31,
+  on screen at 11:36) is 46.82%, i.e. 47%. Introduced by a correction that
+  guessed at a misspoken number. One cue; folded into the next long-form
+  render rather than re-rendering 100 minutes for one word.
 - Upload kit on request
 
 ## Runtime notes (E:\REMOTION)
