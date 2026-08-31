@@ -1,7 +1,7 @@
 # Campaign Index — The Serra Residences (YouTube video #5, launch review)
 
 Date: 2026-08-24
-Status: REVIEW — v3 delivered 2026-08-30 12:13 (20:41 at 1.15x, SAFE outro)
+Status: REVIEW — long-form v3 (20:41) + 11 reels (9:59) delivered 2026-08-31
 Deadline: publish before Preview day. DATES REVISED (Edmund, 2026-08-29):
 preview 2 Oct, launch day 17 Oct — supersedes the 19 Sep / 3 Oct dates
 spoken in the recording, which the on-screen timeline now corrects.
@@ -172,7 +172,47 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   Pipeline: `work/serra/build_reels.py` (machinery) + `reels_serra.py`
   (specs) + `emit_reels.py` + `render_all_reels.ps1`, rendered from the
   pre-built bundle with `--public-dir=public_serra`.
-- Remaining 10 reels on approval of the pilot
+  Round 2 (Edmund, 2026-08-31): document plates now ZOOM to the sale-price /
+  psf columns rather than showing the whole row, cropped SQUARE, and the crop
+  is chosen per beat from the words he is saying (`img(..., zooms=[...])`);
+  number captions are set larger than the words around them.
+  Round 3 (Edmund, 2026-08-31): the b-roll stretch replaced with his three
+  market assets (mkt_a/b/c) plus a NEW animated `TrendPlate` - a date-vs-price
+  line that draws across the shot, built from the URA Property Price Index
+  series MEASURED out of the pixels of his own chart and calibrated against
+  its printed axis (extracted endpoint 188.2 vs printed 188.6). Caption fix
+  at 0:57 ("and harmonized?").
+  CARE: that index rose ~31% over 1Q2018-4Q2022. Edmund's spoken "+52%" is
+  NEW-LAUNCH prices, a different series. The chart therefore carries NO
+  percentage and the +52% stat was re-anchored one beat earlier so the two
+  are never on screen together appearing to label each other.
+- **REEL BATCH DELIVERED** (2026-08-31) - 11 reels, 9:59 total, in `REELS/`
+  + `ALL_REELS_QA.jpg`. All 1080x1920 h264/aac; batch loudness spread
+  0.1 LU (-14.9 to -15.0), well inside the 2.5 dB rule:
+  | # | Reel | Length |
+  |---|---|---|
+  | 01 | The neighbour that didn't pay | 1:01 |
+  | 02 | The price gap | 1:01 |
+  | 03 | Volume, not location | 0:30 |
+  | 04 | What the old freehold paid | 1:08 |
+  | 05 | Smaller on paper, same to live in | 1:06 |
+  | 06 | The hospital is the rental story | 0:42 |
+  | 07 | Don't buy this for yield | 0:30 |
+  | 08 | The foreign money isn't coming | 0:49 |
+  | 09 | Three buyers, one should slow down | 0:59 |
+  | 10 | Sixteen years on the land | 1:03 |
+  | 11 | The honest scorecard | 1:04 |
+  Twelve candidates cut to eleven on "quality over count".
+  CORRECTIONS CARRIED IN THE REELS (both from opening the source sheets):
+  - Reel 02 caption reads **47%**, not the spoken "3%". His ProTrend sheet
+    (p31, on screen in the same shot) reads $898 / 46.82%. The LONG-FORM
+    still says 43% at 11:24 - that figure is the RCR growth number, a
+    different series - and is fixed in source awaiting its next render.
+  - Reel 10 OMITS "only 13% of all condos are freehold". His own slide (p02)
+    reads freehold = 49% of condo stock; 13% is freehold AND near an MRT.
+    Scarcity rests on the launch drought and the land story instead.
+  - p25 was pulled off the "71% Singaporean" beat in reel 08: it is a
+    profitable-transactions sheet and carries no buyer data at all.
 - **OPEN DEFECT (long-form v3, 11:24):** the subtitle reads "a huge gap, 43%
   more expensive". The correct figure from Edmund's own ProTrend chart (p31,
   on screen at 11:36) is 46.82%, i.e. 47%. Introduced by a correction that
