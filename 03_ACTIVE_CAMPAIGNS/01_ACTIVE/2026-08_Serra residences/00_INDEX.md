@@ -1,7 +1,7 @@
 # Campaign Index — The Serra Residences (YouTube video #5, launch review)
 
 Date: 2026-08-24
-Status: REVIEW — long-form v3 (20:41) + 11 reels (9:59) delivered 2026-08-31
+Status: REVIEW — long-form v3 (20:41) + 11 reels (10:11) re-delivered 2026-09-01 (reel round 4)
 Deadline: publish before Preview day. DATES REVISED (Edmund, 2026-08-29):
 preview 2 Oct, launch day 17 Oct — supersedes the 19 Sep / 3 Oct dates
 spoken in the recording, which the on-screen timeline now corrects.
@@ -186,7 +186,101 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   NEW-LAUNCH prices, a different series. The chart therefore carries NO
   percentage and the +52% stat was re-anchored one beat earlier so the two
   are never on screen together appearing to label each other.
-- **REEL BATCH DELIVERED** (2026-08-31) - 11 reels, 9:59 total, in `REELS/`
+- **REEL BATCH RE-DELIVERED** (2026-09-01) - all 11 reels re-rendered after
+
+  round 4, 10:11 total, in `REELS/` + `REELS_R4_QA.jpg` (22 QA stills, one
+
+  per change). Zero render failures; batch loudness spread **0.2 LU**
+
+  (-15.1 to -14.9), all 1080x1920 h264/aac.
+
+  | # | Reel | Length |
+
+  |---|---|---|
+
+  | 01 | The neighbour that didn't pay | 1:02 |
+
+  | 02 | The price gap | 1:03 |
+
+  | 03 | Volume, not location | 0:31 |
+
+  | 04 | What the old freehold paid | 1:07 |
+
+  | 05 | Smaller on paper, same to live in | 1:06 |
+
+  | 06 | The hospital is the rental story | 0:44 |
+
+  | 07 | Don't buy this for yield | 0:31 |
+
+  | 08 | The foreign money isn't coming | 0:50 |
+
+  | 10 | Three buyers, one should slow down | 1:01 |
+
+  | 11 | Sixteen years on the land | 1:05 |
+
+  | 12 | The honest scorecard | 1:06 |
+
+  Round 4 (Edmund, 2026-09-01): 30 notes across eight reels - 24 caption
+
+  corrections, two clip removals, one held display, one missing figure and
+
+  three plate swaps. Each correction is verified by ASSERTING on the emitted
+
+  cue text (the fix present AND the garble gone), not by eye.
+
+  - "8 Bassein" had been failing silently for three rounds: whisper splits the
+
+    name and puts a CONTINUATION HYPHEN on the back half ("8 -Basin", "both
+
+    -proof"), which `_bare()` never stripped, so the phrase fix matched
+
+    nothing. It is now also ONE caption token, so a line break can no longer
+
+    fall between the 8 and the name (it was doing so in reels 1, 3, 6, 10, 12).
+
+  - "$1,485 sf" was a CLASS, not a one-off: whisper carries the $ from a psf
+
+    figure onto the next number, pricing a floor area. All eight scenes swept;
+
+    three hits, all in reel 04. The cases where $ is correct were left alone.
+
+  - Reel 04's cut-off at 0:41 was measurable - speech ran to 41.94, the cut
+
+    landed at 41.99. `SEG_TAIL` now gives EVERY segment end 0.30s through
+
+    `hold_after()`, which can only extend into measured silence.
+
+  - Fixed beyond the literal notes, same error already ruled on: "both prove"
+
+    in reel 10 as well as 12; "yield is" in reel 07 as well as 12.
+
+  - Two of the three assets Edmund linked were ALREADY in the library,
+
+    byte-identical (Picture 46 = p46, Picture 5 = p05) - referenced, not
+
+    re-imported. Only the pool/tower screenshot was new; it is cropped to its
+
+    bottom-right square because the render's sky is a blown-out WHITE block
+
+    top-left and a square card fills from the top.
+
+  - Spellings used: Tan Tock Seng Hospital, Mount Elizabeth Novena, 8 Bassein.
+
+  CAUGHT BY THE QA STILLS, BEFORE THE RENDER: a re-bundle without
+
+  `--public-dir=public_serra` embedded the shared 16.8 GB public/ (a 64 GB
+
+  bundle). Deck pages exist in both folders and resolved; the new plates and
+
+  EVERY generated crop 404'd. `render_all_reels.ps1` now refuses to start on
+
+  a stale bundle OR a bundle carrying the wrong public dir.
+
+  NOTE for future rounds: composition ids are POSITIONAL (`SerraReel${i+1}`)
+
+  and this campaign has no reel 09, so SerraReel11 is reel 12 and SerraReel12
+
+  does not exist. Derive the id from the manifest, never the reel number.- **REEL BATCH DELIVERED** (2026-08-31) - 11 reels, 9:59 total, in `REELS/`
   + `ALL_REELS_QA.jpg`. All 1080x1920 h264/aac; batch loudness spread
   0.1 LU (-14.9 to -15.0), well inside the 2.5 dB rule:
   | # | Reel | Length |
@@ -199,9 +293,9 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   | 06 | The hospital is the rental story | 0:42 |
   | 07 | Don't buy this for yield | 0:30 |
   | 08 | The foreign money isn't coming | 0:49 |
-  | 09 | Three buyers, one should slow down | 0:59 |
-  | 10 | Sixteen years on the land | 1:03 |
-  | 11 | The honest scorecard | 1:04 |
+  | 10 | Three buyers, one should slow down | 0:59 |
+  | 11 | Sixteen years on the land | 1:03 |
+  | 12 | The honest scorecard | 1:04 |
   Twelve candidates cut to eleven on "quality over count".
   CORRECTIONS CARRIED IN THE REELS (both from opening the source sheets):
   - Reel 02 caption reads **47%**, not the spoken "3%". His ProTrend sheet

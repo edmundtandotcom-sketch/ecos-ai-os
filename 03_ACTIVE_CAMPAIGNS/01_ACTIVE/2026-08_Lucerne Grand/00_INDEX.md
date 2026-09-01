@@ -272,6 +272,40 @@ delivered file is 1:05.
   round 2; the round-1 batch was 9:23)
 - `YOUTUBE_LAYOUTS_PACK.md` / `YOUTUBE_REELS_PACK.md` - titles, descriptions
   and (layouts) 17 timestamp chapters mapped through the splice
+- Google Doc `Project Likes/Dislike-Lucerne Grand (2nd Property)` - the two
+  Second-Property ad scripts (see below)
+
+## AD SCRIPTS - SECOND PROPERTY ANGLE (2026-09-01)
+Google Doc in this folder: docs.google.com/document/d/1bbJv2pTfFyL5QfdhoLx4ilRFLDekvHVNwX5ljkpEpso
+
+Built on the FORMULA of the Amberwood doc (1_nIiumrFOgtQoC53qApWCYxHJk_k2Pa_DW1xGTX2FJU
+- left untouched), but the content is Lucerne's own. Edmund's ruling: do NOT
+port Amberwood's talking points (District 10 / low density / 212 units / no
+1-2BR); use only what is controversial and true about THIS project, and lead
+the body with the risk rather than the likes.
+
+- AD 1 - Lucerne Grand as Property #2. 15 Direct + 8 Own Story + 8 Daughter.
+- AD 2 - Decoupling / restructuring to buy it. 13 Direct + 7 Own Story +
+  8 Daughter. The Own Story and Daughter banks did NOT exist in the Amberwood
+  original even though its bridge referenced them; that gap is now filled.
+
+The four dislikes the bodies open on, all from this campaign's verified
+evidence (same numbers the 12 reels ship): keys Dec 2030 so ~4 years of
+committed capital with nothing coming back; the district's milestones land
+AFTER the keys (CRL to JLD ~2032, PLANNED not operating); Sora's ~209 unsold
+units in the same pocket plus more JLD GLS = competition already selling into
+a 2028-30 exit; and premium entry ($1,132 psf ppr land -> est. $2,300-2,600
+psf) against a 2.8-3.2% indicative yield, so the exit must carry the whole
+return. Then the likes (beside Lakeside MRT, first in 10 years; the lake's own
+track record; the structural HDB-upgrader demand), then the three pressure-test
+questions - where "who buys it from me next" is answered, not asked, because
+Sora 54.7% / LakeGarden 45.8% tells us it is a West upgrader whose ceiling is
+set by their flat price.
+
+Every price is flagged as an estimate; a NOTE ON THE NUMBERS closes the doc
+separating confirmed (GLS award, project information) from estimated
+($2,300-2,600 psf, the $2,600 walk-away, 2.8-3.2% yield) from historical
+(the comparable gains) from planned (CRL ~2032).
 - `subtitles_review.txt` + `subs_manifest.json` for the REVIEW_STUDIO
   subtitle editor (round-1 review)
 - Superseded (kept for history): LOOK_VARIATIONS/, GRADE_OPTIONS/,
