@@ -86,7 +86,7 @@ Browser MEDIA-FILL pass across the top active advertisers. Method upgrade: extra
 
 **Sweep total: +58 new videos across 7 media-bearing competitors + King Kong (9) + Caleb (42).** All transcribed (en) this session.
 
-**Page-ID gaps flagged for the automation to resolve (my breakdown docs stored an ad-archive-id, not a page-id, so the SG lookup returned no advertiser):** Stella Thio (folder has 10v), Colin Ee (6v). Their real `view_all_page_id` needs re-capturing from the live page before they can be refreshed.
+**Page-ID gaps:** Colin Ee (6v) still needs its real `view_all_page_id` re-captured (my breakdown doc stored an ad-archive-id). **Stella Thio RESOLVED 2026-08-29** — correct page is **`101446268410106`** (was mis-stored). Refreshed same day: brand-new 12-video campaign (all age 1 day, 6 scripts × 2 length cuts ~96s + ~172s), **+12 videos downloaded/transcribed** (folder 10→22). SG luxury-homes advisor; this is a fresh launch worth reviewing for new hooks/offer vs. the old Dunearn House pre-ballot funnel. Track weekly on the resolved page ID.
 
 **Media-coverage note:** this pass refreshed VIDEO deltas only. Static-image deltas were NOT pulled — in this non-composited browser the ad-preview images serialize at 60×60 thumbnail size (full-res needs the visually-composited/automation runner). Image refresh remains queued for the weekly cloud media-fill (Decision 125).
 
