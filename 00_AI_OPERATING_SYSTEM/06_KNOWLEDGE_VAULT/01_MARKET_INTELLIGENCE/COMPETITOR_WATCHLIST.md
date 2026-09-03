@@ -102,3 +102,17 @@ Corrected the image-extraction method (was grabbing 60×60 thumbnails; now pulls
 | Denise Tan | 16 → 17 | +1 | Already current — 16 of 17 skipped. |
 | Stella Thio - Singapore Luxury Homes | 0 → 5 | +5 | Her fresh campaign runs 12 video + 5 static ads; the video-only pull had skipped the 5 statics (why the folder showed 0 images). Now captured. |
 Remaining video-bearing folders' image deltas + the ~219 scaffold first-fills are handled by the weekly cloud media-fill runner following the corrected SKILL rule.
+
+## 2026-08-29 — Stale-folder catch-up + weekly schedule (regularity fix)
+Freshness audit showed ~30 of 39 media folders were 3-4 weeks stale (regular pulling had not been happening). Root cause fixed via SWIPE_PAGE_ID_REGISTRY.md. Ran a catch-up sweep (video age-filter + s600 images) over the registry:
+| Folder | Result |
+|---|---|
+| The Freedom Growth Academy | +16 videos + 5 images (106->122v, 0->5i) — big active advertiser, had drifted |
+| Beyond Realtors Club | +7 videos (8->15) |
+| Legacy Advisors Academy | +5 videos (8->13) + 1 over-cap VSL (682s) logged |
+| M H Simon | +5 videos (6->11) |
+| Rodney Tan | +4 images (6->10) |
+| The Right Move / CP Homes / Patricia Ang / Adrian Lee | 0 new (already current — stale date, not stale content) |
+| Sarah Lee | 0 active (campaign ended; on-disk retained) |
+Still to sweep (next run): Frank Kern, Dan Lok, Property Exit Advantage, image-only folders (Allan Khazak, Eddy Miranda, Entrepedia, Issac Liu, Real Estate Mentor), + the 18 unresolved-page-ID folders.
+**DURABLE FIX:** scheduled task `rei-swipe-weekly-refresh` (C:\Users\Admin\.claude\scheduled-tasks\) now runs every Monday 09:00 in the desktop app (browser-capable — the cloud routine cannot reach facebook.com), iterating the page-ID registry with the append-only video+s600-image method. This is what makes the pulling actually regular.
