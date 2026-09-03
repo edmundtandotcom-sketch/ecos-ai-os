@@ -91,3 +91,13 @@ Browser MEDIA-FILL pass across the top active advertisers. Method upgrade: extra
 **Media-coverage note:** this pass refreshed VIDEO deltas only. Static-image deltas were NOT pulled — in this non-composited browser the ad-preview images serialize at 60×60 thumbnail size (full-res needs the visually-composited/automation runner). Image refresh remains queued for the weekly cloud media-fill (Decision 125).
 
 **Scope note:** the library has 238 swipe folders; 49 hold media, ~189 are Cloud metadata-only scaffolds. This manual sweep covered the ~12 highest-value active competitors. The remaining media folders' long tail + all scaffold first-fills stay on the locked-in weekly automation cadence.
+
+## 2026-08-29 — Static-image backfill (Decision 128; full-res s600 fix)
+Corrected the image-extraction method (was grabbing 60×60 thumbnails; now pulls the `s600x600` creatives that sit alongside them in the page HTML) and ran a paced backfill. Dedup by CDN filename base + existing library ID, so already-captured statics are skipped, not duplicated.
+| Advertiser | Images before → after | New | Note |
+|---|---|---|---|
+| Growth Partners Inc | 44 → 87 | +43 | All current active statics; its library IDs had rotated so none matched the old ID-named set (possible minor visual overlap, kept per append-only). |
+| Ernee Ong | 19 → 22 | +3 | 14 current statics; 10 already on disk (matched by ID), correctly skipped. |
+| Damien Tan Real Estate | 2 → 4 | +2 | Both genuinely new. |
+| Denise Tan | 16 → 17 | +1 | Already current — 16 of 17 skipped. |
+Remaining video-bearing folders' image deltas + the ~219 scaffold first-fills are handled by the weekly cloud media-fill runner following the corrected SKILL rule.
