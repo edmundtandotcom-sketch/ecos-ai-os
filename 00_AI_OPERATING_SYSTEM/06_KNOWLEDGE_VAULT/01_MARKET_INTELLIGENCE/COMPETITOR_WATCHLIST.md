@@ -100,4 +100,5 @@ Corrected the image-extraction method (was grabbing 60×60 thumbnails; now pulls
 | Ernee Ong | 19 → 22 | +3 | 14 current statics; 10 already on disk (matched by ID), correctly skipped. |
 | Damien Tan Real Estate | 2 → 4 | +2 | Both genuinely new. |
 | Denise Tan | 16 → 17 | +1 | Already current — 16 of 17 skipped. |
+| Stella Thio - Singapore Luxury Homes | 0 → 5 | +5 | Her fresh campaign runs 12 video + 5 static ads; the video-only pull had skipped the 5 statics (why the folder showed 0 images). Now captured. |
 Remaining video-bearing folders' image deltas + the ~219 scaffold first-fills are handled by the weekly cloud media-fill runner following the corrected SKILL rule.
