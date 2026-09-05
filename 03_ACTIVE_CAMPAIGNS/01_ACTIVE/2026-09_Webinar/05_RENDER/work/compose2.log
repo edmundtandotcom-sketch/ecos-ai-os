@@ -1,0 +1,75 @@
+== TIGHTEN ==
+  tight cut cached (43 segments)
+  tight: 205.6s -> 198.5s (3% dead air removed)
+== COMPOSE ==
+  178 shots, 40 beats
+  cut 203.7s  median shot 1.03s  52 cuts/min
+  114 caption plates
+  insert  shot                         0.00 ->   2.00
+  ! beat 1 '$3.5 million budget': no shot claimed it
+  insert  shot                         2.00 ->   4.60
+  insert  family_showflat_real.jpg     4.60 ->   6.70
+  insert  sg_marinabay_towers.mp4      6.70 ->   9.57
+  device  stat_pop                    10.53 ->  13.20
+  insert  edmund_daughter_floorplan.jpg  14.80 ->  17.07
+  device  split_labels                18.23 ->  21.92
+  device  lower_ticker                21.92 ->  24.39
+  device  black_type_open             24.39 ->  27.09
+  device  stat_pop                    30.22 ->  34.57
+  insert  family_sofa.mp4             35.80 ->  39.85
+  device  checklist                   40.95 ->  44.98
+  device  accum_caption               44.98 ->  47.18
+  device  stat_pop                    49.75 ->  53.55
+  insert  sg_aerial.mp4               57.52 ->  61.48
+  device  accum_caption               61.48 ->  64.11
+  insert  shot                        64.65 ->  66.81
+  device  black_type_open             69.05 ->  71.78
+  insert  red                         71.78 ->  74.55
+  device  stat_pop                    77.01 ->  80.11
+  device  icon_compare                86.58 ->  90.25
+  insert  sg_road_night.mp4           90.61 ->  94.72
+  insert  sg_sunrise_traffic.mp4      96.05 ->  99.61
+  device  stat_pop                    99.61 -> 103.50
+  device  versus_bars                104.93 -> 109.86
+  insert  shot                       111.26 -> 113.30
+  device  cost_stack                 113.90 -> 118.26
+  device  stat_pop                   121.80 -> 125.13
+  device  checklist                  129.30 -> 133.30
+  device  grid_paper_plate           134.53 -> 138.10
+  device  dread_plate                144.56 -> 148.23
+  insert  shot                       150.13 -> 152.16
+  insert  desk_laptop_typing.mp4     153.63 -> 157.30
+  insert  family_showflat_model_a.png 161.86 -> 166.06
+  device  checklist                  169.56 -> 175.86
+  insert  desk_calendar_calc.mp4     177.86 -> 181.10
+  device  icon_compare               186.73 -> 190.03
+  device  accum_caption              194.06 -> 196.83
+  insert  shot                       198.33 -> 201.10
+  endcard black_type_open            201.10 -> 203.70
+  vfx     vfx_explosion_flash.mp4      0.00 ->   0.90
+  vfx     vfx_lightleak_burn.mp4       2.00 ->   3.60
+  vfx     vfx_confetti_left.mp4       10.53 ->  12.53
+  vfx     vfx_lightleak_dissolve.mp4  61.48 ->  62.88
+  vfx     vfx_glitch_numbers.mp4      64.65 ->  65.65
+  vfx     vfx_glitch_tv.mp4          111.26 -> 112.06
+  vfx     vfx_flash_wave.mp4         121.80 -> 122.60
+  vfx     vfx_glow_transition.mp4    150.13 -> 151.13
+  vfx     vfx_lightleak_lens.mp4     194.06 -> 195.46
+Traceback (most recent call last):
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 635, in <module>
+    main()
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 631, in main
+    compose(SPEC, tight, words, smap, OUT_NAME)
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 585, in compose
+    run(["ffmpeg", "-y", "-loglevel", "error", "-stats", *inputs,
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 83, in run
+    subprocess.run(cmd, check=True)
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 206] The filename or extension is too long

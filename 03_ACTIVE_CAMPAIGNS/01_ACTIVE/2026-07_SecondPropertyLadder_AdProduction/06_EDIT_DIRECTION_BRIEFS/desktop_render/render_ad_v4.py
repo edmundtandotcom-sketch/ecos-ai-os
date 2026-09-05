@@ -24,7 +24,14 @@ from pathlib import Path
 
 sys.path.insert(0, r"E:\REMOTION\ads")
 import devices as DV                                            # noqa: E402
+import devices_house as HD                                      # noqa: E402
 import effects as FX                                            # noqa: E402
+
+# One lookup for both libraries. devices.py = learned from competitors,
+# devices_house.py = learned from our own finals. A variation names either.
+DEVICES = {**DV.REGISTRY, **HD.REGISTRY}
+FULL_FRAME = DV.FULL_FRAME | HD.FULL_FRAME
+OVER_SPEAKER = DV.OVER_SPEAKER | HD.OVER_SPEAKER
 
 HERE = Path(__file__).parent
 OUT = HERE / "out"
@@ -53,6 +60,13 @@ SG_BROLL = [
     "rx_girl_face.mp4", "rx_woman_gesture.mp4", "rx_woman_social.mp4",
 ]
 AUDIO = Path(r"E:\REMOTION\public\audio")
+FAMILY = Path(r"E:\REMOTION\public\family")
+PROPS = Path(r"E:\REMOTION\public\props")
+VFX = Path(r"E:\REMOTION\public\vfx")
+REACTIONS = Path(r"E:\REMOTION\public\reactions")   # Edmund's own reaction clips
+# Family/profile stills a beat may name with photo=; read from the manifest so
+# the allowlist grows when the folder does.
+FAMILY_ASSETS = {m["file"]: m for m in json.loads((FAMILY / "manifest.json").read_text(encoding="utf-8"))} if (FAMILY / "manifest.json").exists() else {}
 
 W, H, FPS = 1080, 1920, 30
 SPEED = FX.HOUSE['speed']
@@ -278,7 +292,10 @@ def build_shots(spec, words, work):
                               dev_id=beats.index(dev) if dev else None,
                               backdrop=(dev or {}).get("backdrop"),
                               split=(dev or {}).get("split", False),
-                              backdrops=(dev or {}).get("backdrops")))
+                              backdrops=(dev or {}).get("backdrops"),
+                              photo=(dev or {}).get("photo"),
+                              prop=(dev or {}).get("prop"),
+                              vfx=(dev or {}).get("vfx")))
 
     prev, seen = -1, set()
     for i, s in enumerate(shots):
@@ -306,7 +323,21 @@ def render_shots(shots, body, work):
         d = s["t1"] - s["t0"]
         nf = max(2, int(round(d * FPS)))
         p = sd / f"s{i:03d}.mp4"
-        if s.get("backdrops"):
+        if s.get("photo"):
+            # family / profile still as a full-frame insert with a Ken Burns push
+            src = FAMILY / s["photo"] if (FAMILY / s["photo"]).exists() else PROPS / s["photo"]
+            run(["ffmpeg", "-y", "-loglevel", "error",
+                 "-loop", "1", "-framerate", str(FPS), "-t", f"{d:.3f}", "-i", str(src),
+                 "-ss", f"{s['t0']:.3f}", "-to", f"{s['t1']:.3f}", "-i", str(body),
+                 "-filter_complex",
+                 f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},"
+                 f"{GRADE},{motion(nf, 'push')}[v]",
+                 "-map", "[v]", "-map", "1:a", "-frames:v", str(nf),
+                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                 "-pix_fmt", "yuv420p", "-r", str(FPS),
+                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+                 "-video_track_timescale", "90000", str(p)])
+        elif s.get("backdrops"):
             # split screen: two sources stacked, seam and labels drawn by the
             # split_labels device on top
             top, bot = s["backdrops"]
@@ -528,7 +559,7 @@ def build(key):
         if sh.get("segment_start"):
             flashes.append(sh["out0"])
             segs.append(sh["out0"])
-        if sh["dev"]:                       # a device carries its own copy
+        if sh["dev"] and sh["dev"] != "icon_row":   # device carries its own copy
             continue
         cue = [w["w"] for w in sh["cue"]]
         ai = score_accent(sh["cue"])
@@ -555,7 +586,7 @@ def build(key):
             print(f"  insert  {b['backdrop']:22} {t0:6.2f} -> {t1:6.2f}")
             continue
         d = devdir / f"{bi:02d}_{b['dev']}"
-        DV.REGISTRY[b["dev"]](d, secs, **b["params"])
+        DEVICES[b["dev"]](d, secs, **b["params"])
         dev_overlays.append((d, t0, t1))
         print(f"  device {b['dev']:14} {t0:6.2f} -> {t1:6.2f}")
 
@@ -579,6 +610,40 @@ def build(key):
                     f"enable='between(t,{t0:.3f},{t1:.3f})'[v{idx}]")
         last = f"v{idx}"
         idx += 1
+    # prop slams (e.g. the SOLD stamp) - a PNG that lands oversized and settles
+    for bi, b in enumerate(beats):
+        if not b.get("prop"):
+            continue
+        owners = [x for x in shots if x["dev_id"] == bi]
+        if not owners:
+            continue
+        t0, t1 = owners[0]["out0"], owners[-1]["out1"]
+        inputs += ["-framerate", str(FPS), "-i", str(PROPS / b["prop"])]
+        n = int((t1 - t0) * FPS) + 4
+        filt.append(f"[{idx}:v]loop=loop={n}:size=1,fps={FPS},"
+                    f"setpts=PTS-STARTPTS+{t0:.3f}/TB,format=rgba,scale=iw*0.8:ih*0.8[pp{idx}]")
+        filt.append(f"[{last}][pp{idx}]overlay=(W-w)/2:(H-h)/2:"
+                    f"enable='between(t,{t0:.3f},{t1:.3f})'[v{idx}]")
+        last = f"v{idx}"; idx += 1
+        print(f"  prop    {b['prop']:22} {t0:6.2f} -> {t1:6.2f}")
+    # vfx overlays - black-ground clips screen-blended over a window
+    used_vfx = set()
+    for bi, b in enumerate(beats):
+        if not b.get("vfx"):
+            continue
+        owners = [x for x in shots if x["dev_id"] == bi]
+        if not owners:
+            continue
+        t0 = owners[0]["out0"]; t1 = min(owners[-1]["out1"], t0 + b.get("vfx_secs", 1.2))
+        pool = [f for f in sorted(VFX.glob(f"vfx_{b['vfx']}*.mp4")) if f.name not in used_vfx] or sorted(VFX.glob(f"vfx_{b['vfx']}*.mp4"))
+        if not pool:
+            print(f"  ! no vfx clip for kind '{b['vfx']}'"); continue
+        clip = pool[0]; used_vfx.add(clip.name)
+        # loop for the whole cut, not just the window - see effects.vfx_overlay
+        inputs += ["-stream_loop", "-1", "-t", f"{shots[-1]['out1'] + 0.5:.3f}", "-i", str(clip)]
+        filt.extend(FX.vfx_overlay(idx, t0, t1, src=last, dst=f"v{idx}"))
+        last = f"v{idx}"; idx += 1
+        print(f"  vfx     {clip.name:22} {t0:6.2f} -> {t1:6.2f}")
     for t in flashes:
         filt.append(f"[{last}]{FX.flash(t)}[f{idx}]")
         last = f"f{idx}"

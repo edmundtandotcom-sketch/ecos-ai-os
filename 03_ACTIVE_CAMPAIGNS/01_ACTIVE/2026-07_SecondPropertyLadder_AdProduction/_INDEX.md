@@ -62,6 +62,32 @@ Captions consequently sit at 67% rather than the reference 55%, to clear the fac
 **Also pending:** caption face is Impact (stand-in). Anton / Archivo Black are
 the playbook faces and need downloading as local TTFs for ffmpeg.
 
+## Ads production foundation (built 2026-08-26 to 2026-09-01)
+
+The paid-ad pipeline this campaign's renders run on. Lives at `E:\REMOTION` beside
+the reels and long-form playbooks; rendered with `/rei-ad-build`.
+
+| File | Role |
+|---|---|
+| `ADS_PLAYBOOK.md` | Measured competitor norms (171 vertical ads) |
+| `ads/HOUSE_STYLE_ADS.md` | Study of 128 of OUR finals - **wins over the playbook where they disagree** |
+| `ads/DEVICE_LIBRARY.md` | Catalogue of every device and its placement class |
+| `ads/devices.py` + `ads/devices_house.py` | 23 animated devices (competitor-derived + house) |
+| `ads/effects.py` | Camera moves, transitions, layouts, speaker treatments, house defaults |
+| `ads/scan_devices.py` | Standing sweep of the swipe library for new devices |
+| `06_EDIT_DIRECTION_BRIEFS/desktop_render/render_ad_v4.py` | This campaign's composer - a variation spec is the whole ad |
+| `ads/HOUSE_STYLE_ADS.md` §9 + `public/family/` | 24 family & profile stills (manifest) - `photo=` inserts |
+| `public/props/` · `public/vfx/` | 12 props (SOLD stamp, signs, icons, keys-in-hand, coin stacks) · 18 VFX overlays - `prop=` / `vfx=` beats |
+| `ads/MEME_EXPRESSION_LIBRARY.md` + `public/reactions/` | 28-entry reaction/meme shot list for Edmund; drop folder for the clips |
+
+Cross-pollination is the rule: ad devices go into long-form and reels as
+interstitials; map plates, MRT rail and VAKit charts come into ads compressed
+to 2-3s in the ad palette. See `HOUSE_STYLE_ADS.md` section 7.
+
+**Shoot note carried forward:** every one of the 128 finals has the speaker
+outdoors. The grey-curtain S&P take is the outlier - reshoot outdoors before
+this angle ships.
+
 ## Boundaries
 
 - No named client/contact evidence.

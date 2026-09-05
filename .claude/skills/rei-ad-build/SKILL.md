@@ -14,7 +14,10 @@ Desktop-only. Builds a finished 9:16 ad from a raw talking-head take.
 | `E:\REMOTION\ADS_PLAYBOOK.md` | The measured norms. Derived from 171 vertical ads in the swipe library, not asserted. |
 | `E:\REMOTION\ads\DEVICE_LIBRARY.md` | The graphic devices and how each is placed. |
 | `E:\REMOTION\ads\devices.py` | Device code. |
-| `E:\REMOTION\ads\effects.py` | Camera moves, transitions, layouts, frame furniture, and `HOUSE` defaults. |
+| `E:\REMOTION\ads\effects.py` | Camera moves, transitions, layouts, frame furniture, speaker treatments, and `HOUSE` defaults. |
+| **`E:\REMOTION\ads\HOUSE_STYLE_ADS.md`** | **What OUR 128 delivered ads/reels actually do. Where it disagrees with the playbook, it wins - it is what Edmund already approved.** |
+| `E:\REMOTION\ads\devices_house.py` | The 10 devices extracted from those finals: grid-paper plate, dread plate, metaphor illustrations, icon devices, black cold-open, burst opener, accumulating captions. |
+| `E:\REMOTION\ads\MEME_EXPRESSION_LIBRARY.md` | The reaction/meme shot list - 28 entries Edmund performs (face, hands, props). Comic beats here are props + deadpan, not pulled faces. |
 
 **Ads are not reels.** `REELS_PLAYBOOK.md` (square speaker card, brand-colour
 world, captions at 83%) is for ORGANIC short-form and must not be applied here.
@@ -48,6 +51,30 @@ local faces, Singapore currency.
 - **Never repeat a clip inside one ad.** Repeats were the clearest tell that a
   cut was machine-assembled.
 
+## 2b. ASSET FOLDERS - all under `E:\REMOTION\public`, each with `manifest.json`
+
+| Folder | Use in a beat | Contents |
+|---|---|---|
+| `broll/stock` | `backdrop=` | 37 Singapore/neutral clips |
+| `family/` | `photo=` | 24 family/profile stills - green-screen Edmund and transparent Cindior are compositable; real showflat photos are the proof inserts |
+| `props/` | `prop=` (PNG slam) or `backdrop=` (clip) | SOLD stamp, SALE post, OPEN HOUSE sign, house icons, keys-in-hand clip, coin stacks |
+| `vfx/` | `vfx="lightleak"\|"glitch"\|"burst"\|"celebrate"\|"transition"` | 18 black-ground overlays, screen-style via `effects.vfx_overlay` |
+| `reactions/` | `backdrop=` for `meme_card` | **drop folder** for Edmund's own clips - shoot list in MEME_EXPRESSION_LIBRARY §6 |
+
+Beat keys all live on the same dict:
+
+```python
+dict(at="returned 22", dev="stat_pop", secs=3.0, backdrop="sg_city_night.mp4",
+     vfx="burst", vfx_secs=1.2, params=dict(value=22.9, label="a year")),
+dict(at="her first", dev=None, secs=2.4, photo="family_showflat_real.jpg"),
+dict(at="sold at", dev=None, secs=1.6, backdrop="sg_marinabay_towers.mp4",
+     prop="prop_sold_stamp_5250892.png"),
+```
+
+Harvesting more: Pixabay via the in-app browser, same-origin `fetch()`, take
+the **`og:image`** tag (never the first CDN URL - often a related thumbnail),
+and **eyeball every batch** before promoting - 24 of 59 were rejected on sight.
+
 ## 3. Procedure
 
 1. **Confirm the take and the CTA.** Multi-variant CTA recordings are common —
@@ -62,6 +89,17 @@ local faces, Singapore currency.
    spoken phrases, not timestamps), SG b-roll per beat.
 6. **Render QA stills and look at them** before committing to a full render.
 7. Version and log; update the campaign `_INDEX.md`.
+
+## 3b. Native 9:16 phone takes (webinar campaign, 2026-09)
+
+`03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-09_Webinar/05_RENDER/render_webinar.py` is
+the composer for takes already shot vertical: no face crop, zoom levels are
+crops around the measured face centre, the tighten stage re-orders takes
+(`PIECES` in `spec_webinar.py` is the edit order), and beats carry
+`treat=` (red/bw duotone), `frame=` (CTA red border), `motion=`, `nocap=`,
+an `endcard`. Cues are split at beat boundaries so every beat opens on its
+own shot. Shots are cached by content hash - a spec tweak re-encodes only
+what changed.
 
 ## 4. Run it
 
@@ -91,9 +129,15 @@ Only build multiple variations when Edmund asks for them. Default is ONE ad.
 
 ## 5. Traps that have actually bitten
 
-- **A PNG is one frame at t=0.** Fading it leaves that frame at alpha 0, and
-  overlay's `eof_action=repeat` then holds it invisible. Loop it, or drop the
-  fade. This has caused invisible graphics twice.
+- **A single-image input does NOT survive a long timeline on ffmpeg 8.1.2.**
+  Whatever holds it - `loop`, `tpad=clone`, `-stream_loop`, plain
+  `eof_action=repeat` - the overlay stops compositing a few seconds in (a
+  plate drew at 4.2s and never at 7.0s, no fade, no `enable`; webinar ad
+  2026-09-04, four renders). PNG *sequences* (`%04d.png`) are fine at any
+  time, and so is the same PNG on a clip whose timestamps start at zero.
+  So: **burn caption plates into their own shot at shot-render time**
+  (`render_webinar.render_shots` does this); reserve the assembled-timeline
+  overlay pass for multi-frame device sequences and VFX clips.
 - **`drawbox` evaluates size expressions once at init** — a time-based width
   paints a full border for the whole video. Use sliding `overlay` bars.
 - **Never `-c copy` the final concat.** A dimension or timebase mismatch
@@ -104,6 +148,13 @@ Only build multiple variations when Edmund asks for them. Default is ONE ad.
 - **`loop` counts at the input framerate** — pass `-framerate 30` on image
   inputs or a loop sized in 30fps frames runs 20% long.
 - Whisper auto-detect put 55s of English into Malay. Force the language.
+- **ffmpeg 8.1.2 `blend` access-violates (0xC0000005)** whatever the input
+  lengths. Screen-style VFX = luma-to-alpha `alphamerge` + plain `overlay`,
+  clip looped for the whole cut. `effects.vfx_overlay` already does this.
+
+- **Windows caps a command line at 32K chars.** 114 looped caption inputs
+  with absolute Drive paths blew it (`WinError 206`). Write the graph with
+  `-filter_complex_script`, run ffmpeg with `cwd=work` and relative inputs.
 
 ## 6. Growing the library
 
@@ -115,15 +166,36 @@ add it to `devices.py`, log it in `DEVICE_LIBRARY.md`, and every variation
 picks it up with no composer change. Same for a new move or transition in
 `effects.py`.
 
-## 7. Known gaps — state them, do not paper over them
+## 7. House style - the rules that override the playbook
 
-- **Memes** need footage that is *recognisable*. Free stock faces read as
-  stock, not as memes, and are not Singaporean. Real trending clips are
-  copyrighted and this is paid media. The clean route is Edmund shooting his
-  own reaction inserts.
+From `HOUSE_STYLE_ADS.md`. Apply these on top of section 1:
+
+- **One word per cue, ~0.3s.** Captions that **accumulate** for the point
+  ("IT'S -> IT'S EASY -> IT'S EASY TO RECOMMEND"); replacement for narration.
+- **Highlight colour rotates per beat** (`effects.beat_colour`) - yellow, cyan,
+  green, red, purple. Not one fixed accent. A serif payoff word is house style.
+- **The first 2s are rarely the speaker.** Open on `burst_open`,
+  `black_type_open`, a red project plate, or the speaker in `speaker_duotone`.
+- **Plates are literal, not charts.** `metaphor_plate` (cage / gift / net /
+  chair / facepalm), `dread_plate` for cost-of-holding, `grid_paper_plate` for
+  the case-study price, `icon_attrition` for "the few who...".
+- **Cross-pollinate.** Ads <-> reels <-> long-form. Dread and metaphor plates go
+  into long-form as interstitials; map plates, MRT rail and VAKit charts come
+  into ads compressed to 2-3s **in the ad palette, never the brand-colour world**.
+
+## 8. Known gaps - state them, do not paper over them
+
+- **Speaker backdrop.** Every one of the 128 finals is shot OUTDOORS
+  (greenery, HDB courtyard, event banner). The grey-curtain S&P take is the
+  outlier. This is a shoot note and the single biggest lift available.
+- **Memes** still need *recognisable* footage. Three Asian reaction clips
+  exist (`rx_*`), all neutral - fine for a "thinking" beat, not a comic one.
+  Edmund's own reaction inserts remain the clean route.
+- **Props and photos** (red house model, FOR SALE sign, family photo) are
+  house style and need shooting.
+- **Cartoon crowd** illustration needs assets; **real whip-pan** needs a
+  physical camera move.
 - **Torn-paper split edge** (`devices.torn_split`) is built but not yet wired
   into the composer.
-- **Document/desk inserts** (loan form, calculator, signing, SOLD sign) do not
-  exist in the SG set; generate them as graphic plates or shoot them.
-- **Caption face** is Impact. Anton / Archivo Black are the playbook faces and
-  need local TTFs for ffmpeg.
+- Fonts (Anton / Archivo Black / Barlow / Manrope) and generated Singapore
+  document plates are **done**.

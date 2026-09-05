@@ -186,6 +186,104 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   NEW-LAUNCH prices, a different series. The chart therefore carries NO
   percentage and the +52% stat was re-anchored one beat earlier so the two
   are never on screen together appearing to label each other.
+- **LONG-FORM v5 DELIVERED** (2026-09-04) `SERRA_DRAFT_v5_1.15x.mp4`,
+  20:40, 1920x1080 h264/aac, safe outro. Round 5 of Edmund's notes — 22 items,
+  14 of them about WHEN something was on screen rather than how it looked.
+  All six subtitle corrections VERIFIED in the delivered file by frame grab.
+  - Icon slams WITHDRAWN. He flagged three as "came on too early"; they were
+    8.2s / 3.7s / 4.7s early because the placement solver allowed drift in
+    BOTH directions. Drift is now asymmetric (a label may lag the words,
+    never lead them) — but the badges are gone anyway, because every factor
+    already had a real display at the right moment.
+  - Plate durations are now DERIVED from the speech, not hand-set. Six notes
+    said "sync with speaker until we finish explaining".
+  - InfoCard bands separated (headline ended y292, content started y296) and
+    the PIP went 127px -> 229px by reserving the corner and capping the text
+    above it. When the frame is full, the speaker is not what yields.
+  - "5:49 medical video cut off" was NOT a cut: the cue dangled on "I" for
+    four seconds. Rebalanced.
+  - Two schools BOXED in the list panel of his own screenshot rather than
+    pinned on the map — the map carries a dozen school glyphs and nothing
+    identifies which is which. Accurate beats authoritative-looking.
+  ZERO plate-on-plate overlaps (v4 had one).
+  RENDER INCIDENT: three parts failed in two different ways — a Google-font
+  fetch hitting ERR_NO_BUFFER_SPACE, and ffmpeg killed mid-encode — while
+  free RAM read 7-12 GB throughout. Cause: the QA stills harness had leaked
+  **24 orphan node processes** across three batches, holding Chrome instances
+  and network handles. Cleared; all three parts then succeeded on retry. The
+  stills harness now reaps after itself. Playbook rules 78-85.
+  STILL OPEN: 5:31 "double mentioned of more foot" — the cue reads "Food,
+  community spaces, more foot traffic in the area" ONCE and no duplicate was
+  found. Needs Edmund to say where he saw it.
+- **LONG-FORM v4 DELIVERED** (2026-09-04) `SERRA_DRAFT_v4_1.15x.mp4`,
+  20:40, 1920x1080 h264/aac, safe outro. Identical duration and format
+  to v3 — a like-for-like replacement. Render 1h42m, 20 parts, zero
+  failures. MEASURED before/after on the same instrumentation:
+  | | v3 | v4 |
+  |---|---|---|
+  | silences @-40dB | 95 | **19** (-80%) |
+  | dead plate time | 114s | **32s** (-72%) |
+  | cuts/min | 14.4 | 14.1 |
+  | LRA | 2.4 | 2.4 |
+  | LUFS | -16.0 | -15.9 |
+  HONEST LIMIT: the cut rate did NOT fall. Rule 52 says building the
+  annotation layer should let it drop, but cuts/min is a property of the
+  CLIP list and this pass only added overlays. Bringing 14.1 down toward
+  the field's 3-11 needs a re-cut, which is a separate job.
+  43% -> 47% CORRECTED AND VERIFIED IN THE DELIVERED FILE at 11:24.
+  This had been reported as "fixed in source, awaiting the next render" and
+  it was NOT — the source fix only turned whisper's mis-hearing ("only 3%")
+  into 43%, never into 47%. It survived four review rounds because TWO
+  different 43%-looking numbers sit within 30 seconds of each other: at
+  10:51 "RCR the middle ring jumped 43%" is CORRECT (a growth figure), and
+  at 11:24 the same 43% is wrong (the CCR-over-RCR premium). Worse, the
+  GapBar plate on screen at 11:24 already read "47% apart", so v3 had the
+  graphic and the subtitle contradicting each other in the same frame.
+  $900 over an RCR of ~$1,900 = 47.4%; his ProTrend sheet says $898/46.82%.
+  Fixed in the generator (with the trap named in a comment) and re-rendered
+  via a TARGETED repatch: the cue occupies frames 23599-23796, entirely
+  inside part 11 of 20, so this cost 5 minutes rather than 1h42m.
+  `render_serra.ps1 -RepatchParts 11` — an explicit, logged override of the
+  stale-parts gate, not a weakening of it.
+  CH.8/CH.9 retrofit detail: v3 was
+  built one day before the CH.8 deck-behind-speaker teardown and the CH.9
+  ten-channel sweep landed. Measured v3 first with `work/study/analyze.py`
+  against that field: **14.4 cuts/min (fastest of the ten), 367s (30%) of
+  static plate time, 95 silences at -40dB** against 0-2 for the analytical
+  leaders. LRA 2.4 is the best in the field and was left alone.
+  Three engine changes, all ADDITIVE:
+  - The 20 CH.8/CH.9 devices were built against `ProjectLong`; every video we
+    ship renders on `HDBVideo`, so the new grammar was unreachable. Ported
+    into HDBVideo namespaced `w*` — four CH.9 names (`timeline`, `article`,
+    `agenda`, `social`) already meant something else there and a bare port
+    would have silently rebound four working plate kinds.
+  - `FactSlate` already staggered its facts — by SIX FRAMES, so the plate
+    resolved in a second and then held for seven doing nothing. Optional
+    `factTimes` / `sideRowTimes` now spread the reveal across the hold;
+    omitted, they fall back to the old stagger, so every delivered timeline
+    renders exactly as it shipped.
+  - `MUSIC_BASE` 0.07 -> 0.19. On a -17.4 LUFS bed, 0.07 lands near -40 LUFS:
+    playing but masking nothing. Measured sweep of added gain vs silences:
+    +0.00 -> 25, +0.06 -> 11, +0.10 -> 8, +0.14 -> 4, with integrated
+    loudness moving 0.1 LU across the whole range.
+  16 devices added, 8 dropped by the placement gate — those moments already
+  had a `qcard` or `social` bar treating them, and a second treatment would
+  have covered the first. Pass: `work/serra/upgrade_v11.py` (idempotent).
+  TWO GATE BUGS FOUND AND FIXED DURING THE BUILD, both worth remembering:
+  sampling a candidate moment at ONE INSTANT said 11 of 13 were free, while
+  sampling across each device's SPAN said 17 of 24 collided; and a purely
+  geometric solve put the 16-year land story at 1:36, half a minute before
+  the land is mentioned. Placement is now bounded by a per-kind drift.
+  `render_serra.ps1` gained three pre-flight gates: bundle freshness, right
+  public dir, and STALE PARTS — the render is resumable, so 20 v3 parts on
+  disk would have been silently stitched into a v4 cut.
+- **YOUTUBE UPLOAD KIT** (2026-09-04) `YOUTUBE_UPLOAD_KIT.md` - title (3
+  options), thumbnail text + art direction (3 options), full description
+  with 17 chapters, upload settings and the pinned comment. Every
+  timestamp read off the DELIVERED 1.15x file, not the timeline.
+  The copy quotes the CCR-RCR gap in DOLLARS ($900 psf then, $487 now)
+  and never the percentage, because v3 still carries the 43%/47% defect
+  at 11:24 - see OPEN DEFECT below.
 - **REEL BATCH RE-DELIVERED** (2026-09-01) - all 11 reels re-rendered after
 
   round 4, 10:11 total, in `REELS/` + `REELS_R4_QA.jpg` (22 QA stills, one
