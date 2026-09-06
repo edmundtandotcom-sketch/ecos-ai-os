@@ -1,0 +1,10 @@
+== TIGHTEN ==
+Traceback (most recent call last):
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 740, in <module>
+    main()
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 731, in main
+    tight_v, tight_a, words, smap = tighten(PIECES, a.speed)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 275, in tighten
+    raise RuntimeError(f"tight mismatch: video {nv} frames vs {sum(nfs)}, audio {da:.3f}s vs {sum(nfs)/FPS:.3f}")
+RuntimeError: tight mismatch: video 4681 frames vs 4681, audio 156.031s vs 156.033

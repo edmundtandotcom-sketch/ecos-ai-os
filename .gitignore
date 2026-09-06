@@ -53,6 +53,7 @@ Thumbs.db
 *.gdraw
 *.gjam
 *.gmap
+*.gvid
 
 # Binary media — belongs in 01_ASSET_LIBRARY, not in Git
 *.mp4
@@ -83,3 +84,10 @@ Thumbs.db
 # place and carries the same content. Per constitution §9 rule 7, the full-res
 # original's home is the Asset Library, not Git.
 03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA ICB DECK.pdf
+
+# Oversized PDF: 72MB ebook. Under GitHub's 100MB hard limit, but bulk media
+# per constitution §9 rule 7 — same rule as THE SERRA ICB DECK.pdf above. Its
+# home is the Asset Library; the file remains on Drive, untouched.
+# NOTE FOR EDMUND: if this ebook IS meant to be version-controlled, delete this
+# line and re-run the snapshot.
+03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA RESIDENCES EBOOK V2 (Updated).pdf

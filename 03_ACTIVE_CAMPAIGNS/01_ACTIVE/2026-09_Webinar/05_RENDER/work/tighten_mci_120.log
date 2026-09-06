@@ -1,0 +1,12 @@
+== TIGHTEN ==
+Traceback (most recent call last):
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 702, in <module>
+    main()
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 693, in main
+    tight, words, smap = tighten(PIECES, a.speed)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 234, in tighten
+    old.unlink()
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1342, in unlink
+    os.unlink(self)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\_tight_s120m\\seg049.mp4'

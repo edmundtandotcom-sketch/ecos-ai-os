@@ -186,6 +186,15 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   NEW-LAUNCH prices, a different series. The chart therefore carries NO
   percentage and the +52% stat was re-anchored one beat earlier so the two
   are never on screen together appearing to label each other.
+- **REELS SOCIAL COPY KIT** (2026-09-04) `REELS/SOCIAL_COPY_KIT.md` — a
+  title, caption, pinned comment-bait line and hashtag set for each of the 11
+  reels, written against the ACTUAL spoken content of each one rather than
+  its filename. Includes a suggested posting order (lead with the failure
+  story, close with the scorecard) and the link-handling note that IG and
+  TikTok captions are not clickable, so those say "link in bio" while
+  YouTube Shorts and Facebook take the wa.me link directly.
+  Reels 07 and 12 ask for their comment word ON SCREEN, so those two lines
+  must stay matched to the video.
 - **LONG-FORM v5 DELIVERED** (2026-09-04) `SERRA_DRAFT_v5_1.15x.mp4`,
   20:40, 1920x1080 h264/aac, safe outro. Round 5 of Edmund's notes — 22 items,
   14 of them about WHEN something was on screen rather than how it looked.

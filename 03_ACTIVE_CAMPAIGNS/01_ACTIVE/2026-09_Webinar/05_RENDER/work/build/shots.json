@@ -1,23 +1,23 @@
 [
  {
   "t0": 0.0,
-  "t1": 0.87,
+  "t1": 0.743,
   "text": "I have $3.5",
   "cue": [
    {
     "w": "I",
-    "s": 0.09,
-    "e": 0.09
+    "s": 0.078,
+    "e": 0.078
    },
    {
     "w": "have",
-    "s": 0.09,
-    "e": 0.29
+    "s": 0.078,
+    "e": 0.252
    },
    {
     "w": "$3.5",
-    "s": 0.29,
-    "e": 0.97
+    "s": 0.252,
+    "e": 0.843
    }
   ],
   "src": "hooks",
@@ -32,26 +32,28 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c000.png",
   "out0": 0.0,
-  "out1": 0.866
+  "out1": 0.733
  },
  {
-  "t0": 0.87,
-  "t1": 1.95,
+  "t0": 0.743,
+  "t1": 1.557,
   "text": "million budget.",
   "cue": [
    {
     "w": "million",
-    "s": 0.97,
-    "e": 1.17
+    "s": 0.843,
+    "e": 1.017
    },
    {
     "w": "budget.",
-    "s": 1.17,
-    "e": 1.73
+    "s": 1.017,
+    "e": 1.504
    }
   ],
   "src": "hooks",
@@ -66,31 +68,33 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 0.866,
-  "out1": 1.932
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c001.png",
+  "out0": 0.733,
+  "out1": 1.533
  },
  {
-  "t0": 1.95,
-  "t1": 2.81,
+  "t0": 1.557,
+  "t1": 2.305,
   "text": "Will Thomson Reserve",
   "cue": [
    {
     "w": "Will",
-    "s": 2.05,
-    "e": 2.25
+    "s": 1.657,
+    "e": 1.831
    },
    {
     "w": "Thomson",
-    "s": 2.25,
-    "e": 2.63
+    "s": 1.831,
+    "e": 2.162
    },
    {
     "w": "Reserve",
-    "s": 2.63,
-    "e": 2.91
+    "s": 2.162,
+    "e": 2.405
    }
   ],
   "src": "hooks",
@@ -105,31 +109,33 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 1.932,
-  "out1": 2.798
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c002.png",
+  "out0": 1.533,
+  "out1": 2.266
  },
  {
-  "t0": 2.81,
-  "t1": 3.89,
+  "t0": 2.305,
+  "t1": 3.116,
   "text": "be the one?",
   "cue": [
    {
     "w": "be",
-    "s": 2.91,
-    "e": 3.11
+    "s": 2.405,
+    "e": 2.579
    },
    {
     "w": "the",
-    "s": 3.11,
-    "e": 3.29
+    "s": 2.579,
+    "e": 2.736
    },
    {
     "w": "one?",
-    "s": 3.29,
-    "e": 3.61
+    "s": 2.736,
+    "e": 3.014
    }
   ],
   "src": "hooks",
@@ -144,32 +150,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c003.png",
-  "out0": 2.798,
-  "out1": 3.864
+  "out0": 2.266,
+  "out1": 3.066
  },
  {
-  "t0": 3.89,
-  "t1": 4.51,
+  "t0": 3.116,
+  "t1": 3.655,
   "text": "I've bought new",
   "cue": [
    {
     "w": "I've",
-    "s": 3.99,
-    "e": 4.27
+    "s": 3.216,
+    "e": 3.46
    },
    {
     "w": "bought",
-    "s": 4.27,
-    "e": 4.35
+    "s": 3.46,
+    "e": 3.529
    },
    {
     "w": "new",
-    "s": 4.35,
-    "e": 4.61
+    "s": 3.529,
+    "e": 3.755
    }
   ],
   "src": "hooks",
@@ -184,72 +191,74 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c004.png",
-  "out0": 3.864,
-  "out1": 4.497
+  "out0": 3.066,
+  "out1": 3.599
  },
  {
-  "t0": 4.51,
-  "t1": 5.43,
+  "t0": 3.655,
+  "t1": 4.455,
   "text": "launches for myself",
   "cue": [
    {
     "w": "launches",
-    "s": 4.61,
-    "e": 4.87
+    "s": 3.755,
+    "e": 3.981
    },
    {
     "w": "for",
-    "s": 4.87,
-    "e": 5.09
+    "s": 3.981,
+    "e": 4.173
    },
    {
     "w": "myself",
-    "s": 5.09,
-    "e": 5.53
+    "s": 4.173,
+    "e": 4.555
    }
   ],
   "src": "hooks",
   "dev": null,
-  "dev_id": 2,
+  "dev_id": 1,
   "backdrop": null,
   "split": false,
   "backdrops": null,
-  "photo": "family_showflat_real.jpg",
+  "photo": null,
   "prop": null,
-  "vfx": null,
+  "vfx": "lightleak",
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c005.png",
-  "out0": 4.497,
-  "out1": 5.431
+  "out0": 3.599,
+  "out1": 4.399
  },
  {
-  "t0": 5.43,
-  "t1": 6.61,
+  "t0": 4.455,
+  "t1": 5.472,
   "text": "and my family,",
   "cue": [
    {
     "w": "and",
-    "s": 5.53,
-    "e": 5.71
+    "s": 4.555,
+    "e": 4.712
    },
    {
     "w": "my",
-    "s": 5.71,
-    "e": 5.97
+    "s": 4.712,
+    "e": 4.938
    },
    {
     "w": "family,",
-    "s": 5.97,
-    "e": 6.47
+    "s": 4.938,
+    "e": 5.373
    }
   ],
   "src": "hooks",
@@ -264,27 +273,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c006.png",
-  "out0": 5.431,
-  "out1": 6.597
+  "out0": 4.399,
+  "out1": 5.433
  },
  {
-  "t0": 6.61,
-  "t1": 7.49,
-  "text": "the Tre Ver,",
+  "t0": 5.472,
+  "t1": 6.75,
+  "text": "the Tre Ver, Parc Clematis",
   "cue": [
    {
     "w": "the",
-    "s": 6.71,
-    "e": 6.91
+    "s": 5.572,
+    "e": 5.746
    },
    {
     "w": "Tre Ver,",
-    "s": 6.91,
-    "e": 7.29
+    "s": 5.746,
+    "e": 6.076
+   },
+   {
+    "w": "Parc Clematis",
+    "s": 6.258,
+    "e": 6.85
    }
   ],
   "src": "hooks",
@@ -299,32 +314,38 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c007.png",
-  "out0": 6.597,
-  "out1": 7.463
+  "out0": 5.433,
+  "out1": 6.699
  },
  {
-  "t0": 7.49,
-  "t1": 9.397,
-  "text": "Parc Clematis and others,",
+  "t0": 6.75,
+  "t1": 7.81,
+  "text": "and others, and built",
   "cue": [
    {
-    "w": "Parc Clematis",
-    "s": 7.59,
-    "e": 8.27
-   },
-   {
     "w": "and",
-    "s": 8.27,
-    "e": 8.49
+    "s": 6.85,
+    "e": 7.041
    },
    {
     "w": "others,",
-    "s": 8.49,
-    "e": 8.93
+    "s": 7.041,
+    "e": 7.423
+   },
+   {
+    "w": "and",
+    "s": 7.614,
+    "e": 7.805
+   },
+   {
+    "w": "built",
+    "s": 7.805,
+    "e": 7.91
    }
   ],
   "src": "hooks",
@@ -339,44 +360,35 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c008.png",
-  "out0": 7.463,
-  "out1": 9.363
+  "out0": 6.699,
+  "out1": 7.766
  },
  {
-  "t0": 9.397,
-  "t1": 10.337,
-  "text": "and built my property",
+  "t0": 7.81,
+  "t1": 8.331,
+  "text": "my property",
   "cue": [
    {
-    "w": "and",
-    "s": 9.497,
-    "e": 9.717
-   },
-   {
-    "w": "built",
-    "s": 9.717,
-    "e": 9.837
-   },
-   {
     "w": "my",
-    "s": 9.837,
-    "e": 10.077
+    "s": 7.91,
+    "e": 8.118
    },
    {
     "w": "property",
-    "s": 10.077,
-    "e": 10.437
+    "s": 8.118,
+    "e": 8.431
    }
   ],
   "src": "hooks",
   "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
+  "dev_id": 3,
+  "backdrop": "sg_marinabay_towers.mp4",
+  "split": true,
   "backdrops": null,
   "photo": null,
   "prop": null,
@@ -384,71 +396,69 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c009.png",
-  "out0": 9.363,
-  "out1": 10.297
+  "out0": 7.766,
+  "out1": 8.299
  },
  {
-  "t0": 10.337,
-  "t1": 11.217,
-  "text": "net asset value",
+  "t0": 8.331,
+  "t1": 8.627,
+  "text": "net",
   "cue": [
    {
     "w": "net",
-    "s": 10.437,
-    "e": 10.777
-   },
+    "s": 8.431,
+    "e": 8.727
+   }
+  ],
+  "src": "hooks",
+  "dev": "stat_pop",
+  "dev_id": 4,
+  "backdrop": "sg_city_night.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "celebrate",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c010.png",
+  "out0": 8.299,
+  "out1": 8.599
+ },
+ {
+  "t0": 8.627,
+  "t1": 9.514,
+  "text": "asset value to $7",
+  "cue": [
    {
     "w": "asset",
-    "s": 10.777,
-    "e": 11.017
+    "s": 8.727,
+    "e": 8.936
    },
    {
     "w": "value",
-    "s": 11.017,
-    "e": 11.317
-   }
-  ],
-  "src": "hooks",
-  "dev": "stat_pop",
-  "dev_id": 4,
-  "backdrop": "sg_city_night.mp4",
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": "celebrate",
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "out0": 10.297,
-  "out1": 11.163
- },
- {
-  "t0": 11.217,
-  "t1": 12.117,
-  "text": "to $7 million",
-  "cue": [
+    "s": 8.936,
+    "e": 9.197
+   },
    {
     "w": "to",
-    "s": 11.317,
-    "e": 11.497
+    "s": 9.197,
+    "e": 9.353
    },
    {
     "w": "$7",
-    "s": 11.497,
-    "e": 11.797
-   },
-   {
-    "w": "million",
-    "s": 11.797,
-    "e": 12.217
+    "s": 9.353,
+    "e": 9.614
    }
   ],
   "src": "hooks",
@@ -463,31 +473,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 11.163,
-  "out1": 12.063
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c011.png",
+  "out0": 8.599,
+  "out1": 9.499
  },
  {
-  "t0": 12.117,
-  "t1": 12.977,
-  "text": "and I'm looking",
+  "t0": 9.514,
+  "t1": 10.366,
+  "text": "million and I'm",
   "cue": [
    {
+    "w": "million",
+    "s": 9.614,
+    "e": 9.979
+   },
+   {
     "w": "and",
-    "s": 12.217,
-    "e": 12.557
+    "s": 9.979,
+    "e": 10.275
    },
    {
     "w": "I'm",
-    "s": 12.557,
-    "e": 12.777
-   },
-   {
-    "w": "looking",
-    "s": 12.777,
-    "e": 13.077
+    "s": 10.275,
+    "e": 10.466
    }
   ],
   "src": "hooks",
@@ -502,66 +514,74 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 12.063,
-  "out1": 12.93
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c012.png",
+  "out0": 9.499,
+  "out1": 10.366
  },
  {
-  "t0": 12.977,
-  "t1": 13.697,
-  "text": "at this one",
+  "t0": 10.366,
+  "t1": 11.253,
+  "text": "looking at this one",
   "cue": [
    {
+    "w": "looking",
+    "s": 10.466,
+    "e": 10.727
+   },
+   {
     "w": "at",
-    "s": 13.077,
-    "e": 13.357
+    "s": 10.727,
+    "e": 10.971
    },
    {
     "w": "this",
-    "s": 13.357,
-    "e": 13.637
+    "s": 10.971,
+    "e": 11.214
    },
    {
     "w": "one",
-    "s": 13.637,
-    "e": 13.797
+    "s": 11.214,
+    "e": 11.353
    }
   ],
   "src": "hooks",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
+  "dev": "stat_pop",
+  "dev_id": 4,
+  "backdrop": "sg_city_night.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
-  "vfx": null,
+  "vfx": "celebrate",
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c013.png",
-  "out0": 12.93,
-  "out1": 13.663
+  "out0": 10.366,
+  "out1": 11.266
  },
  {
-  "t0": 13.697,
-  "t1": 14.537,
+  "t0": 11.253,
+  "t1": 11.984,
   "text": "potentially as",
   "cue": [
    {
     "w": "potentially",
-    "s": 13.797,
-    "e": 14.297
+    "s": 11.353,
+    "e": 11.788
    },
    {
     "w": "as",
-    "s": 14.297,
-    "e": 14.637
+    "s": 11.788,
+    "e": 12.084
    }
   ],
   "src": "hooks",
@@ -576,27 +596,28 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c014.png",
-  "out0": 13.663,
-  "out1": 14.497
+  "out0": 11.266,
+  "out1": 11.999
  },
  {
-  "t0": 14.537,
-  "t1": 15.117,
+  "t0": 11.984,
+  "t1": 12.488,
   "text": "my own",
   "cue": [
    {
     "w": "my",
-    "s": 14.637,
-    "e": 14.877
+    "s": 12.084,
+    "e": 12.292
    },
    {
     "w": "own",
-    "s": 14.877,
-    "e": 15.217
+    "s": 12.292,
+    "e": 12.588
    }
   ],
   "src": "hooks",
@@ -611,27 +632,28 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c015.png",
-  "out0": 14.497,
-  "out1": 15.063
+  "out0": 11.999,
+  "out1": 12.499
  },
  {
-  "t0": 15.117,
-  "t1": 16.387,
+  "t0": 12.488,
+  "t1": 13.32,
   "text": "next property.",
   "cue": [
    {
     "w": "next",
-    "s": 15.217,
-    "e": 15.357
+    "s": 12.588,
+    "e": 12.71
    },
    {
     "w": "property.",
-    "s": 15.357,
-    "e": 15.957
+    "s": 12.71,
+    "e": 13.231
    }
   ],
   "src": "hooks",
@@ -646,32 +668,74 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c016.png",
-  "out0": 15.063,
-  "out1": 16.33
+  "out0": 12.499,
+  "out1": 13.333
  },
  {
-  "t0": 16.387,
-  "t1": 16.827,
+  "t0": 13.32,
+  "t1": 13.703,
   "text": "I will be",
   "cue": [
    {
     "w": "I",
-    "s": 16.487,
-    "e": 16.487
+    "s": 13.42,
+    "e": 13.42
    },
    {
     "w": "will",
-    "s": 16.487,
-    "e": 16.707
+    "s": 13.42,
+    "e": 13.612
    },
    {
     "w": "be",
-    "s": 16.707,
-    "e": 16.927
+    "s": 13.612,
+    "e": 13.803
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 5,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "edmund_daughter_floorplan.jpg",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c017.png",
+  "out0": 13.333,
+  "out1": 13.699
+ },
+ {
+  "t0": 13.703,
+  "t1": 14.416,
+  "text": "sharing my thoughts",
+  "cue": [
+   {
+    "w": "sharing",
+    "s": 13.803,
+    "e": 13.994
+   },
+   {
+    "w": "my",
+    "s": 13.994,
+    "e": 14.273
+   },
+   {
+    "w": "thoughts",
+    "s": 14.273,
+    "e": 14.516
    }
   ],
   "src": "body",
@@ -685,70 +749,46 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c017.png",
-  "out0": 16.33,
-  "out1": 16.763
- },
- {
-  "t0": 16.827,
-  "t1": 17.647,
-  "text": "sharing my thoughts",
-  "cue": [
-   {
-    "w": "sharing",
-    "s": 16.927,
-    "e": 17.147
-   },
-   {
-    "w": "my",
-    "s": 17.147,
-    "e": 17.467
-   },
-   {
-    "w": "thoughts",
-    "s": 17.467,
-    "e": 17.747
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c018.png",
-  "out0": 16.763,
-  "out1": 17.597
+  "out0": 13.699,
+  "out1": 14.399
  },
  {
-  "t0": 17.647,
-  "t1": 17.967,
-  "text": "on",
+  "t0": 14.416,
+  "t1": 15.355,
+  "text": "on what I like",
   "cue": [
    {
     "w": "on",
-    "s": 17.747,
-    "e": 18.067
+    "s": 14.516,
+    "e": 14.794
+   },
+   {
+    "w": "what",
+    "s": 14.794,
+    "e": 14.951
+   },
+   {
+    "w": "I",
+    "s": 14.951,
+    "e": 15.212
+   },
+   {
+    "w": "like",
+    "s": 15.212,
+    "e": 15.455
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
+  "dev_id": 6,
+  "backdrop": "sg_condo_cranes.mp4",
+  "split": true,
   "backdrops": null,
   "photo": null,
   "prop": null,
@@ -756,171 +796,125 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c019.png",
-  "out0": 17.597,
-  "out1": 17.93
+  "out0": 14.399,
+  "out1": 15.333
  },
  {
-  "t0": 17.967,
-  "t1": 18.727,
-  "text": "what I like",
-  "cue": [
-   {
-    "w": "what",
-    "s": 18.067,
-    "e": 18.247
-   },
-   {
-    "w": "I",
-    "s": 18.247,
-    "e": 18.547
-   },
-   {
-    "w": "like",
-    "s": 18.547,
-    "e": 18.827
-   }
-  ],
-  "src": "body",
-  "dev": "split_labels",
-  "dev_id": 6,
-  "backdrop": null,
-  "split": false,
-  "backdrops": [
-   "cityscape.mp4",
-   "hdb_apartments.mp4"
-  ],
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c020.png",
-  "out0": 17.93,
-  "out1": 18.697
- },
- {
-  "t0": 18.727,
-  "t1": 20.107,
+  "t0": 15.355,
+  "t1": 16.555,
   "text": "and dislike about",
   "cue": [
    {
     "w": "and",
-    "s": 18.827,
-    "e": 19.307
+    "s": 15.455,
+    "e": 15.873
    },
    {
     "w": "dislike",
-    "s": 19.307,
-    "e": 19.747
+    "s": 15.873,
+    "e": 16.255
    },
    {
     "w": "about",
-    "s": 19.747,
-    "e": 20.207
+    "s": 16.255,
+    "e": 16.655
    }
   ],
   "src": "body",
-  "dev": "split_labels",
+  "dev": null,
   "dev_id": 6,
-  "backdrop": null,
-  "split": false,
-  "backdrops": [
-   "cityscape.mp4",
-   "hdb_apartments.mp4"
-  ],
+  "backdrop": "sg_condo_cranes.mp4",
+  "split": true,
+  "backdrops": null,
   "photo": null,
   "prop": null,
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c021.png",
-  "out0": 18.697,
-  "out1": 20.063
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c020.png",
+  "out0": 15.333,
+  "out1": 16.533
  },
  {
-  "t0": 20.107,
-  "t1": 21.647,
+  "t0": 16.555,
+  "t1": 17.894,
   "text": "Thomson Reserve in the",
   "cue": [
    {
     "w": "Thomson",
-    "s": 20.207,
-    "e": 20.647
+    "s": 16.655,
+    "e": 17.038
    },
    {
     "w": "Reserve",
-    "s": 20.647,
-    "e": 21.047
+    "s": 17.038,
+    "e": 17.386
    },
    {
     "w": "in",
-    "s": 21.047,
-    "e": 21.527
+    "s": 17.386,
+    "e": 17.803
    },
    {
     "w": "the",
-    "s": 21.527,
-    "e": 21.747
+    "s": 17.803,
+    "e": 17.994
    }
   ],
   "src": "body",
-  "dev": "split_labels",
+  "dev": null,
   "dev_id": 6,
-  "backdrop": null,
-  "split": false,
-  "backdrops": [
-   "cityscape.mp4",
-   "hdb_apartments.mp4"
-  ],
+  "backdrop": "sg_condo_cranes.mp4",
+  "split": true,
+  "backdrops": null,
   "photo": null,
   "prop": null,
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c022.png",
-  "out0": 20.063,
-  "out1": 21.597
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c021.png",
+  "out0": 16.533,
+  "out1": 17.866
  },
  {
-  "t0": 21.647,
-  "t1": 22.647,
+  "t0": 17.894,
+  "t1": 18.764,
   "text": "live 60 minutes",
   "cue": [
    {
     "w": "live",
-    "s": 21.747,
-    "e": 21.987
+    "s": 17.994,
+    "e": 18.203
    },
    {
     "w": "60",
-    "s": 21.987,
-    "e": 22.327
+    "s": 18.203,
+    "e": 18.499
    },
    {
     "w": "minutes",
-    "s": 22.327,
-    "e": 22.747
+    "s": 18.499,
+    "e": 18.864
    }
   ],
   "src": "body",
-  "dev": "lower_ticker",
-  "dev_id": 7,
+  "dev": null,
+  "dev_id": null,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -930,27 +924,28 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c023.png",
-  "out0": 21.597,
-  "out1": 22.597
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c022.png",
+  "out0": 17.866,
+  "out1": 18.732
  },
  {
-  "t0": 22.647,
-  "t1": 23.53,
+  "t0": 18.764,
+  "t1": 19.421,
   "text": "webinar.",
   "cue": [
    {
     "w": "webinar.",
-    "s": 22.747,
-    "e": 23.287
+    "s": 18.864,
+    "e": 19.333
    }
   ],
   "src": "body",
-  "dev": "lower_ticker",
-  "dev_id": 7,
+  "dev": null,
+  "dev_id": null,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -959,37 +954,38 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c024.png",
-  "out0": 22.597,
-  "out1": 23.463
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c023.png",
+  "out0": 18.732,
+  "out1": 19.399
  },
  {
-  "t0": 23.53,
-  "t1": 24.07,
+  "t0": 19.421,
+  "t1": 19.891,
   "text": "What I like",
   "cue": [
    {
     "w": "What",
-    "s": 23.63,
-    "e": 23.77
+    "s": 19.521,
+    "e": 19.643
    },
    {
     "w": "I",
-    "s": 23.77,
-    "e": 23.99
+    "s": 19.643,
+    "e": 19.834
    },
    {
     "w": "like",
-    "s": 23.99,
-    "e": 24.17
+    "s": 19.834,
+    "e": 19.991
    }
   ],
   "src": "body",
-  "dev": "lower_ticker",
+  "dev": "black_type_open",
   "dev_id": 7,
   "backdrop": null,
   "split": false,
@@ -1000,37 +996,37 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
-  "nocap": false,
-  "zoom": 2,
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
   "segment_start": true,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c025.png",
-  "out0": 23.463,
-  "out1": 23.996
+  "out0": 19.399,
+  "out1": 19.865
  },
  {
-  "t0": 24.07,
-  "t1": 25.53,
+  "t0": 19.891,
+  "t1": 21.168,
   "text": "about Thomson Reserve,",
   "cue": [
    {
     "w": "about",
-    "s": 24.17,
-    "e": 24.39
+    "s": 19.991,
+    "e": 20.182
    },
    {
     "w": "Thomson",
-    "s": 24.39,
-    "e": 24.79
+    "s": 20.182,
+    "e": 20.53
    },
    {
     "w": "Reserve,",
-    "s": 24.79,
-    "e": 25.41
+    "s": 20.53,
+    "e": 21.069
    }
   ],
   "src": "body",
   "dev": "black_type_open",
-  "dev_id": 8,
+  "dev_id": 7,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -1039,32 +1035,33 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": true,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 23.996,
-  "out1": 25.463
+  "out0": 19.865,
+  "out1": 21.131
  },
  {
-  "t0": 25.53,
-  "t1": 26.757,
+  "t0": 21.168,
+  "t1": 22.018,
   "text": "three reasons.",
   "cue": [
    {
     "w": "three",
-    "s": 25.63,
-    "e": 25.89
+    "s": 21.268,
+    "e": 21.494
    },
    {
     "w": "reasons.",
-    "s": 25.89,
-    "e": 26.39
+    "s": 21.494,
+    "e": 21.929
    }
   ],
   "src": "body",
   "dev": "black_type_open",
-  "dev_id": 8,
+  "dev_id": 7,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -1073,32 +1070,33 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": true,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "out0": 25.463,
-  "out1": 26.696
+  "out0": 21.131,
+  "out1": 21.998
  },
  {
-  "t0": 26.757,
-  "t1": 28.017,
+  "t0": 22.018,
+  "t1": 23.013,
   "text": "One, the MRT",
   "cue": [
    {
     "w": "One,",
-    "s": 26.857,
-    "e": 27.197
+    "s": 22.118,
+    "e": 22.414
    },
    {
     "w": "the",
-    "s": 27.517,
-    "e": 27.757
+    "s": 22.591,
+    "e": 22.8
    },
    {
     "w": "MRT",
-    "s": 27.757,
-    "e": 28.117
+    "s": 22.8,
+    "e": 23.113
    }
   ],
   "src": "body",
@@ -1112,38 +1110,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c028.png",
-  "out0": 26.696,
-  "out1": 27.963
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c027.png",
+  "out0": 21.998,
+  "out1": 22.998
  },
  {
-  "t0": 28.017,
-  "t1": 29.177,
+  "t0": 23.013,
+  "t1": 24.022,
   "text": "is genuinely at the",
   "cue": [
    {
     "w": "is",
-    "s": 28.117,
-    "e": 28.397
+    "s": 23.113,
+    "e": 23.357
    },
    {
     "w": "genuinely",
-    "s": 28.397,
-    "e": 28.837
+    "s": 23.357,
+    "e": 23.739
    },
    {
     "w": "at",
-    "s": 28.837,
-    "e": 29.117
+    "s": 23.739,
+    "e": 23.983
    },
    {
     "w": "the",
-    "s": 29.117,
-    "e": 29.277
+    "s": 23.983,
+    "e": 24.122
    }
   ],
   "src": "body",
@@ -1157,23 +1156,24 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c029.png",
-  "out0": 27.963,
-  "out1": 29.129
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c028.png",
+  "out0": 22.998,
+  "out1": 23.998
  },
  {
-  "t0": 29.177,
-  "t1": 29.857,
+  "t0": 24.022,
+  "t1": 24.473,
   "text": "door,",
   "cue": [
    {
     "w": "door,",
-    "s": 29.277,
-    "e": 29.577
+    "s": 24.122,
+    "e": 24.383
    }
   ],
   "src": "body",
@@ -1187,33 +1187,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c030.png",
-  "out0": 29.129,
-  "out1": 29.795
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c029.png",
+  "out0": 23.998,
+  "out1": 24.464
  },
  {
-  "t0": 29.857,
-  "t1": 30.517,
+  "t0": 24.473,
+  "t1": 25.047,
   "text": "two minutes",
   "cue": [
    {
     "w": "two",
-    "s": 29.957,
-    "e": 30.177
+    "s": 24.573,
+    "e": 24.765
    },
    {
     "w": "minutes",
-    "s": 30.177,
-    "e": 30.617
+    "s": 24.765,
+    "e": 25.147
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 9,
+  "dev_id": 8,
   "backdrop": "sg_orchard_crossing.mp4",
   "split": false,
   "backdrops": null,
@@ -1222,32 +1223,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "out0": 29.795,
-  "out1": 30.462
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c030.png",
+  "out0": 24.464,
+  "out1": 25.031
  },
  {
-  "t0": 30.517,
-  "t1": 31.397,
+  "t0": 25.047,
+  "t1": 25.812,
   "text": "sheltered straight",
   "cue": [
    {
     "w": "sheltered",
-    "s": 30.617,
-    "e": 31.237
+    "s": 25.147,
+    "e": 25.686
    },
    {
     "w": "straight",
-    "s": 31.237,
-    "e": 31.497
+    "s": 25.686,
+    "e": 25.912
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 9,
+  "dev_id": 8,
   "backdrop": "sg_orchard_crossing.mp4",
   "split": false,
   "backdrops": null,
@@ -1256,37 +1259,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 30.462,
-  "out1": 31.329
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c031.png",
+  "out0": 25.031,
+  "out1": 25.797
  },
  {
-  "t0": 31.397,
-  "t1": 32.537,
+  "t0": 25.812,
+  "t1": 26.804,
   "text": "into Upper Thomson",
   "cue": [
    {
     "w": "into",
-    "s": 31.497,
-    "e": 31.857
+    "s": 25.912,
+    "e": 26.225
    },
    {
     "w": "Upper",
-    "s": 31.857,
-    "e": 32.217
+    "s": 26.225,
+    "e": 26.538
    },
    {
     "w": "Thomson",
-    "s": 32.217,
-    "e": 32.637
+    "s": 26.538,
+    "e": 26.904
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 9,
+  "dev_id": 8,
   "backdrop": "sg_orchard_crossing.mp4",
   "split": false,
   "backdrops": null,
@@ -1295,32 +1300,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "out0": 31.329,
-  "out1": 32.462
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c032.png",
+  "out0": 25.797,
+  "out1": 26.797
  },
  {
-  "t0": 32.537,
-  "t1": 34.173,
+  "t0": 26.804,
+  "t1": 28.007,
   "text": "Exit 2.",
   "cue": [
    {
     "w": "Exit",
-    "s": 32.637,
-    "e": 33.037
+    "s": 26.904,
+    "e": 27.252
    },
    {
     "w": "2.",
-    "s": 33.037,
-    "e": 33.817
+    "s": 27.252,
+    "e": 27.93
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 9,
+  "dev_id": 8,
   "backdrop": "sg_orchard_crossing.mp4",
   "split": false,
   "backdrops": null,
@@ -1330,21 +1337,23 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 32.462,
-  "out1": 34.095
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c033.png",
+  "out0": 26.797,
+  "out1": 27.997
  },
  {
-  "t0": 34.173,
-  "t1": 35.393,
+  "t0": 28.007,
+  "t1": 28.823,
   "text": "Two,",
   "cue": [
    {
     "w": "Two,",
-    "s": 34.273,
-    "e": 34.993
+    "s": 28.107,
+    "e": 28.733
    }
   ],
   "src": "body",
@@ -1358,33 +1367,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c035.png",
-  "out0": 34.095,
-  "out1": 35.329
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c034.png",
+  "out0": 27.997,
+  "out1": 28.797
  },
  {
-  "t0": 35.393,
-  "t1": 36.113,
+  "t0": 28.823,
+  "t1": 29.449,
   "text": "Ai Tong School",
   "cue": [
    {
     "w": "Ai Tong",
-    "s": 35.493,
-    "e": 35.873
+    "s": 28.923,
+    "e": 29.254
    },
    {
     "w": "School",
-    "s": 35.873,
-    "e": 36.213
+    "s": 29.254,
+    "e": 29.549
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": 10,
+  "dev_id": 9,
   "backdrop": "family_sofa.mp4",
   "split": true,
   "backdrops": null,
@@ -1393,33 +1403,85 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c035.png",
+  "out0": 28.797,
+  "out1": 29.431
+ },
+ {
+  "t0": 29.449,
+  "t1": 30.732,
+  "text": "within 1km, Phase",
+  "cue": [
+   {
+    "w": "within",
+    "s": 29.549,
+    "e": 29.845
+   },
+   {
+    "w": "1km,",
+    "s": 29.845,
+    "e": 30.506
+   },
+   {
+    "w": "Phase",
+    "s": 30.693,
+    "e": 30.832
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 9,
+  "backdrop": "family_sofa.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c036.png",
-  "out0": 35.329,
-  "out1": 36.062
+  "out0": 29.431,
+  "out1": 30.697
  },
  {
-  "t0": 36.113,
-  "t1": 37.76,
-  "text": "within 1km,",
+  "t0": 30.732,
+  "t1": 32.317,
+  "text": "2C priority, at a",
   "cue": [
    {
-    "w": "within",
-    "s": 36.213,
-    "e": 36.553
+    "w": "2C",
+    "s": 30.832,
+    "e": 31.319
    },
    {
-    "w": "1km,",
-    "s": 36.553,
-    "e": 37.313
+    "w": "priority,",
+    "s": 31.319,
+    "e": 31.893
+   },
+   {
+    "w": "at",
+    "s": 32.104,
+    "e": 32.278
+   },
+   {
+    "w": "a",
+    "s": 32.278,
+    "e": 32.417
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": 10,
+  "dev_id": 9,
   "backdrop": "family_sofa.mp4",
   "split": true,
   "backdrops": null,
@@ -1429,137 +1491,64 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c037.png",
-  "out0": 36.062,
-  "out1": 37.695
+  "out0": 30.697,
+  "out1": 32.297
  },
  {
-  "t0": 37.76,
-  "t1": 39.4,
-  "text": "Phase 2C priority,",
+  "t0": 32.317,
+  "t1": 32.926,
+  "text": "school that's",
   "cue": [
    {
-    "w": "Phase",
-    "s": 37.86,
-    "e": 38.02
+    "w": "school",
+    "s": 32.417,
+    "e": 32.608
    },
    {
-    "w": "2C",
-    "s": 38.02,
-    "e": 38.58
-   },
-   {
-    "w": "priority,",
-    "s": 38.58,
-    "e": 39.24
+    "w": "that's",
+    "s": 32.608,
+    "e": 33.026
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": 10,
-  "backdrop": "family_sofa.mp4",
-  "split": true,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c038.png",
-  "out0": 37.695,
-  "out1": 39.329
+  "out0": 32.297,
+  "out1": 32.897
  },
  {
-  "t0": 39.4,
-  "t1": 39.98,
-  "text": "at a school",
-  "cue": [
-   {
-    "w": "at",
-    "s": 39.5,
-    "e": 39.7
-   },
-   {
-    "w": "a",
-    "s": 39.7,
-    "e": 39.86
-   },
-   {
-    "w": "school",
-    "s": 39.86,
-    "e": 40.08
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "drift",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c039.png",
-  "out0": 39.329,
-  "out1": 39.895
- },
- {
-  "t0": 39.98,
-  "t1": 40.46,
-  "text": "that's",
-  "cue": [
-   {
-    "w": "that's",
-    "s": 40.08,
-    "e": 40.56
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c040.png",
-  "out0": 39.895,
-  "out1": 40.361
- },
- {
-  "t0": 40.46,
-  "t1": 41.24,
+  "t0": 32.926,
+  "t1": 33.604,
   "text": "oversubscribed",
   "cue": [
    {
     "w": "oversubscribed",
-    "s": 40.56,
-    "e": 41.34
+    "s": 33.026,
+    "e": 33.704
    }
   ],
   "src": "body",
   "dev": "checklist",
-  "dev_id": 11,
+  "dev_id": 10,
   "backdrop": "family_kitchen.mp4",
   "split": false,
   "backdrops": null,
@@ -1568,37 +1557,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 40.361,
-  "out1": 41.128
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c039.png",
+  "out0": 32.897,
+  "out1": 33.564
  },
  {
-  "t0": 41.24,
-  "t1": 43.086,
+  "t0": 33.604,
+  "t1": 34.991,
   "text": "nearly every year.",
   "cue": [
    {
     "w": "nearly",
-    "s": 41.34,
-    "e": 41.76
+    "s": 33.704,
+    "e": 34.069
    },
    {
     "w": "every",
-    "s": 41.76,
-    "e": 42.22
+    "s": 34.069,
+    "e": 34.469
    },
    {
     "w": "year.",
-    "s": 42.22,
-    "e": 42.72
+    "s": 34.469,
+    "e": 34.904
    }
   ],
   "src": "body",
   "dev": "checklist",
-  "dev_id": 11,
+  "dev_id": 10,
   "backdrop": "family_kitchen.mp4",
   "split": false,
   "backdrops": null,
@@ -1608,36 +1599,38 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 41.128,
-  "out1": 42.961
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c040.png",
+  "out0": 33.564,
+  "out1": 34.964
  },
  {
-  "t0": 43.086,
-  "t1": 43.606,
+  "t0": 34.991,
+  "t1": 35.444,
   "text": "You cannot bid",
   "cue": [
    {
     "w": "You",
-    "s": 43.186,
-    "e": 43.306
+    "s": 35.091,
+    "e": 35.196
    },
    {
     "w": "cannot",
-    "s": 43.306,
-    "e": 43.566
+    "s": 35.196,
+    "e": 35.422
    },
    {
     "w": "bid",
-    "s": 43.566,
-    "e": 43.706
+    "s": 35.422,
+    "e": 35.544
    }
   ],
   "src": "body",
   "dev": "checklist",
-  "dev_id": 11,
+  "dev_id": 10,
   "backdrop": "family_kitchen.mp4",
   "split": false,
   "backdrops": null,
@@ -1646,32 +1639,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 42.961,
-  "out1": 43.495
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c041.png",
+  "out0": 34.964,
+  "out1": 35.431
  },
  {
-  "t0": 43.606,
-  "t1": 44.426,
+  "t0": 35.444,
+  "t1": 36.082,
   "text": "on that,",
   "cue": [
    {
     "w": "on",
-    "s": 43.706,
-    "e": 43.926
+    "s": 35.544,
+    "e": 35.735
    },
    {
     "w": "that,",
-    "s": 43.926,
-    "e": 44.226
+    "s": 35.735,
+    "e": 35.996
    }
   ],
   "src": "body",
   "dev": "checklist",
-  "dev_id": 11,
+  "dev_id": 10,
   "backdrop": "family_kitchen.mp4",
   "split": false,
   "backdrops": null,
@@ -1681,32 +1676,34 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 43.495,
-  "out1": 44.328
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c042.png",
+  "out0": 35.431,
+  "out1": 36.064
  },
  {
-  "t0": 44.426,
-  "t1": 44.826,
+  "t0": 36.082,
+  "t1": 36.43,
   "text": "you can",
   "cue": [
    {
     "w": "you",
-    "s": 44.526,
-    "e": 44.706
+    "s": 36.182,
+    "e": 36.339
    },
    {
     "w": "can",
-    "s": 44.706,
-    "e": 44.926
+    "s": 36.339,
+    "e": 36.53
    }
   ],
   "src": "body",
-  "dev": "accum_caption",
-  "dev_id": 12,
-  "backdrop": null,
+  "dev": "checklist",
+  "dev_id": 10,
+  "backdrop": "family_kitchen.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -1714,37 +1711,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 44.328,
-  "out1": 44.728
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c043.png",
+  "out0": 36.064,
+  "out1": 36.397
  },
  {
-  "t0": 44.826,
-  "t1": 45.906,
+  "t0": 36.43,
+  "t1": 37.369,
   "text": "only buy into",
   "cue": [
    {
     "w": "only",
-    "s": 44.926,
-    "e": 45.326
+    "s": 36.53,
+    "e": 36.878
    },
    {
     "w": "buy",
-    "s": 45.326,
-    "e": 45.626
+    "s": 36.878,
+    "e": 37.139
    },
    {
     "w": "into",
-    "s": 45.626,
-    "e": 46.006
+    "s": 37.139,
+    "e": 37.469
    }
   ],
   "src": "body",
   "dev": "accum_caption",
-  "dev_id": 12,
+  "dev_id": 11,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -1754,26 +1753,27 @@
   "treat": null,
   "frame": false,
   "motion": "push",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 0,
   "segment_start": false,
-  "out0": 44.728,
-  "out1": 45.795
+  "out0": 36.397,
+  "out1": 37.331
  },
  {
-  "t0": 45.906,
-  "t1": 46.583,
+  "t0": 37.369,
+  "t1": 37.854,
   "text": "it.",
   "cue": [
    {
     "w": "it.",
-    "s": 46.006,
-    "e": 46.346
+    "s": 37.469,
+    "e": 37.765
    }
   ],
   "src": "body",
   "dev": "accum_caption",
-  "dev_id": 12,
+  "dev_id": 11,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -1782,32 +1782,33 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
-  "nocap": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
   "zoom": 2,
   "segment_start": false,
-  "out0": 45.795,
-  "out1": 46.461
+  "out0": 37.331,
+  "out1": 37.831
  },
  {
-  "t0": 46.583,
-  "t1": 49.136,
+  "t0": 37.854,
+  "t1": 39.809,
   "text": "Three, Central Catchment,",
   "cue": [
    {
     "w": "Three,",
-    "s": 46.683,
-    "e": 47.383
+    "s": 37.954,
+    "e": 38.563
    },
    {
     "w": "Central Catchment,",
-    "s": 47.836,
-    "e": 48.996
+    "s": 38.73,
+    "e": 39.739
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
+  "dev": "accum_caption",
+  "dev_id": 11,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -1817,38 +1818,38 @@
   "treat": null,
   "frame": false,
   "motion": "push",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c048.png",
-  "out0": 46.461,
-  "out1": 49.027
+  "out0": 37.831,
+  "out1": 39.797
  },
  {
-  "t0": 49.136,
-  "t1": 50.496,
+  "t0": 39.809,
+  "t1": 40.991,
   "text": "over 2,000 hectares",
   "cue": [
    {
     "w": "over",
-    "s": 49.236,
-    "e": 49.576
+    "s": 39.909,
+    "e": 40.205
    },
    {
     "w": "2,000",
-    "s": 49.576,
-    "e": 50.156
+    "s": 40.205,
+    "e": 40.709
    },
    {
     "w": "hectares",
-    "s": 50.156,
-    "e": 50.596
+    "s": 40.709,
+    "e": 41.091
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 13,
-  "backdrop": "sg_gardens_bay.mp4",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -1857,32 +1858,34 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 49.027,
-  "out1": 50.394
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c047.png",
+  "out0": 39.797,
+  "out1": 40.964
  },
  {
-  "t0": 50.496,
-  "t1": 51.456,
+  "t0": 40.991,
+  "t1": 41.724,
   "text": "of forest,",
   "cue": [
    {
     "w": "of",
-    "s": 50.596,
-    "e": 50.816
+    "s": 41.091,
+    "e": 41.283
    },
    {
     "w": "forest,",
-    "s": 50.816,
-    "e": 51.216
+    "s": 41.283,
+    "e": 41.631
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 13,
-  "backdrop": "sg_gardens_bay.mp4",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -1891,37 +1894,29 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 50.394,
-  "out1": 51.361
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c048.png",
+  "out0": 40.964,
+  "out1": 41.697
  },
  {
-  "t0": 51.456,
-  "t1": 52.916,
-  "text": "more than 20km",
+  "t0": 41.724,
+  "t1": 41.933,
+  "text": "more",
   "cue": [
    {
     "w": "more",
-    "s": 51.556,
-    "e": 51.796
-   },
-   {
-    "w": "than",
-    "s": 51.796,
-    "e": 52.076
-   },
-   {
-    "w": "20km",
-    "s": 52.076,
-    "e": 53.016
+    "s": 41.824,
+    "e": 42.033
    }
   ],
   "src": "body",
   "dev": "stat_pop",
-  "dev_id": 13,
-  "backdrop": "sg_gardens_bay.mp4",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -1930,32 +1925,44 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 51.361,
-  "out1": 52.827
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c049.png",
+  "out0": 41.697,
+  "out1": 41.897
  },
  {
-  "t0": 52.916,
-  "t1": 54.099,
-  "text": "of trails.",
+  "t0": 41.933,
+  "t1": 43.864,
+  "text": "than 20km of trails.",
   "cue": [
    {
+    "w": "than",
+    "s": 42.033,
+    "e": 42.276
+   },
+   {
+    "w": "20km",
+    "s": 42.276,
+    "e": 43.094
+   },
+   {
     "w": "of",
-    "s": 53.016,
-    "e": 53.436
+    "s": 43.094,
+    "e": 43.459
    },
    {
     "w": "trails.",
-    "s": 53.436,
-    "e": 53.796
+    "s": 43.459,
+    "e": 43.772
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
+  "dev": "stat_pop",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -1963,33 +1970,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c052.png",
-  "out0": 52.827,
-  "out1": 53.994
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c050.png",
+  "out0": 41.897,
+  "out1": 43.831
  },
  {
-  "t0": 54.099,
-  "t1": 55.219,
+  "t0": 43.864,
+  "t1": 44.838,
   "text": "Most views in Singapore",
   "cue": [
    {
     "w": "Most views",
-    "s": 54.199,
-    "e": 54.739
+    "s": 43.964,
+    "e": 44.434
    },
    {
     "w": "in",
-    "s": 54.739,
-    "e": 54.979
+    "s": 44.434,
+    "e": 44.642
    },
    {
     "w": "Singapore",
-    "s": 54.979,
-    "e": 55.319
+    "s": 44.642,
+    "e": 44.938
    }
   ],
   "src": "body",
@@ -2003,28 +2011,29 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c053.png",
-  "out0": 53.994,
-  "out1": 55.127
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c051.png",
+  "out0": 43.831,
+  "out1": 44.797
  },
  {
-  "t0": 55.219,
-  "t1": 56.833,
+  "t0": 44.838,
+  "t1": 45.967,
   "text": "are temporary,",
   "cue": [
    {
     "w": "are",
-    "s": 55.319,
-    "e": 55.839
+    "s": 44.938,
+    "e": 45.39
    },
    {
     "w": "temporary,",
-    "s": 55.839,
-    "e": 56.379
+    "s": 45.39,
+    "e": 45.86
    }
   ],
   "src": "body",
@@ -2039,27 +2048,105 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c052.png",
+  "out0": 44.797,
+  "out1": 45.931
+ },
+ {
+  "t0": 45.967,
+  "t1": 46.35,
+  "text": "somebody",
+  "cue": [
+   {
+    "w": "somebody",
+    "s": 46.067,
+    "e": 46.45
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 14,
+  "backdrop": "sg_aerial.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c053.png",
+  "out0": 45.931,
+  "out1": 46.297
+ },
+ {
+  "t0": 46.35,
+  "t1": 47.028,
+  "text": "eventually builds",
+  "cue": [
+   {
+    "w": "eventually",
+    "s": 46.45,
+    "e": 46.954
+   },
+   {
+    "w": "builds",
+    "s": 46.954,
+    "e": 47.128
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 14,
+  "backdrop": "sg_aerial.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c054.png",
-  "out0": 55.127,
-  "out1": 56.727
+  "out0": 46.297,
+  "out1": 46.964
  },
  {
-  "t0": 56.833,
-  "t1": 57.853,
-  "text": "somebody eventually",
+  "t0": 47.028,
+  "t1": 48.049,
+  "text": "in front of you.",
   "cue": [
    {
-    "w": "somebody",
-    "s": 56.933,
-    "e": 57.373
+    "w": "in",
+    "s": 47.128,
+    "e": 47.406
    },
    {
-    "w": "eventually",
-    "s": 57.373,
-    "e": 57.953
+    "w": "front",
+    "s": 47.406,
+    "e": 47.545
+   },
+   {
+    "w": "of",
+    "s": 47.545,
+    "e": 47.684
+   },
+   {
+    "w": "you.",
+    "s": 47.684,
+    "e": 47.98
    }
   ],
   "src": "body",
@@ -2074,107 +2161,33 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c055.png",
-  "out0": 56.727,
-  "out1": 57.76
+  "out0": 46.964,
+  "out1": 47.997
  },
  {
-  "t0": 57.853,
-  "t1": 58.533,
-  "text": "builds in front",
-  "cue": [
-   {
-    "w": "builds",
-    "s": 57.953,
-    "e": 58.153
-   },
-   {
-    "w": "in",
-    "s": 58.153,
-    "e": 58.473
-   },
-   {
-    "w": "front",
-    "s": 58.473,
-    "e": 58.633
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": 14,
-  "backdrop": "sg_aerial.mp4",
-  "split": true,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c056.png",
-  "out0": 57.76,
-  "out1": 58.426
- },
- {
-  "t0": 58.533,
-  "t1": 59.506,
-  "text": "of you.",
-  "cue": [
-   {
-    "w": "of",
-    "s": 58.633,
-    "e": 58.793
-   },
-   {
-    "w": "you.",
-    "s": 58.793,
-    "e": 59.133
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": 14,
-  "backdrop": "sg_aerial.mp4",
-  "split": true,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c057.png",
-  "out0": 58.426,
-  "out1": 59.393
- },
- {
-  "t0": 59.506,
-  "t1": 60.666,
+  "t0": 48.049,
+  "t1": 49.057,
   "text": "Nobody is ever",
   "cue": [
    {
     "w": "Nobody",
-    "s": 59.606,
-    "e": 60.006
+    "s": 48.149,
+    "e": 48.497
    },
    {
     "w": "is",
-    "s": 60.006,
-    "e": 60.466
+    "s": 48.497,
+    "e": 48.897
    },
    {
     "w": "ever",
-    "s": 60.466,
-    "e": 60.766
+    "s": 48.897,
+    "e": 49.157
    }
   ],
   "src": "body",
@@ -2189,32 +2202,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c058.png",
-  "out0": 59.393,
-  "out1": 60.56
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c056.png",
+  "out0": 47.997,
+  "out1": 48.997
  },
  {
-  "t0": 60.666,
-  "t1": 61.566,
+  "t0": 49.057,
+  "t1": 49.84,
   "text": "building in front",
   "cue": [
    {
     "w": "building",
-    "s": 60.766,
-    "e": 61.026
+    "s": 49.157,
+    "e": 49.384
    },
    {
     "w": "in",
-    "s": 61.026,
-    "e": 61.406
+    "s": 49.384,
+    "e": 49.714
    },
    {
     "w": "front",
-    "s": 61.406,
-    "e": 61.666
+    "s": 49.714,
+    "e": 49.94
    }
   ],
   "src": "body",
@@ -2229,31 +2243,32 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 2,
   "segment_start": false,
-  "out0": 60.56,
-  "out1": 61.46
+  "out0": 48.997,
+  "out1": 49.763
  },
  {
-  "t0": 61.566,
-  "t1": 63.293,
+  "t0": 49.84,
+  "t1": 51.08,
   "text": "of this one.",
   "cue": [
    {
     "w": "of",
-    "s": 61.666,
-    "e": 61.986
+    "s": 49.94,
+    "e": 50.218
    },
    {
     "w": "this",
-    "s": 61.986,
-    "e": 62.286
+    "s": 50.218,
+    "e": 50.479
    },
    {
     "w": "one.",
-    "s": 62.286,
-    "e": 62.926
+    "s": 50.479,
+    "e": 51.036
    }
   ],
   "src": "body",
@@ -2268,26 +2283,27 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 0,
   "segment_start": false,
-  "out0": 61.46,
-  "out1": 63.193
+  "out0": 49.763,
+  "out1": 50.996
  },
  {
-  "t0": 63.293,
-  "t1": 63.813,
+  "t0": 51.08,
+  "t1": 51.532,
   "text": "Here are",
   "cue": [
    {
     "w": "Here",
-    "s": 63.393,
-    "e": 63.653
+    "s": 51.18,
+    "e": 51.406
    },
    {
     "w": "are",
-    "s": 63.653,
-    "e": 63.913
+    "s": 51.406,
+    "e": 51.632
    }
   ],
   "src": "body",
@@ -2301,23 +2317,24 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c061.png",
-  "out0": 63.193,
-  "out1": 63.726
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c059.png",
+  "out0": 50.996,
+  "out1": 51.463
  },
  {
-  "t0": 63.813,
-  "t1": 64.093,
+  "t0": 51.532,
+  "t1": 51.776,
   "text": "three",
   "cue": [
    {
     "w": "three",
-    "s": 63.913,
-    "e": 64.193
+    "s": 51.632,
+    "e": 51.876
    }
   ],
   "src": "body",
@@ -2332,32 +2349,33 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
-  "segment_start": true,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c062.png",
-  "out0": 63.726,
-  "out1": 63.992
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c060.png",
+  "out0": 51.463,
+  "out1": 51.696
  },
  {
-  "t0": 64.093,
-  "t1": 65.173,
+  "t0": 51.776,
+  "t1": 52.715,
   "text": "things that's causing",
   "cue": [
    {
     "w": "things",
-    "s": 64.193,
-    "e": 64.593
+    "s": 51.876,
+    "e": 52.224
    },
    {
     "w": "that's",
-    "s": 64.593,
-    "e": 65.013
+    "s": 52.224,
+    "e": 52.589
    },
    {
     "w": "causing",
-    "s": 65.013,
-    "e": 65.273
+    "s": 52.589,
+    "e": 52.815
    }
   ],
   "src": "body",
@@ -2372,32 +2390,33 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c063.png",
-  "out0": 63.992,
-  "out1": 65.059
+  "segment_start": true,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c061.png",
+  "out0": 51.696,
+  "out1": 52.629
  },
  {
-  "t0": 65.173,
-  "t1": 65.933,
+  "t0": 52.715,
+  "t1": 53.376,
   "text": "me to think",
   "cue": [
    {
     "w": "me",
-    "s": 65.273,
-    "e": 65.533
+    "s": 52.815,
+    "e": 53.041
    },
    {
     "w": "to",
-    "s": 65.533,
-    "e": 65.733
+    "s": 53.041,
+    "e": 53.215
    },
    {
     "w": "think",
-    "s": 65.733,
-    "e": 66.033
+    "s": 53.215,
+    "e": 53.476
    }
   ],
   "src": "body",
@@ -2412,32 +2431,33 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c064.png",
-  "out0": 65.059,
-  "out1": 65.825
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c062.png",
+  "out0": 52.629,
+  "out1": 53.295
  },
  {
-  "t0": 65.933,
-  "t1": 67.053,
+  "t0": 53.376,
+  "t1": 54.35,
   "text": "twice about Thomson",
   "cue": [
    {
     "w": "twice",
-    "s": 66.033,
-    "e": 66.333
+    "s": 53.476,
+    "e": 53.737
    },
    {
     "w": "about",
-    "s": 66.333,
-    "e": 66.653
+    "s": 53.737,
+    "e": 54.015
    },
    {
     "w": "Thomson",
-    "s": 66.653,
-    "e": 67.153
+    "s": 54.015,
+    "e": 54.45
    }
   ],
   "src": "body",
@@ -2451,23 +2471,24 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c065.png",
-  "out0": 65.825,
-  "out1": 66.958
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c063.png",
+  "out0": 53.295,
+  "out1": 54.262
  },
  {
-  "t0": 67.053,
-  "t1": 68.126,
+  "t0": 54.35,
+  "t1": 55.12,
   "text": "Reserve.",
   "cue": [
    {
     "w": "Reserve.",
-    "s": 67.153,
-    "e": 67.813
+    "s": 54.45,
+    "e": 55.024
    }
   ],
   "src": "body",
@@ -2482,32 +2503,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c066.png",
-  "out0": 66.958,
-  "out1": 68.025
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c064.png",
+  "out0": 54.262,
+  "out1": 55.028
  },
  {
-  "t0": 68.126,
-  "t1": 68.966,
+  "t0": 55.12,
+  "t1": 55.851,
   "text": "What I don't",
   "cue": [
    {
     "w": "What",
-    "s": 68.226,
-    "e": 68.506
+    "s": 55.22,
+    "e": 55.464
    },
    {
     "w": "I",
-    "s": 68.506,
-    "e": 68.746
+    "s": 55.464,
+    "e": 55.672
    },
    {
     "w": "don't",
-    "s": 68.746,
-    "e": 69.066
+    "s": 55.672,
+    "e": 55.951
    }
   ],
   "src": "body",
@@ -2522,31 +2544,32 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": true,
   "zoom": 2,
   "segment_start": true,
-  "out0": 68.025,
-  "out1": 68.858
+  "out0": 55.028,
+  "out1": 55.761
  },
  {
-  "t0": 68.966,
-  "t1": 69.926,
+  "t0": 55.851,
+  "t1": 56.685,
   "text": "like about Thomson",
   "cue": [
    {
     "w": "like",
-    "s": 69.066,
-    "e": 69.346
+    "s": 55.951,
+    "e": 56.194
    },
    {
     "w": "about",
-    "s": 69.346,
-    "e": 69.626
+    "s": 56.194,
+    "e": 56.438
    },
    {
     "w": "Thomson",
-    "s": 69.626,
-    "e": 70.026
+    "s": 56.438,
+    "e": 56.785
    }
   ],
   "src": "body",
@@ -2561,21 +2584,22 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": true,
   "zoom": 0,
   "segment_start": false,
-  "out0": 68.858,
-  "out1": 69.825
+  "out0": 55.761,
+  "out1": 56.595
  },
  {
-  "t0": 69.926,
-  "t1": 70.799,
+  "t0": 56.685,
+  "t1": 57.336,
   "text": "Reserve,",
   "cue": [
    {
     "w": "Reserve,",
-    "s": 70.026,
-    "e": 70.566
+    "s": 56.785,
+    "e": 57.255
    }
   ],
   "src": "body",
@@ -2589,22 +2613,68 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": true,
   "zoom": 2,
   "segment_start": false,
-  "out0": 69.825,
-  "out1": 70.691
+  "out0": 56.595,
+  "out1": 57.261
  },
  {
-  "t0": 70.799,
-  "t1": 71.633,
-  "text": "first,",
+  "t0": 57.336,
+  "t1": 57.871,
+  "text": "first, there",
   "cue": [
    {
     "w": "first,",
-    "s": 70.899,
-    "e": 71.239
+    "s": 57.436,
+    "e": 57.732
+   },
+   {
+    "w": "there",
+    "s": 57.936,
+    "e": 57.971
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 17,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 57.261,
+  "out1": 57.795
+ },
+ {
+  "t0": 57.871,
+  "t1": 59.888,
+  "text": "are 1,268 units",
+  "cue": [
+   {
+    "w": "are",
+    "s": 57.971,
+    "e": 58.319
+   },
+   {
+    "w": "1,268",
+    "s": 58.319,
+    "e": 59.588
+   },
+   {
+    "w": "units",
+    "s": 59.588,
+    "e": 59.988
    }
   ],
   "src": "body",
@@ -2619,210 +2689,120 @@
   "treat": "red",
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c069.png",
+  "out0": 57.795,
+  "out1": 59.828
+ },
+ {
+  "t0": 59.888,
+  "t1": 61.61,
+  "text": "and 1,066 of them,",
+  "cue": [
+   {
+    "w": "and",
+    "s": 59.988,
+    "e": 60.423
+   },
+   {
+    "w": "1,066",
+    "s": 60.423,
+    "e": 61.327
+   },
+   {
+    "w": "of",
+    "s": 61.327,
+    "e": 61.432
+   },
+   {
+    "w": "them,",
+    "s": 61.432,
+    "e": 61.71
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c070.png",
-  "out0": 70.691,
-  "out1": 71.524
+  "out0": 59.828,
+  "out1": 61.561
  },
  {
-  "t0": 71.633,
-  "t1": 73.533,
-  "text": "there are 1,268",
+  "t0": 61.61,
+  "t1": 63.297,
+  "text": "84%, sits in one",
   "cue": [
    {
-    "w": "there",
-    "s": 71.733,
-    "e": 71.773
+    "w": "84%,",
+    "s": 61.71,
+    "e": 62.701
    },
    {
-    "w": "are",
-    "s": 71.773,
-    "e": 72.173
+    "w": "sits",
+    "s": 62.701,
+    "e": 62.927
    },
    {
-    "w": "1,268",
-    "s": 72.173,
-    "e": 73.633
+    "w": "in",
+    "s": 62.927,
+    "e": 63.153
+   },
+   {
+    "w": "one",
+    "s": 63.153,
+    "e": 63.397
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": 18,
-  "backdrop": null,
+  "dev": "stat_pop",
+  "dev_id": 19,
+  "backdrop": "skyline_dusk.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
   "vfx": null,
-  "treat": "red",
+  "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c071.png",
-  "out0": 71.524,
-  "out1": 73.424
+  "out0": 61.561,
+  "out1": 63.261
  },
  {
-  "t0": 73.533,
-  "t1": 75.533,
-  "text": "units and 1,066",
-  "cue": [
-   {
-    "w": "units",
-    "s": 73.633,
-    "e": 74.093
-   },
-   {
-    "w": "and",
-    "s": 74.093,
-    "e": 74.593
-   },
-   {
-    "w": "1,066",
-    "s": 74.593,
-    "e": 75.633
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c072.png",
-  "out0": 73.424,
-  "out1": 75.424
- },
- {
-  "t0": 75.533,
-  "t1": 75.973,
-  "text": "of them,",
-  "cue": [
-   {
-    "w": "of",
-    "s": 75.633,
-    "e": 75.753
-   },
-   {
-    "w": "them,",
-    "s": 75.753,
-    "e": 76.073
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c073.png",
-  "out0": 75.424,
-  "out1": 75.857
- },
- {
-  "t0": 75.973,
-  "t1": 77.113,
-  "text": "84%,",
-  "cue": [
-   {
-    "w": "84%,",
-    "s": 76.073,
-    "e": 77.213
-   }
-  ],
-  "src": "body",
-  "dev": "stat_pop",
-  "dev_id": 19,
-  "backdrop": "skyline_dusk.mp4",
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "out0": 75.857,
-  "out1": 76.99
- },
- {
-  "t0": 77.113,
-  "t1": 77.913,
-  "text": "sits in one",
-  "cue": [
-   {
-    "w": "sits",
-    "s": 77.213,
-    "e": 77.473
-   },
-   {
-    "w": "in",
-    "s": 77.473,
-    "e": 77.733
-   },
-   {
-    "w": "one",
-    "s": 77.733,
-    "e": 78.013
-   }
-  ],
-  "src": "body",
-  "dev": "stat_pop",
-  "dev_id": 19,
-  "backdrop": "skyline_dusk.mp4",
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "drift",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "out0": 76.99,
-  "out1": 77.79
- },
- {
-  "t0": 77.913,
-  "t1": 79.039,
+  "t0": 63.297,
+  "t1": 64.083,
   "text": "single collection.",
   "cue": [
    {
     "w": "single",
-    "s": 78.013,
-    "e": 78.313
+    "s": 63.397,
+    "e": 63.658
    },
    {
     "w": "collection.",
-    "s": 78.313,
-    "e": 78.733
+    "s": 63.658,
+    "e": 64.023
    }
   ],
   "src": "body",
@@ -2837,42 +2817,44 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 77.79,
-  "out1": 78.923
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c072.png",
+  "out0": 63.261,
+  "out1": 64.061
  },
  {
-  "t0": 79.039,
-  "t1": 80.459,
+  "t0": 64.083,
+  "t1": 65.296,
   "text": "So, when you eventually",
   "cue": [
    {
     "w": "So,",
-    "s": 79.139,
-    "e": 79.539
+    "s": 64.183,
+    "e": 64.531
    },
    {
     "w": "when",
-    "s": 79.799,
-    "e": 79.819
+    "s": 64.735,
+    "e": 64.752
    },
    {
     "w": "you",
-    "s": 79.819,
-    "e": 80.139
+    "s": 64.752,
+    "e": 65.031
    },
    {
     "w": "eventually",
-    "s": 80.139,
-    "e": 80.559
+    "s": 65.031,
+    "e": 65.396
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
+  "dev": "stat_pop",
+  "dev_id": 19,
+  "backdrop": "skyline_dusk.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -2881,37 +2863,38 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c077.png",
-  "out0": 78.923,
-  "out1": 80.357
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c073.png",
+  "out0": 64.061,
+  "out1": 65.261
  },
  {
-  "t0": 80.459,
-  "t1": 81.639,
+  "t0": 65.296,
+  "t1": 66.229,
   "text": "sell, you are not",
   "cue": [
    {
     "w": "sell,",
-    "s": 80.559,
-    "e": 81.019
+    "s": 65.396,
+    "e": 65.796
    },
    {
     "w": "you",
-    "s": 81.339,
-    "e": 81.439
+    "s": 65.981,
+    "e": 66.068
    },
    {
     "w": "are",
-    "s": 81.439,
-    "e": 81.539
+    "s": 66.068,
+    "e": 66.155
    },
    {
     "w": "not",
-    "s": 81.539,
-    "e": 81.739
+    "s": 66.155,
+    "e": 66.329
    }
   ],
   "src": "body",
@@ -2926,32 +2909,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c078.png",
-  "out0": 80.357,
-  "out1": 81.523
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c074.png",
+  "out0": 65.261,
+  "out1": 66.195
  },
  {
-  "t0": 81.639,
-  "t1": 82.819,
+  "t0": 66.229,
+  "t1": 67.255,
   "text": "competing with District",
   "cue": [
    {
     "w": "competing",
-    "s": 81.739,
-    "e": 82.139
+    "s": 66.329,
+    "e": 66.676
    },
    {
     "w": "with",
-    "s": 82.139,
-    "e": 82.519
+    "s": 66.676,
+    "e": 67.007
    },
    {
     "w": "District",
-    "s": 82.519,
-    "e": 82.919
+    "s": 67.007,
+    "e": 67.355
    }
   ],
   "src": "body",
@@ -2966,27 +2950,28 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c079.png",
-  "out0": 81.523,
-  "out1": 82.69
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c075.png",
+  "out0": 66.195,
+  "out1": 67.228
  },
  {
-  "t0": 82.819,
-  "t1": 84.119,
+  "t0": 67.255,
+  "t1": 68.151,
   "text": "20 solely.",
   "cue": [
    {
     "w": "20",
-    "s": 82.919,
-    "e": 83.339
+    "s": 67.355,
+    "e": 67.72
    },
    {
     "w": "solely.",
-    "s": 83.339,
-    "e": 83.739
+    "s": 67.72,
+    "e": 68.068
    }
   ],
   "src": "body",
@@ -3001,32 +2986,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c080.png",
-  "out0": 82.69,
-  "out1": 83.99
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c076.png",
+  "out0": 67.228,
+  "out1": 68.128
  },
  {
-  "t0": 84.119,
-  "t1": 84.999,
+  "t0": 68.151,
+  "t1": 68.917,
   "text": "You are competing",
   "cue": [
    {
     "w": "You",
-    "s": 84.219,
-    "e": 84.539
+    "s": 68.251,
+    "e": 68.53
    },
    {
     "w": "are",
-    "s": 84.539,
-    "e": 84.699
+    "s": 68.53,
+    "e": 68.669
    },
    {
     "w": "competing",
-    "s": 84.699,
-    "e": 85.099
+    "s": 68.669,
+    "e": 69.017
    }
   ],
   "src": "body",
@@ -3041,22 +3027,23 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c081.png",
-  "out0": 83.99,
-  "out1": 84.856
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c077.png",
+  "out0": 68.128,
+  "out1": 68.894
  },
  {
-  "t0": 84.999,
-  "t1": 85.419,
+  "t0": 68.917,
+  "t1": 69.282,
   "text": "with",
   "cue": [
    {
     "w": "with",
-    "s": 85.099,
-    "e": 85.519
+    "s": 69.017,
+    "e": 69.382
    }
   ],
   "src": "body",
@@ -3071,27 +3058,28 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c082.png",
-  "out0": 84.856,
-  "out1": 85.289
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c078.png",
+  "out0": 68.894,
+  "out1": 69.261
  },
  {
-  "t0": 85.419,
-  "t1": 86.019,
+  "t0": 69.282,
+  "t1": 69.804,
   "text": "your direct",
   "cue": [
    {
     "w": "your",
-    "s": 85.519,
-    "e": 85.739
+    "s": 69.382,
+    "e": 69.573
    },
    {
     "w": "direct",
-    "s": 85.739,
-    "e": 86.119
+    "s": 69.573,
+    "e": 69.904
    }
   ],
   "src": "body",
@@ -3106,21 +3094,23 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 85.289,
-  "out1": 85.889
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c079.png",
+  "out0": 69.261,
+  "out1": 69.794
  },
  {
-  "t0": 86.019,
-  "t1": 87.356,
+  "t0": 69.804,
+  "t1": 70.744,
   "text": "neighbours.",
   "cue": [
    {
     "w": "neighbours.",
-    "s": 86.119,
-    "e": 86.979
+    "s": 69.904,
+    "e": 70.651
    }
   ],
   "src": "body",
@@ -3135,36 +3125,38 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 85.889,
-  "out1": 87.223
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c080.png",
+  "out0": 69.794,
+  "out1": 70.727
  },
  {
-  "t0": 87.356,
-  "t1": 89.036,
+  "t0": 70.744,
+  "t1": 72.0,
   "text": "Second, you are buying",
   "cue": [
    {
     "w": "Second,",
-    "s": 87.456,
-    "e": 88.136
+    "s": 70.844,
+    "e": 71.436
    },
    {
     "w": "you",
-    "s": 88.596,
-    "e": 88.676
+    "s": 71.63,
+    "e": 71.7
    },
    {
     "w": "are",
-    "s": 88.676,
-    "e": 88.856
+    "s": 71.7,
+    "e": 71.856
    },
    {
     "w": "buying",
-    "s": 88.856,
-    "e": 89.136
+    "s": 71.856,
+    "e": 72.1
    }
   ],
   "src": "body",
@@ -3179,21 +3171,23 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 87.223,
-  "out1": 88.889
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c081.png",
+  "out0": 70.727,
+  "out1": 71.994
  },
  {
-  "t0": 89.036,
-  "t1": 89.376,
+  "t0": 72.0,
+  "t1": 72.295,
   "text": "this",
   "cue": [
    {
     "w": "this",
-    "s": 89.136,
-    "e": 89.476
+    "s": 72.1,
+    "e": 72.395
    }
   ],
   "src": "body",
@@ -3208,38 +3202,39 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c086.png",
-  "out0": 88.889,
-  "out1": 89.223
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c082.png",
+  "out0": 71.994,
+  "out1": 72.294
  },
  {
-  "t0": 89.376,
-  "t1": 90.496,
+  "t0": 72.295,
+  "t1": 73.269,
   "text": "after the Thomson",
   "cue": [
    {
     "w": "after",
-    "s": 89.476,
-    "e": 89.856
+    "s": 72.395,
+    "e": 72.726
    },
    {
     "w": "the",
-    "s": 89.856,
-    "e": 90.136
+    "s": 72.726,
+    "e": 72.969
    },
    {
     "w": "Thomson",
-    "s": 90.136,
-    "e": 90.596
+    "s": 72.969,
+    "e": 73.369
    }
   ],
   "src": "body",
   "dev": null,
   "dev_id": 21,
-  "backdrop": "sg_road_night.mp4",
+  "backdrop": "sg_mrt_condos.mp4",
   "split": true,
   "backdrops": null,
   "photo": null,
@@ -3248,33 +3243,39 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c087.png",
-  "out0": 89.223,
-  "out1": 90.356
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c083.png",
+  "out0": 72.294,
+  "out1": 73.261
  },
  {
-  "t0": 90.496,
-  "t1": 91.796,
-  "text": "MRT story,",
+  "t0": 73.269,
+  "t1": 74.533,
+  "text": "MRT story, not",
   "cue": [
    {
     "w": "MRT",
-    "s": 90.596,
-    "e": 91.076
+    "s": 73.369,
+    "e": 73.787
    },
    {
     "w": "story,",
-    "s": 91.076,
-    "e": 91.516
+    "s": 73.787,
+    "e": 74.169
+   },
+   {
+    "w": "not",
+    "s": 74.337,
+    "e": 74.633
    }
   ],
   "src": "body",
   "dev": null,
   "dev_id": 21,
-  "backdrop": "sg_road_night.mp4",
+  "backdrop": "sg_mrt_condos.mp4",
   "split": true,
   "backdrops": null,
   "photo": null,
@@ -3283,38 +3284,34 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c088.png",
-  "out0": 90.356,
-  "out1": 91.656
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c084.png",
+  "out0": 73.261,
+  "out1": 74.527
  },
  {
-  "t0": 91.796,
-  "t1": 93.433,
-  "text": "not before it.",
+  "t0": 74.533,
+  "t1": 75.581,
+  "text": "before it.",
   "cue": [
    {
-    "w": "not",
-    "s": 91.896,
-    "e": 92.236
-   },
-   {
     "w": "before",
-    "s": 92.236,
-    "e": 92.656
+    "s": 74.633,
+    "e": 74.998
    },
    {
     "w": "it.",
-    "s": 92.656,
-    "e": 93.216
+    "s": 74.998,
+    "e": 75.485
    }
   ],
   "src": "body",
   "dev": null,
   "dev_id": 21,
-  "backdrop": "sg_road_night.mp4",
+  "backdrop": "sg_mrt_condos.mp4",
   "split": true,
   "backdrops": null,
   "photo": null,
@@ -3323,32 +3320,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c089.png",
-  "out0": 91.656,
-  "out1": 93.289
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c085.png",
+  "out0": 74.527,
+  "out1": 75.56
  },
  {
-  "t0": 93.433,
-  "t1": 93.913,
+  "t0": 75.581,
+  "t1": 75.998,
   "text": "Look at what",
   "cue": [
    {
     "w": "Look",
-    "s": 93.533,
-    "e": 93.693
+    "s": 75.681,
+    "e": 75.82
    },
    {
     "w": "at",
-    "s": 93.693,
-    "e": 93.853
+    "s": 75.82,
+    "e": 75.959
    },
    {
     "w": "what",
-    "s": 93.853,
-    "e": 94.013
+    "s": 75.959,
+    "e": 76.098
    }
   ],
   "src": "body",
@@ -3363,32 +3361,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c090.png",
-  "out0": 93.289,
-  "out1": 93.756
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c086.png",
+  "out0": 75.56,
+  "out1": 75.994
  },
  {
-  "t0": 93.913,
-  "t1": 94.733,
+  "t0": 75.998,
+  "t1": 76.711,
   "text": "happened to prices",
   "cue": [
    {
     "w": "happened",
-    "s": 94.013,
-    "e": 94.333
+    "s": 76.098,
+    "e": 76.377
    },
    {
     "w": "to",
-    "s": 94.333,
-    "e": 94.573
+    "s": 76.377,
+    "e": 76.585
    },
    {
     "w": "prices",
-    "s": 94.573,
-    "e": 94.833
+    "s": 76.585,
+    "e": 76.811
    }
   ],
   "src": "body",
@@ -3403,44 +3402,45 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c091.png",
-  "out0": 93.756,
-  "out1": 94.589
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c087.png",
+  "out0": 75.994,
+  "out1": 76.694
  },
  {
-  "t0": 94.733,
-  "t1": 96.593,
+  "t0": 76.711,
+  "t1": 78.329,
   "text": "within 800m of Thomson",
   "cue": [
    {
     "w": "within",
-    "s": 94.833,
-    "e": 95.233
+    "s": 76.811,
+    "e": 77.159
    },
    {
     "w": "800m",
-    "s": 95.233,
-    "e": 96.033
+    "s": 77.159,
+    "e": 77.855
    },
    {
     "w": "of",
-    "s": 96.033,
-    "e": 96.333
+    "s": 77.855,
+    "e": 78.116
    },
    {
     "w": "Thomson",
-    "s": 96.333,
-    "e": 96.693
+    "s": 78.116,
+    "e": 78.429
    }
   ],
   "src": "body",
-  "dev": null,
+  "dev": "pin_radius",
   "dev_id": 22,
-  "backdrop": "sg_sunrise_traffic.mp4",
-  "split": true,
+  "backdrop": null,
+  "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
@@ -3448,39 +3448,40 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c092.png",
-  "out0": 94.589,
-  "out1": 96.456
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c088.png",
+  "out0": 76.694,
+  "out1": 78.327
  },
  {
-  "t0": 96.593,
-  "t1": 97.213,
+  "t0": 78.329,
+  "t1": 78.868,
   "text": "East Coast Line",
   "cue": [
    {
     "w": "East",
-    "s": 96.693,
-    "e": 96.933
+    "s": 78.429,
+    "e": 78.637
    },
    {
     "w": "Coast",
-    "s": 96.933,
-    "e": 97.113
+    "s": 78.637,
+    "e": 78.794
    },
    {
     "w": "Line",
-    "s": 97.113,
-    "e": 97.313
+    "s": 78.794,
+    "e": 78.968
    }
   ],
   "src": "body",
-  "dev": null,
+  "dev": "pin_radius",
   "dev_id": 22,
-  "backdrop": "sg_sunrise_traffic.mp4",
-  "split": true,
+  "backdrop": null,
+  "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
@@ -3488,29 +3489,30 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c093.png",
-  "out0": 96.456,
-  "out1": 97.089
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c089.png",
+  "out0": 78.327,
+  "out1": 78.86
  },
  {
-  "t0": 97.213,
-  "t1": 98.199,
+  "t0": 78.868,
+  "t1": 79.534,
   "text": "stations,",
   "cue": [
    {
     "w": "stations,",
-    "s": 97.313,
-    "e": 97.853
+    "s": 78.968,
+    "e": 79.437
    }
   ],
   "src": "body",
-  "dev": null,
+  "dev": "pin_radius",
   "dev_id": 22,
-  "backdrop": "sg_sunrise_traffic.mp4",
-  "split": true,
+  "backdrop": null,
+  "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
@@ -3518,33 +3520,34 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c094.png",
-  "out0": 97.089,
-  "out1": 98.089
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c090.png",
+  "out0": 78.86,
+  "out1": 79.527
  },
  {
-  "t0": 98.199,
-  "t1": 99.619,
+  "t0": 79.534,
+  "t1": 80.769,
   "text": "up 20.86",
   "cue": [
    {
     "w": "up",
-    "s": 98.299,
-    "e": 98.619
+    "s": 79.634,
+    "e": 79.912
    },
    {
     "w": "20.86",
-    "s": 98.619,
-    "e": 99.719
+    "s": 79.912,
+    "e": 80.869
    }
   ],
   "src": "body",
-  "dev": "stat_pop",
-  "dev_id": 23,
-  "backdrop": "desk_calculator_maths.mp4",
+  "dev": "pin_radius",
+  "dev_id": 22,
+  "backdrop": null,
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -3553,36 +3556,38 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 98.089,
-  "out1": 99.523
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c091.png",
+  "out0": 79.527,
+  "out1": 80.76
  },
  {
-  "t0": 99.619,
-  "t1": 100.899,
+  "t0": 80.769,
+  "t1": 81.882,
   "text": "% across the 4",
   "cue": [
    {
     "w": "%",
-    "s": 99.719,
-    "e": 100.179
+    "s": 80.869,
+    "e": 81.269
    },
    {
     "w": "across",
-    "s": 100.179,
-    "e": 100.539
+    "s": 81.269,
+    "e": 81.582
    },
    {
     "w": "the",
-    "s": 100.539,
-    "e": 100.779
+    "s": 81.582,
+    "e": 81.79
    },
    {
     "w": "4",
-    "s": 100.779,
-    "e": 100.999
+    "s": 81.79,
+    "e": 81.982
    }
   ],
   "src": "body",
@@ -3597,36 +3602,38 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 99.523,
-  "out1": 100.789
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c092.png",
+  "out0": 80.76,
+  "out1": 81.86
  },
  {
-  "t0": 100.899,
-  "t1": 102.059,
+  "t0": 81.882,
+  "t1": 82.89,
   "text": "years while the line",
   "cue": [
    {
     "w": "years",
-    "s": 100.999,
-    "e": 101.419
+    "s": 81.982,
+    "e": 82.347
    },
    {
     "w": "while",
-    "s": 101.419,
-    "e": 101.699
+    "s": 82.347,
+    "e": 82.59
    },
    {
     "w": "the",
-    "s": 101.699,
-    "e": 101.979
+    "s": 82.59,
+    "e": 82.834
    },
    {
     "w": "line",
-    "s": 101.979,
-    "e": 102.159
+    "s": 82.834,
+    "e": 82.99
    }
   ],
   "src": "body",
@@ -3641,31 +3648,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 100.789,
-  "out1": 101.956
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c093.png",
+  "out0": 81.86,
+  "out1": 82.86
  },
  {
-  "t0": 102.059,
-  "t1": 102.919,
+  "t0": 82.89,
+  "t1": 83.638,
   "text": "was still being",
   "cue": [
    {
     "w": "was",
-    "s": 102.159,
-    "e": 102.399
+    "s": 82.99,
+    "e": 83.199
    },
    {
     "w": "still",
-    "s": 102.399,
-    "e": 102.719
+    "s": 83.199,
+    "e": 83.477
    },
    {
     "w": "being",
-    "s": 102.719,
-    "e": 103.019
+    "s": 83.477,
+    "e": 83.738
    }
   ],
   "src": "body",
@@ -3680,22 +3689,23 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c098.png",
-  "out0": 101.956,
-  "out1": 102.823
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c094.png",
+  "out0": 82.86,
+  "out1": 83.593
  },
  {
-  "t0": 102.919,
-  "t1": 103.479,
+  "t0": 83.638,
+  "t1": 83.965,
   "text": "built.",
   "cue": [
    {
     "w": "built.",
-    "s": 103.019,
-    "e": 103.179
+    "s": 83.738,
+    "e": 83.877
    }
   ],
   "src": "body",
@@ -3710,32 +3720,33 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c099.png",
-  "out0": 102.823,
-  "out1": 103.389
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c095.png",
+  "out0": 83.593,
+  "out1": 83.927
  },
  {
-  "t0": 103.479,
-  "t1": 104.866,
+  "t0": 83.965,
+  "t1": 84.896,
   "text": "After it opened,",
   "cue": [
    {
     "w": "After",
-    "s": 103.579,
-    "e": 103.879
+    "s": 84.065,
+    "e": 84.325
    },
    {
     "w": "it",
-    "s": 103.879,
-    "e": 104.019
+    "s": 84.325,
+    "e": 84.447
    },
    {
     "w": "opened,",
-    "s": 104.019,
-    "e": 104.419
+    "s": 84.447,
+    "e": 84.795
    }
   ],
   "src": "body",
@@ -3750,31 +3761,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": 0.88,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 103.389,
-  "out1": 104.789
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c096.png",
+  "out0": 83.927,
+  "out1": 84.86
  },
  {
-  "t0": 104.866,
-  "t1": 106.606,
+  "t0": 84.896,
+  "t1": 86.409,
   "text": "5.87 in 2",
   "cue": [
    {
     "w": "5.87",
-    "s": 104.966,
-    "e": 106.006
+    "s": 84.996,
+    "e": 85.9
    },
    {
     "w": "in",
-    "s": 106.006,
-    "e": 106.306
+    "s": 85.9,
+    "e": 86.161
    },
    {
     "w": "2",
-    "s": 106.306,
-    "e": 106.706
+    "s": 86.161,
+    "e": 86.509
    }
   ],
   "src": "body",
@@ -3789,31 +3802,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": 0.88,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 104.789,
-  "out1": 106.523
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c097.png",
+  "out0": 84.86,
+  "out1": 86.36
  },
  {
-  "t0": 106.606,
-  "t1": 108.366,
+  "t0": 86.409,
+  "t1": 87.838,
   "text": "years, under 3",
   "cue": [
    {
     "w": "years,",
-    "s": 106.706,
-    "e": 107.286
+    "s": 86.509,
+    "e": 87.013
    },
    {
     "w": "under",
-    "s": 107.606,
-    "e": 108.046
+    "s": 87.19,
+    "e": 87.572
    },
    {
     "w": "3",
-    "s": 108.046,
-    "e": 108.466
+    "s": 87.572,
+    "e": 87.938
    }
   ],
   "src": "body",
@@ -3828,37 +3843,39 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": 0.88,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 106.523,
-  "out1": 108.289
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c098.png",
+  "out0": 86.36,
+  "out1": 87.793
  },
  {
-  "t0": 108.366,
-  "t1": 109.753,
+  "t0": 87.838,
+  "t1": 88.835,
   "text": "% a year.",
   "cue": [
    {
     "w": "%",
-    "s": 108.466,
-    "e": 108.806
+    "s": 87.938,
+    "e": 88.233
    },
    {
     "w": "a",
-    "s": 108.806,
-    "e": 109.026
+    "s": 88.233,
+    "e": 88.425
    },
    {
     "w": "year.",
-    "s": 109.026,
-    "e": 109.426
+    "s": 88.425,
+    "e": 88.772
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
+  "dev": "versus_bars",
+  "dev_id": 24,
+  "backdrop": "downtown.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -3867,32 +3884,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": 0.88,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c103.png",
-  "out0": 108.289,
-  "out1": 109.689
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c099.png",
+  "out0": 87.793,
+  "out1": 88.793
  },
  {
-  "t0": 109.753,
-  "t1": 111.786,
+  "t0": 88.835,
+  "t1": 90.116,
   "text": "Third, the price.",
   "cue": [
    {
     "w": "Third,",
-    "s": 109.853,
-    "e": 110.193
+    "s": 88.935,
+    "e": 89.23
    },
    {
     "w": "the",
-    "s": 110.846,
-    "e": 111.046
+    "s": 89.396,
+    "e": 89.569
    },
    {
     "w": "price.",
-    "s": 111.046,
-    "e": 111.586
+    "s": 89.569,
+    "e": 90.039
    }
   ],
   "src": "body",
@@ -3907,77 +3925,79 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c104.png",
-  "out0": 109.689,
-  "out1": 111.723
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c100.png",
+  "out0": 88.793,
+  "out1": 90.06
  },
  {
-  "t0": 111.786,
-  "t1": 112.366,
+  "t0": 90.116,
+  "t1": 90.621,
   "text": "If it launches",
   "cue": [
    {
     "w": "If",
-    "s": 111.886,
-    "e": 112.046
+    "s": 90.216,
+    "e": 90.355
    },
    {
     "w": "it",
-    "s": 112.046,
-    "e": 112.206
+    "s": 90.355,
+    "e": 90.495
    },
    {
     "w": "launches",
-    "s": 112.206,
-    "e": 112.466
+    "s": 90.495,
+    "e": 90.721
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": null,
+  "dev_id": 25,
   "backdrop": null,
   "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
-  "vfx": null,
+  "vfx": "glitch",
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c105.png",
-  "out0": 111.723,
-  "out1": 112.289
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c101.png",
+  "out0": 90.06,
+  "out1": 90.56
  },
  {
-  "t0": 112.366,
-  "t1": 114.586,
+  "t0": 90.621,
+  "t1": 92.551,
   "text": "at $2,800 to $3,000",
   "cue": [
    {
     "w": "at",
-    "s": 112.466,
-    "e": 112.706
+    "s": 90.721,
+    "e": 90.929
    },
    {
     "w": "$2,800",
-    "s": 112.706,
-    "e": 113.546
+    "s": 90.929,
+    "e": 91.66
    },
    {
     "w": "to",
-    "s": 113.546,
-    "e": 113.966
+    "s": 91.66,
+    "e": 92.025
    },
    {
     "w": "$3,000",
-    "s": 113.966,
-    "e": 114.686
+    "s": 92.025,
+    "e": 92.651
    }
   ],
   "src": "body",
@@ -3992,31 +4012,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 112.289,
-  "out1": 114.522
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c102.png",
+  "out0": 90.56,
+  "out1": 92.493
  },
  {
-  "t0": 114.586,
-  "t1": 115.506,
+  "t0": 92.551,
+  "t1": 93.351,
   "text": "per square foot,",
   "cue": [
    {
     "w": "per",
-    "s": 114.686,
-    "e": 115.006
+    "s": 92.651,
+    "e": 92.929
    },
    {
     "w": "square",
-    "s": 115.006,
-    "e": 115.286
+    "s": 92.929,
+    "e": 93.173
    },
    {
     "w": "foot,",
-    "s": 115.286,
-    "e": 115.446
+    "s": 93.173,
+    "e": 93.312
    }
   ],
   "src": "body",
@@ -4031,36 +4053,38 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 114.522,
-  "out1": 115.455
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c103.png",
+  "out0": 92.493,
+  "out1": 93.293
  },
  {
-  "t0": 115.506,
-  "t1": 116.706,
+  "t0": 93.351,
+  "t1": 94.322,
   "text": "and that's an estimate,",
   "cue": [
    {
     "w": "and",
-    "s": 115.606,
-    "e": 115.666
+    "s": 93.451,
+    "e": 93.503
    },
    {
     "w": "that's",
-    "s": 115.666,
-    "e": 116.006
+    "s": 93.503,
+    "e": 93.799
    },
    {
     "w": "an",
-    "s": 116.006,
-    "e": 116.166
+    "s": 93.799,
+    "e": 93.938
    },
    {
     "w": "estimate,",
-    "s": 116.166,
-    "e": 116.506
+    "s": 93.938,
+    "e": 94.234
    }
   ],
   "src": "body",
@@ -4075,37 +4099,39 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 115.455,
-  "out1": 116.655
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c104.png",
+  "out0": 93.293,
+  "out1": 94.26
  },
  {
-  "t0": 116.706,
-  "t1": 118.186,
+  "t0": 94.322,
+  "t1": 95.413,
   "text": "nothing official yet,",
   "cue": [
    {
     "w": "nothing",
-    "s": 116.806,
-    "e": 117.106
+    "s": 94.422,
+    "e": 94.683
    },
    {
     "w": "official",
-    "s": 117.106,
-    "e": 117.466
+    "s": 94.683,
+    "e": 94.996
    },
    {
     "w": "yet,",
-    "s": 117.466,
-    "e": 117.846
+    "s": 94.996,
+    "e": 95.326
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
+  "dev": "cost_stack",
+  "dev_id": 26,
+  "backdrop": "desk_realestate_home.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -4114,32 +4140,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c109.png",
-  "out0": 116.655,
-  "out1": 118.121
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c105.png",
+  "out0": 94.26,
+  "out1": 95.36
  },
  {
-  "t0": 118.186,
-  "t1": 119.466,
+  "t0": 95.413,
+  "t1": 96.526,
   "text": "a 3-bedroom premium",
   "cue": [
    {
     "w": "a",
-    "s": 118.286,
-    "e": 118.406
+    "s": 95.513,
+    "e": 95.618
    },
    {
     "w": "3-bedroom",
-    "s": 118.406,
-    "e": 119.066
+    "s": 95.618,
+    "e": 96.192
    },
    {
     "w": "premium",
-    "s": 119.066,
-    "e": 119.566
+    "s": 96.192,
+    "e": 96.626
    }
   ],
   "src": "body",
@@ -4154,27 +4181,28 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c110.png",
-  "out0": 118.121,
-  "out1": 119.387
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c106.png",
+  "out0": 95.36,
+  "out1": 96.46
  },
  {
-  "t0": 119.466,
-  "t1": 120.186,
+  "t0": 96.526,
+  "t1": 97.152,
   "text": "lands about",
   "cue": [
    {
     "w": "lands",
-    "s": 119.566,
-    "e": 119.886
+    "s": 96.626,
+    "e": 96.905
    },
    {
     "w": "about",
-    "s": 119.886,
-    "e": 120.286
+    "s": 96.905,
+    "e": 97.252
    }
   ],
   "src": "body",
@@ -4189,28 +4217,29 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c111.png",
-  "out0": 119.387,
-  "out1": 120.121
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c107.png",
+  "out0": 96.46,
+  "out1": 97.093
  },
  {
-  "t0": 120.186,
-  "t1": 121.206,
+  "t0": 97.152,
+  "t1": 98.039,
   "text": "$3.24",
   "cue": [
    {
     "w": "$3.24",
-    "s": 120.286,
-    "e": 121.306
+    "s": 97.252,
+    "e": 98.139
    }
   ],
   "src": "body",
   "dev": "stat_pop",
   "dev_id": 27,
-  "backdrop": "sg_skyline2.mp4",
+  "backdrop": "sg_condo_cloudy.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -4219,27 +4248,29 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 120.121,
-  "out1": 121.154
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c108.png",
+  "out0": 97.093,
+  "out1": 97.993
  },
  {
-  "t0": 121.206,
-  "t1": 122.379,
+  "t0": 98.039,
+  "t1": 98.819,
   "text": "million.",
   "cue": [
    {
     "w": "million.",
-    "s": 121.306,
-    "e": 121.986
+    "s": 98.139,
+    "e": 98.731
    }
   ],
   "src": "body",
   "dev": "stat_pop",
   "dev_id": 27,
-  "backdrop": "sg_skyline2.mp4",
+  "backdrop": "sg_condo_cloudy.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -4248,37 +4279,39 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 121.154,
-  "out1": 122.321
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c109.png",
+  "out0": 97.993,
+  "out1": 98.76
  },
  {
-  "t0": 122.379,
-  "t1": 123.459,
+  "t0": 98.819,
+  "t1": 99.758,
   "text": "The highest average",
   "cue": [
    {
     "w": "The",
-    "s": 122.479,
-    "e": 122.739
+    "s": 98.919,
+    "e": 99.145
    },
    {
     "w": "highest",
-    "s": 122.739,
-    "e": 123.179
+    "s": 99.145,
+    "e": 99.527
    },
    {
     "w": "average",
-    "s": 123.179,
-    "e": 123.559
+    "s": 99.527,
+    "e": 99.858
    }
   ],
   "src": "body",
   "dev": "stat_pop",
   "dev_id": 27,
-  "backdrop": "sg_skyline2.mp4",
+  "backdrop": "sg_condo_cloudy.mp4",
   "split": false,
   "backdrops": null,
   "photo": null,
@@ -4287,31 +4320,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 122.321,
-  "out1": 123.387
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c110.png",
+  "out0": 98.76,
+  "out1": 99.693
  },
  {
-  "t0": 123.459,
-  "t1": 124.879,
+  "t0": 99.758,
+  "t1": 100.992,
   "text": "quantum a 3-bedroom",
   "cue": [
    {
     "w": "quantum",
-    "s": 123.559,
-    "e": 123.999
+    "s": 99.858,
+    "e": 100.24
    },
    {
     "w": "a",
-    "s": 123.999,
-    "e": 124.299
+    "s": 100.24,
+    "e": 100.501
    },
    {
     "w": "3-bedroom",
-    "s": 124.299,
-    "e": 124.979
+    "s": 100.501,
+    "e": 101.092
    }
   ],
   "src": "body",
@@ -4326,32 +4361,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c115.png",
-  "out0": 123.387,
-  "out1": 124.821
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c111.png",
+  "out0": 99.693,
+  "out1": 100.927
  },
  {
-  "t0": 124.879,
-  "t1": 125.639,
+  "t0": 100.992,
+  "t1": 101.653,
   "text": "has been fetching",
   "cue": [
    {
     "w": "has",
-    "s": 124.979,
-    "e": 125.119
+    "s": 101.092,
+    "e": 101.214
    },
    {
     "w": "been",
-    "s": 125.119,
-    "e": 125.359
+    "s": 101.214,
+    "e": 101.423
    },
    {
     "w": "fetching",
-    "s": 125.359,
-    "e": 125.739
+    "s": 101.423,
+    "e": 101.753
    }
   ],
   "src": "body",
@@ -4366,32 +4402,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c116.png",
-  "out0": 124.821,
-  "out1": 125.587
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c112.png",
+  "out0": 100.927,
+  "out1": 101.593
  },
  {
-  "t0": 125.639,
-  "t1": 126.639,
+  "t0": 101.653,
+  "t1": 102.523,
   "text": "in District 20",
   "cue": [
    {
     "w": "in",
-    "s": 125.739,
-    "e": 125.959
+    "s": 101.753,
+    "e": 101.945
    },
    {
     "w": "District",
-    "s": 125.959,
-    "e": 126.339
+    "s": 101.945,
+    "e": 102.275
    },
    {
     "w": "20",
-    "s": 126.339,
-    "e": 126.739
+    "s": 102.275,
+    "e": 102.623
    }
   ],
   "src": "body",
@@ -4406,22 +4443,23 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c117.png",
-  "out0": 125.587,
-  "out1": 126.587
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c113.png",
+  "out0": 101.593,
+  "out1": 102.46
  },
  {
-  "t0": 126.639,
-  "t1": 127.579,
+  "t0": 102.523,
+  "t1": 103.34,
   "text": "resale.",
   "cue": [
    {
     "w": "resale.",
-    "s": 126.739,
-    "e": 127.679
+    "s": 102.623,
+    "e": 103.44
    }
   ],
   "src": "body",
@@ -4436,32 +4474,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c118.png",
-  "out0": 126.587,
-  "out1": 127.52
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c114.png",
+  "out0": 102.46,
+  "out1": 103.293
  },
  {
-  "t0": 127.579,
-  "t1": 129.159,
+  "t0": 103.34,
+  "t1": 104.714,
   "text": "Near an MRT,",
   "cue": [
    {
     "w": "Near",
-    "s": 127.679,
-    "e": 128.179
+    "s": 103.44,
+    "e": 103.875
    },
    {
     "w": "an",
-    "s": 128.179,
-    "e": 128.399
+    "s": 103.875,
+    "e": 104.066
    },
    {
     "w": "MRT,",
-    "s": 128.399,
-    "e": 129.079
+    "s": 104.066,
+    "e": 104.658
    }
   ],
   "src": "body",
@@ -4476,31 +4515,33 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 127.52,
-  "out1": 129.087
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c115.png",
+  "out0": 103.293,
+  "out1": 104.66
  },
  {
-  "t0": 129.159,
-  "t1": 130.039,
+  "t0": 104.714,
+  "t1": 105.479,
   "text": "near a top-primary",
   "cue": [
    {
     "w": "near",
-    "s": 129.259,
-    "e": 129.439
+    "s": 104.814,
+    "e": 104.971
    },
    {
     "w": "a",
-    "s": 129.439,
-    "e": 129.659
+    "s": 104.971,
+    "e": 105.162
    },
    {
     "w": "top-primary",
-    "s": 129.659,
-    "e": 130.139
+    "s": 105.162,
+    "e": 105.579
    }
   ],
   "src": "body",
@@ -4515,31 +4556,33 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 129.087,
-  "out1": 129.953
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c116.png",
+  "out0": 104.66,
+  "out1": 105.427
  },
  {
-  "t0": 130.039,
-  "t1": 131.539,
+  "t0": 105.479,
+  "t1": 106.682,
   "text": "school, under 10",
   "cue": [
    {
     "w": "school,",
-    "s": 130.139,
-    "e": 130.459
+    "s": 105.579,
+    "e": 105.858
    },
    {
     "w": "under",
-    "s": 130.779,
-    "e": 131.179
+    "s": 106.035,
+    "e": 106.382
    },
    {
     "w": "10",
-    "s": 131.179,
-    "e": 131.639
+    "s": 106.382,
+    "e": 106.782
    }
   ],
   "src": "body",
@@ -4554,31 +4597,187 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 129.953,
-  "out1": 131.453
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c117.png",
+  "out0": 105.427,
+  "out1": 106.627
  },
  {
-  "t0": 131.539,
-  "t1": 132.753,
+  "t0": 106.682,
+  "t1": 107.439,
   "text": "years old,",
   "cue": [
    {
     "w": "years",
-    "s": 131.639,
-    "e": 132.059
+    "s": 106.782,
+    "e": 107.148
    },
    {
     "w": "old,",
-    "s": 132.059,
-    "e": 132.299
+    "s": 107.148,
+    "e": 107.356
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 28,
+  "backdrop": "sg_old_building.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c118.png",
+  "out0": 106.627,
+  "out1": 107.393
+ },
+ {
+  "t0": 107.439,
+  "t1": 107.665,
+  "text": "from",
+  "cue": [
+   {
+    "w": "from",
+    "s": 107.539,
+    "e": 107.765
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": null,
+  "dev_id": 29,
+  "backdrop": "sg_cbd_boatquay.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c119.png",
+  "out0": 107.393,
+  "out1": 107.627
+ },
+ {
+  "t0": 107.665,
+  "t1": 109.352,
+  "text": "$2.7 million to $2.8",
+  "cue": [
+   {
+    "w": "$2.7",
+    "s": 107.765,
+    "e": 108.357
+   },
+   {
+    "w": "million",
+    "s": 108.357,
+    "e": 108.618
+   },
+   {
+    "w": "to",
+    "s": 108.618,
+    "e": 108.826
+   },
+   {
+    "w": "$2.8",
+    "s": 108.826,
+    "e": 109.452
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 29,
+  "backdrop": "sg_cbd_boatquay.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c120.png",
+  "out0": 107.627,
+  "out1": 109.327
+ },
+ {
+  "t0": 109.352,
+  "t1": 110.445,
+  "text": "plus million.",
+  "cue": [
+   {
+    "w": "plus",
+    "s": 109.452,
+    "e": 109.765
+   },
+   {
+    "w": "million.",
+    "s": 109.765,
+    "e": 110.339
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 29,
+  "backdrop": "sg_cbd_boatquay.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c121.png",
+  "out0": 109.327,
+  "out1": 110.393
+ },
+ {
+  "t0": 110.445,
+  "t1": 111.193,
+  "text": "half a million",
+  "cue": [
+   {
+    "w": "half",
+    "s": 110.545,
+    "e": 110.841
+   },
+   {
+    "w": "a",
+    "s": 110.841,
+    "e": 110.998
+   },
+   {
+    "w": "million",
+    "s": 110.998,
+    "e": 111.293
+   }
+  ],
+  "src": "body",
+  "dev": "dread_plate",
+  "dev_id": 30,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -4588,317 +4787,38 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": 0.9,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
   "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c122.png",
-  "out0": 131.453,
-  "out1": 132.653
+  "out0": 110.393,
+  "out1": 111.127
  },
  {
-  "t0": 132.753,
-  "t1": 133.993,
-  "text": "from $2.7 million",
-  "cue": [
-   {
-    "w": "from",
-    "s": 132.853,
-    "e": 133.113
-   },
-   {
-    "w": "$2.7",
-    "s": 133.113,
-    "e": 133.793
-   },
-   {
-    "w": "million",
-    "s": 133.793,
-    "e": 134.093
-   }
-  ],
-  "src": "body",
-  "dev": "grid_paper_plate",
-  "dev_id": 29,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "out0": 132.653,
-  "out1": 133.886
- },
- {
-  "t0": 133.993,
-  "t1": 135.313,
-  "text": "to $2.8 plus",
-  "cue": [
-   {
-    "w": "to",
-    "s": 134.093,
-    "e": 134.333
-   },
-   {
-    "w": "$2.8",
-    "s": 134.333,
-    "e": 135.053
-   },
-   {
-    "w": "plus",
-    "s": 135.053,
-    "e": 135.413
-   }
-  ],
-  "src": "body",
-  "dev": "grid_paper_plate",
-  "dev_id": 29,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "out0": 133.886,
-  "out1": 135.219
- },
- {
-  "t0": 135.313,
-  "t1": 136.253,
-  "text": "million.",
-  "cue": [
-   {
-    "w": "million.",
-    "s": 135.413,
-    "e": 136.073
-   }
-  ],
-  "src": "body",
-  "dev": "grid_paper_plate",
-  "dev_id": 29,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "out0": 135.219,
-  "out1": 136.152
- },
- {
-  "t0": 136.253,
-  "t1": 137.273,
-  "text": "So, you'll be",
-  "cue": [
-   {
-    "w": "So,",
-    "s": 136.353,
-    "e": 136.673
-   },
-   {
-    "w": "you'll",
-    "s": 136.893,
-    "e": 137.153
-   },
-   {
-    "w": "be",
-    "s": 137.153,
-    "e": 137.373
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c126.png",
-  "out0": 136.152,
-  "out1": 137.186
- },
- {
-  "t0": 137.273,
-  "t1": 138.013,
-  "text": "potentially paying",
-  "cue": [
-   {
-    "w": "potentially",
-    "s": 137.373,
-    "e": 137.833
-   },
-   {
-    "w": "paying",
-    "s": 137.833,
-    "e": 138.113
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "drift",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c127.png",
-  "out0": 137.186,
-  "out1": 137.919
- },
- {
-  "t0": 138.013,
-  "t1": 142.653,
-  "text": "more than",
+  "t0": 111.193,
+  "t1": 112.341,
+  "text": "more above the average",
   "cue": [
    {
     "w": "more",
-    "s": 138.113,
-    "e": 138.393
+    "s": 111.293,
+    "e": 111.571
    },
-   {
-    "w": "than",
-    "s": 138.793,
-    "e": 142.753
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c128.png",
-  "out0": 137.919,
-  "out1": 142.552
- },
- {
-  "t0": 142.653,
-  "t1": 142.993,
-  "text": "half",
-  "cue": [
-   {
-    "w": "half",
-    "s": 142.753,
-    "e": 143.093
-   }
-  ],
-  "src": "body",
-  "dev": "dread_plate",
-  "dev_id": 30,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "out0": 142.552,
-  "out1": 142.885
- },
- {
-  "t0": 142.993,
-  "t1": 143.833,
-  "text": "a million more",
-  "cue": [
-   {
-    "w": "a",
-    "s": 143.093,
-    "e": 143.273
-   },
-   {
-    "w": "million",
-    "s": 143.273,
-    "e": 143.613
-   },
-   {
-    "w": "more",
-    "s": 143.613,
-    "e": 143.933
-   }
-  ],
-  "src": "body",
-  "dev": "dread_plate",
-  "dev_id": 30,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "out0": 142.885,
-  "out1": 143.719
- },
- {
-  "t0": 143.833,
-  "t1": 144.833,
-  "text": "above the average",
-  "cue": [
    {
     "w": "above",
-    "s": 143.933,
-    "e": 144.333
+    "s": 111.571,
+    "e": 111.919
    },
    {
     "w": "the",
-    "s": 144.333,
-    "e": 144.613
+    "s": 111.919,
+    "e": 112.163
    },
    {
     "w": "average",
-    "s": 144.613,
-    "e": 144.933
+    "s": 112.163,
+    "e": 112.441
    }
   ],
   "src": "body",
@@ -4913,31 +4833,33 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": 0.9,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 143.719,
-  "out1": 144.719
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c123.png",
+  "out0": 111.127,
+  "out1": 112.26
  },
  {
-  "t0": 144.833,
-  "t1": 146.253,
+  "t0": 112.341,
+  "t1": 113.576,
   "text": "district is currently",
   "cue": [
    {
     "w": "district",
-    "s": 144.933,
-    "e": 145.333
+    "s": 112.441,
+    "e": 112.789
    },
    {
     "w": "is",
-    "s": 145.333,
-    "e": 145.733
+    "s": 112.789,
+    "e": 113.137
    },
    {
     "w": "currently",
-    "s": 145.733,
-    "e": 146.353
+    "s": 113.137,
+    "e": 113.676
    }
   ],
   "src": "body",
@@ -4952,36 +4874,38 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": 0.9,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 144.719,
-  "out1": 146.152
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c124.png",
+  "out0": 112.26,
+  "out1": 113.493
  },
  {
-  "t0": 146.253,
-  "t1": 148.146,
+  "t0": 113.576,
+  "t1": 115.088,
   "text": "transacting and proving.",
   "cue": [
    {
     "w": "transacting",
-    "s": 146.353,
-    "e": 147.033
+    "s": 113.676,
+    "e": 114.267
    },
    {
     "w": "and",
-    "s": 147.033,
-    "e": 147.533
+    "s": 114.267,
+    "e": 114.702
    },
    {
     "w": "proving.",
-    "s": 147.533,
-    "e": 147.893
+    "s": 114.702,
+    "e": 115.015
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
+  "dev": "dread_plate",
+  "dev_id": 30,
   "backdrop": null,
   "split": false,
   "backdrops": null,
@@ -4991,32 +4915,33 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": 0.9,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c133.png",
-  "out0": 146.152,
-  "out1": 148.052
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c125.png",
+  "out0": 113.493,
+  "out1": 114.993
  },
  {
-  "t0": 148.146,
-  "t1": 149.266,
+  "t0": 115.088,
+  "t1": 116.061,
   "text": "Thomson Reserve review",
   "cue": [
    {
     "w": "Thomson",
-    "s": 148.246,
-    "e": 148.646
+    "s": 115.188,
+    "e": 115.535
    },
    {
     "w": "Reserve",
-    "s": 148.646,
-    "e": 149.006
+    "s": 115.535,
+    "e": 115.848
    },
    {
     "w": "review",
-    "s": 149.006,
-    "e": 149.366
+    "s": 115.848,
+    "e": 116.161
    }
   ],
   "src": "body",
@@ -5031,32 +4956,33 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": true,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c134.png",
-  "out0": 148.052,
-  "out1": 149.185
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c126.png",
+  "out0": 114.993,
+  "out1": 115.959
  },
  {
-  "t0": 149.266,
-  "t1": 150.146,
+  "t0": 116.061,
+  "t1": 116.803,
   "text": "is in October,",
   "cue": [
    {
     "w": "is",
-    "s": 149.366,
-    "e": 149.566
+    "s": 116.161,
+    "e": 116.335
    },
    {
     "w": "in",
-    "s": 149.566,
-    "e": 149.706
+    "s": 116.335,
+    "e": 116.457
    },
    {
     "w": "October,",
-    "s": 149.706,
-    "e": 150.146
+    "s": 116.457,
+    "e": 116.84
    }
   ],
   "src": "body",
@@ -5071,97 +4997,69 @@
   "treat": null,
   "frame": false,
   "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c135.png",
-  "out0": 149.185,
-  "out1": 150.052
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c127.png",
+  "out0": 115.959,
+  "out1": 116.692
  },
  {
-  "t0": 150.146,
-  "t1": 151.146,
+  "t0": 116.803,
+  "t1": 117.93,
   "text": "so I'm running",
   "cue": [
    {
     "w": "so",
-    "s": 150.246,
-    "e": 150.686
+    "s": 116.903,
+    "e": 117.285
    },
    {
     "w": "I'm",
-    "s": 150.686,
-    "e": 151.006
+    "s": 117.285,
+    "e": 117.563
    },
    {
     "w": "running",
-    "s": 151.006,
-    "e": 151.246
+    "s": 117.563,
+    "e": 117.772
    }
   ],
   "src": "body",
   "dev": null,
-  "dev_id": null,
+  "dev_id": 31,
   "backdrop": null,
   "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
-  "vfx": null,
+  "vfx": "transition",
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "whip",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c136.png",
-  "out0": 150.052,
-  "out1": 151.052
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c128.png",
+  "out0": 116.692,
+  "out1": 117.825
  },
  {
-  "t0": 151.146,
-  "t1": 151.602,
-  "text": "a",
-  "cue": [
-   {
-    "w": "a",
-    "s": 151.246,
-    "e": 151.432
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "punch",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c137.png",
-  "out0": 151.052,
-  "out1": 151.518
- },
- {
-  "t0": 151.602,
-  "t1": 152.242,
+  "t0": 117.93,
+  "t1": 118.487,
   "text": "live webinar",
   "cue": [
    {
     "w": "live",
-    "s": 151.702,
-    "e": 152.042
+    "s": 118.03,
+    "e": 118.326
    },
    {
     "w": "webinar",
-    "s": 152.042,
-    "e": 152.342
+    "s": 118.326,
+    "e": 118.587
    }
   ],
   "src": "body",
@@ -5175,38 +5073,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c138.png",
-  "out0": 151.518,
-  "out1": 152.151
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c129.png",
+  "out0": 117.825,
+  "out1": 118.392
  },
  {
-  "t0": 152.242,
-  "t1": 153.502,
+  "t0": 118.487,
+  "t1": 119.582,
   "text": "session, giving you the",
   "cue": [
    {
     "w": "session,",
-    "s": 152.342,
-    "e": 152.742
+    "s": 118.587,
+    "e": 118.934
    },
    {
     "w": "giving",
-    "s": 152.862,
-    "e": 153.102
+    "s": 119.039,
+    "e": 119.248
    },
    {
     "w": "you",
-    "s": 153.102,
-    "e": 153.362
+    "s": 119.248,
+    "e": 119.474
    },
    {
     "w": "the",
-    "s": 153.362,
-    "e": 153.602
+    "s": 119.474,
+    "e": 119.682
    }
   ],
   "src": "body",
@@ -5220,38 +5119,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c139.png",
-  "out0": 152.151,
-  "out1": 153.418
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c130.png",
+  "out0": 118.392,
+  "out1": 119.492
  },
  {
-  "t0": 153.502,
-  "t1": 155.162,
+  "t0": 119.582,
+  "t1": 121.026,
   "text": "insights of my own",
   "cue": [
    {
     "w": "insights",
-    "s": 153.602,
-    "e": 154.102
+    "s": 119.682,
+    "e": 120.117
    },
    {
     "w": "of",
-    "s": 154.102,
-    "e": 154.502
+    "s": 120.117,
+    "e": 120.465
    },
    {
     "w": "my",
-    "s": 154.502,
-    "e": 154.862
+    "s": 120.465,
+    "e": 120.778
    },
    {
     "w": "own",
-    "s": 154.862,
-    "e": 155.262
+    "s": 120.778,
+    "e": 121.126
    }
   ],
   "src": "body",
@@ -5265,28 +5165,29 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c140.png",
-  "out0": 153.418,
-  "out1": 155.084
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c131.png",
+  "out0": 119.492,
+  "out1": 120.925
  },
  {
-  "t0": 155.162,
-  "t1": 156.142,
+  "t0": 121.026,
+  "t1": 121.878,
   "text": "full decision-making",
   "cue": [
    {
     "w": "full",
-    "s": 155.262,
-    "e": 155.642
+    "s": 121.126,
+    "e": 121.456
    },
    {
     "w": "decision-making",
-    "s": 155.642,
-    "e": 156.242
+    "s": 121.456,
+    "e": 121.978
    }
   ],
   "src": "body",
@@ -5300,38 +5201,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c141.png",
-  "out0": 155.084,
-  "out1": 156.05
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c132.png",
+  "out0": 120.925,
+  "out1": 121.792
  },
  {
-  "t0": 156.142,
-  "t1": 158.042,
+  "t0": 121.878,
+  "t1": 123.53,
   "text": "process and the analysis",
   "cue": [
    {
     "w": "process",
-    "s": 156.242,
-    "e": 156.782
+    "s": 121.978,
+    "e": 122.448
    },
    {
     "w": "and",
-    "s": 156.782,
-    "e": 157.382
+    "s": 122.448,
+    "e": 122.969
    },
    {
     "w": "the",
-    "s": 157.382,
-    "e": 157.822
+    "s": 122.969,
+    "e": 123.352
    },
    {
     "w": "analysis",
-    "s": 157.822,
-    "e": 158.142
+    "s": 123.352,
+    "e": 123.63
    }
   ],
   "src": "body",
@@ -5345,33 +5247,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c142.png",
-  "out0": 156.05,
-  "out1": 157.95
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c133.png",
+  "out0": 121.792,
+  "out1": 123.458
  },
  {
-  "t0": 158.042,
-  "t1": 159.282,
+  "t0": 123.53,
+  "t1": 124.608,
   "text": "on buying Thomson",
   "cue": [
    {
     "w": "on",
-    "s": 158.142,
-    "e": 158.682
+    "s": 123.63,
+    "e": 124.1
    },
    {
     "w": "buying",
-    "s": 158.682,
-    "e": 158.942
+    "s": 124.1,
+    "e": 124.326
    },
    {
     "w": "Thomson",
-    "s": 158.942,
-    "e": 159.382
+    "s": 124.326,
+    "e": 124.708
    }
   ],
   "src": "body",
@@ -5385,23 +5288,24 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c143.png",
-  "out0": 157.95,
-  "out1": 159.184
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c134.png",
+  "out0": 123.458,
+  "out1": 124.525
  },
  {
-  "t0": 159.282,
-  "t1": 159.682,
+  "t0": 124.608,
+  "t1": 124.956,
   "text": "Reserve",
   "cue": [
    {
     "w": "Reserve",
-    "s": 159.382,
-    "e": 159.782
+    "s": 124.708,
+    "e": 125.056
    }
   ],
   "src": "body",
@@ -5415,33 +5319,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c144.png",
-  "out0": 159.184,
-  "out1": 159.584
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c135.png",
+  "out0": 124.525,
+  "out1": 124.858
  },
  {
-  "t0": 159.682,
-  "t1": 161.142,
+  "t0": 124.956,
+  "t1": 126.226,
   "text": "as my next",
   "cue": [
    {
     "w": "as",
-    "s": 159.782,
-    "e": 160.502
+    "s": 125.056,
+    "e": 125.682
    },
    {
     "w": "my",
-    "s": 160.502,
-    "e": 160.982
+    "s": 125.682,
+    "e": 126.1
    },
    {
     "w": "next",
-    "s": 160.982,
-    "e": 161.242
+    "s": 126.1,
+    "e": 126.326
    }
   ],
   "src": "body",
@@ -5455,33 +5360,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c145.png",
-  "out0": 159.584,
-  "out1": 161.05
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c136.png",
+  "out0": 124.858,
+  "out1": 126.125
  },
  {
-  "t0": 161.142,
-  "t1": 163.862,
+  "t0": 126.226,
+  "t1": 128.591,
   "text": "property and how",
   "cue": [
    {
     "w": "property",
-    "s": 161.242,
-    "e": 161.882
+    "s": 126.326,
+    "e": 126.882
    },
    {
     "w": "and",
-    "s": 161.882,
-    "e": 163.562
+    "s": 126.882,
+    "e": 128.343
    },
    {
     "w": "how",
-    "s": 163.562,
-    "e": 163.962
+    "s": 128.343,
+    "e": 128.691
    }
   ],
   "src": "body",
@@ -5495,33 +5401,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c146.png",
-  "out0": 161.05,
-  "out1": 163.784
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c137.png",
+  "out0": 126.125,
+  "out1": 128.491
  },
  {
-  "t0": 163.862,
-  "t1": 164.442,
+  "t0": 128.591,
+  "t1": 129.095,
   "text": "I will be",
   "cue": [
    {
     "w": "I",
-    "s": 163.962,
-    "e": 164.162
+    "s": 128.691,
+    "e": 128.865
    },
    {
     "w": "will",
-    "s": 164.162,
-    "e": 164.342
+    "s": 128.865,
+    "e": 129.021
    },
    {
     "w": "be",
-    "s": 164.342,
-    "e": 164.542
+    "s": 129.021,
+    "e": 129.195
    }
   ],
   "src": "body",
@@ -5535,33 +5442,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c147.png",
-  "out0": 163.784,
-  "out1": 164.35
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c138.png",
+  "out0": 128.491,
+  "out1": 128.991
  },
  {
-  "t0": 164.442,
-  "t1": 165.942,
+  "t0": 129.095,
+  "t1": 130.4,
   "text": "preparing before and",
   "cue": [
    {
     "w": "preparing",
-    "s": 164.542,
-    "e": 164.802
+    "s": 129.195,
+    "e": 129.421
    },
    {
     "w": "before",
-    "s": 164.802,
-    "e": 165.422
+    "s": 129.421,
+    "e": 129.961
    },
    {
     "w": "and",
-    "s": 165.422,
-    "e": 166.042
+    "s": 129.961,
+    "e": 130.5
    }
   ],
   "src": "body",
@@ -5575,33 +5483,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c148.png",
-  "out0": 164.35,
-  "out1": 165.85
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c139.png",
+  "out0": 128.991,
+  "out1": 130.291
  },
  {
-  "t0": 165.942,
-  "t1": 167.312,
+  "t0": 130.4,
+  "t1": 131.321,
   "text": "during the ballot,",
   "cue": [
    {
     "w": "during",
-    "s": 166.042,
-    "e": 166.402
+    "s": 130.5,
+    "e": 130.813
    },
    {
     "w": "the",
-    "s": 166.402,
-    "e": 166.642
+    "s": 130.813,
+    "e": 131.021
    },
    {
     "w": "ballot,",
-    "s": 166.642,
-    "e": 166.882
+    "s": 131.021,
+    "e": 131.23
    }
   ],
   "src": "body",
@@ -5615,33 +5524,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c149.png",
-  "out0": 165.85,
-  "out1": 167.216
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c140.png",
+  "out0": 130.291,
+  "out1": 131.225
  },
  {
-  "t0": 167.312,
-  "t1": 168.272,
+  "t0": 131.321,
+  "t1": 132.156,
   "text": "the exact price",
   "cue": [
    {
     "w": "the",
-    "s": 167.412,
-    "e": 167.752
+    "s": 131.421,
+    "e": 131.717
    },
    {
     "w": "exact",
-    "s": 167.752,
-    "e": 167.992
+    "s": 131.717,
+    "e": 131.925
    },
    {
     "w": "price",
-    "s": 167.992,
-    "e": 168.372
+    "s": 131.925,
+    "e": 132.256
    }
   ],
   "src": "body",
@@ -5655,32 +5565,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 167.216,
-  "out1": 168.182
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c141.png",
+  "out0": 131.225,
+  "out1": 132.058
  },
  {
-  "t0": 168.272,
-  "t1": 169.032,
+  "t0": 132.156,
+  "t1": 132.817,
   "text": "I walk away",
   "cue": [
    {
     "w": "I",
-    "s": 168.372,
-    "e": 168.652
+    "s": 132.256,
+    "e": 132.499
    },
    {
     "w": "walk",
-    "s": 168.652,
-    "e": 168.872
+    "s": 132.499,
+    "e": 132.69
    },
    {
     "w": "away",
-    "s": 168.872,
-    "e": 169.132
+    "s": 132.69,
+    "e": 132.917
    }
   ],
   "src": "body",
@@ -5694,32 +5606,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "out0": 168.182,
-  "out1": 168.949
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c142.png",
+  "out0": 132.058,
+  "out1": 132.725
  },
  {
-  "t0": 169.032,
-  "t1": 170.459,
+  "t0": 132.817,
+  "t1": 133.776,
   "text": "at, which stacks",
   "cue": [
    {
     "w": "at,",
-    "s": 169.132,
-    "e": 169.432
+    "s": 132.917,
+    "e": 133.177
    },
    {
     "w": "which",
-    "s": 169.939,
-    "e": 170.279
+    "s": 133.337,
+    "e": 133.633
    },
    {
     "w": "stacks",
-    "s": 170.279,
-    "e": 170.559
+    "s": 133.633,
+    "e": 133.876
    }
   ],
   "src": "body",
@@ -5733,37 +5647,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 168.949,
-  "out1": 170.382
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c143.png",
+  "out0": 132.725,
+  "out1": 133.691
  },
  {
-  "t0": 170.459,
-  "t1": 171.779,
+  "t0": 133.776,
+  "t1": 134.924,
   "text": "I go for and",
   "cue": [
    {
     "w": "I",
-    "s": 170.559,
-    "e": 170.839
+    "s": 133.876,
+    "e": 134.12
    },
    {
     "w": "go",
-    "s": 170.839,
-    "e": 171.059
+    "s": 134.12,
+    "e": 134.311
    },
    {
     "w": "for",
-    "s": 171.059,
-    "e": 171.499
+    "s": 134.311,
+    "e": 134.694
    },
    {
     "w": "and",
-    "s": 171.499,
-    "e": 171.879
+    "s": 134.694,
+    "e": 135.024
    }
   ],
   "src": "body",
@@ -5777,32 +5693,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "out0": 170.382,
-  "out1": 171.716
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c144.png",
+  "out0": 133.691,
+  "out1": 134.825
  },
  {
-  "t0": 171.779,
-  "t1": 172.559,
+  "t0": 134.924,
+  "t1": 135.602,
   "text": "which I wouldn't",
   "cue": [
    {
     "w": "which",
-    "s": 171.879,
-    "e": 172.139
+    "s": 135.024,
+    "e": 135.25
    },
    {
     "w": "I",
-    "s": 172.139,
-    "e": 172.379
+    "s": 135.25,
+    "e": 135.459
    },
    {
     "w": "wouldn't",
-    "s": 172.379,
-    "e": 172.659
+    "s": 135.459,
+    "e": 135.702
    }
   ],
   "src": "body",
@@ -5816,32 +5734,80 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 171.716,
-  "out1": 172.482
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c145.png",
+  "out0": 134.825,
+  "out1": 135.491
  },
  {
-  "t0": 172.559,
-  "t1": 173.539,
+  "t0": 135.602,
+  "t1": 136.454,
   "text": "touch at any",
   "cue": [
    {
     "w": "touch",
-    "s": 172.659,
-    "e": 172.999
+    "s": 135.702,
+    "e": 135.998
    },
    {
     "w": "at",
-    "s": 172.999,
-    "e": 173.299
+    "s": 135.998,
+    "e": 136.259
    },
    {
     "w": "any",
-    "s": 173.299,
-    "e": 173.639
+    "s": 136.259,
+    "e": 136.554
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 34,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c146.png",
+  "out0": 135.491,
+  "out1": 136.358
+ },
+ {
+  "t0": 136.454,
+  "t1": 137.926,
+  "text": "price, how I prepare",
+  "cue": [
+   {
+    "w": "price,",
+    "s": 136.554,
+    "e": 136.954
+   },
+   {
+    "w": "how",
+    "s": 137.122,
+    "e": 137.435
+   },
+   {
+    "w": "I",
+    "s": 137.435,
+    "e": 137.713
+   },
+   {
+    "w": "prepare",
+    "s": 137.713,
+    "e": 138.026
    }
   ],
   "src": "body",
@@ -5856,81 +5822,38 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "out0": 172.482,
-  "out1": 173.449
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c147.png",
+  "out0": 136.358,
+  "out1": 137.825
  },
  {
-  "t0": 173.539,
-  "t1": 175.512,
-  "text": "price, how I prepare",
-  "cue": [
-   {
-    "w": "price,",
-    "s": 173.639,
-    "e": 174.099
-   },
-   {
-    "w": "how",
-    "s": 174.572,
-    "e": 174.932
-   },
-   {
-    "w": "I",
-    "s": 174.932,
-    "e": 175.252
-   },
-   {
-    "w": "prepare",
-    "s": 175.252,
-    "e": 175.612
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c156.png",
-  "out0": 173.449,
-  "out1": 175.416
- },
- {
-  "t0": 175.512,
-  "t1": 177.972,
+  "t0": 137.926,
+  "t1": 139.967,
   "text": "before, during and after",
   "cue": [
    {
     "w": "before,",
-    "s": 175.612,
-    "e": 176.332
+    "s": 138.026,
+    "e": 138.653
    },
    {
     "w": "during",
-    "s": 176.652,
-    "e": 177.132
+    "s": 138.833,
+    "e": 139.25
    },
    {
     "w": "and",
-    "s": 177.132,
-    "e": 177.652
+    "s": 139.25,
+    "e": 139.702
    },
    {
     "w": "after",
-    "s": 177.652,
-    "e": 178.072
+    "s": 139.702,
+    "e": 140.067
    }
   ],
   "src": "body",
@@ -5944,33 +5867,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c157.png",
-  "out0": 175.416,
-  "out1": 177.849
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c148.png",
+  "out0": 137.825,
+  "out1": 139.858
  },
  {
-  "t0": 177.972,
-  "t1": 178.752,
+  "t0": 139.967,
+  "t1": 140.646,
   "text": "for the ballot",
   "cue": [
    {
     "w": "for",
-    "s": 178.072,
-    "e": 178.472
+    "s": 140.067,
+    "e": 140.415
    },
    {
     "w": "the",
-    "s": 178.472,
-    "e": 178.672
+    "s": 140.415,
+    "e": 140.589
    },
    {
     "w": "ballot",
-    "s": 178.672,
-    "e": 178.852
+    "s": 140.589,
+    "e": 140.746
    }
   ],
   "src": "body",
@@ -5984,33 +5908,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c158.png",
-  "out0": 177.849,
-  "out1": 178.616
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c149.png",
+  "out0": 139.858,
+  "out1": 140.525
  },
  {
-  "t0": 178.752,
-  "t1": 179.612,
+  "t0": 140.646,
+  "t1": 141.394,
   "text": "so I'm not",
   "cue": [
    {
     "w": "so",
-    "s": 178.852,
-    "e": 179.132
+    "s": 140.746,
+    "e": 140.989
    },
    {
     "w": "I'm",
-    "s": 179.132,
-    "e": 179.412
+    "s": 140.989,
+    "e": 141.233
    },
    {
     "w": "not",
-    "s": 179.412,
-    "e": 179.712
+    "s": 141.233,
+    "e": 141.494
    }
   ],
   "src": "body",
@@ -6024,33 +5949,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c159.png",
-  "out0": 178.616,
-  "out1": 179.482
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c150.png",
+  "out0": 140.525,
+  "out1": 141.258
  },
  {
-  "t0": 179.612,
-  "t1": 180.852,
+  "t0": 141.394,
+  "t1": 142.472,
   "text": "deciding under pressure",
   "cue": [
    {
     "w": "deciding",
-    "s": 179.712,
-    "e": 180.112
+    "s": 141.494,
+    "e": 141.841
    },
    {
     "w": "under",
-    "s": 180.112,
-    "e": 180.632
+    "s": 141.841,
+    "e": 142.294
    },
    {
     "w": "pressure",
-    "s": 180.632,
-    "e": 180.952
+    "s": 142.294,
+    "e": 142.572
    }
   ],
   "src": "body",
@@ -6064,33 +5990,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c160.png",
-  "out0": 179.482,
-  "out1": 180.715
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c151.png",
+  "out0": 141.258,
+  "out1": 142.325
  },
  {
-  "t0": 180.852,
-  "t1": 182.165,
+  "t0": 142.472,
+  "t1": 143.453,
   "text": "on that day,",
   "cue": [
    {
     "w": "on",
-    "s": 180.952,
-    "e": 181.312
+    "s": 142.572,
+    "e": 142.885
    },
    {
     "w": "that",
-    "s": 181.312,
-    "e": 181.472
+    "s": 142.885,
+    "e": 143.024
    },
    {
     "w": "day,",
-    "s": 181.472,
-    "e": 181.832
+    "s": 143.024,
+    "e": 143.337
    }
   ],
   "src": "body",
@@ -6104,38 +6031,39 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c161.png",
-  "out0": 180.715,
-  "out1": 182.015
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c152.png",
+  "out0": 142.325,
+  "out1": 143.291
  },
  {
-  "t0": 182.165,
-  "t1": 183.865,
+  "t0": 143.453,
+  "t1": 144.932,
   "text": "and whether this works",
   "cue": [
    {
     "w": "and",
-    "s": 182.265,
-    "e": 182.885
+    "s": 143.553,
+    "e": 144.092
    },
    {
     "w": "whether",
-    "s": 182.885,
-    "e": 183.285
+    "s": 144.092,
+    "e": 144.44
    },
    {
     "w": "this",
-    "s": 183.285,
-    "e": 183.645
+    "s": 144.44,
+    "e": 144.753
    },
    {
     "w": "works",
-    "s": 183.645,
-    "e": 183.965
+    "s": 144.753,
+    "e": 145.032
    }
   ],
   "src": "body",
@@ -6149,23 +6077,24 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c162.png",
-  "out0": 182.015,
-  "out1": 183.715
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c153.png",
+  "out0": 143.291,
+  "out1": 144.757
  },
  {
-  "t0": 183.865,
-  "t1": 184.305,
+  "t0": 144.932,
+  "t1": 145.314,
   "text": "as",
   "cue": [
    {
     "w": "as",
-    "s": 183.965,
-    "e": 184.405
+    "s": 145.032,
+    "e": 145.414
    }
   ],
   "src": "body",
@@ -6179,28 +6108,29 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "drift",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c163.png",
-  "out0": 183.715,
-  "out1": 184.148
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c154.png",
+  "out0": 144.757,
+  "out1": 145.124
  },
  {
-  "t0": 184.305,
-  "t1": 184.645,
+  "t0": 145.314,
+  "t1": 145.61,
   "text": "a second",
   "cue": [
    {
     "w": "a",
-    "s": 184.405,
-    "e": 184.485
+    "s": 145.414,
+    "e": 145.484
    },
    {
     "w": "second",
-    "s": 184.485,
-    "e": 184.745
+    "s": 145.484,
+    "e": 145.71
    }
   ],
   "src": "body",
@@ -6214,32 +6144,34 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "push",
+  "motion": "drift",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "out0": 184.148,
-  "out1": 184.482
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c155.png",
+  "out0": 145.124,
+  "out1": 145.424
  },
  {
-  "t0": 184.645,
-  "t1": 185.665,
+  "t0": 145.61,
+  "t1": 146.497,
   "text": "property at all",
   "cue": [
    {
     "w": "property",
-    "s": 184.745,
-    "e": 185.165
+    "s": 145.71,
+    "e": 146.075
    },
    {
     "w": "at",
-    "s": 185.165,
-    "e": 185.505
+    "s": 146.075,
+    "e": 146.371
    },
    {
     "w": "all",
-    "s": 185.505,
-    "e": 185.765
+    "s": 146.371,
+    "e": 146.597
    }
   ],
   "src": "body",
@@ -6253,37 +6185,75 @@
   "vfx": null,
   "treat": null,
   "frame": false,
-  "motion": "punch",
+  "motion": "push",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "out0": 184.482,
-  "out1": 185.515
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c156.png",
+  "out0": 145.424,
+  "out1": 146.324
  },
  {
-  "t0": 185.665,
-  "t1": 187.545,
+  "t0": 146.497,
+  "t1": 148.132,
   "text": "or only as an",
   "cue": [
    {
     "w": "or",
-    "s": 185.765,
-    "e": 186.625
+    "s": 146.597,
+    "e": 147.345
    },
    {
     "w": "only",
-    "s": 186.625,
-    "e": 187.105
+    "s": 147.345,
+    "e": 147.762
    },
    {
     "w": "as",
-    "s": 187.105,
-    "e": 187.385
+    "s": 147.762,
+    "e": 148.005
    },
    {
     "w": "an",
-    "s": 187.385,
-    "e": 187.645
+    "s": 148.005,
+    "e": 148.232
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 36,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c157.png",
+  "out0": 146.324,
+  "out1": 147.957
+ },
+ {
+  "t0": 148.132,
+  "t1": 148.866,
+  "text": "own stay.",
+  "cue": [
+   {
+    "w": "own",
+    "s": 148.232,
+    "e": 148.475
+   },
+   {
+    "w": "stay.",
+    "s": 148.475,
+    "e": 148.753
    }
   ],
   "src": "body",
@@ -6298,66 +6268,79 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "out0": 185.515,
-  "out1": 187.381
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c158.png",
+  "out0": 147.957,
+  "out1": 148.691
  },
  {
-  "t0": 187.545,
-  "t1": 188.562,
-  "text": "own stay.",
-  "cue": [
-   {
-    "w": "own",
-    "s": 187.645,
-    "e": 187.925
-   },
-   {
-    "w": "stay.",
-    "s": 187.925,
-    "e": 188.245
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "drift",
-  "nocap": false,
-  "zoom": 2,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c167.png",
-  "out0": 187.381,
-  "out1": 188.415
- },
- {
-  "t0": 188.562,
-  "t1": 189.402,
+  "t0": 148.866,
+  "t1": 149.597,
   "text": "If Thomson Reserve",
   "cue": [
    {
     "w": "If",
-    "s": 188.662,
-    "e": 188.902
+    "s": 148.966,
+    "e": 149.175
    },
    {
     "w": "Thomson",
-    "s": 188.902,
-    "e": 189.182
+    "s": 149.175,
+    "e": 149.419
    },
    {
     "w": "Reserve",
-    "s": 189.182,
-    "e": 189.502
+    "s": 149.419,
+    "e": 149.697
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c159.png",
+  "out0": 148.691,
+  "out1": 149.424
+ },
+ {
+  "t0": 149.597,
+  "t1": 150.613,
+  "text": "is on your list,",
+  "cue": [
+   {
+    "w": "is",
+    "s": 149.697,
+    "e": 149.853
+   },
+   {
+    "w": "on",
+    "s": 149.853,
+    "e": 150.027
+   },
+   {
+    "w": "your",
+    "s": 150.027,
+    "e": 150.201
+   },
+   {
+    "w": "list,",
+    "s": 150.201,
+    "e": 150.514
    }
   ],
   "src": "body",
@@ -6372,37 +6355,28 @@
   "treat": null,
   "frame": false,
   "motion": "push",
+  "cap_y": null,
   "nocap": false,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c168.png",
-  "out0": 188.415,
-  "out1": 189.248
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c160.png",
+  "out0": 149.424,
+  "out1": 150.424
  },
  {
-  "t0": 189.402,
-  "t1": 190.582,
-  "text": "is on your list,",
+  "t0": 150.613,
+  "t1": 151.413,
+  "text": "come and",
   "cue": [
    {
-    "w": "is",
-    "s": 189.502,
-    "e": 189.682
+    "w": "come",
+    "s": 150.713,
+    "e": 151.043
    },
    {
-    "w": "on",
-    "s": 189.682,
-    "e": 189.882
-   },
-   {
-    "w": "your",
-    "s": 189.882,
-    "e": 190.082
-   },
-   {
-    "w": "list,",
-    "s": 190.082,
-    "e": 190.442
+    "w": "and",
+    "s": 151.043,
+    "e": 151.513
    }
   ],
   "src": "body",
@@ -6417,57 +6391,63 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
   "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c169.png",
-  "out0": 189.248,
-  "out1": 190.414
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c161.png",
+  "out0": 150.424,
+  "out1": 151.224
  },
  {
-  "t0": 190.582,
-  "t1": 191.502,
-  "text": "come and",
+  "t0": 151.413,
+  "t1": 151.935,
+  "text": "pressure-test",
   "cue": [
    {
-    "w": "come",
-    "s": 190.682,
-    "e": 191.062
-   },
-   {
-    "w": "and",
-    "s": 191.062,
-    "e": 191.602
+    "w": "pressure-test",
+    "s": 151.513,
+    "e": 152.035
    }
   ],
   "src": "body",
-  "dev": null,
-  "dev_id": null,
+  "dev": "accum_caption",
+  "dev_id": 37,
   "backdrop": null,
   "split": false,
   "backdrops": null,
   "photo": null,
   "prop": null,
-  "vfx": null,
+  "vfx": "lightleak",
   "treat": null,
   "frame": false,
   "motion": "push",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c170.png",
-  "out0": 190.414,
-  "out1": 191.347
+  "out0": 151.224,
+  "out1": 151.757
  },
  {
-  "t0": 191.502,
-  "t1": 192.102,
-  "text": "pressure-test",
+  "t0": 151.935,
+  "t1": 152.63,
+  "text": "it with me",
   "cue": [
    {
-    "w": "pressure-test",
-    "s": 191.602,
-    "e": 192.202
+    "w": "it",
+    "s": 152.035,
+    "e": 152.243
+   },
+   {
+    "w": "with",
+    "s": 152.243,
+    "e": 152.382
+   },
+   {
+    "w": "me",
+    "s": 152.382,
+    "e": 152.73
    }
   ],
   "src": "body",
@@ -6482,70 +6462,67 @@
   "treat": null,
   "frame": false,
   "motion": "drift",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 2,
   "segment_start": false,
-  "out0": 191.347,
-  "out1": 191.947
+  "out0": 151.757,
+  "out1": 152.457
  },
  {
-  "t0": 192.102,
-  "t1": 192.902,
-  "text": "it with me",
-  "cue": [
-   {
-    "w": "it",
-    "s": 192.202,
-    "e": 192.442
-   },
-   {
-    "w": "with",
-    "s": 192.442,
-    "e": 192.602
-   },
-   {
-    "w": "me",
-    "s": 192.602,
-    "e": 193.002
-   }
-  ],
-  "src": "body",
-  "dev": "accum_caption",
-  "dev_id": 37,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": "lightleak",
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "out0": 191.947,
-  "out1": 192.747
- },
- {
-  "t0": 192.902,
-  "t1": 194.268,
+  "t0": 152.63,
+  "t1": 153.593,
   "text": "before the preview,",
   "cue": [
    {
     "w": "before",
-    "s": 193.002,
-    "e": 193.362
+    "s": 152.73,
+    "e": 153.043
    },
    {
     "w": "the",
-    "s": 193.362,
-    "e": 193.622
+    "s": 153.043,
+    "e": 153.269
    },
    {
     "w": "preview,",
-    "s": 193.622,
-    "e": 193.902
+    "s": 153.269,
+    "e": 153.513
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 37,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 152.457,
+  "out1": 153.424
+ },
+ {
+  "t0": 153.593,
+  "t1": 154.514,
+  "text": "not after.",
+  "cue": [
+   {
+    "w": "not",
+    "s": 153.693,
+    "e": 153.937
+   },
+   {
+    "w": "after.",
+    "s": 153.937,
+    "e": 154.441
    }
   ],
   "src": "body",
@@ -6560,66 +6537,32 @@
   "treat": null,
   "frame": false,
   "motion": "punch",
-  "nocap": false,
+  "cap_y": null,
+  "nocap": true,
   "zoom": 2,
   "segment_start": false,
-  "out0": 192.747,
-  "out1": 194.113
+  "out0": 153.424,
+  "out1": 154.357
  },
  {
-  "t0": 194.268,
-  "t1": 195.755,
-  "text": "not after.",
-  "cue": [
-   {
-    "w": "not",
-    "s": 194.368,
-    "e": 194.648
-   },
-   {
-    "w": "after.",
-    "s": 194.648,
-    "e": 195.228
-   }
-  ],
-  "src": "body",
-  "dev": null,
-  "dev_id": null,
-  "backdrop": null,
-  "split": false,
-  "backdrops": null,
-  "photo": null,
-  "prop": null,
-  "vfx": null,
-  "treat": null,
-  "frame": false,
-  "motion": "push",
-  "nocap": false,
-  "zoom": 0,
-  "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c174.png",
-  "out0": 194.113,
-  "out1": 195.613
- },
- {
-  "t0": 195.755,
-  "t1": 196.215,
+  "t0": 154.514,
+  "t1": 154.914,
   "text": "Click the link",
   "cue": [
    {
     "w": "Click",
-    "s": 195.855,
-    "e": 196.055
+    "s": 154.614,
+    "e": 154.788
    },
    {
     "w": "the",
-    "s": 196.055,
-    "e": 196.195
+    "s": 154.788,
+    "e": 154.909
    },
    {
     "w": "link",
-    "s": 196.195,
-    "e": 196.315
+    "s": 154.909,
+    "e": 155.014
    }
   ],
   "src": "body",
@@ -6634,32 +6577,33 @@
   "treat": null,
   "frame": true,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c175.png",
-  "out0": 195.613,
-  "out1": 196.08
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c166.png",
+  "out0": 154.357,
+  "out1": 154.757
  },
  {
-  "t0": 196.215,
-  "t1": 197.155,
+  "t0": 154.914,
+  "t1": 155.731,
   "text": "below and join",
   "cue": [
    {
     "w": "below",
-    "s": 196.315,
-    "e": 196.695
+    "s": 155.014,
+    "e": 155.344
    },
    {
     "w": "and",
-    "s": 196.695,
-    "e": 197.055
+    "s": 155.344,
+    "e": 155.657
    },
    {
     "w": "join",
-    "s": 197.055,
-    "e": 197.255
+    "s": 155.657,
+    "e": 155.831
    }
   ],
   "src": "body",
@@ -6674,27 +6618,28 @@
   "treat": null,
   "frame": true,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 0,
+  "zoom": 2,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c176.png",
-  "out0": 196.08,
-  "out1": 197.013
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c167.png",
+  "out0": 154.757,
+  "out1": 155.59
  },
  {
-  "t0": 197.155,
-  "t1": 198.519333,
+  "t0": 155.731,
+  "t1": 156.768875,
   "text": "me live.",
   "cue": [
    {
     "w": "me",
-    "s": 197.255,
-    "e": 197.855
+    "s": 155.831,
+    "e": 156.353
    },
    {
     "w": "live.",
-    "s": 197.855,
-    "e": 198.175
+    "s": 156.353,
+    "e": 156.631
    }
   ],
   "src": "body",
@@ -6709,11 +6654,12 @@
   "treat": null,
   "frame": true,
   "motion": "punch",
+  "cap_y": null,
   "nocap": false,
-  "zoom": 2,
+  "zoom": 0,
   "segment_start": false,
-  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c177.png",
-  "out0": 197.013,
-  "out1": 198.346
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build\\caps\\c168.png",
+  "out0": 155.59,
+  "out1": 156.59
  }
 ]

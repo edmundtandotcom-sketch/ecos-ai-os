@@ -1,0 +1,6639 @@
+[
+ {
+  "t0": 0.0,
+  "t1": 0.743,
+  "text": "I have $3.5",
+  "cue": [
+   {
+    "w": "I",
+    "s": 0.078,
+    "e": 0.078
+   },
+   {
+    "w": "have",
+    "s": 0.078,
+    "e": 0.252
+   },
+   {
+    "w": "$3.5",
+    "s": 0.252,
+    "e": 0.843
+   }
+  ],
+  "src": "hooks",
+  "dev": "punch_slam",
+  "dev_id": 0,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "burst",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c000.png",
+  "out0": 0.0,
+  "out1": 0.733
+ },
+ {
+  "t0": 0.743,
+  "t1": 1.557,
+  "text": "million budget.",
+  "cue": [
+   {
+    "w": "million",
+    "s": 0.843,
+    "e": 1.017
+   },
+   {
+    "w": "budget.",
+    "s": 1.017,
+    "e": 1.504
+   }
+  ],
+  "src": "hooks",
+  "dev": "punch_slam",
+  "dev_id": 0,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "burst",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c001.png",
+  "out0": 0.733,
+  "out1": 1.533
+ },
+ {
+  "t0": 1.557,
+  "t1": 2.305,
+  "text": "Will Thomson Reserve",
+  "cue": [
+   {
+    "w": "Will",
+    "s": 1.657,
+    "e": 1.831
+   },
+   {
+    "w": "Thomson",
+    "s": 1.831,
+    "e": 2.162
+   },
+   {
+    "w": "Reserve",
+    "s": 2.162,
+    "e": 2.405
+   }
+  ],
+  "src": "hooks",
+  "dev": "punch_slam",
+  "dev_id": 0,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "burst",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c002.png",
+  "out0": 1.533,
+  "out1": 2.266
+ },
+ {
+  "t0": 2.305,
+  "t1": 3.116,
+  "text": "be the one?",
+  "cue": [
+   {
+    "w": "be",
+    "s": 2.405,
+    "e": 2.579
+   },
+   {
+    "w": "the",
+    "s": 2.579,
+    "e": 2.736
+   },
+   {
+    "w": "one?",
+    "s": 2.736,
+    "e": 3.014
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 1,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c003.png",
+  "out0": 2.266,
+  "out1": 3.066
+ },
+ {
+  "t0": 3.116,
+  "t1": 3.655,
+  "text": "I've bought new",
+  "cue": [
+   {
+    "w": "I've",
+    "s": 3.216,
+    "e": 3.46
+   },
+   {
+    "w": "bought",
+    "s": 3.46,
+    "e": 3.529
+   },
+   {
+    "w": "new",
+    "s": 3.529,
+    "e": 3.755
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 1,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c004.png",
+  "out0": 3.066,
+  "out1": 3.599
+ },
+ {
+  "t0": 3.655,
+  "t1": 4.455,
+  "text": "launches for myself",
+  "cue": [
+   {
+    "w": "launches",
+    "s": 3.755,
+    "e": 3.981
+   },
+   {
+    "w": "for",
+    "s": 3.981,
+    "e": 4.173
+   },
+   {
+    "w": "myself",
+    "s": 4.173,
+    "e": 4.555
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 1,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c005.png",
+  "out0": 3.599,
+  "out1": 4.399
+ },
+ {
+  "t0": 4.455,
+  "t1": 5.472,
+  "text": "and my family,",
+  "cue": [
+   {
+    "w": "and",
+    "s": 4.555,
+    "e": 4.712
+   },
+   {
+    "w": "my",
+    "s": 4.712,
+    "e": 4.938
+   },
+   {
+    "w": "family,",
+    "s": 4.938,
+    "e": 5.373
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 2,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "family_showflat_real.jpg",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c006.png",
+  "out0": 4.399,
+  "out1": 5.433
+ },
+ {
+  "t0": 5.472,
+  "t1": 6.75,
+  "text": "the Tre Ver, Parc Clematis",
+  "cue": [
+   {
+    "w": "the",
+    "s": 5.572,
+    "e": 5.746
+   },
+   {
+    "w": "Tre Ver,",
+    "s": 5.746,
+    "e": 6.076
+   },
+   {
+    "w": "Parc Clematis",
+    "s": 6.258,
+    "e": 6.85
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 3,
+  "backdrop": "sg_marinabay_towers.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c007.png",
+  "out0": 5.433,
+  "out1": 6.699
+ },
+ {
+  "t0": 6.75,
+  "t1": 7.81,
+  "text": "and others, and built",
+  "cue": [
+   {
+    "w": "and",
+    "s": 6.85,
+    "e": 7.041
+   },
+   {
+    "w": "others,",
+    "s": 7.041,
+    "e": 7.423
+   },
+   {
+    "w": "and",
+    "s": 7.614,
+    "e": 7.805
+   },
+   {
+    "w": "built",
+    "s": 7.805,
+    "e": 7.91
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 3,
+  "backdrop": "sg_marinabay_towers.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c008.png",
+  "out0": 6.699,
+  "out1": 7.766
+ },
+ {
+  "t0": 7.81,
+  "t1": 8.331,
+  "text": "my property",
+  "cue": [
+   {
+    "w": "my",
+    "s": 7.91,
+    "e": 8.118
+   },
+   {
+    "w": "property",
+    "s": 8.118,
+    "e": 8.431
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 3,
+  "backdrop": "sg_marinabay_towers.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c009.png",
+  "out0": 7.766,
+  "out1": 8.299
+ },
+ {
+  "t0": 8.331,
+  "t1": 8.627,
+  "text": "net",
+  "cue": [
+   {
+    "w": "net",
+    "s": 8.431,
+    "e": 8.727
+   }
+  ],
+  "src": "hooks",
+  "dev": "stat_pop",
+  "dev_id": 4,
+  "backdrop": "sg_city_night.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "celebrate",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c010.png",
+  "out0": 8.299,
+  "out1": 8.599
+ },
+ {
+  "t0": 8.627,
+  "t1": 9.514,
+  "text": "asset value to $7",
+  "cue": [
+   {
+    "w": "asset",
+    "s": 8.727,
+    "e": 8.936
+   },
+   {
+    "w": "value",
+    "s": 8.936,
+    "e": 9.197
+   },
+   {
+    "w": "to",
+    "s": 9.197,
+    "e": 9.353
+   },
+   {
+    "w": "$7",
+    "s": 9.353,
+    "e": 9.614
+   }
+  ],
+  "src": "hooks",
+  "dev": "stat_pop",
+  "dev_id": 4,
+  "backdrop": "sg_city_night.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "celebrate",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c011.png",
+  "out0": 8.599,
+  "out1": 9.499
+ },
+ {
+  "t0": 9.514,
+  "t1": 10.366,
+  "text": "million and I'm",
+  "cue": [
+   {
+    "w": "million",
+    "s": 9.614,
+    "e": 9.979
+   },
+   {
+    "w": "and",
+    "s": 9.979,
+    "e": 10.275
+   },
+   {
+    "w": "I'm",
+    "s": 10.275,
+    "e": 10.466
+   }
+  ],
+  "src": "hooks",
+  "dev": "stat_pop",
+  "dev_id": 4,
+  "backdrop": "sg_city_night.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "celebrate",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c012.png",
+  "out0": 9.499,
+  "out1": 10.366
+ },
+ {
+  "t0": 10.366,
+  "t1": 11.253,
+  "text": "looking at this one",
+  "cue": [
+   {
+    "w": "looking",
+    "s": 10.466,
+    "e": 10.727
+   },
+   {
+    "w": "at",
+    "s": 10.727,
+    "e": 10.971
+   },
+   {
+    "w": "this",
+    "s": 10.971,
+    "e": 11.214
+   },
+   {
+    "w": "one",
+    "s": 11.214,
+    "e": 11.353
+   }
+  ],
+  "src": "hooks",
+  "dev": "stat_pop",
+  "dev_id": 4,
+  "backdrop": "sg_city_night.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "celebrate",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c013.png",
+  "out0": 10.366,
+  "out1": 11.266
+ },
+ {
+  "t0": 11.253,
+  "t1": 11.984,
+  "text": "potentially as",
+  "cue": [
+   {
+    "w": "potentially",
+    "s": 11.353,
+    "e": 11.788
+   },
+   {
+    "w": "as",
+    "s": 11.788,
+    "e": 12.084
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c014.png",
+  "out0": 11.266,
+  "out1": 11.999
+ },
+ {
+  "t0": 11.984,
+  "t1": 12.488,
+  "text": "my own",
+  "cue": [
+   {
+    "w": "my",
+    "s": 12.084,
+    "e": 12.292
+   },
+   {
+    "w": "own",
+    "s": 12.292,
+    "e": 12.588
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 5,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "edmund_daughter_floorplan.jpg",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c015.png",
+  "out0": 11.999,
+  "out1": 12.499
+ },
+ {
+  "t0": 12.488,
+  "t1": 13.32,
+  "text": "next property.",
+  "cue": [
+   {
+    "w": "next",
+    "s": 12.588,
+    "e": 12.71
+   },
+   {
+    "w": "property.",
+    "s": 12.71,
+    "e": 13.231
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 5,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "edmund_daughter_floorplan.jpg",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c016.png",
+  "out0": 12.499,
+  "out1": 13.333
+ },
+ {
+  "t0": 13.32,
+  "t1": 13.703,
+  "text": "I will be",
+  "cue": [
+   {
+    "w": "I",
+    "s": 13.42,
+    "e": 13.42
+   },
+   {
+    "w": "will",
+    "s": 13.42,
+    "e": 13.612
+   },
+   {
+    "w": "be",
+    "s": 13.612,
+    "e": 13.803
+   }
+  ],
+  "src": "hooks",
+  "dev": null,
+  "dev_id": 5,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "edmund_daughter_floorplan.jpg",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c017.png",
+  "out0": 13.333,
+  "out1": 13.699
+ },
+ {
+  "t0": 13.703,
+  "t1": 14.416,
+  "text": "sharing my thoughts",
+  "cue": [
+   {
+    "w": "sharing",
+    "s": 13.803,
+    "e": 13.994
+   },
+   {
+    "w": "my",
+    "s": 13.994,
+    "e": 14.273
+   },
+   {
+    "w": "thoughts",
+    "s": 14.273,
+    "e": 14.516
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 5,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "edmund_daughter_floorplan.jpg",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c018.png",
+  "out0": 13.699,
+  "out1": 14.399
+ },
+ {
+  "t0": 14.416,
+  "t1": 15.355,
+  "text": "on what I like",
+  "cue": [
+   {
+    "w": "on",
+    "s": 14.516,
+    "e": 14.794
+   },
+   {
+    "w": "what",
+    "s": 14.794,
+    "e": 14.951
+   },
+   {
+    "w": "I",
+    "s": 14.951,
+    "e": 15.212
+   },
+   {
+    "w": "like",
+    "s": 15.212,
+    "e": 15.455
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 6,
+  "backdrop": "sg_condo_cranes.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c019.png",
+  "out0": 14.399,
+  "out1": 15.333
+ },
+ {
+  "t0": 15.355,
+  "t1": 16.555,
+  "text": "and dislike about",
+  "cue": [
+   {
+    "w": "and",
+    "s": 15.455,
+    "e": 15.873
+   },
+   {
+    "w": "dislike",
+    "s": 15.873,
+    "e": 16.255
+   },
+   {
+    "w": "about",
+    "s": 16.255,
+    "e": 16.655
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 6,
+  "backdrop": "sg_condo_cranes.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c020.png",
+  "out0": 15.333,
+  "out1": 16.533
+ },
+ {
+  "t0": 16.555,
+  "t1": 17.894,
+  "text": "Thomson Reserve in the",
+  "cue": [
+   {
+    "w": "Thomson",
+    "s": 16.655,
+    "e": 17.038
+   },
+   {
+    "w": "Reserve",
+    "s": 17.038,
+    "e": 17.386
+   },
+   {
+    "w": "in",
+    "s": 17.386,
+    "e": 17.803
+   },
+   {
+    "w": "the",
+    "s": 17.803,
+    "e": 17.994
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 6,
+  "backdrop": "sg_condo_cranes.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c021.png",
+  "out0": 16.533,
+  "out1": 17.866
+ },
+ {
+  "t0": 17.894,
+  "t1": 18.764,
+  "text": "live 60 minutes",
+  "cue": [
+   {
+    "w": "live",
+    "s": 17.994,
+    "e": 18.203
+   },
+   {
+    "w": "60",
+    "s": 18.203,
+    "e": 18.499
+   },
+   {
+    "w": "minutes",
+    "s": 18.499,
+    "e": 18.864
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c022.png",
+  "out0": 17.866,
+  "out1": 18.732
+ },
+ {
+  "t0": 18.764,
+  "t1": 19.421,
+  "text": "webinar.",
+  "cue": [
+   {
+    "w": "webinar.",
+    "s": 18.864,
+    "e": 19.333
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c023.png",
+  "out0": 18.732,
+  "out1": 19.399
+ },
+ {
+  "t0": 19.421,
+  "t1": 19.891,
+  "text": "What I like",
+  "cue": [
+   {
+    "w": "What",
+    "s": 19.521,
+    "e": 19.643
+   },
+   {
+    "w": "I",
+    "s": 19.643,
+    "e": 19.834
+   },
+   {
+    "w": "like",
+    "s": 19.834,
+    "e": 19.991
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 7,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": true,
+  "out0": 19.399,
+  "out1": 19.865
+ },
+ {
+  "t0": 19.891,
+  "t1": 21.168,
+  "text": "about Thomson Reserve,",
+  "cue": [
+   {
+    "w": "about",
+    "s": 19.991,
+    "e": 20.182
+   },
+   {
+    "w": "Thomson",
+    "s": 20.182,
+    "e": 20.53
+   },
+   {
+    "w": "Reserve,",
+    "s": 20.53,
+    "e": 21.069
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 7,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 19.865,
+  "out1": 21.131
+ },
+ {
+  "t0": 21.168,
+  "t1": 22.018,
+  "text": "three reasons.",
+  "cue": [
+   {
+    "w": "three",
+    "s": 21.268,
+    "e": 21.494
+   },
+   {
+    "w": "reasons.",
+    "s": 21.494,
+    "e": 21.929
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 7,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 21.131,
+  "out1": 21.998
+ },
+ {
+  "t0": 22.018,
+  "t1": 23.013,
+  "text": "One, the MRT",
+  "cue": [
+   {
+    "w": "One,",
+    "s": 22.118,
+    "e": 22.414
+   },
+   {
+    "w": "the",
+    "s": 22.591,
+    "e": 22.8
+   },
+   {
+    "w": "MRT",
+    "s": 22.8,
+    "e": 23.113
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c027.png",
+  "out0": 21.998,
+  "out1": 22.998
+ },
+ {
+  "t0": 23.013,
+  "t1": 24.022,
+  "text": "is genuinely at the",
+  "cue": [
+   {
+    "w": "is",
+    "s": 23.113,
+    "e": 23.357
+   },
+   {
+    "w": "genuinely",
+    "s": 23.357,
+    "e": 23.739
+   },
+   {
+    "w": "at",
+    "s": 23.739,
+    "e": 23.983
+   },
+   {
+    "w": "the",
+    "s": 23.983,
+    "e": 24.122
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c028.png",
+  "out0": 22.998,
+  "out1": 23.998
+ },
+ {
+  "t0": 24.022,
+  "t1": 24.473,
+  "text": "door,",
+  "cue": [
+   {
+    "w": "door,",
+    "s": 24.122,
+    "e": 24.383
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c029.png",
+  "out0": 23.998,
+  "out1": 24.464
+ },
+ {
+  "t0": 24.473,
+  "t1": 25.047,
+  "text": "two minutes",
+  "cue": [
+   {
+    "w": "two",
+    "s": 24.573,
+    "e": 24.765
+   },
+   {
+    "w": "minutes",
+    "s": 24.765,
+    "e": 25.147
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 8,
+  "backdrop": "sg_orchard_crossing.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c030.png",
+  "out0": 24.464,
+  "out1": 25.031
+ },
+ {
+  "t0": 25.047,
+  "t1": 25.812,
+  "text": "sheltered straight",
+  "cue": [
+   {
+    "w": "sheltered",
+    "s": 25.147,
+    "e": 25.686
+   },
+   {
+    "w": "straight",
+    "s": 25.686,
+    "e": 25.912
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 8,
+  "backdrop": "sg_orchard_crossing.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c031.png",
+  "out0": 25.031,
+  "out1": 25.797
+ },
+ {
+  "t0": 25.812,
+  "t1": 26.804,
+  "text": "into Upper Thomson",
+  "cue": [
+   {
+    "w": "into",
+    "s": 25.912,
+    "e": 26.225
+   },
+   {
+    "w": "Upper",
+    "s": 26.225,
+    "e": 26.538
+   },
+   {
+    "w": "Thomson",
+    "s": 26.538,
+    "e": 26.904
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 8,
+  "backdrop": "sg_orchard_crossing.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c032.png",
+  "out0": 25.797,
+  "out1": 26.797
+ },
+ {
+  "t0": 26.804,
+  "t1": 28.007,
+  "text": "Exit 2.",
+  "cue": [
+   {
+    "w": "Exit",
+    "s": 26.904,
+    "e": 27.252
+   },
+   {
+    "w": "2.",
+    "s": 27.252,
+    "e": 27.93
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 8,
+  "backdrop": "sg_orchard_crossing.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c033.png",
+  "out0": 26.797,
+  "out1": 27.997
+ },
+ {
+  "t0": 28.007,
+  "t1": 28.823,
+  "text": "Two,",
+  "cue": [
+   {
+    "w": "Two,",
+    "s": 28.107,
+    "e": 28.733
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c034.png",
+  "out0": 27.997,
+  "out1": 28.797
+ },
+ {
+  "t0": 28.823,
+  "t1": 29.449,
+  "text": "Ai Tong School",
+  "cue": [
+   {
+    "w": "Ai Tong",
+    "s": 28.923,
+    "e": 29.254
+   },
+   {
+    "w": "School",
+    "s": 29.254,
+    "e": 29.549
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 9,
+  "backdrop": "family_sofa.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c035.png",
+  "out0": 28.797,
+  "out1": 29.431
+ },
+ {
+  "t0": 29.449,
+  "t1": 30.732,
+  "text": "within 1km, Phase",
+  "cue": [
+   {
+    "w": "within",
+    "s": 29.549,
+    "e": 29.845
+   },
+   {
+    "w": "1km,",
+    "s": 29.845,
+    "e": 30.506
+   },
+   {
+    "w": "Phase",
+    "s": 30.693,
+    "e": 30.832
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 9,
+  "backdrop": "family_sofa.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c036.png",
+  "out0": 29.431,
+  "out1": 30.697
+ },
+ {
+  "t0": 30.732,
+  "t1": 32.317,
+  "text": "2C priority, at a",
+  "cue": [
+   {
+    "w": "2C",
+    "s": 30.832,
+    "e": 31.319
+   },
+   {
+    "w": "priority,",
+    "s": 31.319,
+    "e": 31.893
+   },
+   {
+    "w": "at",
+    "s": 32.104,
+    "e": 32.278
+   },
+   {
+    "w": "a",
+    "s": 32.278,
+    "e": 32.417
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 9,
+  "backdrop": "family_sofa.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c037.png",
+  "out0": 30.697,
+  "out1": 32.297
+ },
+ {
+  "t0": 32.317,
+  "t1": 32.926,
+  "text": "school that's",
+  "cue": [
+   {
+    "w": "school",
+    "s": 32.417,
+    "e": 32.608
+   },
+   {
+    "w": "that's",
+    "s": 32.608,
+    "e": 33.026
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c038.png",
+  "out0": 32.297,
+  "out1": 32.897
+ },
+ {
+  "t0": 32.926,
+  "t1": 33.604,
+  "text": "oversubscribed",
+  "cue": [
+   {
+    "w": "oversubscribed",
+    "s": 33.026,
+    "e": 33.704
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 10,
+  "backdrop": "family_kitchen.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c039.png",
+  "out0": 32.897,
+  "out1": 33.564
+ },
+ {
+  "t0": 33.604,
+  "t1": 34.991,
+  "text": "nearly every year.",
+  "cue": [
+   {
+    "w": "nearly",
+    "s": 33.704,
+    "e": 34.069
+   },
+   {
+    "w": "every",
+    "s": 34.069,
+    "e": 34.469
+   },
+   {
+    "w": "year.",
+    "s": 34.469,
+    "e": 34.904
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 10,
+  "backdrop": "family_kitchen.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c040.png",
+  "out0": 33.564,
+  "out1": 34.964
+ },
+ {
+  "t0": 34.991,
+  "t1": 35.444,
+  "text": "You cannot bid",
+  "cue": [
+   {
+    "w": "You",
+    "s": 35.091,
+    "e": 35.196
+   },
+   {
+    "w": "cannot",
+    "s": 35.196,
+    "e": 35.422
+   },
+   {
+    "w": "bid",
+    "s": 35.422,
+    "e": 35.544
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 10,
+  "backdrop": "family_kitchen.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c041.png",
+  "out0": 34.964,
+  "out1": 35.431
+ },
+ {
+  "t0": 35.444,
+  "t1": 36.082,
+  "text": "on that,",
+  "cue": [
+   {
+    "w": "on",
+    "s": 35.544,
+    "e": 35.735
+   },
+   {
+    "w": "that,",
+    "s": 35.735,
+    "e": 35.996
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 10,
+  "backdrop": "family_kitchen.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c042.png",
+  "out0": 35.431,
+  "out1": 36.064
+ },
+ {
+  "t0": 36.082,
+  "t1": 36.43,
+  "text": "you can",
+  "cue": [
+   {
+    "w": "you",
+    "s": 36.182,
+    "e": 36.339
+   },
+   {
+    "w": "can",
+    "s": 36.339,
+    "e": 36.53
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 10,
+  "backdrop": "family_kitchen.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c043.png",
+  "out0": 36.064,
+  "out1": 36.397
+ },
+ {
+  "t0": 36.43,
+  "t1": 37.369,
+  "text": "only buy into",
+  "cue": [
+   {
+    "w": "only",
+    "s": 36.53,
+    "e": 36.878
+   },
+   {
+    "w": "buy",
+    "s": 36.878,
+    "e": 37.139
+   },
+   {
+    "w": "into",
+    "s": 37.139,
+    "e": 37.469
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 11,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 36.397,
+  "out1": 37.331
+ },
+ {
+  "t0": 37.369,
+  "t1": 37.854,
+  "text": "it.",
+  "cue": [
+   {
+    "w": "it.",
+    "s": 37.469,
+    "e": 37.765
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 11,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 37.331,
+  "out1": 37.831
+ },
+ {
+  "t0": 37.854,
+  "t1": 39.809,
+  "text": "Three, Central Catchment,",
+  "cue": [
+   {
+    "w": "Three,",
+    "s": 37.954,
+    "e": 38.563
+   },
+   {
+    "w": "Central Catchment,",
+    "s": 38.73,
+    "e": 39.739
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 11,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 37.831,
+  "out1": 39.797
+ },
+ {
+  "t0": 39.809,
+  "t1": 40.991,
+  "text": "over 2,000 hectares",
+  "cue": [
+   {
+    "w": "over",
+    "s": 39.909,
+    "e": 40.205
+   },
+   {
+    "w": "2,000",
+    "s": 40.205,
+    "e": 40.709
+   },
+   {
+    "w": "hectares",
+    "s": 40.709,
+    "e": 41.091
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c047.png",
+  "out0": 39.797,
+  "out1": 40.964
+ },
+ {
+  "t0": 40.991,
+  "t1": 41.933,
+  "text": "of forest, more",
+  "cue": [
+   {
+    "w": "of",
+    "s": 41.091,
+    "e": 41.283
+   },
+   {
+    "w": "forest,",
+    "s": 41.283,
+    "e": 41.631
+   },
+   {
+    "w": "more",
+    "s": 41.824,
+    "e": 42.033
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c048.png",
+  "out0": 40.964,
+  "out1": 41.897
+ },
+ {
+  "t0": 41.933,
+  "t1": 43.864,
+  "text": "than 20km of trails.",
+  "cue": [
+   {
+    "w": "than",
+    "s": 42.033,
+    "e": 42.276
+   },
+   {
+    "w": "20km",
+    "s": 42.276,
+    "e": 43.094
+   },
+   {
+    "w": "of",
+    "s": 43.094,
+    "e": 43.459
+   },
+   {
+    "w": "trails.",
+    "s": 43.459,
+    "e": 43.772
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 12,
+  "backdrop": "sg_forest_aerial.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c049.png",
+  "out0": 41.897,
+  "out1": 43.831
+ },
+ {
+  "t0": 43.864,
+  "t1": 44.838,
+  "text": "Most views in Singapore",
+  "cue": [
+   {
+    "w": "Most views",
+    "s": 43.964,
+    "e": 44.434
+   },
+   {
+    "w": "in",
+    "s": 44.434,
+    "e": 44.642
+   },
+   {
+    "w": "Singapore",
+    "s": 44.642,
+    "e": 44.938
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c050.png",
+  "out0": 43.831,
+  "out1": 44.797
+ },
+ {
+  "t0": 44.838,
+  "t1": 45.967,
+  "text": "are temporary,",
+  "cue": [
+   {
+    "w": "are",
+    "s": 44.938,
+    "e": 45.39
+   },
+   {
+    "w": "temporary,",
+    "s": 45.39,
+    "e": 45.86
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c051.png",
+  "out0": 44.797,
+  "out1": 45.931
+ },
+ {
+  "t0": 45.967,
+  "t1": 46.35,
+  "text": "somebody",
+  "cue": [
+   {
+    "w": "somebody",
+    "s": 46.067,
+    "e": 46.45
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 13,
+  "backdrop": "sg_aerial.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c052.png",
+  "out0": 45.931,
+  "out1": 46.297
+ },
+ {
+  "t0": 46.35,
+  "t1": 47.028,
+  "text": "eventually builds",
+  "cue": [
+   {
+    "w": "eventually",
+    "s": 46.45,
+    "e": 46.954
+   },
+   {
+    "w": "builds",
+    "s": 46.954,
+    "e": 47.128
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 13,
+  "backdrop": "sg_aerial.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c053.png",
+  "out0": 46.297,
+  "out1": 46.964
+ },
+ {
+  "t0": 47.028,
+  "t1": 48.049,
+  "text": "in front of you.",
+  "cue": [
+   {
+    "w": "in",
+    "s": 47.128,
+    "e": 47.406
+   },
+   {
+    "w": "front",
+    "s": 47.406,
+    "e": 47.545
+   },
+   {
+    "w": "of",
+    "s": 47.545,
+    "e": 47.684
+   },
+   {
+    "w": "you.",
+    "s": 47.684,
+    "e": 47.98
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 13,
+  "backdrop": "sg_aerial.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c054.png",
+  "out0": 46.964,
+  "out1": 47.997
+ },
+ {
+  "t0": 48.049,
+  "t1": 49.057,
+  "text": "Nobody is ever",
+  "cue": [
+   {
+    "w": "Nobody",
+    "s": 48.149,
+    "e": 48.497
+   },
+   {
+    "w": "is",
+    "s": 48.497,
+    "e": 48.897
+   },
+   {
+    "w": "ever",
+    "s": 48.897,
+    "e": 49.157
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 13,
+  "backdrop": "sg_aerial.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c055.png",
+  "out0": 47.997,
+  "out1": 48.997
+ },
+ {
+  "t0": 49.057,
+  "t1": 49.84,
+  "text": "building in front",
+  "cue": [
+   {
+    "w": "building",
+    "s": 49.157,
+    "e": 49.384
+   },
+   {
+    "w": "in",
+    "s": 49.384,
+    "e": 49.714
+   },
+   {
+    "w": "front",
+    "s": 49.714,
+    "e": 49.94
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 14,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 48.997,
+  "out1": 49.763
+ },
+ {
+  "t0": 49.84,
+  "t1": 51.08,
+  "text": "of this one.",
+  "cue": [
+   {
+    "w": "of",
+    "s": 49.94,
+    "e": 50.218
+   },
+   {
+    "w": "this",
+    "s": 50.218,
+    "e": 50.479
+   },
+   {
+    "w": "one.",
+    "s": 50.479,
+    "e": 51.036
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 14,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 49.763,
+  "out1": 50.997
+ },
+ {
+  "t0": 51.08,
+  "t1": 51.532,
+  "text": "Here are",
+  "cue": [
+   {
+    "w": "Here",
+    "s": 51.18,
+    "e": 51.406
+   },
+   {
+    "w": "are",
+    "s": 51.406,
+    "e": 51.632
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c058.png",
+  "out0": 50.997,
+  "out1": 51.463
+ },
+ {
+  "t0": 51.532,
+  "t1": 51.776,
+  "text": "three",
+  "cue": [
+   {
+    "w": "three",
+    "s": 51.632,
+    "e": 51.876
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 15,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "glitch",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c059.png",
+  "out0": 51.463,
+  "out1": 51.696
+ },
+ {
+  "t0": 51.776,
+  "t1": 52.715,
+  "text": "things that's causing",
+  "cue": [
+   {
+    "w": "things",
+    "s": 51.876,
+    "e": 52.224
+   },
+   {
+    "w": "that's",
+    "s": 52.224,
+    "e": 52.589
+   },
+   {
+    "w": "causing",
+    "s": 52.589,
+    "e": 52.815
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 15,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "glitch",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": true,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c060.png",
+  "out0": 51.696,
+  "out1": 52.629
+ },
+ {
+  "t0": 52.715,
+  "t1": 53.376,
+  "text": "me to think",
+  "cue": [
+   {
+    "w": "me",
+    "s": 52.815,
+    "e": 53.041
+   },
+   {
+    "w": "to",
+    "s": 53.041,
+    "e": 53.215
+   },
+   {
+    "w": "think",
+    "s": 53.215,
+    "e": 53.476
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 15,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "glitch",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c061.png",
+  "out0": 52.629,
+  "out1": 53.295
+ },
+ {
+  "t0": 53.376,
+  "t1": 54.35,
+  "text": "twice about Thomson",
+  "cue": [
+   {
+    "w": "twice",
+    "s": 53.476,
+    "e": 53.737
+   },
+   {
+    "w": "about",
+    "s": 53.737,
+    "e": 54.015
+   },
+   {
+    "w": "Thomson",
+    "s": 54.015,
+    "e": 54.45
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c062.png",
+  "out0": 53.295,
+  "out1": 54.261
+ },
+ {
+  "t0": 54.35,
+  "t1": 55.12,
+  "text": "Reserve.",
+  "cue": [
+   {
+    "w": "Reserve.",
+    "s": 54.45,
+    "e": 55.024
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c063.png",
+  "out0": 54.261,
+  "out1": 55.028
+ },
+ {
+  "t0": 55.12,
+  "t1": 55.851,
+  "text": "What I don't",
+  "cue": [
+   {
+    "w": "What",
+    "s": 55.22,
+    "e": 55.464
+   },
+   {
+    "w": "I",
+    "s": 55.464,
+    "e": 55.672
+   },
+   {
+    "w": "don't",
+    "s": 55.672,
+    "e": 55.951
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 16,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": true,
+  "out0": 55.028,
+  "out1": 55.761
+ },
+ {
+  "t0": 55.851,
+  "t1": 56.685,
+  "text": "like about Thomson",
+  "cue": [
+   {
+    "w": "like",
+    "s": 55.951,
+    "e": 56.194
+   },
+   {
+    "w": "about",
+    "s": 56.194,
+    "e": 56.438
+   },
+   {
+    "w": "Thomson",
+    "s": 56.438,
+    "e": 56.785
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 16,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 55.761,
+  "out1": 56.594
+ },
+ {
+  "t0": 56.685,
+  "t1": 57.336,
+  "text": "Reserve,",
+  "cue": [
+   {
+    "w": "Reserve,",
+    "s": 56.785,
+    "e": 57.255
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 16,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 56.594,
+  "out1": 57.261
+ },
+ {
+  "t0": 57.336,
+  "t1": 57.871,
+  "text": "first, there",
+  "cue": [
+   {
+    "w": "first,",
+    "s": 57.436,
+    "e": 57.732
+   },
+   {
+    "w": "there",
+    "s": 57.936,
+    "e": 57.971
+   }
+  ],
+  "src": "body",
+  "dev": "black_type_open",
+  "dev_id": 16,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 57.261,
+  "out1": 57.794
+ },
+ {
+  "t0": 57.871,
+  "t1": 59.888,
+  "text": "are 1,268 units",
+  "cue": [
+   {
+    "w": "are",
+    "s": 57.971,
+    "e": 58.319
+   },
+   {
+    "w": "1,268",
+    "s": 58.319,
+    "e": 59.588
+   },
+   {
+    "w": "units",
+    "s": 59.588,
+    "e": 59.988
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 17,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": "red",
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c068.png",
+  "out0": 57.794,
+  "out1": 59.828
+ },
+ {
+  "t0": 59.888,
+  "t1": 61.61,
+  "text": "and 1,066 of them,",
+  "cue": [
+   {
+    "w": "and",
+    "s": 59.988,
+    "e": 60.423
+   },
+   {
+    "w": "1,066",
+    "s": 60.423,
+    "e": 61.327
+   },
+   {
+    "w": "of",
+    "s": 61.327,
+    "e": 61.432
+   },
+   {
+    "w": "them,",
+    "s": 61.432,
+    "e": 61.71
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c069.png",
+  "out0": 59.828,
+  "out1": 61.561
+ },
+ {
+  "t0": 61.61,
+  "t1": 63.297,
+  "text": "84%, sits in one",
+  "cue": [
+   {
+    "w": "84%,",
+    "s": 61.71,
+    "e": 62.701
+   },
+   {
+    "w": "sits",
+    "s": 62.701,
+    "e": 62.927
+   },
+   {
+    "w": "in",
+    "s": 62.927,
+    "e": 63.153
+   },
+   {
+    "w": "one",
+    "s": 63.153,
+    "e": 63.397
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 18,
+  "backdrop": "skyline_dusk.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c070.png",
+  "out0": 61.561,
+  "out1": 63.261
+ },
+ {
+  "t0": 63.297,
+  "t1": 64.083,
+  "text": "single collection.",
+  "cue": [
+   {
+    "w": "single",
+    "s": 63.397,
+    "e": 63.658
+   },
+   {
+    "w": "collection.",
+    "s": 63.658,
+    "e": 64.023
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 18,
+  "backdrop": "skyline_dusk.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c071.png",
+  "out0": 63.261,
+  "out1": 64.061
+ },
+ {
+  "t0": 64.083,
+  "t1": 65.296,
+  "text": "So, when you eventually",
+  "cue": [
+   {
+    "w": "So,",
+    "s": 64.183,
+    "e": 64.531
+   },
+   {
+    "w": "when",
+    "s": 64.735,
+    "e": 64.752
+   },
+   {
+    "w": "you",
+    "s": 64.752,
+    "e": 65.031
+   },
+   {
+    "w": "eventually",
+    "s": 65.031,
+    "e": 65.396
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 18,
+  "backdrop": "skyline_dusk.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c072.png",
+  "out0": 64.061,
+  "out1": 65.261
+ },
+ {
+  "t0": 65.296,
+  "t1": 66.229,
+  "text": "sell, you are not",
+  "cue": [
+   {
+    "w": "sell,",
+    "s": 65.396,
+    "e": 65.796
+   },
+   {
+    "w": "you",
+    "s": 65.981,
+    "e": 66.068
+   },
+   {
+    "w": "are",
+    "s": 66.068,
+    "e": 66.155
+   },
+   {
+    "w": "not",
+    "s": 66.155,
+    "e": 66.329
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c073.png",
+  "out0": 65.261,
+  "out1": 66.194
+ },
+ {
+  "t0": 66.229,
+  "t1": 67.255,
+  "text": "competing with District",
+  "cue": [
+   {
+    "w": "competing",
+    "s": 66.329,
+    "e": 66.676
+   },
+   {
+    "w": "with",
+    "s": 66.676,
+    "e": 67.007
+   },
+   {
+    "w": "District",
+    "s": 67.007,
+    "e": 67.355
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c074.png",
+  "out0": 66.194,
+  "out1": 67.227
+ },
+ {
+  "t0": 67.255,
+  "t1": 68.151,
+  "text": "20 solely.",
+  "cue": [
+   {
+    "w": "20",
+    "s": 67.355,
+    "e": 67.72
+   },
+   {
+    "w": "solely.",
+    "s": 67.72,
+    "e": 68.068
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c075.png",
+  "out0": 67.227,
+  "out1": 68.127
+ },
+ {
+  "t0": 68.151,
+  "t1": 68.917,
+  "text": "You are competing",
+  "cue": [
+   {
+    "w": "You",
+    "s": 68.251,
+    "e": 68.53
+   },
+   {
+    "w": "are",
+    "s": 68.53,
+    "e": 68.669
+   },
+   {
+    "w": "competing",
+    "s": 68.669,
+    "e": 69.017
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c076.png",
+  "out0": 68.127,
+  "out1": 68.894
+ },
+ {
+  "t0": 68.917,
+  "t1": 69.282,
+  "text": "with",
+  "cue": [
+   {
+    "w": "with",
+    "s": 69.017,
+    "e": 69.382
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c077.png",
+  "out0": 68.894,
+  "out1": 69.26
+ },
+ {
+  "t0": 69.282,
+  "t1": 69.804,
+  "text": "your direct",
+  "cue": [
+   {
+    "w": "your",
+    "s": 69.382,
+    "e": 69.573
+   },
+   {
+    "w": "direct",
+    "s": 69.573,
+    "e": 69.904
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 19,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c078.png",
+  "out0": 69.26,
+  "out1": 69.794
+ },
+ {
+  "t0": 69.804,
+  "t1": 70.744,
+  "text": "neighbours.",
+  "cue": [
+   {
+    "w": "neighbours.",
+    "s": 69.904,
+    "e": 70.651
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 19,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c079.png",
+  "out0": 69.794,
+  "out1": 70.727
+ },
+ {
+  "t0": 70.744,
+  "t1": 72.0,
+  "text": "Second, you are buying",
+  "cue": [
+   {
+    "w": "Second,",
+    "s": 70.844,
+    "e": 71.436
+   },
+   {
+    "w": "you",
+    "s": 71.63,
+    "e": 71.7
+   },
+   {
+    "w": "are",
+    "s": 71.7,
+    "e": 71.856
+   },
+   {
+    "w": "buying",
+    "s": 71.856,
+    "e": 72.1
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 19,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c080.png",
+  "out0": 70.727,
+  "out1": 71.994
+ },
+ {
+  "t0": 72.0,
+  "t1": 72.295,
+  "text": "this",
+  "cue": [
+   {
+    "w": "this",
+    "s": 72.1,
+    "e": 72.395
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c081.png",
+  "out0": 71.994,
+  "out1": 72.294
+ },
+ {
+  "t0": 72.295,
+  "t1": 73.269,
+  "text": "after the Thomson",
+  "cue": [
+   {
+    "w": "after",
+    "s": 72.395,
+    "e": 72.726
+   },
+   {
+    "w": "the",
+    "s": 72.726,
+    "e": 72.969
+   },
+   {
+    "w": "Thomson",
+    "s": 72.969,
+    "e": 73.369
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 20,
+  "backdrop": "sg_mrt_condos.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c082.png",
+  "out0": 72.294,
+  "out1": 73.26
+ },
+ {
+  "t0": 73.269,
+  "t1": 74.533,
+  "text": "MRT story, not",
+  "cue": [
+   {
+    "w": "MRT",
+    "s": 73.369,
+    "e": 73.787
+   },
+   {
+    "w": "story,",
+    "s": 73.787,
+    "e": 74.169
+   },
+   {
+    "w": "not",
+    "s": 74.337,
+    "e": 74.633
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 20,
+  "backdrop": "sg_mrt_condos.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c083.png",
+  "out0": 73.26,
+  "out1": 74.527
+ },
+ {
+  "t0": 74.533,
+  "t1": 75.581,
+  "text": "before it.",
+  "cue": [
+   {
+    "w": "before",
+    "s": 74.633,
+    "e": 74.998
+   },
+   {
+    "w": "it.",
+    "s": 74.998,
+    "e": 75.485
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 20,
+  "backdrop": "sg_mrt_condos.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c084.png",
+  "out0": 74.527,
+  "out1": 75.56
+ },
+ {
+  "t0": 75.581,
+  "t1": 75.998,
+  "text": "Look at what",
+  "cue": [
+   {
+    "w": "Look",
+    "s": 75.681,
+    "e": 75.82
+   },
+   {
+    "w": "at",
+    "s": 75.82,
+    "e": 75.959
+   },
+   {
+    "w": "what",
+    "s": 75.959,
+    "e": 76.098
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c085.png",
+  "out0": 75.56,
+  "out1": 75.993
+ },
+ {
+  "t0": 75.998,
+  "t1": 76.711,
+  "text": "happened to prices",
+  "cue": [
+   {
+    "w": "happened",
+    "s": 76.098,
+    "e": 76.377
+   },
+   {
+    "w": "to",
+    "s": 76.377,
+    "e": 76.585
+   },
+   {
+    "w": "prices",
+    "s": 76.585,
+    "e": 76.811
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c086.png",
+  "out0": 75.993,
+  "out1": 76.693
+ },
+ {
+  "t0": 76.711,
+  "t1": 78.329,
+  "text": "within 800m of Thomson",
+  "cue": [
+   {
+    "w": "within",
+    "s": 76.811,
+    "e": 77.159
+   },
+   {
+    "w": "800m",
+    "s": 77.159,
+    "e": 77.855
+   },
+   {
+    "w": "of",
+    "s": 77.855,
+    "e": 78.116
+   },
+   {
+    "w": "Thomson",
+    "s": 78.116,
+    "e": 78.429
+   }
+  ],
+  "src": "body",
+  "dev": "pin_radius",
+  "dev_id": 21,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c087.png",
+  "out0": 76.693,
+  "out1": 78.326
+ },
+ {
+  "t0": 78.329,
+  "t1": 78.868,
+  "text": "East Coast Line",
+  "cue": [
+   {
+    "w": "East",
+    "s": 78.429,
+    "e": 78.637
+   },
+   {
+    "w": "Coast",
+    "s": 78.637,
+    "e": 78.794
+   },
+   {
+    "w": "Line",
+    "s": 78.794,
+    "e": 78.968
+   }
+  ],
+  "src": "body",
+  "dev": "pin_radius",
+  "dev_id": 21,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c088.png",
+  "out0": 78.326,
+  "out1": 78.859
+ },
+ {
+  "t0": 78.868,
+  "t1": 79.534,
+  "text": "stations,",
+  "cue": [
+   {
+    "w": "stations,",
+    "s": 78.968,
+    "e": 79.437
+   }
+  ],
+  "src": "body",
+  "dev": "pin_radius",
+  "dev_id": 21,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c089.png",
+  "out0": 78.859,
+  "out1": 79.526
+ },
+ {
+  "t0": 79.534,
+  "t1": 80.769,
+  "text": "up 20.86",
+  "cue": [
+   {
+    "w": "up",
+    "s": 79.634,
+    "e": 79.912
+   },
+   {
+    "w": "20.86",
+    "s": 79.912,
+    "e": 80.869
+   }
+  ],
+  "src": "body",
+  "dev": "pin_radius",
+  "dev_id": 21,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c090.png",
+  "out0": 79.526,
+  "out1": 80.759
+ },
+ {
+  "t0": 80.769,
+  "t1": 81.882,
+  "text": "% across the 4",
+  "cue": [
+   {
+    "w": "%",
+    "s": 80.869,
+    "e": 81.269
+   },
+   {
+    "w": "across",
+    "s": 81.269,
+    "e": 81.582
+   },
+   {
+    "w": "the",
+    "s": 81.582,
+    "e": 81.79
+   },
+   {
+    "w": "4",
+    "s": 81.79,
+    "e": 81.982
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 22,
+  "backdrop": "desk_calculator_maths.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c091.png",
+  "out0": 80.759,
+  "out1": 81.859
+ },
+ {
+  "t0": 81.882,
+  "t1": 82.89,
+  "text": "years while the line",
+  "cue": [
+   {
+    "w": "years",
+    "s": 81.982,
+    "e": 82.347
+   },
+   {
+    "w": "while",
+    "s": 82.347,
+    "e": 82.59
+   },
+   {
+    "w": "the",
+    "s": 82.59,
+    "e": 82.834
+   },
+   {
+    "w": "line",
+    "s": 82.834,
+    "e": 82.99
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 22,
+  "backdrop": "desk_calculator_maths.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c092.png",
+  "out0": 81.859,
+  "out1": 82.859
+ },
+ {
+  "t0": 82.89,
+  "t1": 83.638,
+  "text": "was still being",
+  "cue": [
+   {
+    "w": "was",
+    "s": 82.99,
+    "e": 83.199
+   },
+   {
+    "w": "still",
+    "s": 83.199,
+    "e": 83.477
+   },
+   {
+    "w": "being",
+    "s": 83.477,
+    "e": 83.738
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c093.png",
+  "out0": 82.859,
+  "out1": 83.592
+ },
+ {
+  "t0": 83.638,
+  "t1": 83.965,
+  "text": "built.",
+  "cue": [
+   {
+    "w": "built.",
+    "s": 83.738,
+    "e": 83.877
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c094.png",
+  "out0": 83.592,
+  "out1": 83.926
+ },
+ {
+  "t0": 83.965,
+  "t1": 84.896,
+  "text": "After it opened,",
+  "cue": [
+   {
+    "w": "After",
+    "s": 84.065,
+    "e": 84.325
+   },
+   {
+    "w": "it",
+    "s": 84.325,
+    "e": 84.447
+   },
+   {
+    "w": "opened,",
+    "s": 84.447,
+    "e": 84.795
+   }
+  ],
+  "src": "body",
+  "dev": "versus_bars",
+  "dev_id": 23,
+  "backdrop": "downtown.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": 0.88,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c095.png",
+  "out0": 83.926,
+  "out1": 84.859
+ },
+ {
+  "t0": 84.896,
+  "t1": 86.409,
+  "text": "5.87 in 2",
+  "cue": [
+   {
+    "w": "5.87",
+    "s": 84.996,
+    "e": 85.9
+   },
+   {
+    "w": "in",
+    "s": 85.9,
+    "e": 86.161
+   },
+   {
+    "w": "2",
+    "s": 86.161,
+    "e": 86.509
+   }
+  ],
+  "src": "body",
+  "dev": "versus_bars",
+  "dev_id": 23,
+  "backdrop": "downtown.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": 0.88,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c096.png",
+  "out0": 84.859,
+  "out1": 86.359
+ },
+ {
+  "t0": 86.409,
+  "t1": 87.838,
+  "text": "years, under 3",
+  "cue": [
+   {
+    "w": "years,",
+    "s": 86.509,
+    "e": 87.013
+   },
+   {
+    "w": "under",
+    "s": 87.19,
+    "e": 87.572
+   },
+   {
+    "w": "3",
+    "s": 87.572,
+    "e": 87.938
+   }
+  ],
+  "src": "body",
+  "dev": "versus_bars",
+  "dev_id": 23,
+  "backdrop": "downtown.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": 0.88,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c097.png",
+  "out0": 86.359,
+  "out1": 87.792
+ },
+ {
+  "t0": 87.838,
+  "t1": 88.835,
+  "text": "% a year.",
+  "cue": [
+   {
+    "w": "%",
+    "s": 87.938,
+    "e": 88.233
+   },
+   {
+    "w": "a",
+    "s": 88.233,
+    "e": 88.425
+   },
+   {
+    "w": "year.",
+    "s": 88.425,
+    "e": 88.772
+   }
+  ],
+  "src": "body",
+  "dev": "versus_bars",
+  "dev_id": 23,
+  "backdrop": "downtown.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": 0.88,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c098.png",
+  "out0": 87.792,
+  "out1": 88.792
+ },
+ {
+  "t0": 88.835,
+  "t1": 90.116,
+  "text": "Third, the price.",
+  "cue": [
+   {
+    "w": "Third,",
+    "s": 88.935,
+    "e": 89.23
+   },
+   {
+    "w": "the",
+    "s": 89.396,
+    "e": 89.569
+   },
+   {
+    "w": "price.",
+    "s": 89.569,
+    "e": 90.039
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 24,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "glitch",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c099.png",
+  "out0": 88.792,
+  "out1": 90.059
+ },
+ {
+  "t0": 90.116,
+  "t1": 90.621,
+  "text": "If it launches",
+  "cue": [
+   {
+    "w": "If",
+    "s": 90.216,
+    "e": 90.355
+   },
+   {
+    "w": "it",
+    "s": 90.355,
+    "e": 90.495
+   },
+   {
+    "w": "launches",
+    "s": 90.495,
+    "e": 90.721
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 24,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "glitch",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c100.png",
+  "out0": 90.059,
+  "out1": 90.559
+ },
+ {
+  "t0": 90.621,
+  "t1": 92.551,
+  "text": "at $2,800 to $3,000",
+  "cue": [
+   {
+    "w": "at",
+    "s": 90.721,
+    "e": 90.929
+   },
+   {
+    "w": "$2,800",
+    "s": 90.929,
+    "e": 91.66
+   },
+   {
+    "w": "to",
+    "s": 91.66,
+    "e": 92.025
+   },
+   {
+    "w": "$3,000",
+    "s": 92.025,
+    "e": 92.651
+   }
+  ],
+  "src": "body",
+  "dev": "cost_stack",
+  "dev_id": 25,
+  "backdrop": "desk_realestate_home.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c101.png",
+  "out0": 90.559,
+  "out1": 92.492
+ },
+ {
+  "t0": 92.551,
+  "t1": 93.351,
+  "text": "per square foot,",
+  "cue": [
+   {
+    "w": "per",
+    "s": 92.651,
+    "e": 92.929
+   },
+   {
+    "w": "square",
+    "s": 92.929,
+    "e": 93.173
+   },
+   {
+    "w": "foot,",
+    "s": 93.173,
+    "e": 93.312
+   }
+  ],
+  "src": "body",
+  "dev": "cost_stack",
+  "dev_id": 25,
+  "backdrop": "desk_realestate_home.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c102.png",
+  "out0": 92.492,
+  "out1": 93.292
+ },
+ {
+  "t0": 93.351,
+  "t1": 94.322,
+  "text": "and that's an estimate,",
+  "cue": [
+   {
+    "w": "and",
+    "s": 93.451,
+    "e": 93.503
+   },
+   {
+    "w": "that's",
+    "s": 93.503,
+    "e": 93.799
+   },
+   {
+    "w": "an",
+    "s": 93.799,
+    "e": 93.938
+   },
+   {
+    "w": "estimate,",
+    "s": 93.938,
+    "e": 94.234
+   }
+  ],
+  "src": "body",
+  "dev": "cost_stack",
+  "dev_id": 25,
+  "backdrop": "desk_realestate_home.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c103.png",
+  "out0": 93.292,
+  "out1": 94.259
+ },
+ {
+  "t0": 94.322,
+  "t1": 95.413,
+  "text": "nothing official yet,",
+  "cue": [
+   {
+    "w": "nothing",
+    "s": 94.422,
+    "e": 94.683
+   },
+   {
+    "w": "official",
+    "s": 94.683,
+    "e": 94.996
+   },
+   {
+    "w": "yet,",
+    "s": 94.996,
+    "e": 95.326
+   }
+  ],
+  "src": "body",
+  "dev": "cost_stack",
+  "dev_id": 25,
+  "backdrop": "desk_realestate_home.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c104.png",
+  "out0": 94.259,
+  "out1": 95.359
+ },
+ {
+  "t0": 95.413,
+  "t1": 96.526,
+  "text": "a 3-bedroom premium",
+  "cue": [
+   {
+    "w": "a",
+    "s": 95.513,
+    "e": 95.618
+   },
+   {
+    "w": "3-bedroom",
+    "s": 95.618,
+    "e": 96.192
+   },
+   {
+    "w": "premium",
+    "s": 96.192,
+    "e": 96.626
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c105.png",
+  "out0": 95.359,
+  "out1": 96.459
+ },
+ {
+  "t0": 96.526,
+  "t1": 97.152,
+  "text": "lands about",
+  "cue": [
+   {
+    "w": "lands",
+    "s": 96.626,
+    "e": 96.905
+   },
+   {
+    "w": "about",
+    "s": 96.905,
+    "e": 97.252
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c106.png",
+  "out0": 96.459,
+  "out1": 97.092
+ },
+ {
+  "t0": 97.152,
+  "t1": 98.039,
+  "text": "$3.24",
+  "cue": [
+   {
+    "w": "$3.24",
+    "s": 97.252,
+    "e": 98.139
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 26,
+  "backdrop": "sg_condo_cloudy.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "burst",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c107.png",
+  "out0": 97.092,
+  "out1": 97.992
+ },
+ {
+  "t0": 98.039,
+  "t1": 98.819,
+  "text": "million.",
+  "cue": [
+   {
+    "w": "million.",
+    "s": 98.139,
+    "e": 98.731
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 26,
+  "backdrop": "sg_condo_cloudy.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "burst",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c108.png",
+  "out0": 97.992,
+  "out1": 98.759
+ },
+ {
+  "t0": 98.819,
+  "t1": 99.758,
+  "text": "The highest average",
+  "cue": [
+   {
+    "w": "The",
+    "s": 98.919,
+    "e": 99.145
+   },
+   {
+    "w": "highest",
+    "s": 99.145,
+    "e": 99.527
+   },
+   {
+    "w": "average",
+    "s": 99.527,
+    "e": 99.858
+   }
+  ],
+  "src": "body",
+  "dev": "stat_pop",
+  "dev_id": 26,
+  "backdrop": "sg_condo_cloudy.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "burst",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c109.png",
+  "out0": 98.759,
+  "out1": 99.692
+ },
+ {
+  "t0": 99.758,
+  "t1": 100.992,
+  "text": "quantum a 3-bedroom",
+  "cue": [
+   {
+    "w": "quantum",
+    "s": 99.858,
+    "e": 100.24
+   },
+   {
+    "w": "a",
+    "s": 100.24,
+    "e": 100.501
+   },
+   {
+    "w": "3-bedroom",
+    "s": 100.501,
+    "e": 101.092
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c110.png",
+  "out0": 99.692,
+  "out1": 100.926
+ },
+ {
+  "t0": 100.992,
+  "t1": 101.653,
+  "text": "has been fetching",
+  "cue": [
+   {
+    "w": "has",
+    "s": 101.092,
+    "e": 101.214
+   },
+   {
+    "w": "been",
+    "s": 101.214,
+    "e": 101.423
+   },
+   {
+    "w": "fetching",
+    "s": 101.423,
+    "e": 101.753
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c111.png",
+  "out0": 100.926,
+  "out1": 101.592
+ },
+ {
+  "t0": 101.653,
+  "t1": 102.523,
+  "text": "in District 20",
+  "cue": [
+   {
+    "w": "in",
+    "s": 101.753,
+    "e": 101.945
+   },
+   {
+    "w": "District",
+    "s": 101.945,
+    "e": 102.275
+   },
+   {
+    "w": "20",
+    "s": 102.275,
+    "e": 102.623
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c112.png",
+  "out0": 101.592,
+  "out1": 102.459
+ },
+ {
+  "t0": 102.523,
+  "t1": 103.34,
+  "text": "resale.",
+  "cue": [
+   {
+    "w": "resale.",
+    "s": 102.623,
+    "e": 103.44
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c113.png",
+  "out0": 102.459,
+  "out1": 103.292
+ },
+ {
+  "t0": 103.34,
+  "t1": 104.714,
+  "text": "Near an MRT,",
+  "cue": [
+   {
+    "w": "Near",
+    "s": 103.44,
+    "e": 103.875
+   },
+   {
+    "w": "an",
+    "s": 103.875,
+    "e": 104.066
+   },
+   {
+    "w": "MRT,",
+    "s": 104.066,
+    "e": 104.658
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 27,
+  "backdrop": "sg_old_building.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c114.png",
+  "out0": 103.292,
+  "out1": 104.659
+ },
+ {
+  "t0": 104.714,
+  "t1": 105.479,
+  "text": "near a top-primary",
+  "cue": [
+   {
+    "w": "near",
+    "s": 104.814,
+    "e": 104.971
+   },
+   {
+    "w": "a",
+    "s": 104.971,
+    "e": 105.162
+   },
+   {
+    "w": "top-primary",
+    "s": 105.162,
+    "e": 105.579
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 27,
+  "backdrop": "sg_old_building.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c115.png",
+  "out0": 104.659,
+  "out1": 105.425
+ },
+ {
+  "t0": 105.479,
+  "t1": 106.682,
+  "text": "school, under 10",
+  "cue": [
+   {
+    "w": "school,",
+    "s": 105.579,
+    "e": 105.858
+   },
+   {
+    "w": "under",
+    "s": 106.035,
+    "e": 106.382
+   },
+   {
+    "w": "10",
+    "s": 106.382,
+    "e": 106.782
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 27,
+  "backdrop": "sg_old_building.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c116.png",
+  "out0": 105.425,
+  "out1": 106.625
+ },
+ {
+  "t0": 106.682,
+  "t1": 107.439,
+  "text": "years old,",
+  "cue": [
+   {
+    "w": "years",
+    "s": 106.782,
+    "e": 107.148
+   },
+   {
+    "w": "old,",
+    "s": 107.148,
+    "e": 107.356
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 27,
+  "backdrop": "sg_old_building.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c117.png",
+  "out0": 106.625,
+  "out1": 107.392
+ },
+ {
+  "t0": 107.439,
+  "t1": 107.665,
+  "text": "from",
+  "cue": [
+   {
+    "w": "from",
+    "s": 107.539,
+    "e": 107.765
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 28,
+  "backdrop": "sg_cbd_boatquay.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c118.png",
+  "out0": 107.392,
+  "out1": 107.625
+ },
+ {
+  "t0": 107.665,
+  "t1": 109.352,
+  "text": "$2.7 million to $2.8",
+  "cue": [
+   {
+    "w": "$2.7",
+    "s": 107.765,
+    "e": 108.357
+   },
+   {
+    "w": "million",
+    "s": 108.357,
+    "e": 108.618
+   },
+   {
+    "w": "to",
+    "s": 108.618,
+    "e": 108.826
+   },
+   {
+    "w": "$2.8",
+    "s": 108.826,
+    "e": 109.452
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 28,
+  "backdrop": "sg_cbd_boatquay.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c119.png",
+  "out0": 107.625,
+  "out1": 109.325
+ },
+ {
+  "t0": 109.352,
+  "t1": 110.445,
+  "text": "plus million.",
+  "cue": [
+   {
+    "w": "plus",
+    "s": 109.452,
+    "e": 109.765
+   },
+   {
+    "w": "million.",
+    "s": 109.765,
+    "e": 110.339
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 28,
+  "backdrop": "sg_cbd_boatquay.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c120.png",
+  "out0": 109.325,
+  "out1": 110.392
+ },
+ {
+  "t0": 110.445,
+  "t1": 111.193,
+  "text": "half a million",
+  "cue": [
+   {
+    "w": "half",
+    "s": 110.545,
+    "e": 110.841
+   },
+   {
+    "w": "a",
+    "s": 110.841,
+    "e": 110.998
+   },
+   {
+    "w": "million",
+    "s": 110.998,
+    "e": 111.293
+   }
+  ],
+  "src": "body",
+  "dev": "dread_plate",
+  "dev_id": 29,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": 0.9,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c121.png",
+  "out0": 110.392,
+  "out1": 111.125
+ },
+ {
+  "t0": 111.193,
+  "t1": 112.341,
+  "text": "more above the average",
+  "cue": [
+   {
+    "w": "more",
+    "s": 111.293,
+    "e": 111.571
+   },
+   {
+    "w": "above",
+    "s": 111.571,
+    "e": 111.919
+   },
+   {
+    "w": "the",
+    "s": 111.919,
+    "e": 112.163
+   },
+   {
+    "w": "average",
+    "s": 112.163,
+    "e": 112.441
+   }
+  ],
+  "src": "body",
+  "dev": "dread_plate",
+  "dev_id": 29,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": 0.9,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c122.png",
+  "out0": 111.125,
+  "out1": 112.259
+ },
+ {
+  "t0": 112.341,
+  "t1": 113.576,
+  "text": "district is currently",
+  "cue": [
+   {
+    "w": "district",
+    "s": 112.441,
+    "e": 112.789
+   },
+   {
+    "w": "is",
+    "s": 112.789,
+    "e": 113.137
+   },
+   {
+    "w": "currently",
+    "s": 113.137,
+    "e": 113.676
+   }
+  ],
+  "src": "body",
+  "dev": "dread_plate",
+  "dev_id": 29,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": 0.9,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c123.png",
+  "out0": 112.259,
+  "out1": 113.492
+ },
+ {
+  "t0": 113.576,
+  "t1": 115.088,
+  "text": "transacting and proving.",
+  "cue": [
+   {
+    "w": "transacting",
+    "s": 113.676,
+    "e": 114.267
+   },
+   {
+    "w": "and",
+    "s": 114.267,
+    "e": 114.702
+   },
+   {
+    "w": "proving.",
+    "s": 114.702,
+    "e": 115.015
+   }
+  ],
+  "src": "body",
+  "dev": "dread_plate",
+  "dev_id": 29,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": 0.9,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c124.png",
+  "out0": 113.492,
+  "out1": 114.992
+ },
+ {
+  "t0": 115.088,
+  "t1": 116.061,
+  "text": "Thomson Reserve review",
+  "cue": [
+   {
+    "w": "Thomson",
+    "s": 115.188,
+    "e": 115.535
+   },
+   {
+    "w": "Reserve",
+    "s": 115.535,
+    "e": 115.848
+   },
+   {
+    "w": "review",
+    "s": 115.848,
+    "e": 116.161
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 30,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "transition",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": true,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c125.png",
+  "out0": 114.992,
+  "out1": 115.958
+ },
+ {
+  "t0": 116.061,
+  "t1": 116.803,
+  "text": "is in October,",
+  "cue": [
+   {
+    "w": "is",
+    "s": 116.161,
+    "e": 116.335
+   },
+   {
+    "w": "in",
+    "s": 116.335,
+    "e": 116.457
+   },
+   {
+    "w": "October,",
+    "s": 116.457,
+    "e": 116.84
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 30,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "transition",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c126.png",
+  "out0": 115.958,
+  "out1": 116.691
+ },
+ {
+  "t0": 116.803,
+  "t1": 117.93,
+  "text": "so I'm running",
+  "cue": [
+   {
+    "w": "so",
+    "s": 116.903,
+    "e": 117.285
+   },
+   {
+    "w": "I'm",
+    "s": 117.285,
+    "e": 117.563
+   },
+   {
+    "w": "running",
+    "s": 117.563,
+    "e": 117.772
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 30,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "transition",
+  "treat": null,
+  "frame": false,
+  "motion": "whip",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c127.png",
+  "out0": 116.691,
+  "out1": 117.824
+ },
+ {
+  "t0": 117.93,
+  "t1": 118.487,
+  "text": "live webinar",
+  "cue": [
+   {
+    "w": "live",
+    "s": 118.03,
+    "e": 118.326
+   },
+   {
+    "w": "webinar",
+    "s": 118.326,
+    "e": 118.587
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 31,
+  "backdrop": "desk_laptop_typing.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c128.png",
+  "out0": 117.824,
+  "out1": 118.391
+ },
+ {
+  "t0": 118.487,
+  "t1": 119.582,
+  "text": "session, giving you the",
+  "cue": [
+   {
+    "w": "session,",
+    "s": 118.587,
+    "e": 118.934
+   },
+   {
+    "w": "giving",
+    "s": 119.039,
+    "e": 119.248
+   },
+   {
+    "w": "you",
+    "s": 119.248,
+    "e": 119.474
+   },
+   {
+    "w": "the",
+    "s": 119.474,
+    "e": 119.682
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 31,
+  "backdrop": "desk_laptop_typing.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c129.png",
+  "out0": 118.391,
+  "out1": 119.491
+ },
+ {
+  "t0": 119.582,
+  "t1": 121.026,
+  "text": "insights of my own",
+  "cue": [
+   {
+    "w": "insights",
+    "s": 119.682,
+    "e": 120.117
+   },
+   {
+    "w": "of",
+    "s": 120.117,
+    "e": 120.465
+   },
+   {
+    "w": "my",
+    "s": 120.465,
+    "e": 120.778
+   },
+   {
+    "w": "own",
+    "s": 120.778,
+    "e": 121.126
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 31,
+  "backdrop": "desk_laptop_typing.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c130.png",
+  "out0": 119.491,
+  "out1": 120.924
+ },
+ {
+  "t0": 121.026,
+  "t1": 121.878,
+  "text": "full decision-making",
+  "cue": [
+   {
+    "w": "full",
+    "s": 121.126,
+    "e": 121.456
+   },
+   {
+    "w": "decision-making",
+    "s": 121.456,
+    "e": 121.978
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c131.png",
+  "out0": 120.924,
+  "out1": 121.791
+ },
+ {
+  "t0": 121.878,
+  "t1": 123.53,
+  "text": "process and the analysis",
+  "cue": [
+   {
+    "w": "process",
+    "s": 121.978,
+    "e": 122.448
+   },
+   {
+    "w": "and",
+    "s": 122.448,
+    "e": 122.969
+   },
+   {
+    "w": "the",
+    "s": 122.969,
+    "e": 123.352
+   },
+   {
+    "w": "analysis",
+    "s": 123.352,
+    "e": 123.63
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c132.png",
+  "out0": 121.791,
+  "out1": 123.457
+ },
+ {
+  "t0": 123.53,
+  "t1": 124.608,
+  "text": "on buying Thomson",
+  "cue": [
+   {
+    "w": "on",
+    "s": 123.63,
+    "e": 124.1
+   },
+   {
+    "w": "buying",
+    "s": 124.1,
+    "e": 124.326
+   },
+   {
+    "w": "Thomson",
+    "s": 124.326,
+    "e": 124.708
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c133.png",
+  "out0": 123.457,
+  "out1": 124.524
+ },
+ {
+  "t0": 124.608,
+  "t1": 124.956,
+  "text": "Reserve",
+  "cue": [
+   {
+    "w": "Reserve",
+    "s": 124.708,
+    "e": 125.056
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c134.png",
+  "out0": 124.524,
+  "out1": 124.857
+ },
+ {
+  "t0": 124.956,
+  "t1": 126.226,
+  "text": "as my next",
+  "cue": [
+   {
+    "w": "as",
+    "s": 125.056,
+    "e": 125.682
+   },
+   {
+    "w": "my",
+    "s": 125.682,
+    "e": 126.1
+   },
+   {
+    "w": "next",
+    "s": 126.1,
+    "e": 126.326
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 32,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "family_showflat_model_a.png",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c135.png",
+  "out0": 124.857,
+  "out1": 126.124
+ },
+ {
+  "t0": 126.226,
+  "t1": 128.591,
+  "text": "property and how",
+  "cue": [
+   {
+    "w": "property",
+    "s": 126.326,
+    "e": 126.882
+   },
+   {
+    "w": "and",
+    "s": 126.882,
+    "e": 128.343
+   },
+   {
+    "w": "how",
+    "s": 128.343,
+    "e": 128.691
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 32,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": "family_showflat_model_a.png",
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c136.png",
+  "out0": 126.124,
+  "out1": 128.491
+ },
+ {
+  "t0": 128.591,
+  "t1": 129.095,
+  "text": "I will be",
+  "cue": [
+   {
+    "w": "I",
+    "s": 128.691,
+    "e": 128.865
+   },
+   {
+    "w": "will",
+    "s": 128.865,
+    "e": 129.021
+   },
+   {
+    "w": "be",
+    "s": 129.021,
+    "e": 129.195
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c137.png",
+  "out0": 128.491,
+  "out1": 128.991
+ },
+ {
+  "t0": 129.095,
+  "t1": 130.4,
+  "text": "preparing before and",
+  "cue": [
+   {
+    "w": "preparing",
+    "s": 129.195,
+    "e": 129.421
+   },
+   {
+    "w": "before",
+    "s": 129.421,
+    "e": 129.961
+   },
+   {
+    "w": "and",
+    "s": 129.961,
+    "e": 130.5
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c138.png",
+  "out0": 128.991,
+  "out1": 130.291
+ },
+ {
+  "t0": 130.4,
+  "t1": 131.321,
+  "text": "during the ballot,",
+  "cue": [
+   {
+    "w": "during",
+    "s": 130.5,
+    "e": 130.813
+   },
+   {
+    "w": "the",
+    "s": 130.813,
+    "e": 131.021
+   },
+   {
+    "w": "ballot,",
+    "s": 131.021,
+    "e": 131.23
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c139.png",
+  "out0": 130.291,
+  "out1": 131.224
+ },
+ {
+  "t0": 131.321,
+  "t1": 132.156,
+  "text": "the exact price",
+  "cue": [
+   {
+    "w": "the",
+    "s": 131.421,
+    "e": 131.717
+   },
+   {
+    "w": "exact",
+    "s": 131.717,
+    "e": 131.925
+   },
+   {
+    "w": "price",
+    "s": 131.925,
+    "e": 132.256
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c140.png",
+  "out0": 131.224,
+  "out1": 132.057
+ },
+ {
+  "t0": 132.156,
+  "t1": 132.817,
+  "text": "I walk away",
+  "cue": [
+   {
+    "w": "I",
+    "s": 132.256,
+    "e": 132.499
+   },
+   {
+    "w": "walk",
+    "s": 132.499,
+    "e": 132.69
+   },
+   {
+    "w": "away",
+    "s": 132.69,
+    "e": 132.917
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c141.png",
+  "out0": 132.057,
+  "out1": 132.724
+ },
+ {
+  "t0": 132.817,
+  "t1": 133.776,
+  "text": "at, which stacks",
+  "cue": [
+   {
+    "w": "at,",
+    "s": 132.917,
+    "e": 133.177
+   },
+   {
+    "w": "which",
+    "s": 133.337,
+    "e": 133.633
+   },
+   {
+    "w": "stacks",
+    "s": 133.633,
+    "e": 133.876
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c142.png",
+  "out0": 132.724,
+  "out1": 133.691
+ },
+ {
+  "t0": 133.776,
+  "t1": 134.924,
+  "text": "I go for and",
+  "cue": [
+   {
+    "w": "I",
+    "s": 133.876,
+    "e": 134.12
+   },
+   {
+    "w": "go",
+    "s": 134.12,
+    "e": 134.311
+   },
+   {
+    "w": "for",
+    "s": 134.311,
+    "e": 134.694
+   },
+   {
+    "w": "and",
+    "s": 134.694,
+    "e": 135.024
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c143.png",
+  "out0": 133.691,
+  "out1": 134.824
+ },
+ {
+  "t0": 134.924,
+  "t1": 135.602,
+  "text": "which I wouldn't",
+  "cue": [
+   {
+    "w": "which",
+    "s": 135.024,
+    "e": 135.25
+   },
+   {
+    "w": "I",
+    "s": 135.25,
+    "e": 135.459
+   },
+   {
+    "w": "wouldn't",
+    "s": 135.459,
+    "e": 135.702
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c144.png",
+  "out0": 134.824,
+  "out1": 135.491
+ },
+ {
+  "t0": 135.602,
+  "t1": 136.454,
+  "text": "touch at any",
+  "cue": [
+   {
+    "w": "touch",
+    "s": 135.702,
+    "e": 135.998
+   },
+   {
+    "w": "at",
+    "s": 135.998,
+    "e": 136.259
+   },
+   {
+    "w": "any",
+    "s": 136.259,
+    "e": 136.554
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c145.png",
+  "out0": 135.491,
+  "out1": 136.357
+ },
+ {
+  "t0": 136.454,
+  "t1": 137.926,
+  "text": "price, how I prepare",
+  "cue": [
+   {
+    "w": "price,",
+    "s": 136.554,
+    "e": 136.954
+   },
+   {
+    "w": "how",
+    "s": 137.122,
+    "e": 137.435
+   },
+   {
+    "w": "I",
+    "s": 137.435,
+    "e": 137.713
+   },
+   {
+    "w": "prepare",
+    "s": 137.713,
+    "e": 138.026
+   }
+  ],
+  "src": "body",
+  "dev": "checklist",
+  "dev_id": 33,
+  "backdrop": "sg_flyer_wheel.mp4",
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c146.png",
+  "out0": 136.357,
+  "out1": 137.824
+ },
+ {
+  "t0": 137.926,
+  "t1": 139.967,
+  "text": "before, during and after",
+  "cue": [
+   {
+    "w": "before,",
+    "s": 138.026,
+    "e": 138.653
+   },
+   {
+    "w": "during",
+    "s": 138.833,
+    "e": 139.25
+   },
+   {
+    "w": "and",
+    "s": 139.25,
+    "e": 139.702
+   },
+   {
+    "w": "after",
+    "s": 139.702,
+    "e": 140.067
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 34,
+  "backdrop": "desk_calendar_calc.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c147.png",
+  "out0": 137.824,
+  "out1": 139.857
+ },
+ {
+  "t0": 139.967,
+  "t1": 140.646,
+  "text": "for the ballot",
+  "cue": [
+   {
+    "w": "for",
+    "s": 140.067,
+    "e": 140.415
+   },
+   {
+    "w": "the",
+    "s": 140.415,
+    "e": 140.589
+   },
+   {
+    "w": "ballot",
+    "s": 140.589,
+    "e": 140.746
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 34,
+  "backdrop": "desk_calendar_calc.mp4",
+  "split": true,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c148.png",
+  "out0": 139.857,
+  "out1": 140.524
+ },
+ {
+  "t0": 140.646,
+  "t1": 141.394,
+  "text": "so I'm not",
+  "cue": [
+   {
+    "w": "so",
+    "s": 140.746,
+    "e": 140.989
+   },
+   {
+    "w": "I'm",
+    "s": 140.989,
+    "e": 141.233
+   },
+   {
+    "w": "not",
+    "s": 141.233,
+    "e": 141.494
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c149.png",
+  "out0": 140.524,
+  "out1": 141.257
+ },
+ {
+  "t0": 141.394,
+  "t1": 142.472,
+  "text": "deciding under pressure",
+  "cue": [
+   {
+    "w": "deciding",
+    "s": 141.494,
+    "e": 141.841
+   },
+   {
+    "w": "under",
+    "s": 141.841,
+    "e": 142.294
+   },
+   {
+    "w": "pressure",
+    "s": 142.294,
+    "e": 142.572
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c150.png",
+  "out0": 141.257,
+  "out1": 142.324
+ },
+ {
+  "t0": 142.472,
+  "t1": 143.453,
+  "text": "on that day,",
+  "cue": [
+   {
+    "w": "on",
+    "s": 142.572,
+    "e": 142.885
+   },
+   {
+    "w": "that",
+    "s": 142.885,
+    "e": 143.024
+   },
+   {
+    "w": "day,",
+    "s": 143.024,
+    "e": 143.337
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c151.png",
+  "out0": 142.324,
+  "out1": 143.291
+ },
+ {
+  "t0": 143.453,
+  "t1": 144.932,
+  "text": "and whether this works",
+  "cue": [
+   {
+    "w": "and",
+    "s": 143.553,
+    "e": 144.092
+   },
+   {
+    "w": "whether",
+    "s": 144.092,
+    "e": 144.44
+   },
+   {
+    "w": "this",
+    "s": 144.44,
+    "e": 144.753
+   },
+   {
+    "w": "works",
+    "s": 144.753,
+    "e": 145.032
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c152.png",
+  "out0": 143.291,
+  "out1": 144.757
+ },
+ {
+  "t0": 144.932,
+  "t1": 145.314,
+  "text": "as",
+  "cue": [
+   {
+    "w": "as",
+    "s": 145.032,
+    "e": 145.414
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c153.png",
+  "out0": 144.757,
+  "out1": 145.124
+ },
+ {
+  "t0": 145.314,
+  "t1": 145.61,
+  "text": "a second",
+  "cue": [
+   {
+    "w": "a",
+    "s": 145.414,
+    "e": 145.484
+   },
+   {
+    "w": "second",
+    "s": 145.484,
+    "e": 145.71
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 35,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c154.png",
+  "out0": 145.124,
+  "out1": 145.424
+ },
+ {
+  "t0": 145.61,
+  "t1": 146.497,
+  "text": "property at all",
+  "cue": [
+   {
+    "w": "property",
+    "s": 145.71,
+    "e": 146.075
+   },
+   {
+    "w": "at",
+    "s": 146.075,
+    "e": 146.371
+   },
+   {
+    "w": "all",
+    "s": 146.371,
+    "e": 146.597
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 35,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c155.png",
+  "out0": 145.424,
+  "out1": 146.324
+ },
+ {
+  "t0": 146.497,
+  "t1": 148.132,
+  "text": "or only as an",
+  "cue": [
+   {
+    "w": "or",
+    "s": 146.597,
+    "e": 147.345
+   },
+   {
+    "w": "only",
+    "s": 147.345,
+    "e": 147.762
+   },
+   {
+    "w": "as",
+    "s": 147.762,
+    "e": 148.005
+   },
+   {
+    "w": "an",
+    "s": 148.005,
+    "e": 148.232
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 35,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c156.png",
+  "out0": 146.324,
+  "out1": 147.957
+ },
+ {
+  "t0": 148.132,
+  "t1": 148.866,
+  "text": "own stay.",
+  "cue": [
+   {
+    "w": "own",
+    "s": 148.232,
+    "e": 148.475
+   },
+   {
+    "w": "stay.",
+    "s": 148.475,
+    "e": 148.753
+   }
+  ],
+  "src": "body",
+  "dev": "icon_compare",
+  "dev_id": 35,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c157.png",
+  "out0": 147.957,
+  "out1": 148.691
+ },
+ {
+  "t0": 148.866,
+  "t1": 149.597,
+  "text": "If Thomson Reserve",
+  "cue": [
+   {
+    "w": "If",
+    "s": 148.966,
+    "e": 149.175
+   },
+   {
+    "w": "Thomson",
+    "s": 149.175,
+    "e": 149.419
+   },
+   {
+    "w": "Reserve",
+    "s": 149.419,
+    "e": 149.697
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c158.png",
+  "out0": 148.691,
+  "out1": 149.424
+ },
+ {
+  "t0": 149.597,
+  "t1": 150.613,
+  "text": "is on your list,",
+  "cue": [
+   {
+    "w": "is",
+    "s": 149.697,
+    "e": 149.853
+   },
+   {
+    "w": "on",
+    "s": 149.853,
+    "e": 150.027
+   },
+   {
+    "w": "your",
+    "s": 150.027,
+    "e": 150.201
+   },
+   {
+    "w": "list,",
+    "s": 150.201,
+    "e": 150.514
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c159.png",
+  "out0": 149.424,
+  "out1": 150.424
+ },
+ {
+  "t0": 150.613,
+  "t1": 151.413,
+  "text": "come and",
+  "cue": [
+   {
+    "w": "come",
+    "s": 150.713,
+    "e": 151.043
+   },
+   {
+    "w": "and",
+    "s": 151.043,
+    "e": 151.513
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": null,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c160.png",
+  "out0": 150.424,
+  "out1": 151.224
+ },
+ {
+  "t0": 151.413,
+  "t1": 151.935,
+  "text": "pressure-test",
+  "cue": [
+   {
+    "w": "pressure-test",
+    "s": 151.513,
+    "e": 152.035
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 36,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 151.224,
+  "out1": 151.757
+ },
+ {
+  "t0": 151.935,
+  "t1": 152.63,
+  "text": "it with me",
+  "cue": [
+   {
+    "w": "it",
+    "s": 152.035,
+    "e": 152.243
+   },
+   {
+    "w": "with",
+    "s": 152.243,
+    "e": 152.382
+   },
+   {
+    "w": "me",
+    "s": 152.382,
+    "e": 152.73
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 36,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 151.757,
+  "out1": 152.457
+ },
+ {
+  "t0": 152.63,
+  "t1": 153.593,
+  "text": "before the preview,",
+  "cue": [
+   {
+    "w": "before",
+    "s": 152.73,
+    "e": 153.043
+   },
+   {
+    "w": "the",
+    "s": 153.043,
+    "e": 153.269
+   },
+   {
+    "w": "preview,",
+    "s": 153.269,
+    "e": 153.513
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 36,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "drift",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 2,
+  "segment_start": false,
+  "out0": 152.457,
+  "out1": 153.424
+ },
+ {
+  "t0": 153.593,
+  "t1": 154.514,
+  "text": "not after.",
+  "cue": [
+   {
+    "w": "not",
+    "s": 153.693,
+    "e": 153.937
+   },
+   {
+    "w": "after.",
+    "s": 153.937,
+    "e": 154.441
+   }
+  ],
+  "src": "body",
+  "dev": "accum_caption",
+  "dev_id": 36,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": "lightleak",
+  "treat": null,
+  "frame": false,
+  "motion": "push",
+  "cap_y": null,
+  "nocap": true,
+  "zoom": 0,
+  "segment_start": false,
+  "out0": 153.424,
+  "out1": 154.357
+ },
+ {
+  "t0": 154.514,
+  "t1": 154.914,
+  "text": "Click the link",
+  "cue": [
+   {
+    "w": "Click",
+    "s": 154.614,
+    "e": 154.788
+   },
+   {
+    "w": "the",
+    "s": 154.788,
+    "e": 154.909
+   },
+   {
+    "w": "link",
+    "s": 154.909,
+    "e": 155.014
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 37,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": true,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c165.png",
+  "out0": 154.357,
+  "out1": 154.757
+ },
+ {
+  "t0": 154.914,
+  "t1": 155.731,
+  "text": "below and join",
+  "cue": [
+   {
+    "w": "below",
+    "s": 155.014,
+    "e": 155.344
+   },
+   {
+    "w": "and",
+    "s": 155.344,
+    "e": 155.657
+   },
+   {
+    "w": "join",
+    "s": 155.657,
+    "e": 155.831
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 37,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": true,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 0,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c166.png",
+  "out0": 154.757,
+  "out1": 155.591
+ },
+ {
+  "t0": 155.731,
+  "t1": 156.768875,
+  "text": "me live.",
+  "cue": [
+   {
+    "w": "me",
+    "s": 155.831,
+    "e": 156.353
+   },
+   {
+    "w": "live.",
+    "s": 156.353,
+    "e": 156.631
+   }
+  ],
+  "src": "body",
+  "dev": null,
+  "dev_id": 37,
+  "backdrop": null,
+  "split": false,
+  "backdrops": null,
+  "photo": null,
+  "prop": null,
+  "vfx": null,
+  "treat": null,
+  "frame": true,
+  "motion": "punch",
+  "cap_y": null,
+  "nocap": false,
+  "zoom": 2,
+  "segment_start": false,
+  "cap": "H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\build_115\\caps\\c167.png",
+  "out0": 155.591,
+  "out1": 156.591
+ }
+]

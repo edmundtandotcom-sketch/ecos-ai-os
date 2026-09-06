@@ -1,0 +1,20 @@
+== TIGHTEN ==
+[in#0 @ 000002adbe24fb80] Impossible to open 'H:/Shared drives/00_E.C.O.S/03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-09_Webinar/05_RENDER/work/_tight_s120m/seg000.mp4'
+[in#0 @ 000002adbe2cf900] Error opening input: No such file or directory
+Error opening input file H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\work\_tight_s120m\concat.txt.
+Error opening input files: No such file or directory
+Traceback (most recent call last):
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 702, in <module>
+    print("== COMPOSE ==")
+    ^^^^^^
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 693, in main
+    ap.add_argument("--speed", type=float, default=1.15)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 249, in tighten
+    "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-09_Webinar\05_RENDER\render_webinar.py", line 85, in run
+    
+  File "C:\Users\Admin\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', 'H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\_tight_s120m\\concat.txt', '-c', 'copy', 'H:\\Shared drives\\00_E.C.O.S\\03_ACTIVE_CAMPAIGNS\\01_ACTIVE\\2026-09_Webinar\\05_RENDER\\work\\_tight_s120m.mp4']' returned non-zero exit status 4294967294.

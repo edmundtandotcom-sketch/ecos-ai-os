@@ -34,7 +34,10 @@ OVER_SPEAKER = DV.OVER_SPEAKER | HD.OVER_SPEAKER
 
 HERE = Path(__file__).parent
 CAMPAIGN = HERE.parent
-WORK = HERE / "work"
+# Working files live on the LOCAL disk. Drive File Stream locks freshly
+# written files while it uploads them (PermissionError on unlink, 2026-09-05)
+# and the shot cache is thousands of small encodes. Only out/ stays on Drive.
+WORK = Path(r"E:\REMOTION\work\webinar_2026-09")
 OUT = HERE / "out"
 SOURCES = {"hooks": CAMPAIGN / "1-Webinar Hooks.mp4",
            "body": CAMPAIGN / "2-Webinar Body.mp4"}
@@ -48,19 +51,22 @@ SG_BROLL = [p.name for p in sorted(BROLL_DIR.glob("*.mp4"))]
 VFX_MANIFEST = json.loads((VFX / "manifest.json").read_text(encoding="utf-8"))
 
 W, H, FPS = 1080, 1920, 30
-SPEED = FX.HOUSE["speed"]
+SPEED = 1.0   # speed is applied in tighten(); the final pass only mixes
 LOUDNORM_I = -16
 MUSIC_VOL = 0.09
 PROGRESS_BAR = 12
+WHOOSH_PEAK = 0.89   # seconds into whoosh1.mp3 where the impact sits
 GRADE = FX.GRADE
 
 # face centre / eye line in the SOURCE frame (haar on a reference frame)
 FACE = {"hooks": (524, 734), "body": (468, 783)}
 ZOOMS = [1.00, 1.10, 1.22]
 CAP_MAX_WORDS = 3
+CAP_Y = 0.80
+CAP_SIZE = 82
 
 # pause carving
-MAX_GAP, PAD_OUT, PAD_IN = 0.38, 0.22, 0.12
+MAX_GAP, PAD_OUT, PAD_IN = 0.20, 0.10, 0.07
 
 GLUE = [(("$3", ".5"), "$3.5"), (("Park", "Clementis"), "Parc Clematis"),
         (("the", "Triva"), "the Tre Ver"), (("S", "&P"), "S&P"),
@@ -193,62 +199,100 @@ def plan_segments(words, t_lo, t_hi):
             for a, b in segs if b - a > 1.0 / FPS]
 
 
-def tighten(pieces):
+def tighten(pieces, speed=1.0):
     """pieces: [(label, t_lo, t_hi), ...] in edit order.
 
-    Every speech run is encoded on its own (no drift), then stream-copied.
-    Word timings are remapped onto the measured durations. Returns the tight
-    file, the words on its timeline, and a source map (which take each
-    stretch came from - the face position differs per take).
+    SYNC BY CONSTRUCTION. Every segment becomes EXACTLY N video frames
+    (N = round(len/speed*FPS)) and EXACTLY N/FPS seconds of PCM audio, so the
+    concatenated video and the concatenated audio share one timeline to the
+    sample. The old per-segment AAC files left a ~30ms timestamp gap at every
+    join that a player honoured but the final filter graph packed shut - the
+    speech ran 1.8s late by 50s (measured 2026-09-05).
+
+    Returns (tight_video.mp4 [video only], tight_audio.wav, words, smap).
     """
     plan = []
     for label, lo, hi in pieces:
         words = json.loads((WORK / f"words_{label}.json").read_text(encoding="utf-8"))
         for a, b in plan_segments(words, lo, hi):
             plan.append((label, a, b))
-    stamp = WORK / "_tight.json"
-    dest = WORK / "_tight.mp4"
-    segdir = WORK / "_tight"
+    nfs = [int(round((b - a) / speed * FPS)) for _, a, b in plan]
+    tag = f"_s{int(round(speed * 100))}x"   # x = exact-length segments, PCM audio
+    stamp = WORK / f"_tight{tag}.json"
+    vpath = WORK / f"_tight{tag}_v.mp4"
+    apath = WORK / f"_tight{tag}_a.wav"
+    segdir = WORK / f"_tight{tag}"
     segdir.mkdir(parents=True, exist_ok=True)
-    if dest.exists() and stamp.exists() and json.loads(stamp.read_text()) == [list(p) for p in plan]:
-        durs = [dur_of(q) for q in sorted(segdir.glob("seg*.mp4"))]
+    key = json.dumps([list(x) for x in plan])
+    if vpath.exists() and apath.exists() and stamp.exists() and stamp.read_text() == key:
         print(f"  tight cut cached ({len(plan)} segments)")
     else:
-        for old in segdir.glob("seg*.mp4"):
-            old.unlink()
-        parts, durs = [], []
-        for i, (label, a, b) in enumerate(plan):
-            q = segdir / f"seg{i:03d}.mp4"
+        for old in list(segdir.glob("seg*.wav")):
+            try:
+                old.unlink()
+            except PermissionError:
+                pass
+        vparts, aparts = [], []
+        for i, ((label, a, b), N) in enumerate(zip(plan, nfs)):
+            qv = segdir / f"seg{i:03d}.mp4"
+            qa = segdir / f"seg{i:03d}.wav"
+            # --- video: exactly N frames. The phone take drops frames in
+            # bursts, so speed changes go through motion-compensated
+            # interpolation; it repeats its first/last frames, so interpolate
+            # with 2 source frames of context each side and trim to N.
+            e = 2.0 / FPS
+            a2 = max(0.0, a - e)
+            lead = int(round((a - a2) / speed * FPS))
+            vf = f"scale={W}:{H},setsar=1"
+            if speed != 1.0:
+                vf += (f",setpts=PTS/{speed},minterpolate=fps={FPS}:mi_mode=mci:mc_mode=obmc:"
+                       f"me_mode=bilat:search_param=16:scd=none")
+            vf += (f",tpad=stop_mode=clone:stop_duration=1,trim=start_frame={lead}:end_frame={lead + N},"
+                   f"setpts=N/({FPS}*TB)")
+            have = (qv.exists() and int(ffprobe(qv, "stream=nb_frames")["streams"][0]["nb_frames"]) == N)
+            have or run(["ffmpeg", "-y", "-loglevel", "error",
+                 "-ss", f"{a2:.4f}", "-to", f"{b + e:.4f}", "-i", str(SOURCES[label]),
+                 "-vf", vf, "-an", "-frames:v", str(N),
+                 "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-bf", "0",
+                 "-pix_fmt", "yuv420p", "-r", str(FPS), "-video_track_timescale", "90000", str(qv)])
+            # --- audio: exactly N/FPS seconds of PCM from the exact range
+            af = f"atempo={speed}," if speed != 1.0 else ""
+            af += f"apad,atrim=end_sample={N * 48000 // FPS},asetpts=N/SR/TB"
             run(["ffmpeg", "-y", "-loglevel", "error",
-                 "-ss", f"{a:.3f}", "-to", f"{b:.3f}", "-i", str(SOURCES[label]),
-                 "-vf", f"scale={W}:{H},setsar=1",
-                 "-c:v", "libx264", "-preset", "veryfast", "-crf", "16",
-                 "-pix_fmt", "yuv420p", "-r", str(FPS),
-                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
-                 "-video_track_timescale", "90000", str(q)])
-            parts.append(q)
-            durs.append(dur_of(q))
-        lst = segdir / "concat.txt"
-        lst.write_text("".join(f"file '{q.resolve().as_posix()}'\n" for q in parts), encoding="utf-8")
-        run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
-             "-i", str(lst), "-c", "copy", str(dest)])
-        stamp.write_text(json.dumps([list(p) for p in plan]), encoding="utf-8")
+                 "-ss", f"{a:.4f}", "-to", f"{b:.4f}", "-i", str(SOURCES[label]),
+                 "-vn", "-af", af, "-ac", "2", "-ar", "48000", "-c:a", "pcm_s16le", str(qa)])
+            got = int(ffprobe(qv, "stream=nb_frames")["streams"][0]["nb_frames"])
+            if got != N:
+                raise RuntimeError(f"segment {i}: {got} frames, wanted {N}")
+            vparts.append(qv)
+            aparts.append(qa)
+        for parts, dest in ((vparts, vpath), (aparts, apath)):
+            lst = segdir / ("concat_" + dest.suffix[1:] + ".txt")
+            lst.write_text("".join(f"file '{q.resolve().as_posix()}'\n" for q in parts), encoding="utf-8")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
+                 "-i", str(lst), "-c", "copy", str(dest)])
+        nv = int(ffprobe(vpath, "stream=nb_frames")["streams"][0]["nb_frames"])
+        da = dur_of(apath)
+        if nv != sum(nfs) or abs(da - sum(nfs) / FPS) > 0.001:
+            raise RuntimeError(f"tight mismatch: video {nv} frames vs {sum(nfs)}, audio {da:.3f}s vs {sum(nfs)/FPS:.3f}")
+        stamp.write_text(key, encoding="utf-8")
+    durs = [N / FPS for N in nfs]
     out, base, smap = [], 0.0, []
     for (label, a, b), d in zip(plan, durs):
         words = json.loads((WORK / f"words_{label}.json").read_text(encoding="utf-8"))
         for w in words:
             if a - 0.001 <= w["s"] < b:
-                out.append(dict(w=w["w"], s=round(base + max(0.0, w["s"] - a), 3),
-                                e=round(base + min(d, max(0.0, w["e"] - a)), 3)))
+                out.append(dict(w=w["w"], s=round(base + max(0.0, (w["s"] - a) / speed), 3),
+                                e=round(base + min(d, max(0.0, (w["e"] - a) / speed)), 3)))
         smap.append(dict(label=label, src0=a, src1=b, out0=round(base, 3), out1=round(base + d, 3)))
         base += d
     raw = sum(hi - lo for _, lo, hi in pieces)
-    print(f"  tight: {raw:.1f}s -> {base:.1f}s ({(1 - base / raw) * 100:.0f}% dead air removed)")
+    print(f"  tight @{speed:.2f}x: {raw:.1f}s -> {base:.1f}s  ({sum(nfs)} frames, audio {dur_of(apath):.3f}s)")
     out = fix_tokens(out)
     (WORK / "words_tight.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     (WORK / "words_tight.txt").write_text(
         "\n".join(f"{w['s']:7.2f} {w['w']}" for w in out), encoding="utf-8")
-    return dest, out, smap
+    return vpath, apath, out, smap
 
 
 # ============================================================== shots
@@ -311,8 +355,10 @@ def build_shots(spec, words, smap, total):
         cues.append(cur)
     shots = []
     for cue in cues:
-        t0 = max(0.0, cue[0]["s"] - 0.10)
-        t1 = min(total, cue[-1]["e"] + 0.12)
+        # shot boundaries live on the frame grid so the video timeline equals
+        # the audio timeline exactly (sum of nf/FPS == t1)
+        t0 = round(max(0.0, cue[0]["s"] - 0.10) * FPS) / FPS
+        t1 = round(min(total, cue[-1]["e"] + 0.12) * FPS) / FPS
         if t1 - t0 < 0.30:
             continue
         dev = next((x for x in beats if x["t0"] - 0.30 < t0 < x["t1"]), None)
@@ -331,11 +377,12 @@ def build_shots(spec, words, smap, total):
                           treat=(dev or {}).get("treat"),
                           frame=(dev or {}).get("frame", False),
                           motion=(dev or {}).get("motion"),
+                          cap_y=(dev or {}).get("cap_y"),
                           nocap=(dev or {}).get("nocap", False)))
     # continuous audio: each shot runs to the next one's start
     for i in range(len(shots) - 1):
         shots[i]["t1"] = shots[i + 1]["t0"]
-    shots[-1]["t1"] = total
+    shots[-1]["t1"] = round(total * FPS) / FPS
 
     seg_times = []
     for ph in spec.get("segments", []):
@@ -367,29 +414,29 @@ ENC = ["-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420
 
 
 def render_shots(shots, tight, work, endcard=None):
-    """Encode every shot. The shot's caption plate (s["cap"]) is burned in
-    HERE, on a clip whose timestamps start at zero - a single-image input on
-    the long assembled timeline stops compositing a few seconds in on ffmpeg
-    8.1.2 no matter how it is held (loop / tpad / stream_loop all failed,
-    2026-09-04), while the same overlay on a fresh clip always draws."""
+    """Encode every shot from the tight VIDEO, video only, exactly nf frames.
+    Audio is never cut per shot - it comes from the continuous tight track.
+    The shot's caption plate is burned in here (a single-image overlay on the
+    long timeline stops compositing on ffmpeg 8.1.2)."""
     sd = work / "shots"
     sd.mkdir(parents=True, exist_ok=True)
     parts, tl = [], 0.0
     for i, s in enumerate(shots):
-        d = s["t1"] - s["t0"]
-        nf = max(2, int(round(d * FPS)))
-        aud = ["-ss", f"{s['t0']:.3f}", "-to", f"{s['t1']:.3f}", "-i", str(tight)]
-        cap = s.get("cap")
+        nf = int(round((s["t1"] - s["t0"]) * FPS))
+        d = nf / FPS
+        src_in = ["-ss", f"{s['t0'] - 0.5 / FPS:.6f}", "-to", f"{s['t1'] + 0.5 / FPS:.6f}", "-i", str(tight)]
+        cap = s.get("cap") if s.get("cap_burn", True) else None
         cap_sig = hashlib.md5(Path(cap).read_bytes()).hexdigest() if cap else None
         key = json.dumps({k: v for k, v in s.items()
-                          if k not in ("out0", "out1", "dev_id", "text", "cue", "segment_start", "cap")}
-                         | {"cue": [w["w"] for w in s["cue"]], "cap_sig": cap_sig}, sort_keys=True)
+                          if k not in ("out0", "out1", "dev_id", "text", "cue", "segment_start", "cap", "cap_burn")}
+                         | {"cue": [w["w"] for w in s["cue"]], "cap_sig": cap_sig,
+                            "src_file": Path(tight).name, "v": 4}, sort_keys=True)
         p = sd / f"h{hashlib.md5(key.encode()).hexdigest()[:12]}.mp4"
         stamp = p.with_suffix(".json")
         if p.exists() and stamp.exists() and stamp.read_text(encoding="utf-8") == key:
             pass
         else:
-            ins, chain, amap = [], "", "1:a"
+            ins, chain = [], ""
             if s.get("photo"):
                 src = FAMILY / s["photo"] if (FAMILY / s["photo"]).exists() else PROPS / s["photo"]
                 ins = ["-loop", "1", "-framerate", str(FPS), "-t", f"{d:.3f}", "-i", str(src)]
@@ -403,7 +450,6 @@ def render_shots(shots, tight, work, endcard=None):
                 chain = (f"[0:v]scale={W}:{half}:force_original_aspect_ratio=increase,crop={W}:{half},{GRADE}[t];"
                          f"[1:v]scale={W}:{half}:force_original_aspect_ratio=increase,crop={W}:{half},{GRADE}[b];"
                          f"[t][b]vstack=inputs=2,fps={FPS},setsar=1[v0]")
-                amap = "2:a"
             elif s["backdrop"] and s.get("split"):
                 top_h = int(H * 0.50) & ~1
                 bot_h = H - top_h
@@ -424,32 +470,39 @@ def render_shots(shots, tight, work, endcard=None):
                 mv = FX.move(s["motion"], nf)
                 if s.get("frame"):
                     mv += f",{FX.cta_frame()}"
-                ins = []
-                amap = "0:a"
                 chain = f"[0:v]crop={w}:{h}:{x}:{y},scale={W}:{H}:flags=lanczos,{GRADE}{extra},fps={FPS},{mv}[v0]"
-            n_in = len([x for x in ins if x == "-i"]) + 1        # + the tight take
+            n_in = len([x for x in ins if x == "-i"]) + 1        # + the tight video
             if cap:
                 ins_cap = ["-framerate", str(FPS), "-i", str(cap)]
-                chain += f";[{n_in}:v]format=rgba[cp];[v0][cp]overlay=0:0[v]"
+                chain += f";[{n_in}:v]format=rgba[cp];[v0][cp]overlay=0:0[v1]"
             else:
                 ins_cap = []
-                chain += ";[v0]null[v]"
-            run(["ffmpeg", "-y", "-loglevel", "error", *ins, *aud, *ins_cap,
-                 "-filter_complex", chain, "-map", "[v]", "-map", amap,
-                 "-frames:v", str(nf), *ENC, str(p)])
+                chain += ";[v0]null[v1]"
+            chain += f";[v1]setpts=N/({FPS}*TB)[v]"
+            run(["ffmpeg", "-y", "-loglevel", "error", *ins, *src_in, *ins_cap,
+                 "-filter_complex", chain, "-map", "[v]", "-an", "-frames:v", str(nf),
+                 "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-bf", "0", "-pix_fmt", "yuv420p",
+                 "-r", str(FPS), "-video_track_timescale", "90000", str(p)])
+            got = int(ffprobe(p, "stream=nb_frames")["streams"][0]["nb_frames"])
+            if got != nf:
+                raise RuntimeError(f"shot {i}: {got} frames, wanted {nf} ({s['text']})")
         stamp.write_text(key, encoding="utf-8")
         s["out0"] = round(tl, 3)
-        tl += dur_of(p)
+        tl += d
         s["out1"] = round(tl, 3)
+        if abs(s["out0"] - s["t0"]) > 0.002:
+            raise RuntimeError(f"shot {i}: timeline drift {s['out0'] - s['t0']:+.3f}s")
         parts.append(p)
     if endcard:
         p = sd / "s_end.mp4"
+        n_end = int(round(endcard["secs"] * FPS))
         run(["ffmpeg", "-y", "-loglevel", "error",
-             "-f", "lavfi", "-i", f"color=black:s={W}x{H}:r={FPS}:d={endcard['secs']:.3f}",
-             "-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={endcard['secs']:.3f}",
-             "-shortest", *ENC, str(p)])
+             "-f", "lavfi", "-i", f"color=black:s={W}x{H}:r={FPS}:d={n_end / FPS:.4f}",
+             "-frames:v", str(n_end), "-an",
+             "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-bf", "0", "-pix_fmt", "yuv420p",
+             "-r", str(FPS), "-video_track_timescale", "90000", str(p)])
         endcard["out0"] = round(tl, 3)
-        tl += dur_of(p)
+        tl += n_end / FPS
         endcard["out1"] = round(tl, 3)
         parts.append(p)
     lst = work / "shots.txt"
@@ -457,6 +510,9 @@ def render_shots(shots, tight, work, endcard=None):
     cut = work / "_cut.mp4"
     run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
          "-i", str(lst), "-c", "copy", str(cut)])
+    nv = int(ffprobe(cut, "stream=nb_frames")["streams"][0]["nb_frames"])
+    if nv != int(round(tl * FPS)):
+        raise RuntimeError(f"cut has {nv} frames, timeline says {int(round(tl * FPS))}")
     return cut, tl
 
 
@@ -481,8 +537,35 @@ def score_accent(cue):
 
 # ============================================================== compose
 
-def compose(spec, tight, words, smap, out_name):
-    work = WORK / "build"
+def burn_caps_into_device(devdir, t0, t1, shots):
+    """Captions are burned into the SHOT, so an opaque plate (dread, icon
+    compare, pin map, black type) would hide them. Paste each shot's caption
+    plate onto the device frames it overlaps - the band then rides on top of
+    every plate, and nothing single-image is ever overlaid on the timeline."""
+    from PIL import Image
+    frames = sorted(devdir.glob("*.png"))
+    if not frames:
+        return 0
+    n = 0
+    caps = [(sh["out0"], sh["out1"], sh["cap"]) for sh in shots
+            if sh.get("cap") and sh["out1"] > t0 and sh["out0"] < t1]
+    cache = {}
+    for i, fpath in enumerate(frames):
+        t = t0 + i / FPS
+        hit = next((c for a, b, c in caps if a - 0.001 <= t < b), None)
+        if not hit:
+            continue
+        if hit not in cache:
+            cache[hit] = Image.open(hit).convert("RGBA")
+        im = Image.open(fpath).convert("RGBA")
+        im.alpha_composite(cache[hit])
+        im.save(fpath)
+        n += 1
+    return n
+
+
+def compose(spec, tight, tight_a, words, smap, out_name):
+    work = WORK / ("build_" + Path(out_name).stem[-3:])   # one build dir per speed
     work.mkdir(parents=True, exist_ok=True)
     total = dur_of(tight)
     shots, beats = build_shots(spec, words, smap, total)
@@ -495,14 +578,17 @@ def compose(spec, tight, words, smap, out_name):
     capdir.mkdir(parents=True, exist_ok=True)
     n_caps = 0
     for k, sh in enumerate(shots):
-        if sh.get("nocap") or (sh["dev"] and sh["dev"] not in ("icon_row", "lower_ticker", "split_labels")):
+        if sh.get("nocap"):
             continue
         cue = [w["w"] for w in sh["cue"]]
         png = capdir / f"c{k:03d}.png"
-        y = 0.86 if (sh.get("split") or sh.get("backdrops")) else 0.655
+        # one caption band for the whole ad: low (0.80), on the speaker panel
+        # of a split (0.86), or wherever a beat says its plate leaves room
+        y = sh.get("cap_y") or (0.86 if (sh.get("split") or sh.get("backdrops")) else CAP_Y)
         DV.caption_plate(png, cue, accent=score_accent(sh["cue"]),
-                         emoji=DV.pick_emoji(" ".join(cue)), y_frac=y)
+                         emoji=DV.pick_emoji(" ".join(cue)), y_frac=y, size=CAP_SIZE)
         sh["cap"] = str(png)
+        sh["cap_burn"] = not sh.get("dev")      # device shots: paste on the plate frames instead
         n_caps += 1
     print(f"  {n_caps} caption plates")
 
@@ -528,15 +614,17 @@ def compose(spec, tight, words, smap, out_name):
         if not owners:
             print(f"  ! beat {bi} '{b['at']}': no shot claimed it")
             continue
-        t0, t1 = owners[0]["out0"], owners[-1]["out1"]
+        t0 = owners[0]["out0"]
+        t1 = owners[-1]["out1"]
         what = b.get("dev") or b.get("backdrop") or b.get("photo") or b.get("treat") or "shot"
         if not b.get("dev"):
             print(f"  insert  {what:26} {t0:6.2f} -> {t1:6.2f}")
             continue
         d = devdir / f"{bi:02d}_{b['dev']}"
         DEVICES[b["dev"]](d, max(0.8, t1 - t0), **b.get("params", {}))
+        nb = burn_caps_into_device(d, t0, t1, shots)
         dev_overlays.append((d, t0, t1))
-        print(f"  device  {what:26} {t0:6.2f} -> {t1:6.2f}")
+        print(f"  device  {what:26} {t0:6.2f} -> {t1:6.2f}  (+{nb} caption frames)")
     if endcard:
         d = devdir / "99_endcard"
         DEVICES[endcard["dev"]](d, endcard["secs"] + 0.2, **endcard.get("params", {}))
@@ -595,36 +683,41 @@ def compose(spec, tight, words, smap, out_name):
     inputs = [rel(x, work) if isinstance(x, str) and (x.endswith((".png", ".mp4")) and Path(x).is_absolute()) else x
               for x in inputs]
     run(["ffmpeg", "-y", "-loglevel", "error", "-stats", *inputs,
-         "-filter_complex_script", "filter.txt", "-map", "[vout]", "-map", "0:a", *ENC, "_body.mp4"],
+         "-filter_complex_script", "filter.txt", "-map", "[vout]", "-an",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-bf", "0", "-pix_fmt", "yuv420p",
+         "-r", str(FPS), "-video_track_timescale", "90000", "_body.mp4"],
         cwd=work)
 
-    # ---- final: speed, whooshes, bed, loudness, progress bar ----
-    out_d = dur_of(part) / SPEED
-    inputs = ["-i", str(part), "-stream_loop", "-1", "-i", str(AUDIO / FX.HOUSE["music"])]
+    # ---- final: continuous speech track + whooshes + bed, loudness, progress bar ----
+    out_d = dur_of(part)
+    music = spec.get("music", FX.HOUSE["music"])
+    music_p = Path(music) if Path(music).is_absolute() else AUDIO / music
+    inputs = ["-i", str(part), "-i", str(tight_a), "-stream_loop", "-1", "-i", str(music_p)]
     for _ in segs:
         inputs += ["-i", str(AUDIO / FX.HOUSE["whoosh"])]
-    f = []
-    mixin = "[0:a]"
+    f = ["[1:a]apad[sp0]"]           # speech: one PCM track, padded through the endcard
+    mixin = "[sp0]"
     for i, t in enumerate(segs):
-        f.append(f"[{2+i}:a]adelay={int(t*1000)}|{int(t*1000)},volume=0.45[wh{i}]")
+        ms = max(0, int((t - WHOOSH_PEAK) * 1000))
+        f.append(f"[{3+i}:a]adelay={ms}|{ms},volume=0.45[wh{i}]")
         mixin += f"[wh{i}]"
     if segs:
         f.append(f"{mixin}amix=inputs={len(segs)+1}:duration=first:dropout_transition=0,"
-                 f"volume={len(segs)+1}[mx]")
+                 f"volume={len(segs)+1}[sp]")
     else:
-        f.append("[0:a]anull[mx]")
-    f.append(f"[mx]atempo={SPEED}[sp]")
-    f.append(f"[1:a]volume={MUSIC_VOL},afade=t=out:st={out_d-2.0:.2f}:d=2.0[bed]")
+        f.append("[sp0]anull[sp]")
+    mvol = spec.get("music_vol", MUSIC_VOL)
+    f.append(f"[2:a]volume={mvol},afade=t=out:st={out_d-2.0:.2f}:d=2.0[bed]")
     f.append(f"[sp][bed]amix=inputs=2:duration=first:dropout_transition=0,"
-             f"loudnorm=I={LOUDNORM_I}:TP=-1.5:LRA=11[a]")
-    f.append(f"[0:v]setpts=PTS/{SPEED}[vs]")
+             f"loudnorm=I={LOUDNORM_I}:TP=-1.5:LRA=11,aresample=48000[a]")
+    f.append("[0:v]null[vs]")
     f.extend(FX.progress_bar(out_d, src="vs", dst="vout", thickness=PROGRESS_BAR))
     OUT.mkdir(parents=True, exist_ok=True)
     final = OUT / out_name
     run(["ffmpeg", "-y", "-loglevel", "error", "-stats", *inputs,
          "-filter_complex", ";".join(f), "-map", "[vout]", "-map", "[a]", "-t", f"{out_d:.3f}",
          "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
-         "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", str(final)])
+         "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-ar", "48000", str(final)])
     print(f"  OK {final.name}  {dur_of(final):.1f}s, {final.stat().st_size/1e6:.1f} MB")
     return final
 
@@ -632,16 +725,18 @@ def compose(spec, tight, words, smap, out_name):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tighten-only", action="store_true")
+    ap.add_argument("--speed", type=float, default=1.15)
     a = ap.parse_args()
     sys.path.insert(0, str(HERE))
     from spec_webinar import SPEC, PIECES, OUT_NAME
     WORK.mkdir(parents=True, exist_ok=True)
     print("== TIGHTEN ==")
-    tight, words, smap = tighten(PIECES)
+    tight_v, tight_a, words, smap = tighten(PIECES, a.speed)
     if a.tighten_only:
         return
     print("== COMPOSE ==")
-    compose(SPEC, tight, words, smap, OUT_NAME)
+    name = OUT_NAME.replace(".mp4", f"_{int(round(a.speed * 100))}.mp4")
+    compose(SPEC, tight_v, tight_a, words, smap, name)
 
 
 if __name__ == "__main__":

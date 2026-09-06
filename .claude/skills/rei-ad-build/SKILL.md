@@ -75,6 +75,18 @@ Harvesting more: Pixabay via the in-app browser, same-origin `fetch()`, take
 the **`og:image`** tag (never the first CDN URL - often a related thumbnail),
 and **eyeball every batch** before promoting - 24 of 59 were rejected on sight.
 
+## 2c. Review-round rules (Edmund, 2026-09-05)
+
+- **Captions on every shot, one band, always.** A plate never replaces the
+  caption - the viewer loses the audio. Plates leave the band clear
+  (`cap_y` per beat when they cannot).
+- **Speed in the tighten stage with frame blending**, never `setpts` on
+  the final - that judders. Deliver 1.15x and 1.20x when asked to compare.
+- **Condos only** for a condo pitch - no HDB blocks in the inserts.
+- Illustrate a radius claim (`pin_radius`), a forest claim with forest, an
+  MRT claim with a train. Literal beats generic.
+- Faster bed for a fast cut (`bed_powerful_beat_123`).
+
 ## 3. Procedure
 
 1. **Confirm the take and the CTA.** Multi-variant CTA recordings are common —
@@ -155,6 +167,47 @@ Only build multiple variations when Edmund asks for them. Default is ONE ad.
 - **Windows caps a command line at 32K chars.** 114 looped caption inputs
   with absolute Drive paths blew it (`WinError 206`). Write the graph with
   `-filter_complex_script`, run ffmpeg with `cwd=work` and relative inputs.
+
+- **Phone takes drop frames in bursts** (6-7 identical frames). Any speed
+  change or even a straight cut looks jerky unless the tighten stage runs
+  motion-compensated interpolation (`minterpolate ... mi_mode=mci ...
+  me_mode=bilat:search_param=16`). Blend mode ghosts the hands. Check with
+  a per-frame difference series before and after.
+- **Work directory on E:, not on the Drive.** Drive File Stream locks files
+  it is uploading; a 170-shot cache on H: will hit `WinError 32`.
+
+- **Shot audio must end just BEFORE the video** (`atrim=end=nf/30-0.012`).
+  AAC frames are 21.3ms, video frames 33.3ms; if the audio track is the
+  longer stream the concat demuxer offsets the next shot off the frame grid
+  and the CFR re-encode duplicates a frame at the cut - a hitch on every
+  other cut at 60 cuts/min.
+- **One source per caption.** A shot owned by a plate gets its caption pasted
+  onto the plate frames only, never burned into the shot as well - the two
+  disagree by a frame at cue changes and print over each other.
+
+- **`minterpolate` repeats its first and last frames** (it needs two to
+  interpolate). Per-segment interpolation therefore leaves 2 held frames on
+  each side of every tighten join - and shots start on joins. Interpolate
+  with 2 source frames of context on each side and trim them
+  (`trim=start_frame=lead:end_frame=lead+n`); cut the audio from the exact
+  range as a second input.
+
+- **SYNC BY CONSTRUCTION - the rule that replaces all the seam fixes above.**
+  Never build the ad's audio from per-shot or per-segment AAC files. Every
+  AAC encode leaves a ~30ms timestamp gap at its seam; a player honours the
+  gaps (so stage-by-stage checks pass) but the final filter graph packs the
+  samples shut and the speech runs ~33ms late per cut - 1.8s by 50s, on
+  EVERY round until 2026-09-05. The tighten stage now makes each segment
+  EXACTLY N video frames and EXACTLY N*1600 samples of PCM; shots are cut
+  video-only on the frame grid; the final mixes the ONE continuous wav.
+  Assertions at each stage (segment frames, shot frames, cut frames vs
+  timeline, tight audio vs frames) raise instead of shipping drift.
+- **Audit before delivery, against the raw take:** speech offset (<=40ms),
+  video offset on clean shots (0 frames), caption vs spoken word, whoosh
+  impact on the cut, device starts on shot boundaries, held frames.
+  `work/_final_audit2.py` is the template.
+- Whoosh: `adelay` the file so its IMPACT (0.89s into whoosh1.mp3) lands on
+  the cut, not its silent lead-in.
 
 ## 6. Growing the library
 
