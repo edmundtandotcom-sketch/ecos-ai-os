@@ -116,3 +116,62 @@ Freshness audit showed ~30 of 39 media folders were 3-4 weeks stale (regular pul
 | Sarah Lee | 0 active (campaign ended; on-disk retained) |
 Still to sweep (next run): Frank Kern, Dan Lok, Property Exit Advantage, image-only folders (Allan Khazak, Eddy Miranda, Entrepedia, Issac Liu, Real Estate Mentor), + the 18 unresolved-page-ID folders.
 **DURABLE FIX:** scheduled task `rei-swipe-weekly-refresh` (C:\Users\Admin\.claude\scheduled-tasks\) now runs every Monday 09:00 in the desktop app (browser-capable — the cloud routine cannot reach facebook.com), iterating the page-ID registry with the append-only video+s600-image method. This is what makes the pulling actually regular.
+
+## 2026-09-07 — Weekly swipe refresh (`rei-swipe-weekly-refresh`, scheduled task, browser session)
+
+First fully-automated Monday run off `SWIPE_PAGE_ID_REGISTRY.md`. Method: per page ID, load-more loop → **card-scoped** extraction (each ad card's own DOM subtree, not whole-page position mapping — this fixed a mis-mapping where the duplicate `m366` encodings of every video all collapsed onto one library ID), age-filter videos to `asset_age_days < 35`, dedup videos by CDN asset hash (skip the whole group if any of its library IDs is already on disk), prefer the `s600x600` static variant. Append-only; nothing deleted or re-dated.
+
+**Totals: +58 videos and +136 images across 26 folders. All 58 videos thumbnailed and transcribed (faster-whisper small/int8, `language=en` except Abc Sales AI / Thomas Yap). No leftover `.wav`. Integrity check across the whole library: 0 missing thumbnails, 0 missing transcripts.**
+
+### Per-folder deltas
+| Folder | New videos | New images | Folder now | Note |
+|---|---|---|---|---|
+| Authentic Advisory Systems | **+22** | 0 | 24 v | **Biggest delta of the run.** Page ID resolved this run — folder was previously a 2-video stub. 41 active ads, heavy re-upload (same asset under many IDs); 22 distinct assets <35d captured. Two older assets (39d, 57d) age-filtered out. |
+| KS Tan | **+5** | **+35** | 10 v / 45 i | Page ID resolved this run. 43 active ads; large fresh static wave + 5 videos (18-25d). |
+| Damien Tan Real Estate | +5 | +4 | 15 v / 8 i | Direct competitor, still fast-iterating: 4 of 5 new videos are 5-17d old. |
+| Xccelerate Academy | +5 | +1 | 7 v / 6 i | Page ID resolved this run. Brand-new video wave — all 5 videos 3-6 days old, 21-29s cuts. Fast iteration; watch next week. |
+| M H Simon | +4 | 0 | 15 v | Four brand-new videos, all **age 2 days** — a fresh campaign launched over the weekend. |
+| Peng Joon | **+2** | **+21** | 6 v / 59 i | **CAMPAIGN REACTIVATED** (was marked ENDED 2026-08-29). ~210 ad cards under country=ALL / ~41 SG. 2 video assets + 104 static ad cards → **21 distinct creatives** after byte-level dedup (Meta re-uploads the same JPEG per ad, so 83 of the 104 were byte-identical and were pruned in-run). All age 2 days. |
+| Cynric Ho | +2 | 0 | 4 v | Page ID resolved this run. Both new videos 10d. |
+| Dan Lok | +2 | +13 | 13 v / 14 i | First static pull for this folder. 2 fresh videos (4d, 17d). |
+| Ernee Ong | +2 | 0 | 45 v / 22 i | Two 16d videos (11s / 4s — no voiceover, transcripts correctly empty). |
+| Raymondlim.rlc | +2 | +1 | 5 v / 1 i | Page ID resolved this run. |
+| The Freedom Growth Academy | +2 | +1 | 124 v / 6 i | 80 of ~82 cards reached. Only 2 genuinely new assets — the folder is now well-caught-up. |
+| Caleb Sim | +1 | 0 | 91 v / 5 i | 35 of ~39 cards. Hash-dedup did its job: 4 of the 5 ID-level "new" ads were re-uploads of assets already on disk under older IDs — only 1 real new asset. (This is the ID-rotation duplication flagged on 2026-08-28; the asset-hash group check now prevents it.) |
+| CP Homes | +1 | 0 | 2 v | Highest-priority same-lane competitor: one new 13d video (2:29) — their first new creative since 31 Jul. |
+| I Quadrant | +1 | +2 | 15 v / 18 i | New video is **3 days old**. |
+| King Kong Co | +1 | +4 | 10 v / 8 i | 3 more >10min VSLs logged-only (623s, 1727s, 1045s) per the length cap. |
+| The Investor Realtor | +1 | +4 | 14 v / 18 i | New video 5d. |
+| Miles Stutz | 0 | +16 | 41 i | Page ID resolved this run. All 16 current statics new (IDs had rotated). |
+| Eddy Miranda | 0 | +9 | 27 i | All 9 current statics; prior 18 were ID-named from Aug so no base matched — retained per append-only. |
+| Entrepedia | 0 | +9 | 31 i | 31 cards, 22 already on disk. |
+| Issac Liu | 0 | +6 | 12 i | All 6 current statics. |
+| The Investor Realtor / Colin Ee / Jo Tan / Erik Hoffmann / Abc Sales AI / Real Estate Mentor / Rodney Tan | — | +4/+2/+2/+1/+1/+3/+1 | — | Small static deltas. Colin Ee, Jo Tan, Erik Hoffmann, Abc Sales AI refreshed off newly-resolved page IDs. |
+
+### Campaigns that ENDED (0 active ads; on-disk assets retained per append-only)
+| Folder | Was | Verified |
+|---|---|---|
+| Marc Chan | HIGH activity (65 v on disk) | `active_status=active` → 0; `active_status=all` → ~7. Page resolves fine (name renders). **Paused, not a throttle.** |
+| Growth Partners Inc | 14 v / 87 i | 0 active. Same all-status confirmation pattern. |
+| Frank Kern | 5 v / 5 i | 0 active |
+| Adrian Lee | 4 v | 0 active |
+| Allan Khazak | 6 i | 0 active |
+| Property Exit Advantage Singapore | 2 v / 6 i | 0 active |
+| Sarah Lee | 5 v | 0 active (already known) |
+| Thomas Yap | 4 v / 33 i (country=ALL) | still 0 active |
+| FNX Marketing By Finix Group **and** FNX Advertising (1252511721279349) | 5 i / 2 v | **both** pages now 0 active — the whole FNX spend has stopped, not just moved pages. |
+
+Unchanged / already current, 0 new: Beyond Realtors Club, Denise Tan, Legacy Advisors Academy (1 over-cap VSL 682s re-logged), Patricia Ang, Stella Thio, The Right Move, Jason Evonne Property, Networth Builders.
+
+### New page IDs resolved (12 of the 18 previously UNRESOLVED)
+Abc Sales AI · Authentic Advisory Systems · Colin Ee · Cynric Ho · Erik Hoffmann · Jason Evonne Property · Jo Tan · KS Tan · Miles Stutz · Networth Builders (page name "Networth Prop", confirmed against the video already on disk) · Raymondlim.rlc · Xccelerate Academy — all added to `SWIPE_PAGE_ID_REGISTRY.md` and scanned in the same run.
+Still unresolved (6): Escape Uncertainty · Flexionmarketing · Future Adviser Sg · Leads SG · Success Resources · The Producer Formula.
+
+### Throttling
+**None observed.** Interleaved folders returned full result sets throughout the session, and every 0-active folder was re-verified (page name renders; `active_status=all` returns ads for Marc Chan). The zero-result folders are genuine campaign ends.
+
+### Known issues / carry-forward
+- **One image download failed permanently:** Ernee Ong library ID `27801271979474342` (base `710745344_1271765018274735_8665025176488869155`) — the signed CDN URL returned a 22-byte body on both the initial attempt and a retry. Not captured; retry next run.
+- **Carousel ads:** only the first (primary) creative per ad card is saved, matching prior folder contents. Affects Entrepedia / Dan Lok / KS Tan-style multi-image ads.
+- **Static-image duplication:** Meta re-uploads the identical JPEG per ad, giving each a different CDN base, so base-level dedup cannot catch it. This run added a byte-hash prune of *this run's own* new files (never touches previously captured assets): Peng Joon 104→21, and 1 each pruned from Dan Lok / KS Tan / King Kong Co / Erik Hoffmann / Xccelerate Academy.
+- **Extractor fix worth keeping:** whole-page position-mapping of media URLs to the preceding "Library ID" is unsafe — Meta serialises a second (`m366`) encoding of every video in a trailing JSON blob that maps to the wrong ad. Always scope extraction to each card's own element (climb from the "Library ID" text node while the parent still contains exactly one "Library ID").
