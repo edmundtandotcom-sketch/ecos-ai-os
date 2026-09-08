@@ -91,3 +91,16 @@ Thumbs.db
 # NOTE FOR EDMUND: if this ebook IS meant to be version-controlled, delete this
 # line and re-run the snapshot.
 03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA RESIDENCES EBOOK V2 (Updated).pdf
+
+# Claude Code session worktrees: these are embedded git repositories (nested
+# .git dirs). Committing one stores a broken gitlink that no clone can resolve.
+# They are ephemeral session scaffolding, not content — never track them.
+**/.claude/worktrees/
+
+# Oversized PPTX: 140MB, above GitHub's hard 100MB per-file limit — the push is
+# rejected outright. Same rule as THE SERRA ICB DECK.pdf above: per constitution
+# §9 rule 7 this is bulk media and its home is the Asset Library. The file
+# remains on Drive, untouched.
+# NOTE FOR EDMUND: if this deck IS meant to be version-controlled, compress or
+# export it under 100MB, delete this line, and re-run the snapshot.
+03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-09_Webinar/2025 Webinar Masterclass.pptx
