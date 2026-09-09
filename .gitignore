@@ -77,20 +77,20 @@ Thumbs.db
 # its .docx extension so nothing opens it by double-click — it should be renamed
 # or (better, per constitution §9 rule 1) converted to markdown, after which this
 # line can be deleted.
-03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-07_LegacyLaunch_Meta_Wave1/01_CREATIVE/Scripts_Library/ANGLE_05_PORTFOLIO_SEQUENCE/1-LL_ANGLE1_OWNERSHIP_LIABILITY_v1
+**/1-LL_ANGLE1_OWNERSHIP_LIABILITY_v1
 
 # Oversized PDF: 198MB, above GitHub's hard 100MB per-file limit — the push is
 # rejected outright. THE SERRA ICB DECK_compressed.pdf (7.6MB) is tracked in its
 # place and carries the same content. Per constitution §9 rule 7, the full-res
 # original's home is the Asset Library, not Git.
-03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA ICB DECK.pdf
+**/THE SERRA ICB DECK.pdf
 
 # Oversized PDF: 72MB ebook. Under GitHub's 100MB hard limit, but bulk media
 # per constitution §9 rule 7 — same rule as THE SERRA ICB DECK.pdf above. Its
 # home is the Asset Library; the file remains on Drive, untouched.
 # NOTE FOR EDMUND: if this ebook IS meant to be version-controlled, delete this
 # line and re-run the snapshot.
-03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA RESIDENCES EBOOK V2 (Updated).pdf
+**/THE SERRA RESIDENCES EBOOK V2 (Updated).pdf
 
 # Claude Code session worktrees: these are embedded git repositories (nested
 # .git dirs). Committing one stores a broken gitlink that no clone can resolve.
@@ -103,4 +103,4 @@ Thumbs.db
 # remains on Drive, untouched.
 # NOTE FOR EDMUND: if this deck IS meant to be version-controlled, compress or
 # export it under 100MB, delete this line, and re-run the snapshot.
-03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-09_Webinar/2025 Webinar Masterclass.pptx
+**/2025 Webinar Masterclass.pptx

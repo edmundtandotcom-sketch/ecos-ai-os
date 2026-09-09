@@ -4,8 +4,17 @@ filter: **teach WHAT to check, never HOW to check it.** That's the fix for
 the over-teaching pattern — not fewer topics, less depth per topic.
 
 Runtime: **60 minutes flat**, then open Q&A (unbounded).
-Status: v3 — supersedes v2. Structure locked pending Edmund's review of
-placeholders; deck to be built from this separately.
+Status: v3 — module list still governs; the full word-for-word script
+(same folder, `Thomson_Reserve_60min_Webinar_Script_v1.md`, internally
+v4) is now the more current synthesis document — it enriches these same
+modules with concepts pulled from two market decks Edmund shared
+2026-09-09 (GFA Harmonisation, "MRT is a demand driver not a profit
+guarantee," phase-pricing escalation, the Upgraders' Affordability Check)
+and makes the Brunson/Peng Joon/Hormozi skeleton explicit. Read the
+script's own header for the full sourcing note — what was adopted as a
+general concept vs. deliberately left out as another agent's specific
+material. If this structure doc and the script ever disagree on a detail,
+the script is the more recent word.
 
 ---
 

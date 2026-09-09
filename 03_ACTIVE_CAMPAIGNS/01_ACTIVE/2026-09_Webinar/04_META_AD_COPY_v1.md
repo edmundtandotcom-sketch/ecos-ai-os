@@ -40,7 +40,7 @@ Every line is doing one job; nothing is there just to be informative.
 > No hype. No sales pitch. Just the real numbers, live — while there's
 > still time to do something with them.
 >
-> 🎟️ Claim your free seat (limited): [LINK]
+> 🎟️ Claim your free seat (limited): https://legacylaunch.com.sg/webinar
 
 **What changed, and why it's stronger:**
 - **The hook is a threat, not a mood.** "I'm not sure I'm buying it — and
@@ -135,7 +135,7 @@ before preview on anyone registered-but-not-attended.
 
 ## OPEN ITEMS
 
-- [ ] Registration link — replace `[LINK]` before this goes live.
+- [x] Registration link — live: `https://legacylaunch.com.sg/webinar` (added 2026-09-09).
 - [ ] Confirm preview date if a date reference gets added back into any
       headline/description variant.
 - [ ] Pick 2–3 angles to start at the $200–300/day budget — don't split
