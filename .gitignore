@@ -42,6 +42,9 @@
 # ── Never tracked, anywhere ──
 desktop.ini
 Thumbs.db
+# Microsoft Office lock/owner files (created while a .docx/.pptx/.xlsx is open).
+# Ephemeral, hidden, and often unreadable while locked — never content.
+~$*
 .DS_Store
 *.tmp
 
