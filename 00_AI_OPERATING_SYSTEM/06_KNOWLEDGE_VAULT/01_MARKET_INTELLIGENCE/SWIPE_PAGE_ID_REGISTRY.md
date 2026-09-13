@@ -51,6 +51,7 @@ Every weekly refresh (and every `/rei-ads-scan` catch-up) iterates THIS list: fo
 | Networth Builders | 132637119929833 | resolved 2026-09-07; page name "Networth Prop" — CONFIRMED (its 1 active ad matches the video already on disk) |
 | Raymondlim.rlc | 602457776286259 | resolved 2026-09-07 |
 | Xccelerate Academy | 102308099542618 | resolved 2026-09-07; fresh video campaign |
+| Live A Home SG | 103133488962134 | added 2026-09-13; DIRECT competitor (presenter "Kelly"); new-launch webinar funnel (Thomson Reserve, liveahomesg.com) |
 
 ## UNRESOLVED — page ID needs capturing before these can be auto-refreshed
 (Navigate the Ad Library by name, open any ad, read `view_all_page_id` from the URL, add above. Until then these folders will NOT refresh.)
