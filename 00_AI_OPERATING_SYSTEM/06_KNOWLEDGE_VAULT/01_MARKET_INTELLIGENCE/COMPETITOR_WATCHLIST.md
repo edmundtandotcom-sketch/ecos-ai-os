@@ -177,3 +177,71 @@ Still unresolved (6): Escape Uncertainty · Flexionmarketing · Future Adviser S
 - **Carousel ads:** only the first (primary) creative per ad card is saved, matching prior folder contents. Affects Entrepedia / Dan Lok / KS Tan-style multi-image ads.
 - **Static-image duplication:** Meta re-uploads the identical JPEG per ad, giving each a different CDN base, so base-level dedup cannot catch it. This run added a byte-hash prune of *this run's own* new files (never touches previously captured assets): Peng Joon 104→21, and 1 each pruned from Dan Lok / KS Tan / King Kong Co / Erik Hoffmann / Xccelerate Academy.
 - **Extractor fix worth keeping:** whole-page position-mapping of media URLs to the preceding "Library ID" is unsafe — Meta serialises a second (`m366`) encoding of every video in a trailing JSON blob that maps to the wrong ad. Always scope extraction to each card's own element (climb from the "Library ID" text node while the parent still contains exactly one "Library ID").
+
+---
+
+## Weekly refresh — 2026-09-14 (`rei-swipe-weekly-refresh`, browser-side media pull)
+
+**Run totals:** 46 page IDs iterated · **50 new videos** + **260 new static creatives** appended across **26 folders** ·
+1 new page ID resolved (Flexionmarketing) · 4 campaigns ended · 3 campaigns reactivated · **no throttling observed**.
+Append-only throughout: nothing deleted, nothing re-dated.
+
+### Folders with new creatives
+| Folder | +Video | +Static | Now on disk | Notes |
+|---|---|---|---|---|
+| Authentic Advisory Systems | **+14** | 0 | 38 v | **Biggest video delta.** 30+ active, heavy re-upload. 27 recent assets collapsed to 14 distinct creatives — **5 pairs were byte-identical CDN assets under rotated library IDs** (logged as dup, one representative downloaded each). Ages 3–24d. |
+| Abc Sales AI | **+8** | +5 | 24 v / 6 i | Fresh 6-day-old wave. Whisper auto-detect confirmed **all 8 are Chinese (`lang=zh`)** — the non-English exception in the skill is still correct for this advertiser. |
+| Damien Tan Real Estate | +4 | +4 | 19 v / 12 i | Direct competitor, still the fastest-iterating: new videos at 5d / 12d / 12d / 24d. 2 further statics skipped (thumbnail-only, see Known issues). |
+| Issac Liu | **+4** | 0 | 4 v / 12 i | **Format switch:** registry had this folder as *image-only*; it is now video-led — 4 new videos, all age 6d. Registry updated. |
+| Flexionmarketing | **+3** | +18 | 7 v / 20 i | **Page ID resolved this run** (1190074440850416) after being unresolved since 2026-07-31. 12 active ads; all 3 videos are **age 0 — launched today**. |
+| The Investor Realtor | +3 | +7 | 17 v / 25 i | Direct competitor. **All 3 new videos are age 0 (launched today)** — 149s / 144s / 100s, a longer-form format than their previous cuts. Worth a close read next run. |
+| Cynric Ho | +3 | 0 | 7 v | Direct competitor. All 3 videos age 1d — fresh wave. |
+| KS Tan | +3 | **+33** | 13 v / 78 i | 42 active ads (DOM sweep found 12 more than the 30-ad server-render cap). Large static wave + 3 videos (25–30d). |
+| Growth Partners Inc | +2 | **+31** | 16 v / 118 i | **REACTIVATED** — was 0-active on 2026-09-07. 34 active ads, entire wave age 2d. A 3rd video (2502097310257430) is the same asset as 916063884530038 re-uploaded — logged as dup, not downloaded. |
+| FNX Marketing By Finix Group | +2 | +4 | 2 v / 9 i | **REACTIVATED** — both FNX pages were 0-active last week. Spend is back on the sibling page **FNX Advertising (1252511721279349)**; new videos 9d and 2d. Assets filed in the existing FNX folder. |
+| M H Simon | +2 | 0 | 17 v | Two new videos, ages 7d and 8d. |
+| Legacy Advisors Academy | +1 | 0 | 14 v | One new 351s video. **1 over-cap VSL logged-only, not downloaded:** library ID `28087910587497074`, 682s (11m22s) — exceeds the ~10min length cap. |
+| I Quadrant | +1 | +12 | 16 v / 30 i | New video age 6d. |
+| Dan Lok | 0 | **+45** | 13 v / 59 i | Largest static delta. Only recent video (1390575299887379) was already on disk. |
+| Entrepedia | 0 | **+42** | 73 i | Image-only advertiser, large refresh. |
+| Miles Stutz | 0 | +13 | 54 i | Image-only. |
+| I Quadrant / Stella Thio / Beyond Realtors Club / Jo Tan / The Investor Realtor | — | +12 / +9 / +8 / +8 / +7 | — | Static-only deltas. Beyond Realtors Club had **no `02_IMAGES` content at all** before this run — first static capture for that folder. |
+| Erik Hoffmann / Rodney Tan / Ernee Ong / Real Estate Mentor / Abc Sales AI | — | +6 / +5 / +4 / +3 / +5 | — | Small static deltas. |
+| Live A Home SG / Raymondlim.rlc / The Freedom Growth Academy | — | +1 each | — | Marginal. Stella Thio's 12 "recent" videos were all already on disk. |
+
+### Campaigns that ENDED this week (0 active ads; assets retained per append-only)
+| Folder | Was | Verified |
+|---|---|---|
+| King Kong Co (Sabri Suby) | active cross-vertical, 21 >10min VSLs logged | 0 active — campaign ended since 2026-09-07 |
+| Colin Ee | direct competitor, active 2026-09-07 | 0 active — campaign ended |
+| Xccelerate Academy | "fresh video campaign" 2026-09-07 | 0 active — campaign ended (short-lived wave) |
+| Peng Joon | REACTIVATED 2026-09-07 with a ~210-ad wave | 0 active (country=ALL) — **that reactivation wave has now ended**, one week after it started |
+
+Still 0-active (unchanged from last week): Allan Khazak · Frank Kern · Marc Chan · Property Exit Advantage Singapore · Sarah Lee · Thomas Yap · Eddy Miranda · FNX Marketing (original page).
+
+### Reactivated
+**Growth Partners Inc** (0 → 34 ads), **FNX Advertising** (0 → 6 ads), **Adrian Lee** (0 → 3 ads, but every creative is ≥35 days old so nothing was pulled).
+
+### New page IDs resolved
+**Flexionmarketing → 1190074440850416** (exact `page_name` match on the keyword search). Registry now holds **45 resolved IDs**.
+Still unresolved (5): Escape Uncertainty · Future Adviser Sg · Leads SG · Success Resources · The Producer Formula — none return an
+exact page-name match under `country=SG` or `country=ALL`; they need the page opened manually once, or a distinctive brand keyword from their ad copy.
+
+### Throttling
+**None observed.** Every folder returned a full result set; all 0-active folders are genuine campaign ends (not transient blocks) — the
+pages still render their name and ad counts, and previously-ended folders (Growth Partners, FNX) came back with fresh ads this week,
+which is the opposite of what a sustained block would look like.
+
+### Known issues / carry-forward
+- **The `s60x60` → `s600x600` stp rewrite no longer works.** The technique documented in `rei-ads-scan` (2026-08-29) now returns
+  HTTP 403 *"URL signature mismatch"* — Meta tightened per-URL signature validation, so a rewritten stp parameter invalidates the `oh=` hash.
+  **New order of preference:** unresized `original_image_url` (no `stp=` at all — full resolution, often 1638×2048) → a *natively served*
+  `s600x600` URL (these still validate) → skip. Bases that exist only at `s60x60` are 60px thumbnails, not creatives, and are now skipped
+  rather than saved. ~9 such bases were skipped this run (2 Damien Tan, others across Beyond Realtors/Jo Tan/Erik Hoffmann).
+- **Video URLs must come from the rendered DOM.** The server-rendered JSON payload exposes `video_hd_url`/`video_sd_url` **unsigned**; those
+  403 with *"Bad URL hash"*. Only the DOM-materialised URLs carry the `&oh=`/`&oe=` signature. (Static image URLs in the JSON payload *are* signed and work fine.)
+- **Server-render caps at 30 ads.** The ad-library HTML returns only the first 30 cards; folders at exactly 30 need the browser load-more
+  loop to see the rest. This run that mattered for KS Tan (30→42), Growth Partners (30→34) and Authentic Advisory Systems.
+- **Duplicate creatives under rotated library IDs** remain common (Authentic Advisory Systems 5 pairs, Growth Partners 1). Detected by
+  identical CDN asset URL and collapsed to one representative, per the dedupe policy.
+- Carried forward, not re-attempted this run: Ernee Ong library ID `27801271979474342` (image that 403'd on 2026-09-07).
