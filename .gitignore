@@ -66,6 +66,9 @@ Thumbs.db
 *.webm
 *.mp3
 *.wav
+*.m4a
+*.aac
+*.m4v
 *.png
 *.jpg
 *.jpeg
@@ -107,3 +110,11 @@ Thumbs.db
 # NOTE FOR EDMUND: if this deck IS meant to be version-controlled, compress or
 # export it under 100MB, delete this line, and re-run the snapshot.
 **/2025 Webinar Masterclass.pptx
+
+# Extension-less JPEGs: camera/Drive exports that lost their .jpg extension, so
+# the *.jpg rule above does not catch them (same situation as the extension-less
+# Word doc further up). Verified "JPEG image data" by content. Bulk media per
+# constitution §9 rule 7 — home is the Asset Library, not Git.
+# NOTE FOR EDMUND: these are the Continuum shoot stills. Rename them to .jpg (or
+# move them to 01_ASSET_LIBRARY) and this rule keeps them out of Git either way.
+03_ACTIVE_CAMPAIGNS/**/PICTURE [0-9]*

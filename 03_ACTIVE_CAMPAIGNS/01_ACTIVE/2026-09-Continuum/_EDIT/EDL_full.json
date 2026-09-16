@@ -1,0 +1,534 @@
+{
+ "project": "The Continuum Cut",
+ "fps": 30,
+ "cuts": [
+  {
+   "sc": "SC01",
+   "take": "Scene0",
+   "in": 0.0,
+   "out": 19.2,
+   "use": "A-roll",
+   "says": "on the way to a recent new launch... should we be selling"
+  },
+  {
+   "sc": "SC01",
+   "take": "Scene0a",
+   "in": 8.0,
+   "out": 14.0,
+   "use": "B-plate",
+   "says": "MUTE - approach lane"
+  },
+  {
+   "sc": "SC01",
+   "take": "Scene0",
+   "in": 19.2,
+   "out": 30.74,
+   "use": "A-roll",
+   "says": "on the way to the unit at the continuum"
+  },
+  {
+   "sc": "SC01",
+   "take": "Scene0a",
+   "in": 52.0,
+   "out": 58.0,
+   "use": "B-plate",
+   "says": "MUTE - cranes"
+  },
+  {
+   "sc": "SC01",
+   "take": "Scene0",
+   "in": 30.74,
+   "out": 39.4,
+   "use": "A-roll",
+   "says": "holding this freehold or selling it - see you on site"
+  },
+  {
+   "sc": "SC02",
+   "take": "Scene1",
+   "in": 8.1,
+   "out": 16.4,
+   "use": "A-roll",
+   "says": "Behind me is a property I own... finishing touches"
+  },
+  {
+   "sc": "SC02",
+   "take": "Scene1",
+   "in": 17.14,
+   "out": 29.64,
+   "use": "A-roll",
+   "says": "in 2023 they told me I overpaid $2,650 psf"
+  },
+  {
+   "sc": "SC03",
+   "take": "Scene1",
+   "in": 60.24,
+   "out": 64.4,
+   "use": "A-roll",
+   "says": "RETAKE 2 - unproven, expensive, wait for it to drop",
+   "why": "tighter than the 0:29.64 version which runs 14s with dead air"
+  },
+  {
+   "sc": "SC03",
+   "take": "Scene1",
+   "in": 64.8,
+   "out": 69.6,
+   "use": "A-roll",
+   "says": "RETAKE 2 - back on site to decide, whether to sell it",
+   "why": "cleaner than 0:44.72 version ('or keeping it forever')"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 75.16,
+   "out": 88.6,
+   "use": "A-roll",
+   "says": "not the only launch - Parc Clematis 1.15 to 1.525"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 96.74,
+   "out": 102.3,
+   "use": "A-roll",
+   "says": "just sold that, hunting 2.5 to 2.8 next"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 108.52,
+   "out": 117.3,
+   "use": "A-roll",
+   "says": "real purchase price, real loan, real proceeds"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 125.52,
+   "out": 134.3,
+   "use": "A-roll",
+   "says": "projects compared one by one - sell now, later or hold"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 146.07,
+   "out": 148.6,
+   "use": "A-roll",
+   "says": "RETAKE 2 - exact conditions that trigger it"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 155.14,
+   "out": 168.4,
+   "use": "A-roll",
+   "says": "2 and 3 bed showflat, 3 MRT, 3 primary schools"
+  },
+  {
+   "sc": "SC04",
+   "take": "Scene1",
+   "in": 174.32,
+   "out": 175.5,
+   "use": "A-roll",
+   "says": "Come, let's do this"
+  },
+  {
+   "sc": "SC05",
+   "take": "Scene2",
+   "in": 14.6,
+   "out": 30.8,
+   "use": "A-roll",
+   "says": "I'm Coach Edmund, REI Method, subscribe, QR",
+   "why": "head trimmed to 14.60 - 0:00-14:20 is dead air before the line"
+  },
+  {
+   "sc": "SC06",
+   "take": "Scene2a",
+   "in": 11.12,
+   "out": 20.12,
+   "use": "A-roll",
+   "says": "started watching 2021, land sold 815 million"
+  },
+  {
+   "sc": "SC06",
+   "take": "Scene2a",
+   "in": 30.94,
+   "out": 41.24,
+   "use": "A-roll",
+   "says": "freehold D15, $1,488 psf ppr, largest land deal"
+  },
+  {
+   "sc": "SC06",
+   "take": "Scene2a",
+   "in": 50.4,
+   "out": 63.3,
+   "use": "A-roll",
+   "says": "en-bloc not GLS, no more freehold land, rare"
+  },
+  {
+   "sc": "SC07",
+   "take": "Scene2a",
+   "in": 75.08,
+   "out": 84.2,
+   "use": "A-roll",
+   "says": "5 bungalows 10 semi-Ds, one kept as clubhouse"
+  },
+  {
+   "sc": "SC07",
+   "take": "Scene2a",
+   "in": 84.88,
+   "out": 90.7,
+   "use": "A-roll",
+   "says": "I chose the premium block overseeing the clubhouse"
+  },
+  {
+   "sc": "SC07",
+   "take": "Scene2a",
+   "in": 98.66,
+   "out": 105.2,
+   "use": "A-roll",
+   "says": "why - further line of sight, not facing the neighbour"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 113.02,
+   "out": 128.2,
+   "use": "A-roll",
+   "says": "I know this area, grew up here, Haig Road, grandma's",
+   "why": "starts at 113.02 - skips the false start at 108.48"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 128.59,
+   "out": 144.1,
+   "use": "A-roll",
+   "says": "CC basketball, drive from Esso, the bungalows"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 169.72,
+   "out": 186.8,
+   "use": "A-roll",
+   "says": "RETAKE 2 - grandma, prata, soya bean, wet market",
+   "why": "the 2:32.53 version is a false start; 2:49.72 is the complete one"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 180.26,
+   "out": 186.8,
+   "use": "A-roll",
+   "says": "memories, property still there, grandma no longer around"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 187.36,
+   "out": 194.5,
+   "use": "A-roll",
+   "says": "how much this place changed - MRT, Kinex, Paya Lebar"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 202.01,
+   "out": 212.5,
+   "use": "A-roll",
+   "says": "short legs, now under 7 minutes to amenities"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 221.8,
+   "out": 226.2,
+   "use": "A-roll",
+   "says": "Tanjong Katong 2 bus stops away"
+  },
+  {
+   "sc": "SC08",
+   "take": "Scene2a",
+   "in": 230.1,
+   "out": 247.8,
+   "use": "A-roll",
+   "says": "less busy than Katong/Amber, everything in 10 min"
+  },
+  {
+   "sc": "SC09",
+   "take": "Scene2b",
+   "in": 1.55,
+   "out": 12.1,
+   "use": "A-roll",
+   "says": "launch day May 2023, first weekend 26.5% sold"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 12.6,
+   "out": 24.4,
+   "use": "A-roll",
+   "says": "market called it expensive, 99y launched $2,465"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 32.98,
+   "out": 38.0,
+   "use": "A-roll",
+   "says": "here's the math the crowd missed"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 45.19,
+   "out": 52.7,
+   "use": "A-roll",
+   "says": "FLAG - says 15% to 20%, script now says 25%",
+   "flag": "number-conflict"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 60.51,
+   "out": 66.5,
+   "use": "A-roll",
+   "says": "argument that the 99y is Tanjong Katong, more prime"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 77.19,
+   "out": 85.0,
+   "use": "A-roll",
+   "says": "two bus stops - does that justify it? comment below"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 92.19,
+   "out": 107.95,
+   "use": "A-roll",
+   "says": "D15 always freehold, 99y only recently, no more FH land"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 120.11,
+   "out": 126.1,
+   "use": "A-roll",
+   "says": "FLAG - says 6% more only, script now says 14% / 8.9%",
+   "flag": "number-conflict"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 135.33,
+   "out": 152.5,
+   "use": "A-roll",
+   "says": "everyone saw expensive, research said underpriced; bought 3-bed 1087sf $2,650"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 167.59,
+   "out": 185.7,
+   "use": "A-roll",
+   "says": "different reasons to own; later we go to the showflat"
+  },
+  {
+   "sc": "SC10",
+   "take": "Scene2b",
+   "in": 199.02,
+   "out": 223.7,
+   "use": "A-roll",
+   "says": "second opinion CTA, scan the QR",
+   "why": "ends 223.70 - cuts the 3 stray CTA retakes and crew line at 226.68"
+  },
+  {
+   "sc": "SC12",
+   "take": "Scene3",
+   "in": 7.04,
+   "out": 70.6,
+   "use": "A-roll",
+   "says": "my exact unit type, 1087sf, 3m ceiling, the glass window panel"
+  },
+  {
+   "sc": "SC13",
+   "take": "Scene3a",
+   "in": 0.0,
+   "out": 41.0,
+   "use": "A-roll",
+   "says": "three reasons: FH at LH price / 3-bed family district / next buyer can afford"
+  },
+  {
+   "sc": "SC14",
+   "take": "Scene3a",
+   "in": 41.0,
+   "out": 102.5,
+   "use": "A-roll",
+   "says": "the $120k lesson, per-floor jump, factors 1 and 2"
+  },
+  {
+   "sc": "SC14",
+   "take": "Scene3a",
+   "in": 104.24,
+   "out": 150.5,
+   "use": "A-roll",
+   "says": "factor 3 fengshui, the fun fact, comment prompt",
+   "why": "skips the 102.5-104.24 stumble (line restarted)"
+  },
+  {
+   "sc": "SC14",
+   "take": "Scene3a",
+   "in": 150.64,
+   "out": 165.3,
+   "use": "A-roll",
+   "says": "2nd Property Ladder CTA + QR"
+  },
+  {
+   "sc": "SC15",
+   "take": "Scene3b",
+   "in": 3.25,
+   "out": 158.5,
+   "use": "A-roll",
+   "says": "open the books, BSD, scenarios A and B, cannot predict, kiasu"
+  },
+  {
+   "sc": "SC15",
+   "take": "Scene3b",
+   "in": 162.05,
+   "out": 189.8,
+   "use": "A-roll",
+   "says": "five checks, Scenario C, continue watching",
+   "why": "skips 158.5-162.05 false start on 'when their property are not growing'"
+  },
+  {
+   "sc": "SC16",
+   "take": "Scene4",
+   "in": 6.79,
+   "out": 158.6,
+   "use": "A-roll",
+   "says": "Tembusu, Grand Dunman, Emerald - three launches after mine"
+  },
+  {
+   "sc": "SC17",
+   "take": "Scene4",
+   "in": 169.56,
+   "out": 355.8,
+   "use": "A-roll",
+   "says": "unit vs unit, both-sides tenure debate, buying an exit"
+  },
+  {
+   "sc": "SC17",
+   "take": "Scene4",
+   "in": 365.73,
+   "out": 391.4,
+   "use": "A-roll",
+   "says": "or the buyer after that; widest buyer pool; safety margin",
+   "why": "skips 355.8-365.73 partial retake of the lease-clock line; trims 'Okay' at 391.56"
+  },
+  {
+   "sc": "SC18",
+   "take": "Scene4a",
+   "in": 2.83,
+   "out": 313.4,
+   "use": "A-roll",
+   "says": "completion calendar, the flood isn't happening, 3-bed stock, three reasons"
+  },
+  {
+   "sc": "SC19",
+   "take": "Scene4b",
+   "in": 1.1,
+   "out": 40.02,
+   "use": "A-roll",
+   "says": "don't sell at all; Amber Park and Tembusu rents"
+  },
+  {
+   "sc": "SC19",
+   "take": "VO",
+   "in": 0,
+   "out": 4.0,
+   "use": "VO-PATCH",
+   "says": "[rent figure] a month",
+   "flag": "figure never spoken on either take"
+  },
+  {
+   "sc": "SC19",
+   "take": "Scene4b",
+   "in": 52.52,
+   "out": 107.4,
+   "use": "A-roll",
+   "says": "sounds decent until the mortgage; net is thin; capital locked",
+   "why": "picks up on 'Sounds decent' - both attempts at the figure are fluffed"
+  },
+  {
+   "sc": "SC20",
+   "take": "Scene4b",
+   "in": 107.4,
+   "out": 141.0,
+   "use": "A-roll",
+   "says": "never the destination; NAV toward $5-7m; destination or next move?",
+   "why": "uses the 1:59 retake which carries the $5-7m figure"
+  },
+  {
+   "sc": "SC20",
+   "take": "Scene4b",
+   "in": 147.17,
+   "out": 181.0,
+   "use": "A-roll",
+   "says": "not theory - Tre Ver 1.05 to 1.28, Parc Clematis 1.15 to 1.525, +375k"
+  },
+  {
+   "sc": "SC20",
+   "take": "Scene4b",
+   "in": 179.98,
+   "out": 215.9,
+   "use": "A-roll",
+   "says": "the waiting is uncomfortable; move forward to re-enter"
+  },
+  {
+   "sc": "SC20",
+   "take": "Scene4b",
+   "in": 241.98,
+   "out": 246.3,
+   "use": "A-roll",
+   "says": "same process we run with clients, both directions",
+   "why": "uses the 4:01 retake which adds 'in both directions'; trims 'Stop' at 248.4"
+  },
+  {
+   "sc": "SC21",
+   "take": "Scene4c",
+   "in": 0.88,
+   "out": 55.0,
+   "use": "A-roll",
+   "says": "four things nobody controls; over-prepare; map 3 moves; 90% filter"
+  },
+  {
+   "sc": "SC21",
+   "take": "Scene4c",
+   "in": 58.36,
+   "out": 115.6,
+   "use": "A-roll",
+   "says": "walk-away price in writing; recompute live; not to transact",
+   "why": "skips 55.0-58.36 false start on 'put your walk away price in'"
+  },
+  {
+   "sc": "SC22",
+   "take": "Scene4c",
+   "in": 126.34,
+   "out": 229.6,
+   "use": "A-roll",
+   "says": "my answer; four buyer reasons; prepared exit not panic sell"
+  },
+  {
+   "sc": "SC23",
+   "take": "Scene4c",
+   "in": 238.22,
+   "out": 319.7,
+   "use": "A-roll",
+   "says": "save this video; next video tease; 2nd Property Ladder CTA"
+  }
+ ]
+}

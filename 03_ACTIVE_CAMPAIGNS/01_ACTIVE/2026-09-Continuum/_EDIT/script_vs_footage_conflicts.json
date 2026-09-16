@@ -1,0 +1,35 @@
+[
+ {"sc":"SC15","take":"Scene3b","tc":"3:03.39","dur":2.4,"sev":"ERROR",
+  "says":"the gross gain $5 million plus","should":"$500,000 plus",
+  "src":"arithmetic: $3.4M - $2.88M = ~$520K",
+  "note":"10x overstatement of his own profit, on a video about opening the actual books. Confirmed with the medium model, not a transcription glitch."},
+
+ {"sc":"SC10","take":"Scene2b","tc":"0:45.19","dur":7.5,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"15% to 20% above a comparable 99 years","should":"around 25%","src":"PIC 09 = 25.40%"},
+ {"sc":"SC10","take":"Scene2b","tc":"2:00.11","dur":6.0,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"asking about 6% more only","should":"14.27% project / 8.9% his unit","src":"PIC 11 = 14.27%"},
+ {"sc":"SC15","take":"Scene3b","tc":"0:46.89","dur":12.7,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"$2,700 plus psf, around $3 million, gain roughly $120,000","should":"$2,790 psf, $3.03M, $152,730","src":"PIC 18 = $2,790"},
+ {"sc":"SC16","take":"Scene4","tc":"1:55.99","dur":7.7,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"recent height of 2,994 per square foot","should":"$3,015","src":"PIC 21 = $3,015 (all unit types)"},
+ {"sc":"SC17","take":"Scene4","tc":"3:20.10","dur":6.2,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"$3.33 million at $2,796 psf","should":"$3.28M at $2,796","src":"PIC 16 + PIC 23 = $3,280,000"},
+ {"sc":"SC17","take":"Scene4","tc":"3:31.06","dur":9.7,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"$3.228 million, $2,844 psf","should":"$3.225M, $2,881 psf","src":"PIC 17 + PIC 23 = $2,881"},
+ {"sc":"SC18","take":"Scene4a","tc":"1:38.87","dur":5.2,"sev":"CONTRADICTS-GRAPHIC",
+  "says":"35 units resale plus 6 sub-sales","should":"8 resale + 7 sub-sale","src":"PIC 23, row-counted"},
+
+ {"sc":"SC17","take":"Scene4","tc":"4:44.92","dur":5.1,"sev":"SOFT",
+  "says":"freehold typically costs 10-20% more","should":"20%","src":"script revision only"},
+ {"sc":"SC17","take":"Scene4","tc":"6:18.68","dur":5.8,"sev":"SOFT",
+  "says":"safety for 6% instead of the usual 10-20","should":"8.9% instead of 20","src":"script revision only"},
+ {"sc":"SC16","take":"Scene4","tc":"0:51.78","dur":6.5,"sev":"SOFT",
+  "says":"recent average around $2700 plus","should":"$2,73x","src":"script revision only"},
+ {"sc":"SC18","take":"Scene4a","tc":"1:44.59","dur":9.3,"sev":"SOFT",
+  "says":"10 years old, 3 bedrooms, 300 units+, 990sqft+","should":"+ within 1km of Tanjong Katong Pri","src":"PIC 23 filter includes the school criterion"},
+
+ {"sc":"SC18","take":"Scene4a","tc":"2:47.62","dur":1.5,"sev":"COSMETIC",
+  "says":"Emerald of Katong 283 three-bedrooms","should":"282","src":"PIC 25 = 101 + 181"},
+ {"sc":"SC18","take":"Scene4a","tc":"3:03.06","dur":10.1,"sev":"COSMETIC",
+  "says":"total 1,121 units","should":"1,120","src":"282+279+49+310+200"}
+]
