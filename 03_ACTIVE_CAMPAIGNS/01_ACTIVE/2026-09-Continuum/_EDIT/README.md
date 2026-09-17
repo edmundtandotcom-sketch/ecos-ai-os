@@ -1,35 +1,101 @@
-# The Continuum — Edit Workbench
+# Continuum — long-form YouTube cut
 
-Storyboard (live): https://claude.ai/code/artifact/99cdbb7a-508c-484c-a0a6-fc40d73b32c5
-3D unit model:     https://claude.ai/code/artifact/2c18006b-e1ca-4f29-84f9-9f91902904f0
+**`CONTINUUM_v3_1.15x.mp4`** — 18:47, 1920×1080, delivered at 1.15× (34.5fps)
+with the branded SAFE outro attached. Audio normalised to **−16.4 LUFS**,
+true peak −1.1 dBFS, 48 kHz.
 
-## Deliverables
+Built through the Remotion pipeline (`ContinuumLong`), not a flat assembly:
+525 talking-head and b-roll clips, 118 graphic overlays across 21 kinds, 414
+burned-in subtitle cues.
 
-| File | What it is |
+---
+
+## What was cut out of the takes
+
+The cut is carved against **measured audio**, not the transcript — Whisper's
+source timings are unreliable (on one take it placed a word at 0.00s where the
+file is provably silent until 6.25s).
+
+| Removed | |
 |---|---|
-| `CONTINUUM_v1_SUBS.mp4` | **The render.** 27m20s. 23 scenes, silence tightened, 29 pictures on their trigger words, 40 b-roll cutaways, 836 burned subtitle cards. 960x540 review copy - the 1080p master is a re-run of the same pipeline. |
-| `subtitles.ass` | The caption file. 836 cards, 247 figures in gold. **Upload this to YouTube rather than auto-captioning** - Whisper mis-hears every proper noun in this script and 28 of those were corrected by hand. |
-| `Scene4b_LEVELLED.mp4` | Scene4b with the camera roll corrected (8.70 deg -> 0.78 deg). 1080p. **Use this, not the original**, for all further work. |
-| `CUT_LIST.csv` | 128 rows. Source file, in/out timecode, duration, timeline position, content. Editor-ready. |
-| `EDL_full.json` | The same cut list as structured data, with the reasoning for each retake choice. |
-| `picture_positions.json` | Where each of the 29 pictures lands on the timeline. |
-| `script_vs_footage_conflicts.json` | The 14 places the script and the footage disagree. |
+| Silence | 11.5 min — `silencedetect`, −33dB / 0.35s, 0.12s held at each edge |
+| Fumbles | 4.7s — any single token ≥2.8s is a fumble hiding inside a long word |
+| Restarts | 27.0s — a phrase begun, abandoned and said again |
 
-## Definition of done — outstanding
+**Restarts are the category that silence detection cannot see**, because the
+speaker never pauses while doing it. Thirteen were found and cut, across four
+passes — removing one unmasks the next. Examples:
 
-1. **Nine pickup VO lines** (~1 min of recording). Listed in the storyboard. Blocks the graphics layer for Acts II-IV.
-2. **SC11 has no A-roll** — the showflat arrival bridge (Act II into Act III). Needs a VO line over gallery b-roll, or accept a hard cut.
-3. **SC18 runs 3:54** — the trim candidate if the target is under 27 minutes.
-4. **Developer 3D assets** — site plan, 360 tour, CGI flythrough master. Three scenes designed around them.
-5. **Google Earth descent** — must be built in Earth Studio. Long-form only; not permitted in the ads cut.
+- "scan the QR code…" — said three times, the third kept
+- "have an extra *this set of big*" → "have an extra set of data"
+- "1,121 units including Tembusu Grand 200" — said twice, 6.2s
+- "your your gains", "live in **in** prime district"
 
-## Known in the current assembly
+**Deliberately kept** — repetition is not automatically a defect:
 
-- Slate at ~21:30 where the monthly rent figure should be (never spoken on either take).
-- Pictures hold a plain 3.5s with no animation — that is the graphics layer, still pending.
-- Picture 14 is missing from the source folder; Picture 4 duplicates Picture 3.
+- "maybe you want to **stay** / maybe you want to **sell**"
+- "should you be selling / keeping it / leaving it"
+- "run **far far** away" — idiom
+- "three honest scenario**s**. **Scenario** A" — two different words
+- "people, people kill for…" — emphasis
 
-## Method
+---
 
-Footage surveyed frame-by-frame, all 13 takes transcribed at word level, cuts made on exact words.
-Retakes and false starts resolved to the better take (documented in `EDL_full.json`).
+## Audio and figures are exactly as shot
+
+Nothing was re-voiced, re-ordered or corrected. Fourteen places where the
+spoken figure disagrees with the graphic on screen are catalogued in
+**`FIX_LIST.md`**, timestamped against this delivered file. One is a genuine
+factual error worth fixing before publishing; the rest are smaller.
+
+Two points in the script have **no recording at all** — the rent figure and the
+SC11 bridge. Both need a pickup, not an edit.
+
+---
+
+## Files
+
+| | |
+|---|---|
+| `CONTINUUM_v3_1.15x.mp4` | the cut — **this is the deliverable** |
+| `FIX_LIST.md` | 14 spoken-vs-graphic mismatches, timestamped |
+| `subtitles_review.txt` | all 414 captions as text, for proofreading |
+| `CUT_LIST.csv`, `EDL_full.json` | which passage of which take, in order |
+| `picture_positions.json` | where each supplied picture lands |
+| `Scene4b_LEVELLED.mp4` | Scene4b with the camera roll corrected |
+
+`CONTINUUM_v1_SUBS.mp4` and `CONTINUUM_v2_1.15x.mp4` are superseded and can be
+deleted once you are happy with v3 — that reclaims about 1.2 GB. v1 is the
+first flat assembly (stutters and caption defects in it); v2 is this same cut
+before "TOP" was corrected in two captions.
+
+## Loudness
+
+The render comes out around −22 LUFS. YouTube turns loud uploads down but
+never lifts quiet ones, so that plays noticeably quieter than everything
+around it. `fix_loudness.sh` brings the finished file to −16 LUFS to match
+`THOMSON_RESERVE_FINAL`, audio only, video copied — a couple of minutes rather
+than a re-render:
+
+    bash work/continuum/fix_loudness.sh <in.mp4> <out.mp4>
+
+---
+
+## Scene4b
+
+The recording rolls continuously between −8.76° and +2.34°. It is corrected
+per-segment with rotation clamped at ±5°: **15.5% crop, 13 of 14 measured
+points inside ±0.78°**. Clamping is what keeps the crop at 15.5% — an
+unclamped correction took it to 23.5% for no visible gain.
+
+---
+
+## Rebuilding
+
+    bash work/continuum/rebuild.sh     # captions, overlays, gates, timeline, meta
+    bash work/continuum/bundle.sh      # only if src/ changed
+
+`rebuild.sh` runs the three build gates (anchor, collision, asset) and writes
+the TypeScript timeline Remotion actually compiles. A re-carve moves every
+absolute second in the programme, so nothing downstream survives one — run the
+whole chain, never a single step.
