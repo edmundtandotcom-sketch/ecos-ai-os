@@ -1,19 +1,24 @@
 ================================================================
-THOMSON RESERVE — PART 2 · YOUTUBE PRODUCTION SCRIPT (DRAFT v2)
-Target runtime: 22-26 minutes · Status: DRAFT — pending platform verification
+THOMSON RESERVE — PART 2 · YOUTUBE PRODUCTION SCRIPT (DRAFT v3)
+Target runtime: 24-28 minutes · Status: DRAFT — pending platform verification
 and pending Edmund's fact confirmation on flagged open items (see
-OPEN_ITEMS list at bottom and cross-check map, separate file)
+PART2_cross_check_resources.md)
 
-v2 CHANGES FROM v1 (per Edmund's review):
-- Cut the unit-mix supply-map section entirely (JadeScape 55% vs Thomson
-  Reserve 84%, 1km supply table) — it duplicated Part 1's R7/R14 reels.
-- Part 1 recap cut down to a ~25-second reminder/teaser, not a restated
-  summary of numbers — no duplicated content from Part 1.
-- The client ballot story is no longer a single anecdote block. It's now
-  a full "how we guide a client through a ballot, phase by phase"
-  section (Before / During / After), with the real Dunearn House outcome
-  woven through as proof at each phase — this is now the anchor section
-  of Part 2, not a short story near the end.
+v3 CHANGES FROM v2 (per Edmund's review):
+- Layouts section rebuilt: each unit type now carries its OWN price
+  estimate and a real take on who it suits, woven together — not a
+  separate "describe the layouts" scene followed by a separate "here's
+  the pricing" scene. The old sizing-history aside is folded in, not a
+  standalone scene.
+- Engagement pass throughout: added open loops (planted early, paid off
+  later), direct-to-camera questions inviting comments, a mid-video
+  re-hook, and a CTA roughly every 4-6 minutes instead of two total.
+- Voice pass: rewritten to sound like a person talking through this in
+  one take, not a document being read aloud — natural asides, rhetorical
+  questions, contractions, "notice this," "here's the thing" style
+  connective tissue instead of clean topic-sentence transitions.
+- Ballot story: removed the inferred "out of roughly 1,248" total ballot
+  pool — kept only the confirmed number (1,247) and the 380-unit release.
 ================================================================
 
 HOUSE PRODUCTION RULES APPLIED (per campaign default, see 00_INDEX.md):
@@ -25,6 +30,8 @@ HOUSE PRODUCTION RULES APPLIED (per campaign default, see 00_INDEX.md):
 - Music: original synthesized bed only, no Content-ID track
 - [SCREEN: ...] = full-screen graphic/chart takes over from talking head
 - [B-ROLL: ...] = supporting footage/still, head in circular PIP
+- [ENGAGE: ...] = direct-to-camera question, pause a beat before moving on
+- [CTA: ...] = spoken call-to-action, not just an end-card ask
 
 
 ----------------------------------------------------------------
@@ -59,11 +66,9 @@ WHAT'S IN PART 2
   the developer-margin logic, proven with a real, very recent example
 • The land-to-launch price multiplier, updated: it used to be about 2x.
   By 2025 it's closer to 2.3x. I run both on Thomson Reserve's numbers.
-• LAYOUTS — for the first time: the 4 unit types we can study today, what
-  each one actually offers, and why the sizes are smaller than you
-  remember 3-bedrooms being
-• Reverse-engineered pricing per unit type, cross-checked against real
-  District 20 resale quantum data
+• LAYOUTS — for the first time: the 4 unit types we can study today, my
+  own price estimate for each one, and which type I'd actually put my
+  own money on
 • Inside a real ballot day — Before, During, and After: exactly what we
   prepare with a client before they ever pick a number, what actually
   happens live when the plan gets tested, and what we do afterward
@@ -74,6 +79,8 @@ Every figure here is either an officially confirmed transaction (I'll tell
 you which) or my own estimate built from public data — I flag the
 difference throughout. There is still NO official price list for Thomson
 Reserve. Anything claiming otherwise online is not yet confirmed.
+
+Drop your guesses in the comments as you go — I'll read them.
 
 WANT THIS RUN ON YOUR OWN NUMBERS?
 If you want a clear, independent read on whether Thomson Reserve is right
@@ -87,19 +94,17 @@ walk into selection day with a plan instead of a feeling.
 
 CHAPTERS
 0:00 The result is in
-0:40 Haven't seen Part 1? Quick pointer
-1:05 The Lorong Puntong result, confirmed
-3:15 Does an overbid next door make Thomson Reserve cheaper? (No — here's why)
-5:35 The multiplier: 2x used to be the rule. Now it's 2.3x.
-7:45 LAYOUTS — what we actually know
-10:25 Why 3-bedrooms feel smaller than you remember
-12:05 Reverse-engineering the price per unit type
-14:15 The hidden-gem reframe
-15:35 Inside a real ballot day — BEFORE
-17:50 Inside a real ballot day — DURING
-20:10 Inside a real ballot day — AFTER
-21:40 Updated verdict — what works, what gives me pause
-23:40 What's still unconfirmed, and what's next
+0:45 Haven't seen Part 1? Quick pointer
+1:10 The Lorong Puntong result, confirmed
+3:30 Does an overbid next door make Thomson Reserve cheaper? (No — here's why)
+6:00 The multiplier: 2x used to be the rule. Now it's 2.3x.
+8:10 LAYOUTS — what we know, and what I'd actually pay for each
+13:30 The hidden-gem reframe
+15:00 Inside a real ballot day — BEFORE
+17:30 Inside a real ballot day — DURING
+19:50 Inside a real ballot day — AFTER
+21:30 Updated verdict — what works, what gives me pause
+23:30 What's still unconfirmed, and what's next
 
 #ThomsonReserve #SingaporeProperty #NewLaunch #District20 #UpperThomson
 #PropertyInvestment #TheREIMethod #LorongPuntong
@@ -120,47 +125,52 @@ THE SCRIPT
 ================================================================
 
 ----------------------------------------------------------------
-SCENE 1 — COLD OPEN (0:00-0:40)
+SCENE 1 — COLD OPEN (0:00-0:45)
 ----------------------------------------------------------------
 [Front camera, talk. Energy: direct, no warm-up.]
 
 At the end of Part 1, I asked you to guess one number. Lorong Puntong's
 land tender — above or below $1,400 psf ppr.
 
-The tender closed on 15 September. I have the result. And it's not close
-to what most people guessed.
+The tender closed on 15 September. I have the result. And honestly? It's
+not close to what most of you guessed in the comments.
 
 [PUNCH: LORONG PUNTONG TENDER — RESULT IS IN]
 
-This is Part 2. Today I'm closing that loop, going into the actual
-layouts for the first time, and showing you something I haven't shown on
-camera before — the real, phase-by-phase process we run a client through
-on an actual ballot day.
+So that's coming up first. But stick with me today, because later in this
+video I'm going to walk you through something I've never actually shown
+on camera before — a real ballot day, phase by phase, including the
+moment a client almost made a $200,000-plus mistake standing in that
+room. I'll tell you exactly what stopped him.
+
+[ENGAGE: If you're new here, comment "PART 2" so I know you found your
+way from Part 1 — I actually read these.]
 
 [TRANSITION: fade]
 
 
 ----------------------------------------------------------------
-SCENE 2 — HAVEN'T SEEN PART 1? (0:40-1:05)
+SCENE 2 — HAVEN'T SEEN PART 1? (0:45-1:10)
 ----------------------------------------------------------------
 [Front camera, talk. Keep this fast — 25 seconds, no restated numbers.]
 
-Quick pointer before we go further. Part 1 covers my full 5-check
-breakdown of Thomson Reserve — supply, evidence, fair price, and where my
-own numbers landed. If you haven't watched it, it's linked in the cards
-and description, and today's video will make more sense with it. I'm not
-going to repeat it here — let's go straight into what's new.
+Quick pointer if you're jumping in cold. Part 1 covers my full 5-check
+breakdown of Thomson Reserve — supply, evidence, fair price, where my own
+numbers landed. It's linked in the cards and description. I'm not going to
+repeat any of it here, so if today feels like it's missing context, that's
+where it is. Let's get into what's new.
 
 [TRANSITION: wipe]
 
 
 ----------------------------------------------------------------
-SCENE 3 — THE LORONG PUNTONG RESULT (1:05-3:15)
+SCENE 3 — THE LORONG PUNTONG RESULT (1:10-3:30)
 ----------------------------------------------------------------
 [Front camera, talk, building energy.]
 
-Seven bids came in. The winner: Eco World Development, a Malaysian
-developer's first-ever Singapore land win. Their bid — $208.1 million.
+Okay. Seven bids came in on Lorong Puntong. The winner — Eco World
+Development. First-ever Singapore land win for them, a Malaysian
+developer. Their bid: $208.1 million.
 
 [PUNCH: $208.1 MILLION]
 
@@ -168,365 +178,409 @@ Per square foot per plot ratio, that's $1,612.
 
 [PUNCH: $1,612 PSF PPR]
 
-That's not just above my guess range of $1,350 to $1,500. It's 11.1%
-above the second-highest bid, from Intrepid Investments and TID
-Residential, who came in at $1,451 psf ppr.
+Now think about that for a second. My range in Part 1 was $1,350 to
+$1,500. This came in above the TOP of that range. And it wasn't even
+close between the bidders — Eco World's $1,612 beat the second-highest
+bid, from Intrepid Investments and TID Residential at $1,451, by 11.1%.
+That's not a photo finish. That's someone deciding they wanted this site
+badly enough to pay well beyond what everyone else thought it was worth.
 
 [SCREEN: bid table — Eco World $1,612 psf ppr (winner) · Intrepid/TID
 $1,451 psf ppr · gap: +11.1%]
 
-Compare that to what Thomson Reserve paid for its own land: $1,178 psf
-ppr. Lorong Puntong just sold for 37% more, on a per-square-foot basis,
-for a plot in the same general Bright Hill pocket.
+[ENGAGE: Were you expecting it to go this high? Comment below — did you
+guess closer to my range, or closer to $1,600?]
+
+Now put that next to Thomson Reserve's own land price: $1,178 psf ppr.
+Lorong Puntong — same general Bright Hill pocket — just sold for 37% more
+per square foot.
 
 [PUNCH: +37% MORE THAN THOMSON RESERVE'S LAND]
 
-If you watched Part 1 and thought Thomson Reserve's land looked cheap —
-this is the confirmation. It was.
+If you watched Part 1 and walked away thinking Thomson Reserve's land
+looked cheap — this is your confirmation. It was.
+
+But — and this is the part almost nobody thinks through — does that
+actually mean good news for you as a buyer? Let's find out, because I
+don't think it does.
 
 [TRANSITION: slide]
 
 
 ----------------------------------------------------------------
-SCENE 4 — DOES THIS MAKE THOMSON RESERVE CHEAPER? (3:15-5:35)
+SCENE 4 — DOES THIS MAKE THOMSON RESERVE CHEAPER? (3:30-6:00)
 ----------------------------------------------------------------
 [Front camera, talk. This is the section that separates surface reading
 from real analysis — slow down here.]
 
-Now here's where I want you to think like a developer for a second, not
-like a buyer.
+Here's what I want you to do. For the next minute, stop thinking like a
+buyer. Think like the developer.
 
-If you're the developer sitting on Thomson Reserve's land, and you just
-watched the guy next door pay 37% more than you did — does that make you
+You're sitting on Thomson Reserve's land. You just watched the guy next
+door pay 37% more than you did for a similar plot. Does that make you
 want to sell CHEAPER?
 
-Or does it make you realise you now have more room to price UP, and still
-look like the better deal by comparison?
+[ENGAGE: Genuinely — pause the video for a second if you need to. Cheaper,
+or more expensive? What would YOU do if you were the developer?]
+
+Or does it make you realise you now have more room to price up, and
+still look like the better deal by comparison?
 
 [PUNCH: MORE ROOM TO PRICE UP]
 
-This isn't theory. It already happened, recently, in Lentor.
+I know which one I'd pick. And this isn't just theory — it already
+happened, recently, one MRT stop over from here.
 
 [SCREEN: land-vs-launch comparison — cheap land in, launch price still
 climbed]
 
-A neighbouring project bought their land noticeably cheaper than the
-newer plots around it — genuinely cheap, by the standards of that
-cluster. A normal buyer would assume: cheap land, cheap launch price.
+There's a neighbouring project that bought its land noticeably cheaper
+than the newer plots around it — genuinely cheap, by the standards of
+that cluster. If you'd looked at that land price and assumed "cheap land,
+cheap launch," you'd have been wrong.
 
-It still launched at more than double its own land cost — higher than
-several neighbours who'd paid MORE for their land.
+It still launched at more than double its own land cost. Higher than
+several neighbours who'd paid MORE for their land than they did.
 
 [PUNCH: LAUNCHED AT OVER 2X LAND COST]
 
-Why? Because developers don't price off their own cost. They price off
-what the market — and their neighbours — just proved buyers will pay.
-Cheap land becomes the developer's extra margin. It does not automatically
-become your discount.
+Why? Because developers don't price off what THEY paid. They price off
+what the market just proved buyers will pay. Cheap land doesn't become
+your discount. It becomes their extra margin.
 
-So if you've been telling yourself "Thomson Reserve's land was cheap, so
-the price will be reasonable" — Lorong Puntong just gave the developer a
-reason to think the opposite.
+So if part of your confidence in Thomson Reserve was "the land was
+cheap, so the price should be reasonable" — Lorong Puntong just handed
+the developer a reason to think the opposite.
 
 [TRANSITION: fade]
 
-[MICRO-CTA: If this is the kind of read you want on YOUR shortlist before
-you commit — not after — the link's below.]
+[CTA: If you want someone to pressure-test YOUR read on a launch before
+you commit — not after — that's literally what the link below is for.]
 
 
 ----------------------------------------------------------------
-SCENE 5 — THE MULTIPLIER, UPDATED (5:35-7:45)
+SCENE 5 — THE MULTIPLIER, UPDATED (6:00-8:10)
 ----------------------------------------------------------------
 [Front camera, talk.]
 
 Here's a number most buyers never hear, and it's the fastest gut-check
-you can run on any launch.
+you can run on any launch, on your own, in ten seconds.
 
-Before 2025, developers generally priced launches at about 2 times their
-land cost, per square foot.
+Before 2025, developers were generally pricing launches at about 2 times
+their land cost per square foot.
 
 [PUNCH: OLD RULE — 2X LAND COST]
 
-Run that on Thomson Reserve: $1,178 times 2 is roughly $2,350 to $2,400
-psf. That's the old-rules number.
+So — run that on Thomson Reserve with me. $1,178, times 2. That's roughly
+$2,350 to $2,400 psf. That's the old-rules answer.
 
 [PUNCH: 2X RULE → ~$2,350–2,400 PSF]
 
-But we're not in the old rules anymore. Construction costs, financing
-costs, and land betterment charges have all climbed. By 2025, the
-multiplier moved closer to 2.3 times.
+But here's the thing — we're not in the old rules anymore. Construction
+costs, financing costs, land betterment charges, all of it's climbed. By
+2025, that multiplier has drifted closer to 2.3 times.
 
 [PUNCH: NEW RULE — 2.3X LAND COST]
 
-Run that instead: $1,178 times 2.3 lands you around $2,700 psf.
+Run it again. $1,178 times 2.3. Now you're around $2,700 psf.
 
 [PUNCH: 2.3X RULE → ~$2,700 PSF]
 
-That number sits right at the top of the fair-price zone I built in
-Part 1. Two completely different methods, landing in the same
-neighbourhood. That's what makes me trust the range, not just one number
-inside it. Land keeps climbing too — every recent site in this pocket has
-sold for more than the one before it. That trend pushes future launch
-prices up. It does NOT guarantee your resale price goes up with it — a
-different question most buyers quietly assume is the same one.
+[ENGAGE: Try this on a project YOU'VE been watching — take its land psf,
+multiply by 2.3, drop your answer in the comments. Let's see how close
+we all land.]
+
+Notice something — that $2,700 sits right at the top of the fair-price
+zone I built the hard way in Part 1, using the full 4-Factors breakdown.
+Two completely different methods, one quick and one slow, landing in the
+same neighbourhood. That agreement is exactly what makes a range worth
+trusting instead of a single guess.
+
+One more thing before we move on — land in this pocket has gone up with
+every single site sold. That pushes future launch prices up. It does NOT
+guarantee YOUR resale price goes up with it. Those are two different
+questions, and mixing them up is how people overpay with confidence.
 
 [TRANSITION: wipe]
 
 
 ----------------------------------------------------------------
-SCENE 6 — LAYOUTS: WHAT WE ACTUALLY KNOW (7:45-10:25)
+SCENE 6 — LAYOUTS: WHAT WE KNOW, AND WHAT I'D PAY FOR EACH
+(8:10-13:30)
 ----------------------------------------------------------------
-[Front camera, talk. Tone shift — new territory, curiosity-led.]
+[Front camera, talk. Tone shift — new territory, curiosity-led. This is
+the section Part 1 never touched, treat it like the reveal it is.]
 
-Now — the part I promised. Layouts. Thomson Reserve hasn't officially
-released its full floor plan set. But four show-unit types are out, and
-they tell us a lot about who this project is actually built for.
+Alright — this is the part I promised you. Layouts. Thomson Reserve
+hasn't officially released its full floor plan set yet, but four
+show-unit types are out, and if you actually study them instead of just
+scrolling past the marketing photos, they tell you a lot about who this
+project is built for — and what you'd actually be paying.
+
+[ENGAGE: Before I give you my take — comment which unit type you're
+watching this for. 2-bed, 3-bed, 4-bed, or 5-bed? I want your gut answer
+before I give you mine.]
 
 [SCREEN: Type BPS1 floor plan]
-Type BPS1 — a 2-bedroom premium plus study, 732 square feet. Every
-bedroom and the living area gets full frontage — nothing borrows light
-from a corridor. It runs a dumbbell layout, which just means the two
-bedrooms sit at opposite ends with living space between them — good for
-privacy if you're sharing with a flatmate or in-laws. Enclosable kitchen.
-Every bedroom has its own ensuite.
+Let's start small. Type BPS1 — a 2-bedroom premium plus study, 732
+square feet. Every bedroom and the living area gets full frontage,
+nothing's borrowing light off a corridor. It runs what's called a
+dumbbell layout — the two bedrooms sit at opposite ends with the living
+space between them, which is actually a nice touch if you're sharing
+with a flatmate or in-laws and want real separation. Every bedroom has
+its own ensuite.
+
+Now here's what I did with that. Using 732 square feet as our anchor, a
+plain 2-bedroom, 2-bath without the study likely comes in around 700
+square feet. Run that at an estimated $3,000 psf, and you're looking at
+roughly $1.8 to $2.1 million.
+
+[PUNCH: 2-BED, 2-BATH (~700SQFT) → EST. $1.8M–$2.1M]
+
+My honest take on this type: it's the one most investors will default
+to, purely because the entry price feels manageable. That's exactly why
+I'd want you to pressure-test the rental demand before assuming
+"manageable entry" automatically means "smart buy."
 
 [SCREEN: Type CP1 floor plan]
-Type CP1 — a 3-bedroom premium, 1,055 square feet. Same full-frontage
-principle. Living and dining opens onto a balcony that extends the
-space. Every bathroom has natural ventilation — small detail, but it
-matters for mould and resale appeal down the line.
+Next — Type CP1, a 3-bedroom premium, 1,055 square feet. Same
+full-frontage principle, living and dining opens onto a balcony that
+extends the space, every bathroom has natural ventilation — small detail,
+but it matters for resale appeal years down the line.
+
+If you've been house-hunting a while, you probably remember a "normal"
+3-bedroom being around 900 square feet. The truly compact 3-bedrooms in
+this market right now are actually landing closer to 700 to 800 square
+feet — that's the floor-area harmonisation change from Part 1 at work,
+the new measurement standard runs leaner across the board. So don't be
+shocked when a 3-bedroom here feels smaller than the one you grew up in.
+At an estimated $3,000 psf, a compact 3-bedroom tops out around $3.05
+million.
+
+[PUNCH: 3-BED COMPACT → EST. UP TO $3.05M]
 
 [SCREEN: Type DP1(L) floor plan]
 Type DP1(L) — 4-bedroom premium, 1,367 square feet, with a private lift.
-Marble finishes in the private lift lobby, living and dining. Ducted
-aircon throughout. This is a unit built for a household that's staying
-long-term, not flipping.
+Marble finishes in the lift lobby, living and dining. Ducted aircon
+throughout. This isn't a unit built for someone planning to flip in four
+years — it's built for a household settling in for the long haul. At an
+estimated $3,000 psf, you're looking at up to roughly $4 million.
+
+[PUNCH: 4-BED (PRIVATE LIFT) → EST. UP TO $4M]
+
+Here's why I keep coming back to this one. The entire district has a real
+shortage of 4-bedroom stock right now — go check the resale listings
+yourself, you'll see it. Low supply, real demand from families who need
+the space. If I had to put my own money on one type today, based purely
+on scarcity, this is where I'd start looking first.
 
 [SCREEN: Type E1(L) floor plan]
-Type E1(L) — the 5-bedroom suite, 1,808 square feet, also with a private
-lift. This one has roughly a 6-metre-wide frontage with an unblocked view
-toward the low-rise GCB cluster, Windsor Nature Park, and MacRitchie
-Reservoir. Master bedroom gets a corner window, his-and-hers basins, a
-bathtub. This is the unit the marketing photos are built around.
+And the top of the range — Type E1(L), the 5-bedroom suite, 1,808 square
+feet, also with a private lift. Roughly a 6-metre-wide frontage with an
+unblocked view toward the low-rise GCB cluster, Windsor Nature Park, and
+MacRitchie Reservoir. Master bedroom with a corner window, his-and-hers
+basins, a bathtub. This is the unit every marketing photo is built
+around, and it's priced like it — this one's for a very specific buyer,
+not the general audience watching this video.
 
-[PUNCH: 4 TYPES CONFIRMED — 2BR+STUDY / 3BR / 4BR(L) / 5BR(L)]
+[PUNCH: 4 TYPES MAPPED — 2BR / 3BR / 4BR(L) / 5BR(L)]
 
-One important flag, and I want to be straight with you about this: these
-are show-unit types. The developer has not officially confirmed this is
-the final, full layout set for the whole project. Treat the show units as
-real. Treat everything I estimate from them as an educated estimate, not
-a developer confirmation.
+Quick, honest flag before we move on: these are show-unit types, not the
+developer's officially confirmed final layout set. My pricing here is
+built by reverse-engineering off real, confirmed sizes — but it's still
+an estimate, and I'll say that clearly every time I give you a number
+today.
+
+[ENGAGE: So — still the same answer as when I asked five minutes ago, or
+did I change your mind? Comment which type you're leaning toward now.]
 
 [TRANSITION: fade]
 
 
 ----------------------------------------------------------------
-SCENE 7 — WHY 3-BEDROOMS FEEL SMALLER (10:25-12:05)
+SCENE 7 — THE HIDDEN-GEM REFRAME (13:30-15:00)
 ----------------------------------------------------------------
-[Front camera, talk.]
+[Front camera, talk. Tone: reflective, slightly slower pace. This is
+also your mid-video re-hook — reset energy here before the ballot
+section.]
 
-If you've been house-hunting for a while, you probably remember a
-"normal" 3-bedroom being around 900 square feet. Thomson Reserve's
-compact 3-bedroom, Type CP1, is 1,055 — and the truly compact end of the
-new-launch market right now is landing closer to 700 to 800 square feet.
+Before we get into the ballot process — and this next part is honestly
+my favourite section of this whole video — let me give you one more idea.
 
-[PUNCH: 3-BEDROOMS NOW ~700–800 SQFT (COMPACT)]
-
-That's not this project being stingy. That's the floor-area harmonisation
-change I covered in Part 1 — the new measurement standard runs leaner
-than the old one across the whole market. Sizes shrink, so the psf number
-you see quoted looks higher for what feels like a smaller home. If you
-skipped Part 1's explanation of this, that's one comparison mistake that
-trips up almost everyone doing this analysis on their own.
-
-[TRANSITION: wipe]
-
-
-----------------------------------------------------------------
-SCENE 8 — REVERSE-ENGINEERING THE PRICE PER TYPE (12:05-14:15)
-----------------------------------------------------------------
-[Front camera, talk over graphic.]
-
-So here's what we did. Using the confirmed Type BPS1 size — 732 square
-feet for a 2-bedroom plus study — we can estimate the plain 2-bedroom,
-2-bath at roughly 700 square feet.
-
-[SCREEN: estimate table]
-At an estimated $3,000 psf:
-2-bed, 1-bath (~600sqft): roughly $1.5M–$1.8M
-2-bed, 2-bath (~700sqft): roughly $1.8M–$2.1M
-3-bed compact (~700–800sqft): up to roughly $3.05M
-4-bed (~1,367sqft, private lift): up to roughly $4M
-
-[PUNCH: 2-BED → $1.5M–2.1M · 3-BED → UP TO $3.05M · 4-BED → UP TO $4M]
-
-Cross-check that against a completely different source — District 20's
-actual resale quantum over the past year, for private resale near MRT and
-within 1km of a primary school:
-
-[SCREEN: D20 resale quantum — 2BR up to $2.21M · 3BR up to $3.02M · 4BR
-up to $4.1M · 5BR up to $5.05M]
-
-Two different methods — one built forward off an estimated psf, one built
-backward off what the district has actually transacted at — landing
-within a few percent of each other. That's the kind of agreement that
-makes a number worth bringing to ballot day, instead of a single guess
-you're hoping holds up.
-
-[TRANSITION: slide]
-
-
-----------------------------------------------------------------
-SCENE 9 — THE HIDDEN-GEM REFRAME (14:15-15:35)
-----------------------------------------------------------------
-[Front camera, talk. Tone: reflective, slightly slower pace.]
-
-One more idea before we get into the ballot process, because I think
-it's the most useful reframe in this whole video.
-
-Everyone chasing Thomson Reserve right now is also hearing about the next
-wave of launches — sites already being talked about as the new 2027 and
-2028 benchmarks. And land keeps climbing under all of them too.
+Everyone chasing Thomson Reserve right now is also hearing about the
+NEXT wave. Sites already being talked about as the new 2027 and 2028
+benchmarks. And land keeps climbing under every single one of them too.
 
 [PUNCH: THE NEXT WAVE IS ALREADY BEING PRICED HIGHER]
 
-So here's the question I ask myself on every launch, including this one:
+So here's a question I ask myself on every launch, including this one,
+and I want you to actually sit with it instead of skipping ahead:
 instead of always chasing the newest, most hyped site — what if the
-smarter move is going backward? Finding a project that's already built,
-already has a track record, still sits below where the new benchmark is
-heading, and isn't being talked about because nobody's marketing it
-anymore.
+smarter move is going backward? Finding something that's already built,
+already has a real track record, still sits below where the new
+benchmark is heading, and isn't being talked about anymore because
+nobody's actively marketing it.
 
-Lower entry. Smaller mortgage. Longer runway before the next cycle. Not
-as exciting as a launch-day queue. But "exciting" and "safe" are not the
-same test, and I'd rather you know both exist before you choose.
+Lower entry. Smaller mortgage. Longer runway before the next cycle turns.
+Not as exciting as a launch-day queue, I'll give you that. But "exciting"
+and "safe" have never been the same test — and I'd rather you know both
+options exist before you choose which one you're actually optimising for.
+
+[ENGAGE: Have you ever considered an "old news" project over a hyped
+launch? Comment yes or no — I'm curious how many of you have actually
+done this.]
 
 [TRANSITION: slide]
 
+[CTA: If you want us to run this exact hidden-gem screen against your
+own budget, not just Thomson Reserve — link's below, that's part of what
+a session with us covers.]
+
+Alright — now let me show you what actually happens once you've decided
+to go for it. Because deciding is the easy part.
+
 
 ----------------------------------------------------------------
-SCENE 10 — INSIDE A REAL BALLOT DAY: BEFORE (15:35-17:50)
+SCENE 8 — INSIDE A REAL BALLOT DAY: BEFORE (15:00-17:30)
 ----------------------------------------------------------------
 [Front camera, talk. Slower, deliberate pace — this is the anchor
 section of Part 2. Protect the pacing, no rushed delivery.]
 
-Everything so far has been analysis. I want to show you something
-different now — not what to think about Thomson Reserve, but what
-actually happens when a real client works with us through an entire
-ballot, from weeks before to the day itself to after. I'll walk you
-through it in three phases, using a real client's outcome as proof at
-each one.
+Everything so far has been analysis — numbers, land, layouts. I want to
+show you something completely different now. Not what to think about
+Thomson Reserve, but what actually happens when a real client works with
+us through an entire ballot — from weeks before, to the day itself, to
+after. Three phases. I'll walk you through all three, and I'll prove
+every one of them with what actually happened to a real client, on a
+real launch.
 
 [PUNCH: BEFORE · DURING · AFTER]
 
-Phase one: BEFORE. This happens weeks ahead of preview, never in the
-room on the day.
+[ENGAGE: Have you ever been through a new-launch ballot yourself? Comment
+below — good experience, or a nightmare? I genuinely want to know.]
+
+Phase one — BEFORE. This happens weeks ahead of preview. Never in the
+room, never on the day.
 
 [SCREEN: "BEFORE" checklist — walk-away price set · ranked stack list ·
 financing confirmed]
 
-We set a real walk-away price before anyone sees a showflat — a number
-built the same way I build one on camera, land, expenses, profit,
-benchmark, not a feeling. We build a ranked list of acceptable units in
-order, not "whichever's available when my number's called." And
+We set a real walk-away price before anyone's even seen a showflat — the
+same land, expenses, profit, benchmark process I've shown you on camera,
+not a gut feeling. We build a ranked list of acceptable units, in order,
+so it's never "whichever's available when my number's called." And
 financing gets fully confirmed ahead of time — if that's not sorted, you
-shouldn't be in the room at all.
+shouldn't even be walking into that room.
 
-Here's how that played out for a real client. He'd missed several
-launches before — not because he didn't want to buy, but because his
-ballot number kept landing badly, and by the time his turn came, the
-units he wanted were already gone. He'd stopped trying to guess his way
-into a decision.
+Let me tell you about a client this actually happened to. He'd missed
+several launches before us — not because he didn't want to buy, but
+because his ballot number kept landing badly, and by the time his turn
+came around, the units he actually wanted were already gone. He'd
+basically given up trying to guess his way into a decision.
 
-When a new launch came up — a 2-bedroom, budget around $1.9 million, a
-location he genuinely loved — we pulled the expected pricing, compared it
-against both newer launches AND older resale in the same pocket to find
-the real gap, not just the headline number, and mapped a backup option
-before he ever set foot in the showflat.
+When a new launch came up — a 2-bedroom, budget around $1.9 million, in
+a location he genuinely loved — we didn't just say "great, let's go." We
+pulled the expected pricing, compared it against both newer launches AND
+older resale in the same pocket to find the real gap, not just the
+headline number. And critically — we mapped a backup option before he
+ever set foot in the showflat.
 
 [PUNCH: BACKUP OPTION MAPPED — BEFORE PREVIEW]
 
-That last part is the one most buyers skip entirely. And it's the one
-that ends up mattering most.
+That last part is the one almost every buyer skips entirely. It's also
+the one that ends up mattering the most. Hold onto that thought.
 
 [TRANSITION: fade]
 
 
 ----------------------------------------------------------------
-SCENE 11 — INSIDE A REAL BALLOT DAY: DURING (17:50-20:10)
+SCENE 9 — INSIDE A REAL BALLOT DAY: DURING (17:30-19:50)
 ----------------------------------------------------------------
 [Front camera, talk.]
 
-Phase two: DURING. This is the part nobody can fully prepare you for,
-because it's live.
+Phase two — DURING. This is the part nobody can fully prepare you for,
+because it's live, and it's happening in real time in a room full of
+strangers all wanting the same thing you do.
 
 [SCREEN: "DURING" checklist — discipline over panic · real-time unknowns]
 
-Even with all the preparation in the world, there are things you only
-find out on the day — per-floor price jumps, how many buyers are ahead of
-you, whether your preferred facing is even still available by the time
-your number is called. The job on the day isn't to have zero surprises.
-It's to already know what you'll do when one shows up.
+Even with every bit of preparation, there's stuff you only find out on
+the day — per-floor price jumps, how many buyers are ahead of you,
+whether your preferred facing is even still on the table by the time
+your number's called. The goal on the day was never "zero surprises."
+It's already knowing what you'll do the moment one shows up.
 
-For our client, his ballot number came up 1,247, out of roughly 1,248,
-with only 380 units on offer that day.
+So — his ballot number came up 1,247, with only 380 units on offer that
+day.
 
 [PUNCH: NUMBER 1,247 · 380 UNITS AVAILABLE]
 
-Thin odds. By the time his turn came, the 2-bed, 1-bath he'd wanted was
-priced at a point where, by his own pre-set walk-away number, the risk
-outweighed the reward — even in a location he loved. This is exactly the
-moment most buyers freeze, or worse, abandon the number they set for
-themselves because they're standing in the room and don't want to leave
-empty-handed.
+[ENGAGE: Take a guess before I tell you — do you think he got the unit
+he originally wanted? Comment your guess.]
+
+Thin odds. And by the time his turn actually came, the 2-bed, 1-bath he'd
+wanted was priced at a point where, by his OWN pre-set walk-away number,
+the risk outweighed the reward — even in a location he loved. This is
+the exact moment most buyers freeze. Or worse, they quietly abandon the
+number they set for themselves, because they're standing in the room and
+they don't want to walk out with nothing.
 
 He didn't freeze. Because the backup had already been vetted weeks
-earlier, he pivoted live — to a 2-bed, 2-bath instead, in the same
-segment, at almost the same price.
+earlier, he pivoted live — to a 2-bed, 2-bath instead, same segment, at
+almost the same price.
 
 [PUNCH: PIVOTED LIVE. DIDN'T ABANDON THE NUMBER.]
 
-That pivot took seconds on the day. The work that made it possible took
-weeks, and happened long before he was in the room.
+That pivot took him seconds, standing right there in the room. The work
+that made it possible took weeks, and it happened long before he ever
+walked in.
 
 [TRANSITION: wipe]
 
 
 ----------------------------------------------------------------
-SCENE 12 — INSIDE A REAL BALLOT DAY: AFTER (20:10-21:40)
+SCENE 10 — INSIDE A REAL BALLOT DAY: AFTER (19:50-21:30)
 ----------------------------------------------------------------
 [Front camera, talk.]
 
-Phase three: AFTER. This is the phase most buyers don't even know exists,
-because for them, the story usually ends the moment they sign.
+Phase three — AFTER. Most buyers don't even know this phase exists,
+because for them, the story ends the moment they sign.
 
 [SCREEN: "AFTER" checklist — confirm the numbers still hold · map the
 next move regardless of outcome]
 
-Whichever way a ballot goes — first choice, backup, or nothing at all —
-there's a next move to map. Get your first choice: confirm the numbers
-still hold and plan the exit, don't just file it away. Get your backup:
-go back and check it actually still serves the original objective, not
-just "at least I bought something." Get nothing: the worst thing you can
-do is panic-buy whatever's next just to feel like the day wasn't wasted.
+Whichever way a ballot goes, there's a next move to map. Got your first
+choice? Confirm the numbers still hold and plan the exit — don't just
+file it away and forget about it. Got your backup? Go back and check it
+actually still serves the original objective, not just "well, at least I
+bought something." Got nothing at all? The worst thing you can do is
+panic-buy whatever's next just so the day doesn't feel wasted.
 
-For our client, the outcome was straightforward once the day was done: a
-2-bed, 2-bath, in the same market segment he wanted, for almost exactly
-what the 2-bed, 1-bath would have cost him. A better unit, same money —
-purely because the alternative had already been vetted before he needed
-it.
+For our client, the outcome was straightforward: a 2-bed, 2-bath, in the
+market segment he actually wanted, for almost exactly what the 2-bed,
+1-bath would've cost him anyway. A better unit, same money — purely
+because the alternative had already been vetted before he needed it.
 
 [PUNCH: BETTER UNIT. SAME BUDGET.]
 
 That's what "guiding a client through a ballot" actually means to us.
-Not standing next to you in a queue. Three phases of real preparation,
-most of it finished before you ever pick a number.
+Not standing next to you in a queue for moral support. Three phases of
+real preparation, and most of the work is already finished long before
+you ever pick a number.
+
+[ENGAGE: If you've made it this far, drop a comment telling me which
+phase you think most buyers skip — before, during, or after? I'll reply
+to a few of you.]
+
+[CTA: This exact process — all three phases — is what we run for every
+client before a ballot. If you want it run on your own numbers, the
+link's below.]
 
 [TRANSITION: fade]
 
 
 ----------------------------------------------------------------
-SCENE 13 — UPDATED VERDICT (21:40-23:40)
+SCENE 11 — UPDATED VERDICT (21:30-23:30)
 ----------------------------------------------------------------
 [Front camera, talk. Direct, confident close to the analysis.]
 
@@ -555,34 +609,38 @@ WHY I PAUSE
 My own-money answer hasn't changed from Part 1: this stays on my
 shortlist — but I'm not committing until the actual price list is public,
 and I'm not walking into that room without the same three phases I just
-showed you already done.
+showed you.
+
+[ENGAGE: What's your verdict after these two videos — still interested,
+or has something here changed your mind? Comment below, I read every
+one.]
 
 [TRANSITION: wipe]
 
 
 ----------------------------------------------------------------
-SCENE 14 — CLOSE (23:40-END)
+SCENE 12 — CLOSE (23:30-END)
 ----------------------------------------------------------------
 [Front camera, talk. Direct to camera, no rush.]
 
-To be clear about what's confirmed and what isn't in this video: the
-Lorong Puntong bid and the land price ladder are real, sourced
-transactions. The layout sizes come from the developer's own show-unit
-pack. The exact pricing per type is still our own estimate — there is
-still no official word from the developer on the price list or the final
-unit mix. I'll update this the moment that changes.
+Quick honesty check before you go. The Lorong Puntong bid and the land
+price ladder — real, sourced transactions. The layout sizes — straight
+from the developer's own show-unit pack. The pricing per type — still my
+own estimate, because there's still no official word on the price list
+or the final unit mix. The moment that changes, I'm coming back to update
+this.
 
 [PUNCH: NO OFFICIAL PRICE LIST YET — STILL AN ESTIMATE]
 
-If you want the same three-phase process — before, during, and after —
-run on your own numbers and your own ballot, the link's below. We'll tell
-you honestly if Thomson Reserve fits, and if it doesn't, we'll tell you
-that too.
+[CTA: If you want the same three-phase process — before, during, after —
+run on your own numbers, your own ballot, your own budget, the link's
+below. We'll tell you honestly if Thomson Reserve fits. And if it
+doesn't, we'll tell you that too.]
 
 [SUBSCRIBE REMINDER — seeded here per house rule]
-If Part 1 and this one were useful, subscribe — the moment the real
-price list drops, I'm opening this analysis back up and checking every
-number I committed to today, on camera.
+If Part 1 and this one gave you something real, subscribe — the second
+the actual price list drops, I'm opening this whole analysis back up and
+checking every number I committed to today, on camera, in front of you.
 
 I'm Coach Edmund. See you in the next one.
 

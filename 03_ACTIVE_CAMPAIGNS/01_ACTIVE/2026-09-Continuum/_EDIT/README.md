@@ -1,12 +1,72 @@
 # Continuum — long-form YouTube cut
 
-**`CONTINUUM_v3_1.15x.mp4`** — 18:47, 1920×1080, delivered at 1.15× (34.5fps)
-with the branded SAFE outro attached. Audio normalised to **−16.4 LUFS**,
-true peak −1.1 dBFS, 48 kHz.
+Two cuts, **same edit underneath** — the only difference is the motion, so they
+can be compared directly.
+
+| | |
+|---|---|
+| **`CONTINUUM_v6_MOTION_1.15x.mp4`** | the motion version — kinetic captions, counting figures, drawn-on highlights |
+| `CONTINUUM_v5_1.15x.mp4` | the same cut with static captions |
+
+20:33 · 1920×1080 · 1.15× (34.5fps) · branded SAFE outro · **−16.5 LUFS**,
+true peak −1.0 dBFS, 48 kHz · A/V sync 0.05s across the programme.
+173 clips · 116 overlays / 21 kinds · 426 subtitle cues.
+
+## The motion layer (v6)
+
+**Captions are spoken, not printed.** Each word lands on its own timing, the
+word being said is gold, and upcoming words sit ghosted at 22% so the line
+never reflows. Word timings come from the carve itself, not a separate pass.
+
+**Figures box and hold.** A money amount, a percentage, or a figure precise
+enough to be a measurement gets a gold box and keeps it after it is said - the
+only part of a sentence a property viewer is really scanning for.
+
+The rule is deliberately NOT "any number". At `[$%]|\d{2,}` it boxed 141
+words, so "10 years old, 3 bedrooms, 300 units" arrived as three highlights in
+one sentence and the emphasis stopped meaning anything. Now 101 words: money,
+percentages, and figures with a comma, a decimal, or three digits. Plain counts
+like "99 years" stay in the sentence. A lone "%" is glued to the number in
+front of it, or "15 % to 20 %" renders as four boxes instead of two figures.
+
+**Figures count up.** `$2,650 PSF` rolls to its value over 0.65s. Only the
+numeric run animates - prefix, suffix and thousands separators are preserved,
+and a non-numeric value passes through untouched. A number that appears reads
+as decoration; one that climbs reads as a measurement.
+
+**Highlights draw on.** The stroke on a table screenshot draws across the cell
+over 0.55s with a light sweep running ahead of it, and the dim mask settles
+separately so it does not animate with the stroke.
 
 Built through the Remotion pipeline (`ContinuumLong`), not a flat assembly:
-525 talking-head and b-roll clips, 118 graphic overlays across 21 kinds, 414
+173 talking-head and b-roll clips, 116 graphic overlays across 21 kinds, 426
 burned-in subtitle cues.
+
+## Why v5 is calmer than v3
+
+A cut has to earn itself. v3 made 506 cuts, and the smallest half saved only
+52.7s between them — about 0.21s each — landing a cut every 2.43s against
+sentences of roughly 3.5s. That is what "multiple transitions in one sentence"
+was. Below `MIN_GAP` (0.55s) the pause is now simply kept.
+
+| | v3 | v5 |
+|---|---|---|
+| clips | 525 | 173 |
+| a cut every | 2.43s | 8.4s |
+| clips under 1.5s | 169 | 9 |
+| first word already running | 56% | 0 |
+| last word cut mid-word | 24% | 0 |
+| speech replayed | 7.2s | 0 |
+
+Boundaries now snap to whole words. `silencedetect` marks low ENERGY, not word
+edges, so a soft onset or a consonant tail read as silence and the cut landed
+inside a word — one lost 0.73s of "$2". No hold value fixes that; the error is
+a misaligned edge, not a margin.
+
+Every join also carries a transition now (157 fade inside a continuing
+thought, 11 wipe at a scene change, 4 slide in and out of b-roll). A
+transition OVERLAPS its clips, so all overlay and caption times are corrected
+for the cumulative 45s that introduces.
 
 ---
 
