@@ -4,7 +4,11 @@ Before They Ballot — Live, With Real Numbers."**
 
 Presenter: Coach Edmund Tan, Singapore Real Estate Insider
 Runtime: **60 minutes scripted, then 30–45 min open Q&A.**
-Status: v6 — the version to record from, pending Edmund's read-through.
+Status: SUPERSEDED by v7 (2026-09-19) --
+`Thomson_Reserve_60min_Webinar_Script_v7.md` in this same folder. v7
+rebuilds this around the locked Big Domino + 3 Secrets structure (never
+written back into this file until now) and adds the full pitch-section
+rebuild. Kept here for history only -- do not record from this version.
 Supersedes v5. See "What changed and why" below for what's new and why
 it's structured this way.
 
