@@ -5,9 +5,12 @@ Almost Nobody Checks Before They Ballot — Live, With Real Numbers."**
 Presenter: Coach Edmund Tan, Singapore Real Estate Insider
 Runtime: **90 minutes scripted — 70 min content, 20 min pitch — then open
 Q&A, uncapped, entirely OUTSIDE the 90 minutes.**
-Status: v8 — DRAFT, pending Edmund's read-through and the OPEN ITEMS in
-Appendix A (price reveal, value-justification hours claim, and the
-bankruptcy-story pronoun are still placeholders/unconfirmed).
+Status: SUPERSEDED by v9 (2026-09-21) --
+`Thomson_Reserve_60min_Webinar_Script_v9.md` in this same folder. v9
+replaces the generic 5-objection handling block with 10 sharp,
+trust-positioning objections (why free, are you selling me the launch,
+do you sell property, are you an agent, etc.) per Edmund's direction.
+Kept here for history only -- do not record from this version.
 Supersedes v7.
 
 ---
