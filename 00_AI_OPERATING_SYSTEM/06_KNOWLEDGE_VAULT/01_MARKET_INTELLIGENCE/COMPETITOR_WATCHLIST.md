@@ -245,3 +245,114 @@ which is the opposite of what a sustained block would look like.
 - **Duplicate creatives under rotated library IDs** remain common (Authentic Advisory Systems 5 pairs, Growth Partners 1). Detected by
   identical CDN asset URL and collapsed to one representative, per the dedupe policy.
 - Carried forward, not re-attempted this run: Ernee Ong library ID `27801271979474342` (image that 403'd on 2026-09-07).
+
+---
+
+## Weekly refresh — 2026-09-21 (`rei-swipe-weekly-refresh`, browser-side media pull)
+
+**Scope:** all 45 resolved page IDs re-checked (46 page loads — both FNX pages). Append-only per Decision 124; no pre-existing asset was
+deleted, overwritten or re-dated (library went 673 → 677 videos and 806 → 948 images, exactly the net adds).
+
+**Result: +4 distinct videos, +142 static images, across 13 folders.**
+26 videos and 246 images were actually pulled; the dedupe rules then collapsed **22 videos** (same script already on disk) and
+**104 images** (byte-identical). The gross figures are re-upload noise, not new creative — see "Dedupe did most of the work" below.
+
+> **Read the "Environment change" note before interpreting any active-ad count here.** Meta's React app no longer hydrates in this
+> environment, so the load-more loop is gone and the server-rendered payload caps at 30 ads. **Every folder showing exactly 30 active
+> is a floor, not a true count.**
+
+### Folders with new creatives
+| Folder | Active seen | +video | +image | Notes |
+|---|---|---|---|---|
+| Growth Partners Inc | 26 | 0 | **+46** | Largest real delta. The 2026-09-14 reactivation is still running. Folder now 164 images. |
+| Stella Thio - Singapore Luxury Homes | 30 (cap) | **+1** | **+36** | 4 videos pulled; 3 were re-uploads of 2026-08-29 scripts under rotated library IDs (0.975–0.997 transcript similarity). The genuinely new one is `2386421438765764` — a record-price / "is there profitability left" angle on Thomson Reserve. |
+| Flexionmarketing | 30 (cap) | 0 | +19 | 58 pulled, 39 byte-identical. |
+| Beyond Realtors Club | 30 (cap) | 0 | +18 | No duplicates — a genuinely fresh static set. |
+| Peng Joon | 30 (cap) | 0 | +7 | **REACTIVATED** (country=ALL). 44 pulled, 37 byte-identical — the same heavy-re-upload pattern flagged in Decision 129. |
+| Issac Liu | 10 | 0 | +6 | |
+| King Kong Co (Sabri Suby) | 30 (cap) | **+1** | +3 | **REACTIVATED.** New video age 5d / 2:45. 4 >10min VSLs logged-only per the length cap. |
+| Miles Stutz | 17 | 0 | +3 | |
+| Colin Ee | 14 | 0 | +2 | **REACTIVATED.** |
+| Authentic Advisory Systems | 30 (cap) | **+1** | 0 | 19 videos pulled, **18 collapsed** — 17 are re-encodings of testimonial scripts already captured on 2026-09-07/09-14, 1 byte-identical. Only `1102596052264862` (96s) is a new script. |
+| Live A Home SG | 3 | **+1** | 0 | Age 3d / 2:09 — freshest creative of the run. Direct competitor (Thomson Reserve funnel), same launch as Stella Thio's new one. |
+| Dan Lok | 30 (cap) | 0 | +1 | 4 >10min VSLs logged-only (29:33 / 63:32 / 15:20 / 63:32). |
+| KS Tan | 15 | 0 | +1 | **Active count dropped 42 → 15.** Below the 30 cap, so this is a real contraction, not truncation. |
+
+**Pulled but nothing new after dedupe:** Damien Tan Real Estate (its 1 video was a re-upload of the 2026-09-07 script) ·
+Erik Hoffmann (all 6 image candidates byte-identical) · Abc Sales AI (both byte-identical).
+
+**No new creatives (checked, current):** Adrian Lee (3) · CP Homes (1) · Caleb Sim (22) · Denise Tan (30 cap) · Ernee Ong (30 cap) ·
+FNX Advertising (3, down from 6) · I Quadrant (17) · Jason Evonne Property (3) · Jo Tan (1) · Legacy Advisors Academy (14) ·
+M H Simon (6) · Networth Builders (1) · Raymondlim.rlc (3) · Real Estate Mentor (1) · The Freedom Growth Academy (30 cap) ·
+The Investor Realtor (13) · The Right Move (9).
+
+### Dedupe did most of the work this week — read the gross numbers with suspicion
+A naive count would have reported "+26 videos / +246 images". The real figure is **+4 / +142**. Two mechanisms:
+- **Library-ID rotation.** Meta reissues library IDs on relaunch, so an ID-level diff sees an unchanged creative as new. Caught by
+  comparing each new video's **transcript** against every transcript already in the folder (normalised, similarity ≥ 0.95). Stella Thio's
+  3 and Damien Tan's 1 were exact re-runs of earlier campaigns.
+- **Re-encoding of one creative across many ads.** Authentic Advisory Systems ran 19 ad IDs off essentially one testimonial, each
+  re-encoded so byte-hashing alone could not see it. Only transcript comparison collapses this class.
+- **Byte-identical image re-upload** (Decision 129 Defect 3) accounted for 104 of the 246 images — Flexionmarketing 39, Peng Joon 37.
+
+### Campaigns that ENDED this week (0 active ads; assets retained per append-only)
+| Folder | Was | Verified |
+|---|---|---|
+| Cynric Ho | direct competitor, 4 active + 3 new videos on 2026-09-14 | 0 active — campaign ended |
+| Rodney Tan | direct competitor | 0 active — campaign ended |
+| Patricia Ang Real Estate | active | 0 active — campaign ended |
+| Eddy Miranda | image-only | 0 active — campaign ended |
+| Entrepedia | image-only | 0 active — campaign ended |
+
+Still 0-active (unchanged): Allan Khazak · Frank Kern · Marc Chan · Property Exit Advantage Singapore · Sarah Lee · Thomas Yap ·
+Xccelerate Academy · FNX Marketing (original page 1286193024567598).
+
+### Reactivated
+**King Kong Co** (0 → 30), **Peng Joon** (0 → 30, country=ALL), **Colin Ee** (0 → 14). All three were logged ENDED on 2026-09-14 —
+a reminder that "ENDED" here means *0 active right now*, not *gone for good*.
+
+### New advertisers / page IDs resolved
+**None.** The same 5 remain unresolved: Escape Uncertainty · Future Adviser Sg · Leads SG · Success Resources · The Producer Formula.
+Re-attempted under both `country=SG` and `country=ALL` via the keyword-search `page_id`/`page_name` pairing — no exact page-name match
+for any (nearest noise: "SkillsFuture SG" for *Future Adviser Sg*, "The Row" for *The Producer Formula*). They need the page opened
+manually once, or a distinctive brand keyword lifted from their ad copy.
+
+### Throttling / blocking
+**Significant, and it changed the method — see below.** No per-folder throttling: every page returned its real payload, and the
+0-active folders are genuine campaign ends (previously-ended folders came back with fresh ads, the opposite of a sustained block).
+
+### Environment change — the load-more loop is GONE (new this week, carry forward)
+- `static.xx.fbcdn.net` now serves **every** `rsrc.php` JS/CSS bundle with `cross-origin-resource-policy: same-origin` and **no**
+  `Access-Control-Allow-Origin`. facebook.com therefore cannot load its own scripts and **the React app never hydrates.**
+- Reproduced identically in the in-app Browser pane *and* in Playwright → **network-level, not browser-specific**. Sending `Origin`,
+  `Referer`, `Sec-Fetch-*` and a real Chrome UA does not change the response headers.
+- A plain `curl` of the Ad Library returns **HTTP 403** with a `__rd_verify_...?challenge=3` bot-detection interstitial. The browsers
+  still get the real document because they carry the session; only the CDN bundles are degraded.
+- **Consequence:** `document.body.innerText` is empty, there are no ad cards in the DOM, and there is no "See more" button — the
+  load-more technique that has powered this sweep since 2026-07-31 **cannot run at all.** The server-rendered payload caps at **30 ads**
+  and that is now a hard ceiling. Ten folders hit it (Authentic Advisory Systems, Beyond Realtors Club, Dan Lok, Denise Tan, Ernee Ong,
+  Flexionmarketing, King Kong Co, Peng Joon, Stella Thio, The Freedom Growth Academy).
+- **Method that still works, and is now primary:** parse the server-rendered payload out of `document.documentElement.outerHTML`, strip
+  JSON escaping, and position-map each media URL to its preceding `"ad_archive_id"`. Decode the base64url `efg` param for
+  `asset_age_days` and `duration_s`. No hydration, no DOM. (Decision 129's Defect 1 — position-mapping collapsing onto the last library
+  ID — is a *hydrated-DOM* problem and does not occur in the payload; verified, see Decision 130.)
+
+### CORRECTION to the 2026-09-14 note — payload video URLs DO work
+Last week's entry recorded the payload's `video_hd_url`/`video_sd_url` as unsigned, 403-ing with *"Bad URL hash"*, and concluded video
+URLs must come from the rendered DOM. **Not correct as a general rule, and it matters now that there is no DOM.** All 27 attempted
+payload video downloads succeeded (0 failures, 1.7–26 MB each). The 403 reproduces only on **stale** assets — first hit on a
+226-day-old URL. Every asset inside the 35-day filter downloaded fine, and that filter is exactly what the weekly pull applies, so the
+full video pull works without hydration.
+
+### Known issues / carry-forward
+- **The 30-ad cap is the single biggest gap.** Until hydration returns or a paged data source is found, high-activity folders are
+  sampled, not swept. KS Tan's 42 → 15 drop is genuine (below cap), but Authentic Advisory Systems / Ernee Ong / I Quadrant-class
+  folders are almost certainly under-counted. **Top priority for next week.**
+- **Static images:** prefer the unresized `original_image_url` (no `stp=` — this run returned 1080×1350 to 1649×2048 originals), then a
+  natively served `s600x600`. Never rewrite the `stp` parameter (403 "URL signature mismatch", per 2026-09-14). Bases available only at
+  `s60x60` are 60px thumbnails, not creatives, and are skipped — ~131 such bases skipped this run.
+- **Transcript-similarity dedup is new this run and should stay.** Byte-hashing alone missed 21 of the 22 duplicate videos because Meta
+  re-encodes the same creative per ad. See Decision 130.
+- **Library integrity: clean.** Full scan of all 278 folders post-run — **677 videos / 948 images, 0 missing thumbnails, 0 missing
+  transcripts, 0 stray `.wav`.** No repairs were needed.
+- Carried forward, not re-attempted: Ernee Ong library ID `27801271979474342` (image that 403'd on 2026-09-07).
