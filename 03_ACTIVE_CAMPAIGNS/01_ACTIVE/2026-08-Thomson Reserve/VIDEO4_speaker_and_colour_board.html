@@ -1,0 +1,198 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Video 4 — Speaker Presence + Colour Variants</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#05070A;font-family:"Segoe UI",system-ui,sans-serif;color:#E6EDF3}
+  .sheet{display:grid;grid-template-columns:repeat(2,600px);gap:30px;padding:26px;justify-content:center}
+  .cap{font-size:13px;color:#8B98A9;padding:6px 2px 10px;letter-spacing:.06em;text-transform:uppercase}
+  .cap b{color:#E6EDF3}
+  .slot{position:relative;width:600px;height:372px;overflow:hidden}
+  .frame{width:1920px;height:1080px;transform:scale(.3125);transform-origin:top left;position:relative;overflow:hidden}
+  .num{font-variant-numeric:tabular-nums}
+  h2.sec{grid-column:1/-1;font-size:18px;letter-spacing:.2em;text-transform:uppercase;
+         color:#A78BFA;padding:28px 2px 2px;border-top:1px solid #2A3441}
+  h2.sec span{color:#5A6676;letter-spacing:0;text-transform:none;font-size:14px;display:block;margin-top:7px}
+
+  /* ============ PALETTES ============ */
+  .pA{--bg:#0E1116;--surf:#161B22;--line:#2A3441;--ink:#E6EDF3;--dim:#8B98A9;--faint:#5A6676;
+      --b2:#F0883E;--b3:#2DD4BF;--b4:#A78BFA;--risk:#F85149}
+  .pB{--bg:#171A23;--surf:#212636;--line:#39415A;--ink:#F2F4F8;--dim:#A7B0C4;--faint:#6D7690;
+      --b2:#FFA94D;--b3:#4FD1C5;--b4:#B69CFF;--risk:#FF6B6B}
+  .pC{--bg:#F4F6FA;--surf:#FFFFFF;--line:#D4DAE6;--ink:#141A24;--dim:#5A6478;--faint:#8892A6;
+      --b2:#E2711D;--b3:#0E9384;--b4:#6941C6;--risk:#D92D20}
+
+  .frame{background:var(--bg);color:var(--ink)}
+  .pad{position:absolute;inset:0;padding:78px 92px 120px;display:flex;flex-direction:column;justify-content:center}
+  .kick{font-size:25px;letter-spacing:.3em;color:var(--faint);text-transform:uppercase;margin-bottom:22px}
+  .h1{font-size:68px;font-weight:700;line-height:1.06;letter-spacing:-.02em}
+  .h1 em{font-style:normal;color:var(--b2)}
+  .foot{position:absolute;left:92px;bottom:52px;font-size:21px;color:var(--faint);letter-spacing:.14em}
+  .rail{position:absolute;left:0;top:0;bottom:0;width:10px;background:var(--b2)}
+
+  .sbar{height:70px;display:flex;border-radius:7px;overflow:hidden;border:1px solid var(--line);margin:34px 0 16px}
+  .sbar div{display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:700;color:#12151b}
+  .note{font-size:25px;color:var(--dim)}
+  .conseq h3{font-size:23px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;margin-bottom:22px;font-weight:500}
+  .conseq p{font-size:33px;line-height:1.4}
+  .verdict{display:inline-flex;gap:14px;font-size:27px;padding:16px 26px;border-radius:8px;margin-top:26px;
+           background:color-mix(in srgb,var(--risk) 14%,transparent);color:var(--risk);
+           border:1px solid color-mix(in srgb,var(--risk) 42%,transparent)}
+
+  /* ============ SPEAKER PRESENCE ============ */
+  .full img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .lowerthird{position:absolute;left:0;right:0;bottom:0;padding:54px 92px;
+    background:linear-gradient(0deg,rgba(6,8,12,.94) 12%,rgba(6,8,12,0));}
+  .lowerthird .q{font-size:56px;font-weight:700;line-height:1.16;color:#fff;max-width:1380px}
+  .lowerthird .who{font-size:24px;color:#A78BFA;letter-spacing:.22em;text-transform:uppercase;margin-bottom:18px}
+
+  .split{position:absolute;inset:0;display:flex}
+  .split .data{flex:1;padding:92px 74px;display:flex;flex-direction:column;justify-content:center}
+  .split .spk{flex:0 0 520px;position:relative;overflow:hidden;background:#0a0c10}
+  .split .spk img{width:100%;height:100%;object-fit:cover}
+  .split.left .spk{order:-1}
+  .seam{position:absolute;top:0;bottom:0;width:3px;background:var(--b2);opacity:.5}
+
+  .pipwrap{position:absolute;left:78px;bottom:78px;width:300px;height:300px;border-radius:50%;
+    overflow:hidden;border:5px solid var(--b4);box-shadow:0 18px 50px rgba(0,0,0,.6)}
+  .pipwrap img{width:100%;height:100%;object-fit:cover}
+  .safe{position:absolute;left:78px;bottom:78px;width:300px;height:300px;border-radius:50%;
+    border:2px dashed rgba(167,139,250,.5)}
+  .safelab{position:absolute;left:78px;bottom:396px;font-size:21px;color:var(--b4);letter-spacing:.1em}
+</style>
+
+<div class="sheet">
+
+<h2 class="sec">A · Speaker presence — four states, cut between as the point demands
+  <span>All four use real frames from the actual sources. The webinar's native layout is already split-right, so state A2 needs no reframing at all.</span></h2>
+
+<!-- A1 FULL -->
+<div><div class="cap"><b>A1 · FULL FRAME</b> — for emphasis. The line lands on his face, not a chart.</div>
+<div class="slot"><div class="frame pA full">
+  <img src="spk_full.jpg" alt="">
+  <div class="lowerthird">
+    <div class="who">Coach Edmund · The R.E.I Method</div>
+    <div class="q">"Your next buyer will run this same comparison."</div>
+  </div>
+</div></div></div>
+
+<!-- A2 SPLIT RIGHT -->
+<div><div class="cap"><b>A2 · SPLIT-RIGHT</b> — native webinar geometry. Data left, speaker right.</div>
+<div class="slot"><div class="frame pA">
+  <div class="split">
+    <div class="data">
+      <div class="kick">Scenario B of D</div>
+      <div class="h1">If it leans<br><em>2-bedroom</em></div>
+      <div class="sbar">
+        <div style="flex:853;background:var(--b2)">853</div>
+        <div style="flex:213;background:#1C3A36;color:var(--b3)">213</div>
+      </div>
+      <div class="note">Regional 2-bed stock → <b style="color:var(--b2)">~1,602</b></div>
+    </div>
+    <div class="spk"><div class="seam" style="left:0"></div><img src="spk_strip.jpg" alt=""></div>
+  </div>
+</div></div></div>
+
+<!-- A3 PIP -->
+<div><div class="cap"><b>A3 · PIP BUBBLE</b> — full graphic, speaker held bottom-left, clear of the data.</div>
+<div class="slot"><div class="frame pA">
+  <div class="pad">
+    <div class="kick">JadeScape · average resale profit</div>
+    <div class="h1" style="font-size:60px">The bigger the unit,<br>the bigger the <em style="color:var(--b4)">gain</em>.</div>
+    <div style="margin-top:38px;display:flex;flex-direction:column;gap:22px;padding-left:440px">
+      <div style="height:52px;border-radius:6px;width:39%;background:var(--b2);display:flex;align-items:center;padding-left:22px;font-size:27px;font-weight:700;color:#1a0f06">$390,000</div>
+      <div style="height:52px;border-radius:6px;width:81%;background:var(--b3);display:flex;align-items:center;padding-left:22px;font-size:27px;font-weight:700;color:#04201c">$812,000</div>
+      <div style="height:52px;border-radius:6px;width:100%;background:var(--b4);display:flex;align-items:center;padding-left:22px;font-size:27px;font-weight:700;color:#140c26">$1,000,000</div>
+    </div>
+  </div>
+  <div class="pipwrap"><img src="spk_pip.jpg" alt=""></div>
+</div></div></div>
+
+<!-- A4 SPLIT LEFT -->
+<div><div class="cap"><b>A4 · SPLIT-LEFT</b> — mirrored, for rhythm so the split never feels static.</div>
+<div class="slot"><div class="frame pA">
+  <div class="split left">
+    <div class="data">
+      <div class="kick">The one type running the other way</div>
+      <div class="h1" style="font-size:60px">202 arriving.<br><em style="color:var(--b4)">67 exist today.</em></div>
+      <div class="note" style="margin-top:30px">Low supply, proven demand.</div>
+    </div>
+    <div class="spk"><div class="seam" style="right:0"></div><img src="spk_strip.jpg" alt=""></div>
+  </div>
+</div></div></div>
+
+<h2 class="sec">B · Colour variants — same card, three palettes
+  <span>Pick one. Every graphic in the video inherits it. The webinar's own slides are light, which is the argument for C.</span></h2>
+
+<!-- B1 -->
+<div><div class="cap"><b>B1 · TERMINAL DARK</b> — current. Most distinct, highest contrast, coldest.</div>
+<div class="slot"><div class="frame pA">
+  <div class="rail"></div>
+  <div class="pad">
+    <div class="kick">Scenario B of D</div>
+    <div class="h1">If it leans <em>2-bedroom</em></div>
+    <div class="sbar"><div style="flex:853;background:var(--b2)">2-BED · 853</div>
+      <div style="flex:213;background:#1C3A36;color:var(--b3)">213</div></div>
+    <div class="conseq" style="margin-top:26px">
+      <h3>What it does to you</h3>
+      <p>You're one of many landlords chasing the same tenant.</p>
+      <div class="verdict">▲ Rent gets adjusted down</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO B</div>
+</div></div></div>
+
+<!-- B2 -->
+<div><div class="cap"><b>B2 · WARM SLATE</b> — softer dark, warmer accents. Less severe, still holds attention.</div>
+<div class="slot"><div class="frame pB">
+  <div class="rail"></div>
+  <div class="pad">
+    <div class="kick">Scenario B of D</div>
+    <div class="h1">If it leans <em>2-bedroom</em></div>
+    <div class="sbar"><div style="flex:853;background:var(--b2)">2-BED · 853</div>
+      <div style="flex:213;background:#24413E;color:var(--b3)">213</div></div>
+    <div class="conseq" style="margin-top:26px">
+      <h3>What it does to you</h3>
+      <p>You're one of many landlords chasing the same tenant.</p>
+      <div class="verdict">▲ Rent gets adjusted down</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO B</div>
+</div></div></div>
+
+<!-- B3 -->
+<div><div class="cap"><b>B3 · BRIGHT STUDIO</b> — light. Matches the webinar slides, best on mobile.</div>
+<div class="slot"><div class="frame pC">
+  <div class="rail"></div>
+  <div class="pad">
+    <div class="kick">Scenario B of D</div>
+    <div class="h1">If it leans <em>2-bedroom</em></div>
+    <div class="sbar" style="border-color:#C9D2E0">
+      <div style="flex:853;background:var(--b2);color:#fff">2-BED · 853</div>
+      <div style="flex:213;background:#E3EAF2;color:var(--b3)">213</div></div>
+    <div class="conseq" style="margin-top:26px">
+      <h3>What it does to you</h3>
+      <p>You're one of many landlords chasing the same tenant.</p>
+      <div class="verdict">▲ Rent gets adjusted down</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO B</div>
+</div></div></div>
+
+<!-- B3 + speaker, to prove the light palette still frames him well -->
+<div><div class="cap"><b>B3 in split-right</b> — checking the light palette against real footage.</div>
+<div class="slot"><div class="frame pC">
+  <div class="split">
+    <div class="data">
+      <div class="kick">Scenario B of D</div>
+      <div class="h1">If it leans<br><em>2-bedroom</em></div>
+      <div class="sbar" style="border-color:#C9D2E0">
+        <div style="flex:853;background:var(--b2);color:#fff">853</div>
+        <div style="flex:213;background:#E3EAF2;color:var(--b3)">213</div></div>
+      <div class="note">Regional 2-bed stock → <b style="color:var(--b2)">~1,602</b></div>
+    </div>
+    <div class="spk"><div class="seam" style="left:0"></div><img src="spk_strip.jpg" alt=""></div>
+  </div>
+</div></div></div>
+
+</div>

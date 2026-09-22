@@ -1,0 +1,672 @@
+{
+ "speed_p1": 1.1996333614491825,
+ "clips": [
+  {
+   "seq": "1A",
+   "label": "hook thesis",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve4a.mp4",
+     "a": 8.827,
+     "b": 10.37
+    },
+    {
+     "src": "Thomson Reserve4a.mp4",
+     "a": 10.13,
+     "b": 17.41
+    },
+    {
+     "src": "Thomson Reserve4b.mp4",
+     "a": 1.91,
+     "b": 8.682
+    }
+   ]
+  },
+  {
+   "seq": "1B",
+   "label": "the 84/16 split",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 239.89,
+     "b": 241.81
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 242.15,
+     "b": 246.228
+    }
+   ]
+  },
+  {
+   "seq": "2A",
+   "label": "coach intro",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 55.053,
+     "b": 57.14
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 56.9,
+     "b": 61.54
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 61.76,
+     "b": 64.8
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 64.92,
+     "b": 68.349
+    }
+   ]
+  },
+  {
+   "seq": "2B",
+   "label": "credibility",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 109.965,
+     "b": 117.0
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 117.34,
+     "b": 120.66
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 121.02,
+     "b": 123.98
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 133.42,
+     "b": 134.5
+    }
+   ]
+  },
+  {
+   "seq": "3A",
+   "label": "tower breakdown 202/1066",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 329.907,
+     "b": 333.88
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 334.38,
+     "b": 336.76
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 336.98,
+     "b": 338.5
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 338.92,
+     "b": 340.88
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 341.08,
+     "b": 343.0
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 352.74,
+     "b": 355.5
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 355.6,
+     "b": 358.02
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 358.08,
+     "b": 359.14
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 359.36,
+     "b": 361.56
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 361.92,
+     "b": 366.2
+    },
+    {
+     "src": "Thomson Reserve1.mp4",
+     "a": 366.5,
+     "b": 368.419
+    }
+   ]
+  },
+  {
+   "seq": "4A",
+   "label": "stuck for years",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4476,
+     "b": 4486
+    }
+   ]
+  },
+  {
+   "seq": "4B",
+   "label": "becomes a resale",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 107.358,
+     "b": 109.97
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 110.35,
+     "b": 112.39
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 113.01,
+     "b": 115.555
+    }
+   ]
+  },
+  {
+   "seq": "5A",
+   "label": "second layer of research",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4494,
+     "b": 4520
+    }
+   ]
+  },
+  {
+   "seq": "6A",
+   "label": "jadescape 55% / 265",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4520,
+     "b": 4559
+    }
+   ]
+  },
+  {
+   "seq": "6B",
+   "label": "limited editions",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 202.217,
+     "b": 205.41
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 206.09,
+     "b": 208.69
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 208.45,
+     "b": 211.03
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 212.82,
+     "b": 214.9
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 225.91,
+     "b": 228.79
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 229.29,
+     "b": 231.45
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 231.63,
+     "b": 235.331
+    }
+   ]
+  },
+  {
+   "seq": "6C",
+   "label": "profit by type",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 155.115,
+     "b": 156.3
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 156.76,
+     "b": 160.54
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 169.3,
+     "b": 173.94
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 173.7,
+     "b": 178.56
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 189.37,
+     "b": 192.45
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 192.65,
+     "b": 196.75
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 196.51,
+     "b": 202.35
+    },
+    {
+     "src": "Thomson Reserve2.mp4",
+     "a": 202.11,
+     "b": 202.217
+    }
+   ]
+  },
+  {
+   "seq": "7A",
+   "label": "1km supply table",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve4b.mp4",
+     "a": 9.882,
+     "b": 10.05
+    },
+    {
+     "src": "Thomson Reserve4b.mp4",
+     "a": 10.25,
+     "b": 17.71
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 1.62,
+     "b": 8.68
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 8.44,
+     "b": 9.04
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 9.3,
+     "b": 12.82
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 21.36,
+     "b": 25.96
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 26.24,
+     "b": 27.96
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 32.22,
+     "b": 35.74
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 36.12,
+     "b": 39.88
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 46.27,
+     "b": 58.248
+    }
+   ]
+  },
+  {
+   "seq": "7B",
+   "label": "1066 incoming",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 65.177,
+     "b": 73.4
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 77.94,
+     "b": 78.115
+    }
+   ]
+  },
+  {
+   "seq": "8A",
+   "label": "which type shopping",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 156.985,
+     "b": 157.77
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 163.48,
+     "b": 167.494
+    }
+   ]
+  },
+  {
+   "seq": "9A",
+   "label": "setup: yield vs capital",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4718,
+     "b": 4738
+    }
+   ]
+  },
+  {
+   "seq": "9B",
+   "label": "SCENARIO A 50/50",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4738,
+     "b": 4768
+    }
+   ]
+  },
+  {
+   "seq": "9C",
+   "label": "SCENARIO B heavy 2BR",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4768,
+     "b": 4853
+    }
+   ]
+  },
+  {
+   "seq": "9D",
+   "label": "SCENARIO C pivot 3BR",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4858,
+     "b": 4886
+    }
+   ]
+  },
+  {
+   "seq": "9E",
+   "label": "SCENARIO D heavy 3BR",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4904,
+     "b": 4958
+    }
+   ]
+  },
+  {
+   "seq": "10A",
+   "label": "which gets the 84%",
+   "kind": "Layout-3Bed",
+   "frags": [
+    {
+     "src": "Layout-3Bed.mp4",
+     "a": 363.04,
+     "b": 376.2
+    }
+   ]
+  },
+  {
+   "seq": "11A",
+   "label": "202 vs 67",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 129.711,
+     "b": 129.95
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 132.7,
+     "b": 142.88
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 143.1,
+     "b": 144.74
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 149.85,
+     "b": 156.985
+    }
+   ]
+  },
+  {
+   "seq": "11B",
+   "label": "lack of supply / sellable",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 5791,
+     "b": 5845
+    }
+   ]
+  },
+  {
+   "seq": "11C",
+   "label": "own-stay, ride cycles",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 5845,
+     "b": 5856
+    }
+   ]
+  },
+  {
+   "seq": "11D",
+   "label": "4-bed pick, 3 reasons",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 415.868,
+     "b": 416.44
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 427.12,
+     "b": 429.72
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 429.78,
+     "b": 432.04
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 432.36,
+     "b": 434.74
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 434.96,
+     "b": 437.42
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 446.58,
+     "b": 450.4
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 450.7,
+     "b": 454.54
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 454.3,
+     "b": 465.159
+    }
+   ]
+  },
+  {
+   "seq": "11E",
+   "label": "under supply",
+   "kind": "Layout-4Bed",
+   "frags": [
+    {
+     "src": "Layout-4Bed.mp4",
+     "a": 17.86,
+     "b": 30.66
+    }
+   ]
+  },
+  {
+   "seq": "12A",
+   "label": "hold 5-6 yrs not 4",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 5856,
+     "b": 5872
+    }
+   ]
+  },
+  {
+   "seq": "12B",
+   "label": "covid bonus caveat",
+   "kind": "P1",
+   "frags": [
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 465.159,
+     "b": 466.36
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 475.89,
+     "b": 478.21
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 478.27,
+     "b": 481.99
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 482.13,
+     "b": 485.57
+    },
+    {
+     "src": "Thomson Reserve5.mp4",
+     "a": 486.03,
+     "b": 486.146
+    }
+   ]
+  },
+  {
+   "seq": "13A",
+   "label": "crowded ballot != value",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 4996,
+     "b": 5012
+    }
+   ]
+  },
+  {
+   "seq": "14A",
+   "label": "plan ahead / climb ladder",
+   "kind": "WEB",
+   "frags": [
+    {
+     "src": "GMT20260916-114939_Recording_1920x1080.mp4",
+     "a": 5043,
+     "b": 5076
+    }
+   ]
+  },
+  {
+   "seq": "14C",
+   "label": "determine which 4/5 bed",
+   "kind": "Layout-4Bed",
+   "frags": [
+    {
+     "src": "Layout-4Bed.mp4",
+     "a": 130.5,
+     "b": 141.54
+    }
+   ]
+  },
+  {
+   "seq": "14D",
+   "label": "link below (alt)",
+   "kind": "Main-DSLR",
+   "frags": [
+    {
+     "src": "Main-DSLR.mp4",
+     "a": 324.66,
+     "b": 327.16
+    }
+   ]
+  }
+ ]
+}

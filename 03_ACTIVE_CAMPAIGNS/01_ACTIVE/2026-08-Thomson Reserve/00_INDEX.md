@@ -2,15 +2,33 @@
 
 Date created: 2026-09-08 (index only — the underlying work started earlier;
 raw footage dated 2026-09-06/07)
-Status: ACTIVE — 2-part YouTube video in production. Part 1: script
-written, raw footage shot, first render rounds done. Part 2: NEW draft
-script written 2026-09-17 (`YOUTUBE_PART2.txt`), built from the live
-2026-09-16 webinar transcript + fresh Lorong Puntong GLS result — not yet
-filmed. See `PART2_cross_check_resources.md` for fact-check map and open
-items before recording.
+Status: ACTIVE — **corrected 2026-09-22**: this is no longer a 2-part
+series. THREE final renders exist on disk and the index previously did not
+reflect them:
+- `THOMSON_RESERVE_FINAL.mp4` (22:34) = Part 1
+- `THOMSON_RESERVE_PART2.mp4` (31:46) = Part 2
+- `THOMSON_RESERVE_LAYOUTS.mp4` (16:07) = the Layouts video, posting now
+
+Publishing order: Part 1 -> Part 2 -> Layouts -> **Unit Mix (video 4, in
+production)**.
+
+Video 4 (Unit Mix) is an **EDIT-ONLY assembly — no new recording**. It is
+cut entirely from existing assets: the 2026-09-16 live webinar recording
+plus clips from the Part 1 / Part 2 / Layouts renders. Editorial decision
+2026-09-22: all "we still do not know the unit mix" lines are CUT, so the
+video presents as a decision-principle piece (what happens to a buyer when
+a development is heavy on one unit type) rather than a live guess about
+unreleased data. The 4-bedroom scarcity argument is pulled from Part 2
+footage and lives fully in this video. River Green / Wing Tai are NOT to
+be named on camera — cut entirely.
+
+NOTE: `YOUTUBE_PART2.txt` (draft script, 2026-09-17) was written before it
+was known that Part 2 had already been filmed and rendered. Treat that
+script as a superseded draft, not as the source of the posted Part 2.
 
 ## Objective
-Full pre-launch review of Thomson Reserve as a 2-part YouTube video,
+Full pre-launch review of Thomson Reserve as a YouTube series (4 videos:
+Part 1, Part 2, Layouts, Unit Mix),
 running Coach Edmund's own **THE REI Method** (Supply → Evidence → Fair
 Price → Walk-Away → Exit) live on the project with his own real money on
 the table ($3.5M–$3.8M budget). This is a standalone public authority
@@ -42,12 +60,15 @@ Coach Edmund Tan (CEA R028032E), Singapore Real Estate Insider.
   (`Thomson Reserve - Is The Price Worth The Hype.pdf`) — source facts for
   the video.
 - `YOUTUBE_PART1.txt` — Part 1 upload pack (title/description/chapters).
-- `YOUTUBE_PART2.txt` — Part 2 DRAFT production script (2026-09-17):
-  resolves Part 1's Lorong Puntong open loop, adds layouts (4 show-unit
-  types), unit-mix risk math, updated land multiplier, and a real client
-  ballot-day case study. Built from the 2026-09-16 live webinar transcript
-  (`2026-09_Webinar/Sept 16/Sept16_Live_Webinar_Transcript.txt`) plus live
-  web research — NOT yet filmed.
+- `YOUTUBE_PART2.txt` — SUPERSEDED draft script (2026-09-17), written
+  before it was known Part 2 had already been filmed and rendered. Useful
+  only as a research/reference artifact (Lorong Puntong GLS result,
+  layouts, land multiplier, ballot-day case study). It is NOT the source
+  of the posted Part 2.
+- `THOMSON_RESERVE_FINAL.mp4` (22:34) / `THOMSON_RESERVE_PART2.mp4`
+  (31:46) / `THOMSON_RESERVE_LAYOUTS.mp4` (16:07) — the three finished
+  renders. These plus the 2026-09-16 webinar recording are the source
+  footage for Video 4 (Unit Mix).
 - `PART2_cross_check_resources.md` — fact-check map for Part 2: every
   figure tagged CONFIRMED (with source) or ESTIMATE, plus an open-items
   list to resolve with Edmund before recording.
@@ -73,17 +94,20 @@ Coach Edmund Tan (CEA R028032E), Singapore Real Estate Insider.
 Coach Edmund Tan.
 
 ## Handoffs
-- Resolve the OPEN ITEMS list in `PART2_cross_check_resources.md` with
-  Edmund (OCR/RCR/CCR growth source, the Lentor Central Residences
-  example, the 84% unit-mix estimate, the client case-study project name)
-  before filming Part 2.
-- Film Part 2 from `YOUTUBE_PART2.txt`, then continue render rounds on
-  both parts through to a final approved cut.
+- **Video 4 (Unit Mix) — current active work.** Edit-only assembly, no new
+  recording. Awaiting: Edmund's new unit-breakdown resource (received
+  separately, NOT to be shown on screen in this video), and a timestamped
+  edit plan naming every cut by source file and in-point.
+- Confirmed 2026-09-22: 84% refers to **2- and 3-bedroom** combined.
+  Deck slide 58 charts 78/22 for the same split — reconcile before any
+  clip quoting either number is used, so two spliced cuts don't contradict
+  each other on screen.
 - Once approved, route to Campaign Finals per the Asset Library lifecycle
   rule, and consider whether any promo copy from the Likes/Dislike doc
   should feed YouTube's own title/description (not Meta ads — those
   belong to `2026-09_Webinar`).
 
 ## Definition of done
-Both parts rendered, Edmund-approved, published to YouTube, and promoted
-to Campaign Finals.
+All four videos rendered, Edmund-approved, published to YouTube in order
+(Part 1 -> Part 2 -> Layouts -> Unit Mix), and promoted to Campaign
+Finals.

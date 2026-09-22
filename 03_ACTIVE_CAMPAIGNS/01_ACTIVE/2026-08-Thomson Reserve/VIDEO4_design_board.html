@@ -1,0 +1,279 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Thomson Reserve — Video 4 Unit Mix — Design Board</title>
+<style>
+  :root{
+    --bg:#0E1116; --surf:#161B22; --surf2:#1C2430; --line:#2A3441;
+    --ink:#E6EDF3; --dim:#8B98A9; --faint:#5A6676;
+    --b2:#F0883E;      /* 2-bedroom  : amber  */
+    --b3:#2DD4BF;      /* 3-bedroom  : teal   */
+    --b4:#A78BFA;      /* 4/5-bedroom: violet */
+    --risk:#F85149; --good:#3FB950;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#05070A;font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink)}
+  .num{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+  /* each frame is a true 1920x1080, scaled down for the contact sheet */
+  .sheet{display:grid;grid-template-columns:repeat(2,600px);gap:30px;padding:26px;justify-content:center}
+  .cap{font-size:13px;color:var(--dim);padding:6px 2px 10px;letter-spacing:.06em;text-transform:uppercase}
+  .frame{width:1920px;height:1080px;transform-origin:top left;background:var(--bg);
+         position:relative;overflow:hidden}
+  .scaled{transform:scale(.3125)}            /* 1920 -> 600 */
+  /* the scaled frame keeps its 1920px layout box, so the slot must clip it */
+  .slot{position:relative;width:600px;height:372px;overflow:hidden}
+
+  /* ---------- shared frame furniture ---------- */
+  .pad{position:absolute;inset:0;padding:86px 104px 150px;display:flex;flex-direction:column;justify-content:center}
+  .kicker{font-size:26px;letter-spacing:.34em;color:var(--faint);text-transform:uppercase;margin-bottom:26px}
+  .h1{font-size:76px;font-weight:700;line-height:1.04;letter-spacing:-.02em}
+  .h1 em{font-style:normal;color:var(--b4)}
+  .sub{font-size:30px;color:var(--dim);margin-top:20px;line-height:1.4;max-width:1180px}
+  .foot{position:absolute;left:104px;bottom:58px;font-size:22px;color:var(--faint);letter-spacing:.14em}
+  .rail{position:absolute;left:0;top:0;bottom:0;width:10px}
+
+  /* ---------- 1. THE TRUNK ---------- */
+  .trunk{height:104px;display:flex;border-radius:7px;overflow:hidden;margin-top:54px;border:1px solid var(--line)}
+  .seg{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px}
+  .seg b{font-size:40px}.seg s{font-size:21px;text-decoration:none;opacity:.8}
+  .classic{background:linear-gradient(180deg,#243244,#1b2634);flex:1066}
+  .lux{background:linear-gradient(180deg,#3B2F5E,#2A2246);flex:202;border-left:1px solid var(--line)}
+  .legend{display:flex;gap:46px;margin-top:38px;font-size:25px;color:var(--dim)}
+  .dot{display:inline-block;width:15px;height:15px;border-radius:4px;margin-right:12px;vertical-align:middle}
+
+  /* ---------- towers ---------- */
+  .towers{display:flex;gap:74px;align-items:flex-end;margin-top:60px}
+  .tgrp{display:flex;gap:17px;align-items:flex-end}
+  .tw{width:74px;background:linear-gradient(180deg,#2B3A4E,#1A2431);border:1px solid var(--line);border-bottom:none;border-radius:5px 5px 0 0}
+  .tw.l{background:linear-gradient(180deg,#4A3B77,#2A2246);border-color:#5B4A8A}
+  .tlab{font-size:24px;color:var(--dim);margin-top:20px}
+
+  /* ---------- bars ---------- */
+  .bars{margin-top:56px;display:flex;flex-direction:column;gap:32px}
+  .bar{display:flex;align-items:center;gap:30px}
+  .bname{width:230px;font-size:32px;color:var(--dim)}
+  .btrack{flex:1;height:64px;background:var(--surf);border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .bfill{height:100%;display:flex;align-items:center;padding-left:28px;font-size:33px;font-weight:700}
+
+  /* ---------- table ---------- */
+  table{width:100%;border-collapse:collapse;margin-top:48px;font-size:29px}
+  th{text-align:left;color:var(--faint);font-weight:500;font-size:23px;letter-spacing:.16em;
+     text-transform:uppercase;padding:0 0 20px}
+  td{padding:22px 0;border-top:1px solid var(--line);color:var(--ink)}
+  td.n{text-align:right;font-variant-numeric:tabular-nums}
+  tr.tot td{border-top:2px solid var(--b4);font-weight:700;color:#fff}
+
+  /* ---------- scenario ---------- */
+  .scn{display:flex;gap:52px;margin-top:52px;flex:1}
+  .split{flex:0 0 620px}
+  .sbar{height:76px;display:flex;border-radius:7px;overflow:hidden;border:1px solid var(--line);margin-bottom:20px}
+  .sbar div{display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:700;color:#0E1116}
+  .conseq{flex:1;border-left:2px solid var(--line);padding-left:52px}
+  .conseq h3{font-size:25px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;margin-bottom:28px;font-weight:500}
+  .conseq p{font-size:35px;line-height:1.42;color:var(--ink)}
+  .verdict{margin-top:auto;display:inline-flex;align-items:center;gap:16px;font-size:29px;
+           padding:18px 30px;border-radius:8px;align-self:flex-start}
+  .v-risk{background:rgba(248,81,73,.13);color:var(--risk);border:1px solid rgba(248,81,73,.42)}
+  .v-good{background:rgba(63,185,80,.12);color:var(--good);border:1px solid rgba(63,185,80,.4)}
+  .v-mid{background:rgba(240,136,62,.12);color:var(--b2);border:1px solid rgba(240,136,62,.4)}
+</style>
+
+<div class="sheet">
+
+<!-- 1 ─────────── THE TRUNK (hero, recurring) -->
+<div class="slot"><div class="cap">01 · The Trunk — hero graphic, recurs through all four scenarios</div>
+<div class="frame scaled"><div class="pad">
+  <div class="kicker">Thomson Reserve</div>
+  <div class="h1">1,268 units.<br><em>One split decides your outcome.</em></div>
+  <div class="trunk">
+    <div class="seg classic"><b class="num">1,066</b><s>Classic Collection · 84%</s></div>
+    <div class="seg lux"><b class="num">202</b><s>Luxury · 16%</s></div>
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:#243244"></i>4 towers × 21 storeys</span>
+    <span><i class="dot" style="background:#3B2F5E"></i>2 towers × 30 storeys</span>
+  </div>
+  <div class="foot">UNIT MIX · 01</div>
+</div></div></div>
+
+<!-- 2 ─────────── TOWERS -->
+<div class="slot"><div class="cap">02 · Tower breakdown — earns the 84% instead of asserting it</div>
+<div class="frame scaled"><div class="pad">
+  <div class="kicker">Where the 84% comes from</div>
+  <div class="h1">4 towers carry <em>84%</em><br>of the whole project.</div>
+  <div class="towers">
+    <div>
+      <div class="tgrp">
+        <div class="tw" style="height:300px"></div><div class="tw" style="height:300px"></div>
+        <div class="tw" style="height:300px"></div><div class="tw" style="height:300px"></div>
+      </div>
+      <div class="tlab">Classic · 21 storeys · <b class="num">1,066 units</b></div>
+    </div>
+    <div>
+      <div class="tgrp">
+        <div class="tw l" style="height:428px"></div><div class="tw l" style="height:428px"></div>
+      </div>
+      <div class="tlab">Luxury · 30 storeys · <b class="num">202 units</b></div>
+    </div>
+  </div>
+  <div class="foot">1,066 + 202 = 1,268 · the maths closes</div>
+</div></div></div>
+
+<!-- 3 ─────────── PROFIT BY TYPE -->
+<div class="slot"><div class="cap">03 · Profit by type — the persuasive core of the evidence block</div>
+<div class="frame scaled"><div class="pad">
+  <div class="kicker">JadeScape · average resale profit</div>
+  <div class="h1">The bigger the unit,<br>the bigger the <em>gain</em>.</div>
+  <div class="bars">
+    <div class="bar"><div class="bname">2-bedroom</div><div class="btrack">
+      <div class="bfill num" style="width:39%;background:linear-gradient(90deg,#7A4A22,#F0883E);color:#1a0f06">$390,000</div></div></div>
+    <div class="bar"><div class="bname">3-bedroom</div><div class="btrack">
+      <div class="bfill num" style="width:81%;background:linear-gradient(90deg,#14584F,#2DD4BF);color:#04201c">$812,000</div></div></div>
+    <div class="bar"><div class="bname">4-bedroom</div><div class="btrack">
+      <div class="bfill num" style="width:100%;background:linear-gradient(90deg,#4B3A84,#A78BFA);color:#140c26">$1,000,000</div></div></div>
+  </div>
+  <div class="foot">and those are exactly the types that were underbuilt</div>
+</div></div></div>
+
+<!-- 4 ─────────── 1KM TABLE -->
+<div class="slot"><div class="cap">04 · The 1km table — rebuilt fresh, not Part 1's plate</div>
+<div class="frame scaled"><div class="pad">
+  <div class="kicker">Younger 99-yr leasehold within 1 km</div>
+  <div class="h1">What's <em>already</em> in this pocket.</div>
+  <table>
+    <tr><th>Project</th><th>TOP</th><th style="text-align:right">Units</th>
+        <th style="text-align:right">2-bed</th><th style="text-align:right">3-bed</th></tr>
+    <tr><td>Thomson Impressions</td><td>2019</td><td class="n">288</td><td class="n">72</td><td class="n">106</td></tr>
+    <tr><td>Thomson Three</td><td>2017</td><td class="n">445</td><td class="n">168</td><td class="n">185</td></tr>
+    <tr><td>Thomson Grand</td><td>2015</td><td class="n">361</td><td class="n">108</td><td class="n">180</td></tr>
+    <tr class="tot"><td>Total</td><td></td><td class="n">1,094</td>
+        <td class="n" style="color:#F0883E">348</td><td class="n" style="color:#2DD4BF">471</td></tr>
+  </table>
+  <div class="sub" style="margin-top:38px">Fairly balanced today. Thomson Reserve adds
+    <b style="color:#fff">1,066</b> more 2- and 3-bedders into the same pocket.</div>
+  <div class="foot">SCOPE · 3 younger 99-LH projects within 1 km</div>
+</div></div></div>
+
+<!-- 5 ─────────── SCENARIO A -->
+<div class="slot"><div class="cap">05 · Scenario A — 50/50</div>
+<div class="frame scaled"><div class="pad">
+  <div class="rail" style="background:linear-gradient(180deg,#2DD4BF,#F0883E)"></div>
+  <div class="kicker">Scenario A of D</div>
+  <div class="h1">If it splits <em>50 / 50</em></div>
+  <div class="scn">
+    <div class="split">
+      <div class="sbar">
+        <div style="flex:1;background:#F0883E">2-BED · 533</div>
+        <div style="flex:1;background:#2DD4BF">3-BED · 533</div>
+      </div>
+      <div class="sub" style="font-size:26px;margin-top:4px">Both types stay considerable</div>
+    </div>
+    <div class="conseq">
+      <h3>What it does to you</h3>
+      <p>More choice either way. Neither type floods the pocket. Your resale
+         competition stays close to what exists today.</p>
+      <div class="verdict v-good">◆ Lowest risk of the four</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO A</div>
+</div></div></div>
+
+<!-- 6 ─────────── SCENARIO B -->
+<div class="slot"><div class="cap">06 · Scenario B — heavy 2-bedroom (the risk case)</div>
+<div class="frame scaled"><div class="pad">
+  <div class="rail" style="background:var(--b2)"></div>
+  <div class="kicker">Scenario B of D</div>
+  <div class="h1">If it leans <em style="color:#F0883E">2-bedroom</em></div>
+  <div class="scn">
+    <div class="split">
+      <div class="sbar">
+        <div style="flex:853;background:#F0883E">2-BED · 853</div>
+        <div style="flex:213;background:#1C3A36;color:#2DD4BF">213</div>
+      </div>
+      <div class="sub" style="font-size:26px;margin-top:4px">
+        Regional 2-bed stock climbs to <b style="color:#F0883E">~1,602</b></div>
+    </div>
+    <div class="conseq">
+      <h3>What it does to you</h3>
+      <p>2-bedders are the investor's unit. Everyone rents out at once —
+         and you're one of many landlords chasing the same tenant.</p>
+      <div class="verdict v-risk">▲ Rent gets adjusted down</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO B</div>
+</div></div></div>
+
+<!-- 7 ─────────── SCENARIO C -->
+<div class="slot"><div class="cap">07 · Scenario C — pivot to 3-bedroom</div>
+<div class="frame scaled"><div class="pad">
+  <div class="rail" style="background:var(--b3)"></div>
+  <div class="kicker">Scenario C of D</div>
+  <div class="h1">So you pivot to <em style="color:#2DD4BF">3-bedroom</em></div>
+  <div class="scn">
+    <div class="split">
+      <div class="sbar">
+        <div style="flex:1;background:#2DD4BF">LOWER RELATIVE SUPPLY</div>
+      </div>
+      <div class="sub" style="font-size:26px;margin-top:4px">Looks more favourable — but</div>
+    </div>
+    <div class="conseq">
+      <h3>What it does to you</h3>
+      <p>Affordability becomes the constraint. Bigger 3-bed or compact
+         3-bed? And does that entry price still make sense for you?</p>
+      <div class="verdict v-mid">◆ The constraint moves, it doesn't vanish</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO C</div>
+</div></div></div>
+
+<!-- 8 ─────────── SCENARIO D -->
+<div class="slot"><div class="cap">08 · Scenario D — heavy 3-bedroom / developer margin</div>
+<div class="frame scaled"><div class="pad">
+  <div class="rail" style="background:var(--b3)"></div>
+  <div class="kicker">Scenario D of D</div>
+  <div class="h1">If it leans <em style="color:#2DD4BF">3-bedroom</em></div>
+  <div class="scn">
+    <div class="split">
+      <div class="sbar">
+        <div style="flex:853;background:#2DD4BF">3-BED · 853</div>
+        <div style="flex:213;background:#3A2A18;color:#F0883E">213</div>
+      </div>
+      <div class="sub" style="font-size:26px;margin-top:4px">
+        Regional 3-bed stock climbs to <b style="color:#2DD4BF">~1,600</b></div>
+    </div>
+    <div class="conseq">
+      <h3>What it does to you</h3>
+      <p>Developers clear margin fast on 2-bedders — roughly 30% of it.
+         Build fewer, and the 3-bedders carry the margin instead.</p>
+      <div class="verdict v-risk">▲ Your 3-bedroom won't be cheap</div>
+    </div>
+  </div>
+  <div class="foot">UNIT MIX · SCENARIO D</div>
+</div></div></div>
+
+<!-- 9 ─────────── 4-BED SCARCITY -->
+<div class="slot"><div class="cap">09 · The 4-bedroom outlier — scarcity</div>
+<div class="frame scaled"><div class="pad">
+  <div class="rail" style="background:var(--b4)"></div>
+  <div class="kicker">The one type that runs the other way</div>
+  <div class="h1">202 arriving.<br><em>67 exist today.</em></div>
+  <div class="bars" style="margin-top:64px">
+    <div class="bar"><div class="bname">Thomson Reserve<br><span style="font-size:23px;color:var(--faint)">4 &amp; 5-bed</span></div>
+      <div class="btrack"><div class="bfill num" style="width:100%;background:linear-gradient(90deg,#4B3A84,#A78BFA);color:#140c26">202</div></div></div>
+    <div class="bar"><div class="bname">3 younger projects<br><span style="font-size:23px;color:var(--faint)">combined</span></div>
+      <div class="btrack"><div class="bfill num" style="width:33%;background:#2A3441;color:var(--dim)">67</div></div></div>
+  </div>
+  <div class="sub" style="margin-top:44px">Low supply, proven demand — the combination that's rare.</div>
+  <div class="foot">UNIT MIX · SCARCITY</div>
+</div></div></div>
+
+<!-- 10 ─────────── CLOSE -->
+<div class="slot"><div class="cap">10 · Closing card</div>
+<div class="frame scaled"><div class="pad" style="justify-content:center">
+  <div class="kicker">The honest read</div>
+  <div class="h1" style="font-size:92px;max-width:1500px">A crowded ballot<br>proves <em style="color:#F85149">demand</em>.<br>
+    It does not prove <em style="color:#3FB950">value</em>.</div>
+  <div class="foot">UNIT MIX · CLOSE</div>
+</div></div></div>
+
+</div>
