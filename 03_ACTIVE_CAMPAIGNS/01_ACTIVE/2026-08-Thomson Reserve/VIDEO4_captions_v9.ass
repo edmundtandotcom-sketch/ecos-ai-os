@@ -1,0 +1,171 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Cap,Segoe UI,46,&H00FFFFFF,&H00FFFFFF,&H00211209,&H00211209,-1,0,0,0,100,100,0,0,3,18,0,2,220,220,52,1
+
+[Events]
+Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text
+Dialogue: 0,0:00:00.00,0:00:03.66,Cap,,0,0,0,,Thomson Reserve Bright Hill Drive\NDistrict {\c&H0000B8FB}20{\c&H00FFFFFF} Upper Thomson.
+Dialogue: 0,0:00:03.93,0:00:09.24,Cap,,0,0,0,,The old Thomson View site. {\c&H0000B8FB}255{\c&H00FFFFFF} units\Nthen. {\c&H0000B8FB}1,268{\c&H00FFFFFF} units now across {\c&H0000B8FB}6{\c&H00FFFFFF}
+Dialogue: 0,0:00:09.28,0:00:10.10,Cap,,0,0,0,,towers.
+Dialogue: 0,0:00:10.14,0:00:15.12,Cap,,0,0,0,,{\c&H0000B8FB}2{\c&H00FFFFFF} tall towers of {\c&H0000B8FB}30{\c&H00FFFFFF} stories. The\Nluxury collection. {\c&H0000B8FB}202{\c&H00FFFFFF} units. The {\c&H0000B8FB}4{\c&H00FFFFFF} towers of
+Dialogue: 0,0:00:15.16,0:00:17.41,Cap,,0,0,0,,{\c&H0000B8FB}21{\c&H00FFFFFF} stories. The classic collection.
+Dialogue: 0,0:00:17.69,0:00:22.72,Cap,,0,0,0,,{\c&H0000B8FB}1,066{\c&H00FFFFFF} units in total. That's {\c&H0000B8FB}84%{\c&H00FFFFFF} of\Nthe whole If you're
+Dialogue: 0,0:00:22.76,0:00:22.95,Cap,,0,0,0,,new.
+Dialogue: 0,0:00:22.99,0:00:26.73,Cap,,0,0,0,,here, I'm Coach Edmund. I check every\Nbig launch with a system we built called
+Dialogue: 0,0:00:26.77,0:00:31.27,Cap,,0,0,0,,the REI method. The same checks we run\Nwith clients before selection day. So
+Dialogue: 0,0:00:31.31,0:00:36.43,Cap,,0,0,0,,they walk in with a plan instead of a\Nfeeling. One of my.
+Dialogue: 0,0:00:36.47,0:00:38.47,Cap,,0,0,0,,new launch units,
+Dialogue: 0,0:00:38.70,0:00:42.37,Cap,,0,0,0,,it grew {\c&H0000B8FB}375,000{\c&H00FFFFFF} in under {\c&H0000B8FB}4{\c&H00FFFFFF} years. Fact\Nnumber {\c&H0000B8FB}5{\c&H00FFFFFF},
+Dialogue: 0,0:00:42.59,0:00:42.83,Cap,,0,0,0,,one.
+Dialogue: 0,0:00:42.87,0:00:47.67,Cap,,0,0,0,,important factor before buying into\Nany area, study the supply of each unit type.
+Dialogue: 0,0:00:47.86,0:00:51.85,Cap,,0,0,0,,Because that determines your future\Ndemand for your own unit. It's very easy
+Dialogue: 0,0:00:51.89,0:00:52.04,Cap,,0,0,0,,to.
+Dialogue: 0,0:00:52.08,0:00:55.01,Cap,,0,0,0,,say, JadeScape made money, so any size\Ncan buy.
+Dialogue: 0,0:01:37.83,0:01:40.11,Cap,,0,0,0,,Please don't be so fast. Here's the\Nbreakdown,
+Dialogue: 0,0:01:40.36,0:01:40.44,Cap,,0,0,0,,I.
+Dialogue: 0,0:01:40.48,0:01:42.47,Cap,,0,0,0,,pulled the younger projects within\N1km.
+Dialogue: 0,0:01:42.77,0:01:47.48,Cap,,0,0,0,,I denied these holes only to keep the\Ncomparison accurate. Thomson impressions,
+Dialogue: 0,0:01:47.63,0:01:49.75,Cap,,0,0,0,,TOP {\c&H0000B8FB}2019,288{\c&H00FFFFFF}.
+Dialogue: 0,0:01:49.79,0:01:50.59,Cap,,0,0,0,,units,
+Dialogue: 0,0:01:50.63,0:01:51.89,Cap,,0,0,0,,{\c&H0000B8FB}101{\c&H00FFFFFF} bedrooms,
+Dialogue: 0,0:01:52.25,0:01:57.54,Cap,,0,0,0,,{\c&H0000B8FB}72{\c&H00FFFFFF} bedrooms, {\c&H0000B8FB}163{\c&H00FFFFFF} bedrooms including {\c&H0000B8FB}3{\c&H00FFFFFF}\Nplus study. Thomson {\c&H0000B8FB}3{\c&H00FFFFFF}, TOP
+Dialogue: 0,0:01:57.58,0:02:02.72,Cap,,0,0,0,,{\c&H0000B8FB}2017,445{\c&H00FFFFFF} units, {\c&H0000B8FB}61{\c&H00FFFFFF} one bedrooms, {\c&H0000B8FB}168{\c&H00FFFFFF}\Ntwo beds,
+Dialogue: 0,0:02:03.02,0:02:08.33,Cap,,0,0,0,,{\c&H0000B8FB}185{\c&H00FFFFFF} three beds. Thomson Grand {\c&H0000B8FB}2015{\c&H00FFFFFF}\NTOP, {\c&H0000B8FB}361{\c&H00FFFFFF} units,
+Dialogue: 0,0:02:08.47,0:02:11.42,Cap,,0,0,0,,there is no one bedroom, {\c&H0000B8FB}108{\c&H00FFFFFF} two\Nbedrooms,
+Dialogue: 0,0:02:11.66,0:02:15.92,Cap,,0,0,0,,{\c&H0000B8FB}183{\c&H00FFFFFF} bedrooms. Total across them {\c&H0000B8FB}348{\c&H00FFFFFF}\Ntwo bedrooms.
+Dialogue: 0,0:02:15.96,0:02:21.32,Cap,,0,0,0,,versus {\c&H0000B8FB}471{\c&H00FFFFFF} three bedrooms, they are\Nkind of fairly balanced. Now, compare
+Dialogue: 0,0:02:21.36,0:02:22.83,Cap,,0,0,0,,Thomson reserve is bringing.
+Dialogue: 0,0:02:22.87,0:02:28.09,Cap,,0,0,0,,{\c&H0000B8FB}1066{\c&H00FFFFFF} units of two and three bedrooms\Ninto this area. today
+Dialogue: 0,0:02:28.13,0:02:28.82,Cap,,0,0,0,,if let's say we have.
+Dialogue: 0,0:02:28.86,0:02:33.56,Cap,,0,0,0,,a lot of supply what happens to price\Nusually when we have a lot of supply what
+Dialogue: 0,0:02:33.60,0:02:37.80,Cap,,0,0,0,,happens to price thank you so if you\Nhave a lot of supply price drop right so
+Dialogue: 0,0:02:37.84,0:02:41.85,Cap,,0,0,0,,this is also one thing that I want to\Nkind of caution everybody So the first
+Dialogue: 0,0:02:41.89,0:02:42.39,Cap,,0,0,0,,scenario, okay, so.
+Dialogue: 0,0:02:42.43,0:02:45.68,Cap,,0,0,0,,this is what happened when we do\NJadeScape comparison to the Thomson region of
+Dialogue: 0,0:02:45.72,0:02:48.18,Cap,,0,0,0,,the two and three bedrooms, okay? We\Nonly want to study these two because these
+Dialogue: 0,0:02:48.22,0:02:51.95,Cap,,0,0,0,,are majority, the most number of\Nunits, right? So you can see it right now, combined,
+Dialogue: 0,0:02:51.99,0:02:55.79,Cap,,0,0,0,,paid balance for the two and three\Nbedrooms, okay, of the entire Thomson region
+Dialogue: 0,0:02:55.83,0:03:00.88,Cap,,0,0,0,,as well as plus JadeScape So again, we\Nmust also agree that JadeScape
+Dialogue: 0,0:03:00.92,0:03:05.45,Cap,,0,0,0,,went on the COVID crazy hunt. That's\Nwhy entire market went up {\c&H0000B8FB}30%{\c&H00FFFFFF} and JadeScape
+Dialogue: 0,0:03:05.49,0:03:08.41,Cap,,0,0,0,,right on the wave and then hope\Neverything goes up. But moving forward, we still
+Dialogue: 0,0:03:08.45,0:03:12.26,Cap,,0,0,0,,perform the same way of {\c&H0000B8FB}30%{\c&H00FFFFFF}. I have my\Ndoubts to be honest, okay? I don't think
+Dialogue: 0,0:03:12.30,0:03:16.24,Cap,,0,0,0,,in future development, even for\NThomson reserve, it's going to outperform JadeScape
+Dialogue: 0,0:03:16.28,0:03:20.54,Cap,,0,0,0,,in any way in the recent years, in the\Nnear years. So I don't think so. Okay,
+Dialogue: 0,0:03:20.58,0:03:22.06,Cap,,0,0,0,,so now we have the number of units,
+Dialogue: 0,0:03:22.27,0:03:27.32,Cap,,0,0,0,,{\c&H0000B8FB}751{\c&H00FFFFFF} and {\c&H0000B8FB}736{\c&H00FFFFFF} of two and three bedrooms.\NThen we have this influx of projects
+Dialogue: 0,0:03:27.36,0:03:32.62,Cap,,0,0,0,,coming in, {\c&H0000B8FB}1066{\c&H00FFFFFF} of two and three\Nbedrooms into the supply, okay? So
+Dialogue: 0,0:03:32.66,0:03:36.21,Cap,,0,0,0,,you can research for the project for\Nweeks, you can pick your right objective,
+Dialogue: 0,0:03:36.44,0:03:40.55,Cap,,0,0,0,,but you may not be able to have a\Nclear direction on how this breakdown is going
+Dialogue: 0,0:03:40.59,0:03:44.70,Cap,,0,0,0,,to be, okay? So remember, if you are\Nlooking at this project as a yield.
+Dialogue: 0,0:03:45.02,0:03:48.76,Cap,,0,0,0,,versus a capital growth, it's a\Ntotally different matrix. Totally different matrix.
+Dialogue: 0,0:03:48.80,0:03:52.37,Cap,,0,0,0,,So let's say if Thomson reserve, they\Nsplit {\c&H0000B8FB}50{\c&H00FFFFFF} -50, okay?
+Dialogue: 0,0:03:52.64,0:03:56.78,Cap,,0,0,0,,In between the two and three bedrooms,\Nthen the number of units should stay similar
+Dialogue: 0,0:03:56.82,0:04:01.87,Cap,,0,0,0,,because both are kind of similar,\Nright? {\c&H0000B8FB}50{\c&H00FFFFFF} -50% but this
+Dialogue: 0,0:04:01.91,0:04:04.89,Cap,,0,0,0,,is scenario one only. So you may be\Nasking, why is this.
+Dialogue: 0,0:04:04.93,0:04:07.61,Cap,,0,0,0,,important? If I buy, if it's a {\c&H0000B8FB}50{\c&H00FFFFFF} -50,\Nthat means I got more chance to buy a
+Dialogue: 0,0:04:07.65,0:04:10.10,Cap,,0,0,0,,two -bedroom or I can choose a three\N-bedroom, nothing wrong,
+Dialogue: 0,0:04:10.35,0:04:12.76,Cap,,0,0,0,,you see? That's why I'm more Kiasu and\NKiasi, right? I always plan different
+Dialogue: 0,0:04:12.80,0:04:13.80,Cap,,0,0,0,,scenario, right?
+Dialogue: 0,0:04:13.87,0:04:18.18,Cap,,0,0,0,,But the risk is if the scenario is,\Nthey build more two -bedrooms and if you
+Dialogue: 0,0:04:18.22,0:04:20.99,Cap,,0,0,0,,are somebody who's looking to invest,\Nchances are you are going to buy a two
+Dialogue: 0,0:04:21.03,0:04:24.77,Cap,,0,0,0,,-bedroom regardless, right? Then you\Nneed to understand this. If there is going
+Dialogue: 0,0:04:24.81,0:04:30.36,Cap,,0,0,0,,to be a supply of {\c&H0000B8FB}853{\c&H00FFFFFF} units into this\Nregion, we're talking about {\c&H0000B8FB}1,602{\c&H00FFFFFF}
+Dialogue: 0,0:04:30.40,0:04:34.25,Cap,,0,0,0,,bedrooms and generally two bedrooms\Nare for what? For investment and what are
+Dialogue: 0,0:04:34.29,0:04:36.13,Cap,,0,0,0,,you going to do with that? You're\Ngoing to rent it out.
+Dialogue: 0,0:04:36.46,0:04:41.54,Cap,,0,0,0,,Is that area going to have so much\Ndemand to rent from you? Okay, full forethought.
+Dialogue: 0,0:04:41.63,0:04:44.68,Cap,,0,0,0,,So you can see why we think too much,\Nright? Sometimes, yeah, we think too much,
+Dialogue: 0,0:04:44.72,0:04:49.53,Cap,,0,0,0,,okay? But at the same time is they,\NI'm only talking about this region for rental,
+Dialogue: 0,0:04:49.57,0:04:54.87,Cap,,0,0,0,,okay? So are there going to be a huge\Ninjection of population
+Dialogue: 0,0:04:54.91,0:04:58.73,Cap,,0,0,0,,into Thomson area to be able to rent\Nfrom you? Who is going to rent from you
+Dialogue: 0,0:04:58.77,0:05:02.19,Cap,,0,0,0,,in the future if we are talking about\Na huge supply of two -bedroom, I mean,
+Dialogue: 0,0:05:02.29,0:05:03.54,Cap,,0,0,0,,the tenants?
+Dialogue: 0,0:05:03.82,0:05:08.40,Cap,,0,0,0,,There must be a real supply and demand\Nsituation. If not, it's just nice to have
+Dialogue: 0,0:05:08.49,0:05:11.06,Cap,,0,0,0,,but then when you are the landlord,\Nyou're going to struggle yourself because
+Dialogue: 0,0:05:11.10,0:05:13.44,Cap,,0,0,0,,everybody is fighting for that one\Ntenant.
+Dialogue: 0,0:05:13.71,0:05:16.84,Cap,,0,0,0,,and you know what happens when you're\Nfighting for that one tenant. Your price
+Dialogue: 0,0:05:16.88,0:05:22.00,Cap,,0,0,0,,will definitely be adjusted. So that's\Nwhy the supply into the market is crucial.
+Dialogue: 0,0:05:22.04,0:05:25.62,Cap,,0,0,0,,Then of course, then you will say\Nthat, oh, if then maybe I don't buy two -bedroom,
+Dialogue: 0,0:05:25.66,0:05:29.16,Cap,,0,0,0,,I go and buy three -bedroom. Okay, in\Nthis situation, it seems the three -bedrooms
+Dialogue: 0,0:05:29.20,0:05:33.71,Cap,,0,0,0,,would be lesser supply, which makes it\Nmore favorable. Okay, but again, if it's
+Dialogue: 0,0:05:33.75,0:05:36.23,Cap,,0,0,0,,three -bedroom, then we also have to\Nagree.
+Dialogue: 0,0:05:36.49,0:05:40.00,Cap,,0,0,0,,that's where your affordability comes\Nin. Whereas should you go for bigger three
+Dialogue: 0,0:05:40.04,0:05:43.79,Cap,,0,0,0,,-bedroom, compact three -bedroom,\Nwhether that price makes sense or not for you
+Dialogue: 0,0:05:43.83,0:05:46.29,Cap,,0,0,0,,to But let's us reverse the situation.\NIf they do.
+Dialogue: 0,0:05:46.33,0:05:47.45,Cap,,0,0,0,,a more {\c&H0000B8FB}3{\c&H00FFFFFF} bedrooms.
+Dialogue: 0,0:05:47.68,0:05:51.03,Cap,,0,0,0,,okay, if they do a more {\c&H0000B8FB}3{\c&H00FFFFFF} bedrooms\Nthen we're talking about {\c&H0000B8FB}1,600{\c&H00FFFFFF} units into
+Dialogue: 0,0:05:51.07,0:05:55.01,Cap,,0,0,0,,the market for {\c&H0000B8FB}3{\c&H00FFFFFF} bedrooms okay. Then\Nin this case, then you need to kind of look
+Dialogue: 0,0:05:55.05,0:05:57.41,Cap,,0,0,0,,into how the developer is going to\Nprice,
+Dialogue: 0,0:05:57.68,0:05:58.31,Cap,,0,0,0,,okay.
+Dialogue: 0,0:05:58.35,0:06:01.88,Cap,,0,0,0,,If let's say they are doing this,\Nbecause it's only {\c&H0000B8FB}853{\c&H00FFFFFF} units, they may price
+Dialogue: 0,0:06:01.92,0:06:05.39,Cap,,0,0,0,,their {\c&H0000B8FB}3{\c&H00FFFFFF} bedrooms a little bit more\Nhigher, because they want to get more profit
+Dialogue: 0,0:06:05.43,0:06:08.81,Cap,,0,0,0,,margin, right. So this is more on the\Nmentality of how developers think, right.
+Dialogue: 0,0:06:08.85,0:06:10.95,Cap,,0,0,0,,Because generally, they make their\Nmoney from {\c&H0000B8FB}2{\c&H00FFFFFF} bedrooms.
+Dialogue: 0,0:06:11.25,0:06:13.97,Cap,,0,0,0,,I'm not saying make, but because they\Nare able to sell it fast, so they can kind
+Dialogue: 0,0:06:14.01,0:06:17.57,Cap,,0,0,0,,of clear out their {\c&H0000B8FB}2{\c&H00FFFFFF} bedrooms as\Nquickly as possible. And that forms their {\c&H0000B8FB}30%{\c&H00FFFFFF}
+Dialogue: 0,0:06:17.61,0:06:22.42,Cap,,0,0,0,,of their margin to kind of take a\Nloan. So if they are going to build lesser
+Dialogue: 0,0:06:22.46,0:06:26.19,Cap,,0,0,0,,and they're going to increase their {\c&H0000B8FB}3{\c&H00FFFFFF}\Nbedrooms then chances are their {\c&H0000B8FB}3{\c&H00FFFFFF} bedrooms
+Dialogue: 0,0:06:26.23,0:06:27.74,Cap,,0,0,0,,are not going to be cheap also.
+Dialogue: 0,0:06:28.07,0:06:30.93,Cap,,0,0,0,,So that's something, of course, we are\Nall guessing right now. We just want to
+Dialogue: 0,0:06:30.97,0:06:35.94,Cap,,0,0,0,,kind of anticipate what's going to\Nhappen and so that you guys kind of have prepared
+Dialogue: 0,0:06:35.98,0:06:40.09,Cap,,0,0,0,,yourself a hit before you enter,\Nright. project, new launch or resale eventually
+Dialogue: 0,0:06:40.13,0:06:41.56,Cap,,0,0,0,,becomes a resale. And.
+Dialogue: 0,0:06:41.60,0:06:45.00,Cap,,0,0,0,,your next buyer will run this same\Ncomparison as well. Note this.
+Dialogue: 0,0:06:45.28,0:06:49.47,Cap,,0,0,0,,JadeScape built only {\c&H0000B8FB}265{\c&H00FFFFFF} three\Nbedrooms out of {\c&H0000B8FB}1206{\c&H00FFFFFF}.
+Dialogue: 0,0:06:49.51,0:06:55.41,Cap,,0,0,0,,units. Based on past trends, that's\Nunder what
+Dialogue: 0,0:06:55.45,0:06:57.15,Cap,,0,0,0,,this area's real demand wants.
+Dialogue: 0,0:06:57.38,0:07:01.38,Cap,,0,0,0,,Would that be exactly what everybody\Nqueues for the three beds? So which type
+Dialogue: 0,0:07:01.42,0:07:03.39,Cap,,0,0,0,,are you shopping? The two, three, or\Nfour.
+Dialogue: 0,0:07:03.43,0:07:07.00,Cap,,0,0,0,,bedrooms? Put the number in the\Ncomments. It decides which deep dive I will go
+Dialogue: 0,0:07:07.04,0:07:10.41,Cap,,0,0,0,,through first when the floor plans\Ncomes out. Average profit for a {\c&H0000B8FB}2{\c&H00FFFFFF} bedrooms
+Dialogue: 0,0:07:10.45,0:07:14.76,Cap,,0,0,0,,around {\c&H0000B8FB}$390,000,3{\c&H00FFFFFF} bedrooms {\c&H0000B8FB}$812,000{\c&H00FFFFFF},\Nand.
+Dialogue: 0,0:07:14.80,0:07:19.92,Cap,,0,0,0,,the {\c&H0000B8FB}4{\c&H00FFFFFF} bedrooms {\c&H0000B8FB}$1{\c&H00FFFFFF} million on average.\NIts unit makes {\c&H0000B8FB}236{\c&H00FFFFFF} one-bedrooms,
+Dialogue: 0,0:07:19.96,0:07:25.46,Cap,,0,0,0,,{\c&H0000B8FB}403{\c&H00FFFFFF} two-bedders, and only {\c&H0000B8FB}265{\c&H00FFFFFF} three\Nbedders and {\c&H0000B8FB}261{\c&H00FFFFFF}.
+Dialogue: 0,0:07:25.50,0:07:26.64,Cap,,0,0,0,,four bedders.
+Dialogue: 0,0:07:26.93,0:07:30.88,Cap,,0,0,0,,The family size unit are basically\Nlimited editions and you see it in the profit
+Dialogue: 0,0:07:30.92,0:07:34.08,Cap,,0,0,0,,numbers. {\c&H0000B8FB}16%{\c&H00FFFFFF} is the {\c&H0000B8FB}4{\c&H00FFFFFF} and {\c&H0000B8FB}5{\c&H00FFFFFF} bedders.
+Dialogue: 0,0:07:34.33,0:07:36.74,Cap,,0,0,0,,{\c&H0000B8FB}84%{\c&H00FFFFFF} is the {\c&H0000B8FB}2{\c&H00FFFFFF} and {\c&H0000B8FB}3{\c&H00FFFFFF} bedrooms.
+Dialogue: 0,0:07:36.78,0:07:39.81,Cap,,0,0,0,,Stay all the way to the video as I\Nwill breaking down why this is an.
+Dialogue: 0,0:07:39.85,0:07:43.59,Cap,,0,0,0,,important factor to choose which unit\Ntype will have a higher chance of success
+Dialogue: 0,0:07:43.63,0:07:47.27,Cap,,0,0,0,,for Thomson Reserve. Three things I\Nlike. The family size units are the limited
+Dialogue: 0,0:07:47.31,0:07:48.31,Cap,,0,0,0,,edition here.
+Dialogue: 0,0:07:48.48,0:07:49.21,Cap,,0,0,0,,Thomson reserve brings.
+Dialogue: 0,0:07:49.25,0:07:53.18,Cap,,0,0,0,,{\c&H0000B8FB}202{\c&H00FFFFFF} four and five bedrooms into the\Npocket, where the three younger projects
+Dialogue: 0,0:07:53.22,0:07:58.18,Cap,,0,0,0,,have only {\c&H0000B8FB}67{\c&H00FFFFFF} in total. And we already\Nsaw what scarcity did at JadeScape It's
+Dialogue: 0,0:07:58.22,0:08:00.50,Cap,,0,0,0,,four bedrooms average {\c&H0000B8FB}$1{\c&H00FFFFFF} million in\Nprofit.
+Dialogue: 0,0:08:00.75,0:08:02.41,Cap,,0,0,0,,Low supply, proven demand.
+Dialogue: 0,0:08:02.73,0:08:06.84,Cap,,0,0,0,,That combination is rare. The demand\Nhere is proven with all the transactions,
+Dialogue: 0,0:08:06.88,0:08:07.83,Cap,,0,0,0,,not marketing.
+Dialogue: 0,0:08:07.87,0:08:08.72,Cap,,0,0,0,,No big launch in this.
+Dialogue: 0,0:08:08.76,0:08:13.39,Cap,,0,0,0,,area for over eight years. And Amo's\Nland drew {\c&H0000B8FB}15{\c&H00FFFFFF} bits in total. JadeScape {\c&H0000B8FB}85{\c&H00FFFFFF}
+Dialogue: 0,0:08:13.43,0:08:18.92,Cap,,0,0,0,,resales in {\c&H0000B8FB}2024{\c&H00FFFFFF}. Every single one of\Nthem are profitable and {\c&H0000B8FB}103{\c&H00FFFFFF} more in {\c&H0000B8FB}2025{\c&H00FFFFFF}.
+Dialogue: 0,0:08:18.96,0:08:23.57,Cap,,0,0,0,,So does my own money go into Thomson\NReserve and which type? Based on these {\c&H0000B8FB}5{\c&H00FFFFFF}.
+Dialogue: 0,0:08:23.61,0:08:29.13,Cap,,0,0,0,,checks so far, which type would I\Npick? For me, potentially the {\c&H0000B8FB}4{\c&H00FFFFFF} bedrooms Number
+Dialogue: 0,0:08:29.17,0:08:33.51,Cap,,0,0,0,,one, it's the limited edition here.\NJadeScape and the younger projects all underbuilt
+Dialogue: 0,0:08:33.55,0:08:34.25,Cap,,0,0,0,,them. And.
+Dialogue: 0,0:08:34.29,0:08:38.84,Cap,,0,0,0,,families queued for them. Simple\Nlogic, low supply, higher margins. That's if
+Dialogue: 0,0:08:38.88,0:08:42.88,Cap,,0,0,0,,it passes your own affordability first\NNumber two, the track record.
+Dialogue: 0,0:08:43.10,0:08:45.34,Cap,,0,0,0,,Half a million to a million in profits\Nacross {\c&H0000B8FB}3{\c&H00FFFFFF} different.
+Dialogue: 0,0:08:45.38,0:08:49.34,Cap,,0,0,0,,projects with very few losers. One\Ndisclaimer though, if you're hoping for a
+Dialogue: 0,0:08:49.38,0:08:51.71,Cap,,0,0,0,,quick {\c&H0000B8FB}4{\c&H00FFFFFF} years flip to repeat those\Nresults,
+Dialogue: 0,0:08:51.83,0:08:55.19,Cap,,0,0,0,,you'll likely be disappointed. a big\Npart of that growth since {\c&H0000B8FB}2020{\c&H00FFFFFF} was the COVID
+Dialogue: 0,0:08:55.23,0:08:59.29,Cap,,0,0,0,,bonus. My plan is not for a fast exit.\NMidterm hold. is where I'm comfortable.
+Dialogue: 0,0:14:09.54,0:14:14.25,Cap,,0,0,0,,Save this video when the official\Nprice list drops, I'll open it again and I'll
+Dialogue: 0,0:14:14.29,0:14:14.46,Cap,,0,0,0,,check.
+Dialogue: 0,0:14:14.50,0:14:18.18,Cap,,0,0,0,,every number I committed to today. and\Nif you want a clear independent read on
+Dialogue: 0,0:14:18.22,0:14:20.17,Cap,,0,0,0,,whether Thomson Reserve is even right\Nfor.
+Dialogue: 0,0:14:20.21,0:14:24.75,Cap,,0,0,0,,you, and if it is, which stacks to go\Nfor, can the QR code or Whatsapp us? That's
+Dialogue: 0,0:14:24.79,0:14:26.22,Cap,,0,0,0,,the Second Property Ladder Session.
+Dialogue: 0,0:14:26.43,0:14:27.91,Cap,,0,0,0,,We write your numbers, your income,
+Dialogue: 0,0:14:28.14,0:14:29.18,Cap,,0,0,0,,your timeline against this.
+Dialogue: 0,0:14:29.22,0:14:33.36,Cap,,0,0,0,,launch, and you live with a second\Nopinion before you commit, not a sales pitch
+Dialogue: 0,0:14:33.40,0:14:37.12,Cap,,0,0,0,,after. Don't run a million dollar\Ndecision on averages from a YouTube video,
+Dialogue: 0,0:14:37.16,0:14:38.05,Cap,,0,0,0,,even mine.
+Dialogue: 0,0:15:20.69,0:15:21.03,Cap,,0,0,0,,The links.
+Dialogue: 0,0:15:21.07,0:15:22.07,Cap,,0,0,0,,below,
