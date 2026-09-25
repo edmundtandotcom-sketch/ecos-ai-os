@@ -111,3 +111,82 @@ Coach Edmund Tan.
 All four videos rendered, Edmund-approved, published to YouTube in order
 (Part 1 -> Part 2 -> Layouts -> Unit Mix), and promoted to Campaign
 Finals.
+
+## Video 5 — THE LAYOUT COMPARISON (in production, added 2026-09-25)
+
+Thomson Reserve's layouts against **AMO Residence** and **JadeScape**, matched
+by size, judged on efficiency, with indicative price points. Edmund's stated
+purpose: a buyer should not "blindly buy any kind of unit and any kind of
+layout". Publishing order is now Part 1 -> Part 2 -> Layouts -> Unit Mix ->
+**Layout Comparison**.
+
+**Not yet recorded.** Voiceover-led: Edmund reads to a teleprompter, the boards
+are built in Remotion. No new camera footage required.
+
+Built on Edmund's own Google Slides deck, `Thomson Reserve floorplans comparison
+Sep 2026` (also in this folder as a `.gslides` shortcut). That deck grew from 13
+to 17 slides on 24 Sep and now runs a full ladder 592 sqft to 1,808 sqft,
+covering 2, 3, 4 and 5 bedroom. **A dated PDF snapshot is kept as
+`VIDEO5_ref_comparison_deck_24Sep.pdf`** because the live file keeps changing
+and the script was written against that version.
+
+### The argument
+
+Sixteen size-matched pairings, each one a real transaction, adjusted by
+**+2% per year since that unit's lease started, +5% for GFA harmonisation**
+(2018 lease -> +21%, 2021 -> +15%). Every effective psf lands between **$2,714
+and $3,199**, and Thomson Reserve at $2,900 psf comes out cheaper in all
+sixteen. The PropNex deck reaches **$2,864-$3,077** by a completely different
+route. Two methods, one band — that convergence is the video's spine.
+
+Strongest single slide: **JadeScape's 3BR and Thomson Reserve's 3-Bed Premium +
+Study are both exactly 1,152 sqft.** It cuts both ways and both belong on
+screen — $310,800 more as a cheque today, $325,500 less once adjusted.
+
+### Files
+
+**To record from — three files:**
+
+| File | What it is |
+|---|---|
+| `VIDEO5_SCRIPT_v4_MODULAR.md` | **the script.** Eleven layouts one by one, each with the same six beats, plus standalone site-plan / car-park / land-per-unit modules. 36 min total, measured; assembly options for 1, 2 or 3 videos at the end |
+| `VIDEO5_LAYOUT_STUDY.md` | the in-depth study the script is written from — five findings nobody else is saying, pros/cons per type, 15 angles |
+| `VIDEO5_teleprompter_v1.pptx` | 30-slide deck built against **v3**, the numbers-first draft. Slides and notes need regenerating against v4 once the module split is chosen |
+
+**`VIDEO5_working/` — receipts and build trail. Not needed to record.**
+Open `VIDEO5_working/README.md` for what each one is; short version: the
+superseded v3 script, the page-cited source figures, the block/facing derivation, the audit of the
+comparison deck, a frozen snapshot of that deck, and the Remotion build notes.
+`VIDEO5_working/VIDEO5_BRIEF.md` is the superseded 23 Sep brief and contains
+two claims now known to be wrong — provenance only, do not work from it.
+
+The Remotion build stays on `E:\REMOTION\` — `work/thomson_compare/` for the
+pipeline and `public_thomson_reserve/compare/plans/` for the 20 named plan
+assets the composition loads at render time.
+
+### Open before recording
+
+1. **[SIGN-OFF]** comparison deck s05/s06 read "$1.98MIL at 2420 psf". No such
+   row exists — the highlighted 775 sqft rows top out at $1,900,000, and
+   2,420 x 775 = $1,875,500. Corrected effective is **$2.299M / $2,966 psf**.
+2. **[SIGN-OFF]** s12 reads "$3.43MIL". $3.02M x 1.15 = **$3.473M**; the 3043
+   psf printed beside it already confirms $3.47M.
+3. Six further on-screen-only fixes are listed in `VIDEO5_DECK_AUDIT.md` and
+   flagged on a red strip on the affected slides of the teleprompter deck.
+4. Scope: 4- and 5-bedroom are **in**, because the 24 Sep deck added them.
+   Slides 20-25 are that block and can be cut whole (takes ~23 min to ~20).
+
+### Two corrections that must not be re-imported from `VIDEO5_BRIEF.md`
+
+- The red/green shading on TriForce p34-p37 is **not** a liveable-area
+  measurement. On p35 and p36 the red covers bedrooms and master suites, and
+  there is no legend anywhere in the deck. No percentage can be derived from it.
+- The 10 m on TriForce p13 is a **boundary setback** at BLK 11 stack 50, not a
+  block-to-block gap. The tightest true block-to-block on the site is **26 m**,
+  BLK 9 #41 to BLK 3 #15/16.
+
+### Named-entity constraint
+
+`PART2_cross_check_resources.md` still applies. River Green / Wing Tai are not
+named on camera, and the ballot client's project is never named. Checked: the
+video 5 script names neither.
