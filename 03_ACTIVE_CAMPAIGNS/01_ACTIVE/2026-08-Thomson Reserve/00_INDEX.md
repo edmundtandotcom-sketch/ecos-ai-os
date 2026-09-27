@@ -149,13 +149,13 @@ screen — $310,800 more as a cheque today, $325,500 less once adjusted.
 
 | File | What it is |
 |---|---|
-| `VIDEO5_SCRIPT_v4_MODULAR.md` | **the script.** Eleven layouts one by one, each with the same six beats, plus standalone site-plan / car-park / land-per-unit modules. 36 min total, measured; assembly options for 1, 2 or 3 videos at the end |
-| `VIDEO5_LAYOUT_STUDY.md` | the in-depth study the script is written from — five findings nobody else is saying, pros/cons per type, 15 angles |
-| `VIDEO5_teleprompter_v1.pptx` | 30-slide deck built against **v3**, the numbers-first draft. Slides and notes need regenerating against v4 once the module split is chosen |
+| `VIDEO5_SCRIPT_v5.md` | **the script.** Eleven layouts one by one, written to be watched: three-shot grammar (`[FULL]` / `[BOARD]` / `[BOARD+]`), hooks, guess-first beats, open loops planted in the open and paid off, micro-CTAs fixed so no cut has a gap over 4 min, plain language. **30 min delivered total, measured** — 2-bed 12.6 · 3-bed 11.3 · 4/5-bed 9.2 · site plan 3.4 |
+| `VIDEO5_LAYOUT_STUDY.md` | the in-depth study the script is written from |
+| `VIDEO5_teleprompter_v1.pptx` | 30-slide deck built against **v3**. Regenerate against v5 once the cut is chosen |
 
 **`VIDEO5_working/` — receipts and build trail. Not needed to record.**
 Open `VIDEO5_working/README.md` for what each one is; short version: the
-superseded v3 script, the page-cited source figures, the block/facing derivation, the audit of the
+superseded v3 and v4 scripts, the page-cited source figures, the block/facing derivation, the audit of the
 comparison deck, a frozen snapshot of that deck, and the Remotion build notes.
 `VIDEO5_working/VIDEO5_BRIEF.md` is the superseded 23 Sep brief and contains
 two claims now known to be wrong — provenance only, do not work from it.

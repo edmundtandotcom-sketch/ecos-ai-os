@@ -83,6 +83,53 @@ Three options, in order of preference:
    distance stay the same colour, which is the exact point of the scene.
 3. Show it whole and talk over it. Weakest.
 
+## Frame rules — 16:9, every board
+
+Locked 26 Sep from the approved mock (`E:\REMOTION\work	homson_compare\_mock_board_A2_16x9_pip.png`).
+
+| Zone | Rule |
+|---|---|
+| Content | stops at **y = 850**. Plan cards 130–600, ledgers 620–780, verdict at 800 |
+| Subtitles | own **y 930–1040**, **x 160–1560**. 46 px Barlow Condensed, cream, gold hot words, dark pill. Two lines stack inside the band |
+| PiP | bottom-right, **260 px circle** centred (1740, 880), gold ring. Nothing else enters the 300×300 corner |
+| PiP crop | **loose** — face in the upper-middle third of the circle with air around it. Not filling the circle. Edmund, 26 Sep |
+| Type floor | 22 px minimum; anything carrying a number 26 px or larger; verdict 44 |
+| Right ledger | capped at x ≤ 1560 so no transaction line runs under the PiP |
+| Plans | competitor plans are **not to scale** with TR's and can't be — both developers print "not drawn to scale". Show a **size bar** under the cards instead (TR vs neighbour, ledge deduction hatched) |
+
+Any board that breaks a zone rule fails the check-board gate before render.
+
+## Script rules the composition enforces
+
+- `[BOARD]` runs never exceed **45 s** without a `[FULL]` or `[BOARD+]` cut — longest in v5 is 22 s
+- Micro-CTA gap never over **4 min** in any assembly — all four cuts checked in v5
+- Every grid board carries `ESTIMATE — PRICE LIST NOT RELEASED`
+
+## Competitor plans — all clean (26 Sep)
+
+Edmund: build without the PropNex watermark. **Done for all nine.** Files are
+`public_thomson_reserve/compare/plans/*_clean.png`; MANIFEST.json records the
+method and source for each. **Use the `_clean` file on every board.**
+
+| Plan | Status | How |
+|---|---|---|
+| amo_614 · 678 · 743 · 958 · 1141 | **CLEAN** | de-watermarked in place: black top-hat k=17 keeps thin features and drops the wide watermark; L<0.72 drops the watermark-toned letter edges. AMO linework is dark, so the tone cut is safe |
+| js_1152 | **CLEAN** | same method; its lines are dark enough |
+| js_646 · js_775 · js_904 | **CLEAN — re-sourced** | the PropNex pastes could not be cleaned (watermark tone = line tone). Replaced with the developer's own plans from the JadeScape floor-plan brochure at jadescape.propertybook.sg (B1-646, B3-775, C1a-904, 800×600 JPG, no mark), cropped, 2× upsampled, top-hat line art. Source JPGs kept as `js_*_src_propertybook.jpg` |
+
+Also on disk, not used: `work/thomson_compare/js_src/` — the full 31-page
+JadeScape brochure PDF and its page extracts (1389 px spreads, 2–4 plans each,
+so lower per-plan resolution than the JPGs) plus `C1b-904` (the mirrored 904).
+
+**Resolution after re-sourcing:** js_646 1080×1200, js_775 1116×1200, js_904
+1368×1200 (post-upsample). Adequate for a half-frame card at 1080p. The 775 is
+no longer the weakest plan we hold.
+
+**On-board credit:** competitor plans carry a one-line source in the footer —
+`Floor plan: JadeScape (Qingjian) brochure` / `Floor plan: AMO Residence
+brochure via PropNex` — same place the TR boards cite the PDF page. Not a
+watermark; a citation, consistent with the "every figure traces" rule.
+
 ## Pipeline — to build, mirroring `work/thomson_layouts/`
 
 Reuse the structure, not the files. Do **not** touch `work/thomson_layouts/`,
