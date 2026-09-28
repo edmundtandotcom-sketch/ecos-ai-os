@@ -145,17 +145,21 @@ screen — $310,800 more as a cheque today, $325,500 less once adjusted.
 
 ### Files
 
+**DELIVERED 28 Sep:** `THOMSON_LAYOUTS_PART1_v1.mp4` (25:09) + `_chapters.txt`. Verified: sync +0.000 s at 8 points, -16.1 LUFS, no held frames (face-region motion identical to master). See `VIDEO5_working/VIDEO5_BUILD_NOTES.md` § DELIVERED.
+
 **To record from — three files:**
 
 | File | What it is |
 |---|---|
-| `VIDEO5_SCRIPT_v5.md` | **the script.** Eleven layouts one by one, written to be watched: three-shot grammar (`[FULL]` / `[BOARD]` / `[BOARD+]`), hooks, guess-first beats, open loops planted in the open and paid off, micro-CTAs fixed so no cut has a gap over 4 min, plain language. **30 min delivered total, measured** — 2-bed 12.6 · 3-bed 11.3 · 4/5-bed 9.2 · site plan 3.4 |
-| `VIDEO5_LAYOUT_STUDY.md` | the in-depth study the script is written from |
-| `VIDEO5_teleprompter_v1.pptx` | 30-slide deck built against **v3**. Regenerate against v5 once the cut is chosen |
+| `VIDEO5_SCRIPT_v6_EDMUND.md` | **the script — Edmund's own conversational draft (28 Sep)**, with a ▶ FACING block added to every layout (block, stack, face, floors, distance, view, sun) and 14 figure slips marked `[FIX]`/`[CHECK]`, not changed. Two videos: 2&3-bed ~28 min, 4&5-bed ~17 min at 150 wpm / 1.15×. Facing table for the boards at the end |
+| `VIDEO5_LAYOUT_STUDY.md` | the in-depth study behind the facing blocks and the comparisons |
+| `VIDEO5_SHOT_LIST.md` | **every display, keyed to the v6 script** — trigger phrase → template → asset. Nine templates (S1–S4 site/view, L1–L4 layout, C1 compare, plus Edmund full-frame). Rotation rule: no template twice in a row, no display over 45 s |
+| `VIDEO5_displays/` | one rendered example of each template on real assets, `_ALL_TEMPLATES.png` is the contact sheet, `make_displays.py` regenerates them |
+| `VIDEO5_teleprompter_v1.pptx` | 30-slide deck built against **v3**. Regenerate against v6 once the [FIX] items are decided |
 
 **`VIDEO5_working/` — receipts and build trail. Not needed to record.**
 Open `VIDEO5_working/README.md` for what each one is; short version: the
-superseded v3 and v4 scripts, the page-cited source figures, the block/facing derivation, the audit of the
+superseded v3, v4 and v5 scripts, the page-cited source figures, the block/facing derivation, the audit of the
 comparison deck, a frozen snapshot of that deck, and the Remotion build notes.
 `VIDEO5_working/VIDEO5_BRIEF.md` is the superseded 23 Sep brief and contains
 two claims now known to be wrong — provenance only, do not work from it.

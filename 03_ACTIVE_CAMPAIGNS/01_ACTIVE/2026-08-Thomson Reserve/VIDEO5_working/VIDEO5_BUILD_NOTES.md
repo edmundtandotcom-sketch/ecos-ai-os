@@ -130,7 +130,116 @@ no longer the weakest plan we hold.
 brochure via PropNex` — same place the TR boards cite the PDF page. Not a
 watermark; a citation, consistent with the "every figure traces" rule.
 
-## Pipeline — to build, mirroring `work/thomson_layouts/`
+## Display library (28 Sep)
+
+Nine templates, rendered on real assets in `../VIDEO5_displays/`, keyed to the
+script line by line in `../VIDEO5_SHOT_LIST.md`. Generator is
+`make_displays.py` (also on E: in `work/thomson_compare/`). It writes:
+- `compare/site/siteplan_clean_notext.png` — TriForce p12 with the slide text
+  masked in the sampled background colour, cropped to the site outline
+- `compare/site/stack_coords.json` — pixel position of every stack in blocks
+  1/3/5/7/9/11, read off a gridded render; `P()` maps grid → cropped-image px
+- `compare/views/photos/view1..8.png` + `INDEX.json` — the eight developer
+  drone photos cropped out of TF p25–28, with direction and level range;
+  `keymap_p25..28.png` show where each was shot from
+
+**Stack → face is validated by two developer callouts** (B1 #07 "pool-facing"
+= Blk 1 west; DPS1 #22 "GCB/Windsor/MacRitchie" = Blk 5 south, which TF p26–27
+place SW). On camera it is still "read off their site plan — confirm at the
+gallery."
+
+**Reconfig template (R1–R3)** — `make_reconfig.py`. Element coordinates are read off `plan_p12.png` with a gridded crop (`_dps1_grid.png`); the same approach gives the 1,152's hackable wall in ten minutes.
+
+**Video 2 assets still to stage:** tr_775, tr_1238, tr_1367, tr_1485, tr_1808
+(all from FP/TF extracts already rendered), js_1259 and amo_1292 (from the
+comparison deck, de-watermark), js_1647 and js_2099 (TF p36/p37). Listed at
+the end of the shot list.
+
+
+
+## DELIVERED — THOMSON_LAYOUTS_PART1_v1 (28 Sep 2026)
+
+`THOMSON_LAYOUTS_PART1_v1.mp4` in the campaign folder (byte-identical to
+`E:\REMOTION\out\THOMSON_LAYOUTS_PART1_v1_1.15x.mp4`), chapters beside it.
+25:09 · 1920x1080 · 34.5 fps (30 x 1.15) · 48 kHz · -16.1 LUFS · 481 MB.
+
+**Measured, not assumed:** G0 every anchor matched · G1 caps on the speech clock ·
+G2 51,595 master frames = sum of measured segments, A/V +0.000 s · G3 speech at
+60/900/1600 s (-17.5 dBFS) · sync +0.000 s at all eight verify points · render took
+~7 min (light composition), delivery pass 5 min.
+
+**Freeze verdict — verify_v5's whole-frame freezedetect said FAIL (765 stretches).
+That test is meaningless for this show (CH.14 addendum) and it was wrong here too:**
+the bubble-crop test flags the curtain on full-frame shots (crop lands beside him),
+and a static plan card is identical frames by design. The valid proof, run on three
+real full-frame speaker shots picked from SHOTS: per-frame face-region diffs
+delivered vs master are identical (2.79/2.77, 4.94/5.00, 5.50/5.43; longest
+identical run 1–2 in both). **The render holds no frames.** Test lives in this
+session's transcript; worth scripting as `freeze_proof.py` next time.
+
+**What was corrected on screen vs what he said** (captions show his words; boards
+carry the audited figure): 28 m not 29 · $2,966 not $2,996 · $1.767 M not $1.75 M ·
+$2.196 M at $3,000 not $2.269 M · $2.39 M not $2.239 M · 1,141 not 1,142 · the 1,152
+is the same size as JadeScape's, not 97 sqft bigger · Block 1 "no block faces it",
+not "40 m".
+
+**Chapters (from SPANS, delivered clock):** 0:00 OPEN · 1:31 SETUP · 1:52 A1 592 ·
+6:30 A2 678 · 10:06 A3 732 · 13:54 A4 775 · 14:55 A5 947 · 17:45 A6 1055 ·
+20:55 A7 1152 · 24:25 CLOSE.
+
+**Not in this cut:** the developer-callout pin reveals (L4 shows the pins but does not
+animate them) and the outro carries Part 2's REI Method card unchanged. Part 2 (4 & 5
+bed, footage `Full Layouts 2a/2b/2c`) is not built; eight plan assets still to extract.
+
+## BUILD — PART 1 (2 & 3 bedroom), recorded 28 Sep, pipeline 28 Sep
+
+**Footage:** `Full Layouts 1a/1b/1c-DSLR.mp4` (18:41 / 7:48 / 5:32, 1280x720p30,
+six AAC tracks — **voice is track 0**, the rest silent or secondary). Copied to
+`E:\REMOTION\work	homson_compareootage\P11a/b/c.mp4`. 1a = OPEN, set-up,
+A1–A4; 1b = A5–A6; 1c = A7 + CLOSE. Edmund read v6 (his own draft + facing).
+`Full Layouts 2a/2b/2c` are Part 2 (4 & 5 bed) — not built yet.
+
+**Pipeline** (`E:\REMOTION\work	homson_compare\`, mirrors the Layouts build):
+
+| Step | File | Gate |
+|---|---|---|
+| transcribe | `transcribe_p1.py` → `P11a/b/c.json` | faster_whisper small int8, beam 5, no conditioning — the Part 2 settings. **Launch with the Bash tool's own background mode, never `nohup &`** (playbook 1851: it silently did not start, again) |
+| EDL | `edl.py` | every boundary is an **anchor phrase** resolved against the word JSON; unmatched anchor = exit 1. 18 keep-spans, 8 drops (retakes: second take kept), 30.1 of 32.0 min kept. `python edl.py` prints the resolved table |
+| voice EQ | `p1_eq.py` | **fitted**, not Part 2's curve: this DSLR sits 4–8 dB under the Layouts master at 1.3–5 kHz. Loop against the Layouts master, worst band residual **0.7 dB** |
+| assemble | `assemble_compare.py` | proven recipe (-t, -frames:v, tpad, apad, pcm); every segment **measured** (frames, audio, level > -50 dBFS) or the build stops; master frame count must equal the sum; words carried across the cut → `compare_map.json` on the master clock |
+| shots | `make_shots.py` → `src/timelines/compare_shots.ts` | display plan per block as (anchor phrase, template, params); unmatched anchor = exit 1 (G0). Also exports SITE stack px, PLAN_SIZES, ZONES. Dry-run against the source transcripts before the map exists |
+| captions | `gen_caps_compare.py` → `thomson_compare_caps.ts` | Part 2's chunk/FIX/WORDFIX + this project's glossary (the actual mishearings: Concert/Thompson/Homsen Reserve, Jet/JSCAPE/JITScape, Amor/Armors/AMRO, Skyhapydead, Bradhill, Takin, latch…) |
+| clock check | `caps_check.py` | first caption per span within 1 s, not in silence, contains the block's key word; drift per 5-min window < 0.35 s (G1) |
+| composition | `src/ThomsonCompare.tsx` + `src/CompareBoard.tsx` | bone theme, fixed Ident, zones from the approved mock, PiP loose crop, `<Audio>` mounted, time from `L.fps` |
+| check board | `run_board.sh` | G0 → G0b → G1 → proxy (960x540, GOP 15) → clean bundle → CompareBoard at REAL fps → `out/compare_board/_SHEET.png` |
+| render | `run_compare.sh` | G0–G2 → bundle → render → **G3 three-point speech level** → 1.15x delivery with bed → verify_v5 → chapters from SPANS. `VER=v1`, name `THOMSON_LAYOUTS_PART1_v1_1.15x.mp4` |
+
+**Spoken slips left in the audio, corrected on the BOARD (never in his mouth):**
+"29 metres" (28) · "$2,996" (2,966) · "$1.75M" (1.767) · "$2.269M at $3,000" (2.196)
+· "$2.239M" (2.39) · "97 sqft bigger" for the 1,152 (same size) · "1142" (1,141).
+Also his ad-lib "Block 1 at least 40 m to the opposite block" — the map has **no**
+block-to-block arrow from Block 1; the board says "no block faces it" and shows no
+number.
+
+
+**Check-board round 1 (28 Sep, 143 probes):** pipeline holds end to end - every display
+lands on his word, captions on the clock, PiP/subtitle zones clean. Fixes applied before
+the full render: (1) ZONES were guessed fractions and ~8 were visibly off -> re-read off
+gridded plan sheets (`zone_sheets.py`, `_zones_1/2.png`), all 16 plans; (2) Whisper number
+mishearings in captions ("762 bedrooms", "$646M unit", "5,775 square feet") -> glossary;
+(3) empty grid showed $0 -> blank; (4) `tighten.py` shortens every pause > 1.0 s to
+~0.7 s, source-anchored, 41 pauses / 87 s removed, 59 spans, 28.7 min - master re-cut;
+(5) `run_board.sh`/`run_compare.sh` now `set -o pipefail` so a gate piped through `tail`
+still stops the chain; the two heredocs that reference $NAME/$VER/$SPEED are unquoted.
+`caps_check.py` rewritten to use ffmpeg silencedetect (the hand-rolled envelope read
+-180 dB on speech) with a 1.0 s volumedetect window (0.4 s after a seek lands on AAC
+priming and reads -91 dB).
+
+**Assets added for the build:** `tr_775.png` (cropped from FP p06 at 300 dpi, pins
+kept, sponsor strip trimmed). Still missing for Part 2: tr_1238, tr_1367, tr_1485,
+tr_1808, js_1259, amo_1292, js_1647, js_2099.
+
+## Pipeline — original plan (superseded by the table above), mirroring `work/thomson_layouts/`
 
 Reuse the structure, not the files. Do **not** touch `work/thomson_layouts/`,
 `out/THOMSON_LAYOUTS_*`, `public_thomson_reserve/layouts/` or
