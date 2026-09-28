@@ -356,3 +356,91 @@ full video pull works without hydration.
 - **Library integrity: clean.** Full scan of all 278 folders post-run — **677 videos / 948 images, 0 missing thumbnails, 0 missing
   transcripts, 0 stray `.wav`.** No repairs were needed.
 - Carried forward, not re-attempted: Ernee Ong library ID `27801271979474342` (image that 403'd on 2026-09-07).
+
+## Weekly refresh — 2026-09-28 (`rei-swipe-weekly-refresh`, browser-side media pull)
+
+**Scope:** all 45 resolved page IDs + both FNX pages re-checked, **plus the 5 previously-UNRESOLVED folders, now resolved** (51 page
+loads). Append-only per Decision 124; library went **677 → 751 videos** and **948 → 1047 images**, exactly the net adds; whole-library
+integrity afterwards: 0 missing thumbnails, 0 missing transcripts, 0 stray `.wav`. `_MASTER_INDEX.md` regenerated.
+
+**Result: +74 distinct videos, +99 static images, across 25 folders.**
+Gross pulls were larger — the dedupe rules collapsed **38 videos** (29 byte-identical + 9 script re-encodes, transcript similarity ≥ 0.95)
+and **~115 images** (byte-identical, mostly Peng Joon 76 and Flexionmarketing 8), and skipped ~25 image candidates already on disk by CDN base.
+
+> **Hydration is BACK — the 2026-09-21 "30-ad cap" no longer applies.** The Ad Library React app renders again in the in-app Browser
+> pane; the "See more" load-more loop runs and loads past 30 (Peng Joon 151 of ~160, The Freedom Growth Academy 93/99, King Kong Co
+> 59/62, Ernee Ong 56/58). Active counts below are full loads unless marked otherwise. Extraction still parses the serialised
+> payload out of `outerHTML` (anchored on both rendered `Library ID:` text and payload `ad_archive_id`) — see Decision 131.
+
+### Folders with new creatives
+| Folder | Active seen | +video | +image | Notes |
+|---|---|---|---|---|
+| Caleb Sim | 37 | **+12** | +1 | Fresh 5-6d wave around the "$97 two-day event" / 1CallClose offer. 14 assets pulled: 1 byte-identical, 1 script re-encode (0.987 vs 2026-08-28). Several of the 12 are 0.93-0.945 near-variants (hook swaps on one body) — kept, under the 0.95 bar. |
+| Stella Thio - Singapore Luxury Homes | 37 | **+12** | +1 | 21 assets pulled, 9 byte-identical. The kept 12 score 0.76-0.92 against the 2026-08-29 scripts — **same two scripts (≈95s / ≈170s) re-cut with different hooks**, i.e. a hook-testing matrix, not new messaging. |
+| KS Tan | 29 | **+9** | 0 | **New video wave, 4-6 days old** (was image-led). Thomson Reserve land-cost angle — "a suburban land site sold at a record $1,278 psf… Thomson Reserve is closer to town, yet its land cost about $100 less" — plus a policy-vs-infrastructure piece ("A property policy can be written on Monday and reversed by Friday, but poured concrete… cannot"). 5 of the 9 are 0.75-0.81 hook variants of one script. |
+| Ernee Ong | 56 of ~58 | +9 | +3 | 9 short (4-11s) visual clips, no speech (transcripts ≈ empty) — kept on byte-hash only; transcript dedupe deliberately not applied to near-silent clips. |
+| Eddy Miranda | 34 | 0 | **+26** | **REACTIVATED** (was ENDED 09-21). 34 pulled, 8 byte-identical within the run. |
+| Marc Chan | 36 | 0 | **+33** | **REACTIVATED** — image-only wave (was 0 active since 2026-09-07). 35 pulled, 2 byte-identical. |
+| The Freedom Growth Academy | 93 of ~99 | +6 | +1 | 1 byte-identical; 1 >10min VSL logged-only (`1610862453738855`, 16:04). |
+| The Producer Formula | 6 | **+5** | +1 | **Newly resolved + fresh wave (2-9 days old).** Adviser-business angles: "time becomes your biggest bottleneck… a race to see who hires their first personal assistant." |
+| Peng Joon | 151 of ~160 | +2 | +5 | country=ALL. 81 images pulled, **76 byte-identical** — same heavy re-upload pattern as 09-14/09-21. |
+| Success Resources | 12 | +3 | +6 | **Newly resolved.** 1 video collapsed as script re-encode; 1 image 403'd (`1397583722348268`, carried forward). |
+| Cynric Ho | 6 | **+4** | 0 | **REACTIVATED** (ENDED 09-21). 4-5d old; 2 others byte-identical to 2026-09-07. Land-bid angle: "one particular plot… no agent is talking about because there is a drop in terms of the land bid prices." |
+| Authentic Advisory Systems | 37 | +3 | 0 | 15 assets pulled → 5 byte-identical + 7 script re-encodes (0.953-1.0) → **3 distinct scripts**. |
+| Damien Tan Real Estate | 7 | +3 | 0 | 1 byte-identical. New: "Did you know that PropertyGuru is one of the worst places to find condos to upgrade to?" |
+| I Quadrant | 18 | 0 | +8 | 3-card carousels; 8 distinct cards (carousels share cards across IDs — per-card dedupe). |
+| Rodney Tan | 6 | 0 | +5 | **REACTIVATED** (ENDED 09-21). |
+| Beyond Realtors Club | 34 | 0 | +4 | |
+| Colin Ee | 6 | 0 | +2 | |
+| CP Homes | 2 | +1 | 0 | 8d old — Lucent Grand show-flat walkthrough. |
+| Flexionmarketing | 30 | +1 | 0 | 3 videos + 8 statics byte-identical to 2026-09-14. |
+| King Kong Co (Sabri Suby) | 59 of ~62 | +1 | 0 | 2 >10min VSLs logged-only (`1614747790230441` 14:18, `28452065887761850` 28:47). |
+| Miles Stutz | 17 | +1 | +1 | Video is a 7s silent clip. |
+| Raymondlim.rlc | 2 | +1 | 0 | 5d old, 0.91 vs its 2026-09-07 script (kept — below 0.95). |
+| The Investor Realtor | 12 | +1 | 0 | 3 byte-identical. New: "When someone tells you buy freehold near the MRT… that checklist" is the problem. |
+| Entrepedia | 31 | 0 | +1 | **REACTIVATED.** 30 of 31 creatives already on disk (same wave as August). |
+| Real Estate Mentor | 2 | 0 | +1 | 1 byte-identical. |
+
+**Pulled but nothing new after dedupe:** Issac Liu (4 videos byte-identical to 2026-09-14 under rotated IDs) · Dan Lok (2 statics) ·
+Erik Hoffmann (4 statics, all the same file) · Denise Tan · Jo Tan (cards already on disk by CDN base).
+
+**No new creatives (checked, current):** Adrian Lee (3) · Abc Sales AI (20) · Future Adviser Sg (10, newly resolved) · Jason Evonne
+Property (1) · M H Simon (6) · Networth Builders (1) · Patricia Ang Real Estate (2 — **REACTIVATED**, both creatives ≥35d old) ·
+The Right Move (9).
+
+### Campaigns that ENDED this week (0 active ads; assets retained per append-only)
+| Folder | Was | Verified |
+|---|---|---|
+| Growth Partners Inc | 26 active on 09-21 (its largest-ever image wave) | 0 active; re-checked twice, page name resolves normally → genuine end |
+| Legacy Advisors Academy | 14 active | 0 active under country=SG **and** country=ALL |
+| Live A Home SG | 3 active (direct competitor, Thomson Reserve funnel) | 0 active |
+| FNX Advertising (1252511721279349) | 3 active | 0 active |
+
+Still 0-active (unchanged): Allan Khazak · Frank Kern · Property Exit Advantage Singapore · Sarah Lee · Thomas Yap · Xccelerate Academy ·
+FNX Marketing (original page 1286193024567598). Newly-resolved but currently 0-active: Escape Uncertainty · Leads SG.
+
+### Reactivated
+**Eddy Miranda** (0 → 34), **Marc Chan** (0 → 36), **Entrepedia** (0 → 31), **Rodney Tan** (0 → 6), **Cynric Ho** (0 → 6),
+**Patricia Ang Real Estate** (0 → 2). Three of the five direct competitors that had gone quiet are back.
+
+### New advertisers / page IDs resolved
+**All 5 outstanding UNRESOLVED folders resolved — registry now 50 / 0.** Every ID was already sitting in the folder's own
+`_ad_breakdown.md` header (`page-ID <digits>`); the keyword-search attempts on 09-07/09-14/09-21 never looked there.
+Success Resources `550751965021284` (confirmed on an exact-phrase search — 3 other same-named pages exist) · Escape Uncertainty
+`559289110600596` · Future Adviser Sg `1052806307905338` · Leads SG `1851368671745396` · The Producer Formula `840716469132393`.
+No brand-new advertisers were added this run.
+
+### Throttling / blocking
+**None.** Every page returned its real content. The four "No ads match" folders were re-checked (Growth Partners twice; Legacy Advisors
+under active/all and SG/ALL) and are genuine campaign ends, while six previously-ended folders came back live in the same session.
+
+### Known issues / carry-forward
+- **Hydration restored (reverses the 2026-09-21 environment note).** The CORS/CORP breakage on `static.xx.fbcdn.net` is gone in the
+  in-app Browser pane; ad cards render and the load-more loop works again. Keep the payload-parsing extractor as the primary method (it
+  is robust either way) and keep the load-more loop in front of it.
+- **Hook-variant near-duplicates.** Caleb Sim, Stella Thio and KS Tan are running one body script under many hooks (0.75-0.945
+  similarity). They pass the ≥0.95 bar and were kept as distinct creatives; if the library should hold one representative per body,
+  that needs a lower threshold or a body-only comparison (skip the first ~15s).
+- **Short silent clips** (Ernee Ong 4-11s, Miles Stutz 7s) now bypass transcript dedupe on purpose — near-empty transcripts made
+  every silent clip look like a duplicate of every other.
+- Carried forward: Success Resources image `1397583722348268` (403) and Ernee Ong `27801271979474342` (403 since 2026-09-07).
