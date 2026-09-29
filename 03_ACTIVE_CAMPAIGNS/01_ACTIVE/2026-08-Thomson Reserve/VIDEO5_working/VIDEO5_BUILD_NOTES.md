@@ -272,3 +272,52 @@ G1 caption clock + sources are the cut ones, G2 master is CFR / matched streams
 
 Boards can be built and the check board rendered before 1–3 land, using
 placeholder timing. Nothing goes to a **master** until the two sign-offs do.
+
+---
+
+## v2 — design v2 across the whole of Part 1 (29 Sep 2026)
+
+Built on Edmund's 29 Sep review of v1 and his approval of the 592-block mock.
+
+**Frame rules (every scene)**: logo only; gold punchline in the header band starting clear of the logo;
+content band y 180–900 (breathing room under the header); subtitles centred, 52 px; PiP 380 px circle
+bottom-right (320 px on FACE scenes, under the fact panel); full-screen speaker on FULL cuts.
+
+**Templates in use**: FULL, MIX (bigger), FLICK, G (matrix, big, TR label), DATE (preview-date asset +
+work banner + QR card), L1 (unit-count tag), L2 (dim + box), L3 (plan + context zoom + callout tag),
+SIDE (B1 vs B2), S1 (site: plain / lux / classic / stacks with bold block highlights + rings),
+FACE (block crop + BLOCK·STACKS / FACING / IN FRONT / FLOORS panel), DIST (developer's p13 drawing
+cropped, tag), C1 (TR vs competitor + estimate grid + real transaction), ADJ, L4, CARDS.
+Dropped from v1: S2, S3, S4 (drone), NOVIEW, BOTHWAYS — replaced by FACE / S1-stacks / DIST.
+
+**CTAs**: QR card (`cta_card.png`) on every CTA scene (qr / sub / work / DATE); SUBSCRIBE pill + bell
+animated; 7 scheduled subscribe pop-ins on FULL cuts (seeded, ~every 3–5 min, never on a CTA shot):
+0:30, 3:37, 7:56, 13:02, 18:33, 23:28, 27:21 (master clock, before the 1.15× delivery speed).
+
+**Facings**: re-derived on Edmund's north arrow (north = page-left). Table in VIDEO5_STACK_FACING.md §5.
+Two on-camera lines disagree with it (A2/A3 "east facing" → SOUTH on screen; A7 "only south" → WEST).
+
+**Edit**: 15 dead-air drops added to `edl.py` (Edmund's 6 timestamps + 10 more found by silencedetect,
+all between sentences): master 1719.8 s → 1686.3 s, 71 spans, 50,589 frames. `spans()` now
+overlap-safe (`cur = max(cur, db)`).
+
+**Assets**: `tr_592_b2` cleaned (developer bubbles / disclaimer masked; raw kept as
+`tr_592_b2_raw_backup.png`). `plans_tight/` regenerated for it.
+
+**Pipeline**: `run_mock.sh` (block-filtered board for design rounds), `run_board.sh`, `run_compare.sh`
+(VER=v2). Bundle copies the 8 GB public dir (~10 min); the render step occasionally dies with a
+BrowserRunner timeout on the first attempt — rerun the render alone.
+
+---
+
+## v3 — Edmund's v2 review (29 Sep evening)
+
+- **Project colours** on every label bar and callout tag: Thomson Reserve navy, AMO red (#B3261E), JadeScape green (#1E7F4E), Sky Habitat blue (#1F4E9E).
+- **FACE** rebuilt: site crop left (880 px), fact panel 560 px on a blurred site-plan backdrop, bigger text, new TYPE row.
+- **His assets** (from his Drive links, 3x Lanczos upscaled — screenshots at 437/634 px): `tr_732_sizes` on the 732 room-by-room scene, `tr_1055_sizes` on the 1,055 first plan + room-by-room, `view_stack05` (his "existing surrounding views" slide) replaces the site plan at "drone view".
+- **New displays**: TR 592 vs AMO 678 while he quotes the AMO sale (5:50); AMO 743 storeroom gap (9:13); 947 dining zone + foyer store spotlights (15:33 / 15:54); 904 comparison waits for the second "904 square feet" (nth=2 anchor).
+- **Zones corrected**: 947 balcony / dining / foyer; JadeScape 904 bedroom 3; 1,055 back (yard+WC+ST+HS), HS, kitchen countertop; 1,152 wall.
+- **Subtitles**: 22 token-level fixes (see gen_caps_compare.py). Rule order matters: an earlier rule can rewrite the tokens a later rule expects.
+- **Edit**: 17 clip removals exactly as given (his "12:53.5" read as 13:53.5), plus sliver merge in `spans()` (a keep-span under 0.6 s between two cuts is dropped). Master 1686.3 s → 1630.1 s, 79 spans. The "other side of Bright Hill" display went with its clip; "from 54" anchor became "at level 10".
+- caps_check A2 block-start keys updated (the cut removed the old first words).
+- Board: `VIDEO5_working/board_v3/`. YouTube pack: `VIDEO5_YOUTUBE_PART1.md`.

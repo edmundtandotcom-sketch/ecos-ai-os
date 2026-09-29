@@ -147,6 +147,8 @@ screen — $310,800 more as a cheque today, $325,500 less once adjusted.
 
 **DELIVERED 28 Sep:** `THOMSON_LAYOUTS_PART1_v1.mp4` (25:09) + `_chapters.txt`. Verified: sync +0.000 s at 8 points, -16.1 LUFS, no held frames (face-region motion identical to master). See `VIDEO5_working/VIDEO5_BUILD_NOTES.md` § DELIVERED.
 
+**DELIVERED 29 Sep — v2 (use this one):** `THOMSON_LAYOUTS_PART1_v2.mp4` (24:40) + `THOMSON_LAYOUTS_PART1_v2_chapters.txt`. Edmund's 29 Sep review applied across every block (design v2, approved on the 592 mock): logo only, centred 52 px subtitles, bigger PiP, labelled tight-cropped plans, context spotlights, FACE/DIST panels on his north arrow, QR on every CTA, scheduled subscribe pop-ins, 33 s of dead air cut. Verified: sync +0.000 s at 8 points, -16.1 LUFS, face-region held-frame proof 0/99. Board in `VIDEO5_working/board_v2/`, notes in `VIDEO5_working/VIDEO5_BUILD_NOTES.md` § v2, facings in `VIDEO5_working/VIDEO5_STACK_FACING.md` § 5. v1 superseded.
+
 **To record from — three files:**
 
 | File | What it is |

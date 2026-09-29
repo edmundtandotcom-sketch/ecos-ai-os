@@ -181,3 +181,33 @@ west face, tight on the east.
 - Orientation: the site plan gives north via Sin Ming Avenue and Bright Hill
   Drive, but the developer has not published per-stack facing. Any sun or
   afternoon-heat claim needs that schedule first.
+
+---
+
+## 5. ON-SCREEN FACINGS, v2 (29 Sep 2026) — Edmund's north arrow
+
+Edmund's north-arrow asset puts **NORTH to the page's LEFT** of the TriForce site
+plan. So on the page: **up = EAST, right = SOUTH, down = WEST**. Every FACE panel
+in the video uses this. Distances come only from the developer's block-to-block
+drawing (TF p13) and are shown on that drawing, cropped.
+
+| Block · stack | Type | Faces (page) | Facing on screen | In front (p13 drawing) |
+|---|---|---|---|---|
+| 1 · 07, 08 | B1, B2 | left | NORTH — into the site, over the pool | Block 11 at 40 m (Edmund) |
+| 1 · 09 | C1 | up | EAST — over the pool, toward Block 11 | Block 11 at 40 m |
+| 1 · 02, 03 | BP3, BP1 | right | SOUTH — Bright Hill Drive side | boundary at 24 m |
+| 1 · 04 | BPS1 | right | SOUTH — Bright Hill Drive side | Exit 2 corner (no figure drawn) |
+| 1 · 05 | CPS1 | down | WEST — Exit 2, then Upper Thomson | boundary at 36 m |
+| 1 · 06 | CP1 | left | NORTH — into the site, over the pool | the pool, then Block 3 (no figure) |
+| 3 · 17 | B1 | up | EAST — into the site, over the north pool | Block 11 at 80 m |
+| 3 · 18 | CP1 | up | EAST — into the site, over the north pool | Block 11 at 63 m |
+| 3 · 10, 11, 12 | CPS1, BPS1, BP3 | down | WEST — the Upper Thomson side | Upper Thomson Road boundary (24 m / 60 m drawn at #14 only) |
+| 9 · 38, 39 | BP1, BP3 | up | EAST — the boundary side | boundary at 28 m (he says 29 on camera) |
+| 9 · 44 | BPS4 | down | WEST — over the main pool | Block 3 at 26 m |
+| 11 · 47 | BP3 | up | EAST — the landscaped corner | the boundary (10 m drawn at #50-51) |
+| 11 · 54 | BPS1 | down | WEST — across the north pool | Block 3 at 77 m |
+
+**Two places the recording disagrees with the arrow** (captions show what he said,
+the panel shows the arrow's facing): A2/A3 "east facing" for Block 1 #02/03/04 (on
+screen SOUTH) and A7 "only south" for Block 1 #05 (on screen WEST). Sections 2-4
+above were written north-up and are superseded by this table.

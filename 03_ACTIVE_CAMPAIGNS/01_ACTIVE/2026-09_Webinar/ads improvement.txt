@@ -1,0 +1,75 @@
+ads improvement
+1.25x speed
+
+banner on top-headline
+
+my daughter made $400k in parc clementis
+
+my daughter help me make money
+
+i am buying a property for my daughter, am i considering for Thomson reserve
+
+if you buying a property for your kids-
+
+how i buy property with my daughter
+
+
+Deck improvements
+case study-headline on top
+
+-mid way-drop the link and qR code earlier-before stacking
+
+drop 10 hours
+
+qR code- calendar link at the bottom of the frame
+-remove bonuses
+
+-------
+controvosial Thomson reserve video
+-1 entrance-walk super far- 1 in and 1 out.
+-2 side gates at each far end.
+-west facing units
+-9/10 stacks per block
+-how many lifts-3 per block
+-morning and return home mad jam
+-no possible way of road expansion in future
+-mrt to further blocks is almost non existence
+-facilities far away
+-Thomson plaza but have you seen the weekend traffic to drive into the carpark-you can walk back but carry bags of grocery and walk?
+-
+
+
+
+
+-----
+Feedback for THOMSON_LAYOUTS_PART1_v1.mp4:
+
+OVERALL:
+1. sub titles not aligned to center of screen.
+
+2. top left text beside logo is too AI generated, no need to have those text-remove. keep the logo only.
+
+3. missing captions for call out text we want to emphanize.
+
+4. we can enlarge pip speaker profile if the space allow for each scene.
+
+5.
+
+SUBTITLE FIXES (text = the correct subtitle):
+1:44 - sin ming side
+2:31 - 2 seater sofa
+
+DISPLAY / DATA (charts, graphs, tables, maps, diagrams):
+0:06 - bar chart can be bigger-theres alot of empty space
+0:33 - price matrix table can be bigger- alot of empty space
+1:05 - where are all the CTA, subscribe buttons, QR code image whatsapp to show message (Thomson Reserve)
+1:13 - so much empty space-can do more animation how the date should be displayed. /  / Replace with image. [asset: https://drive.google.com/file/d/1cXXyiW_IrvhOQ62oINlTpE4EtyAXR33H/view?usp=drive_link]
+1:32 - remove the compass cause its showing the wrong direction
+1:39 - shape highlight block 5& 7 cannot be seen, use bold colour to highlight. same goes for other blocks. use a more contrast colour shape. and they should be remove once explained and sync with speaker content.
+2:01 - layout size can be bigger to see better. can remove as much white space from the image that are redudent.
+
+OTHER NOTES:
+0:16 - show full screen speaker profile
+0:40 - show full screen speaker profile
+1:39 - site plan image can be enlarged bigger
+1:46 - there are no colour highlights when we talk about blk 1, 3, 9, 11 like how you do for block 5 & 7. highlight them too as it synced with speaker content.
