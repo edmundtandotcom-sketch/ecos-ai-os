@@ -5,7 +5,34 @@ different fact; they never repeat each other. Every claim below is made in the v
 
 ---
 
-## HEADLINE + TITLE PAIRS (pick one pair)
+## HEADLINE + TITLE PAIRS — round 3 (harder edge; headline = the argument, title = the proof, no shared words)
+
+**1. 716 UNITS. ALL YOUR COMPETITION.**
+Title: Every 2-bedroom owner at Thomson Reserve sells into the same crowd one day. Watch before you ballot.
+
+**2. THE DEVELOPER SHOWS YOU THE BEST 23%**
+Title: The 732 and 1,055 showflats are 290 of 1,268 units. Here's what the other stacks actually get.
+
+**3. $1.7M FOR ONE BATHROOM**
+Title: Thomson Reserve's 592 sqft has two doors into a single bath. JadeScape's 646 next door sold for $1.46M.
+
+**4. YOUR NEIGHBOUR IS 26 M AWAY**
+Title: The tightest block-to-block gap on the developer's own drawing, and the stacks that sit inside it.
+
+**5. PAY 28% MORE FOR LESS SPACE?**
+Title: Thomson Reserve 592 sqft at an estimated $2,900 psf vs JadeScape 646 at $2,261. Same neighbourhood.
+
+**6. NOBODY READS THE SITE PLAN**
+Title: Which Thomson Reserve stacks face the road, the boundary or the pool. Blocks 1, 3, 9 and 11 decoded.
+
+**7. THE SHOWFLAT LAYOUT YOU WON'T GET**
+Title: Only 120 of the 732 and 170 of the 1,055 exist. The rest of the 2 and 3-bedders are different animals.
+
+Pick: #1 or #3. #5 leans on the $2,900 estimate, so keep the disclaimer in the description.
+
+---
+
+## HEADLINE + TITLE PAIRS (pick one pair)  — round 2
 
 **1. DON'T BUY THE 2-BEDDER**
 Title: 716 of Thomson Reserve's 1,268 units are the same size class. Here's what that does to your exit.
@@ -71,13 +98,12 @@ CHAPTERS
 1:31 Which blocks hold the 2 & 3-beds
 1:52 592 sqft — B1 vs B2, JadeScape 646, AMO 678
 6:21 678 sqft — the fan favourite, six stacks
-9:53 732 sqft — study inside the master, Sky Habitat 1,195
-13:38 775 sqft — one stack only
-14:39 947 sqft — no yard, no store, AMO 958, JadeScape 904
-17:28 1,055 sqft — the showflat 3-bed, JadeScape 1,152
-20:31 1,152 sqft — four rooms along the window, AMO 1,141
-23:58 Before the price list drops
-(chapter times are from v2 — replace with `THOMSON_LAYOUTS_PART1_v3_chapters.txt` when v3 is up)
+9:31 732 sqft — study inside the master, Sky Habitat 1,195
+13:11 775 sqft — one stack only
+14:10 947 sqft — no yard, no store, AMO 958, JadeScape 904
+16:48 1,055 sqft — the showflat 3-bed, JadeScape 1,152
+19:50 1,152 sqft — four rooms along the window, AMO 1,141
+23:09 Before the price list drops
 
 #ThomsonReserve #JadeScape #AMOResidence #SingaporeProperty #NewLaunch #Condo #UpperThomson #BrightHill #FloorPlan #PropertyInvestment #TheREIMethod
 

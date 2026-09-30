@@ -321,3 +321,28 @@ BrowserRunner timeout on the first attempt — rerun the render alone.
 - **Edit**: 17 clip removals exactly as given (his "12:53.5" read as 13:53.5), plus sliver merge in `spans()` (a keep-span under 0.6 s between two cuts is dropped). Master 1686.3 s → 1630.1 s, 79 spans. The "other side of Bright Hill" display went with its clip; "from 54" anchor became "at level 10".
 - caps_check A2 block-start keys updated (the cut removed the old first words).
 - Board: `VIDEO5_working/board_v3/`. YouTube pack: `VIDEO5_YOUTUBE_PART1.md`.
+
+---
+
+## v4 — Edmund's v3 review (30 Sep)
+
+- 732 room-by-room scene re-anchored to "liveable" (10:13): his earlier clip cut had removed "Living Hall 23", so the old anchor matched a later "living hall" and the sizes image came in at 11:04.
+- L4 rows are now cue-driven: make_shots finds the moment he says each figure (`rowT`, tokens '23' '.5' or a rounded "32"), each row slides in on its cue and the current one is highlighted gold. Rows he never says appear on a fast stagger and are never highlighted. Applies to the 1,055 scene too.
+- Caption at 10:14 reads "Living hall 23.5, Master 10.9" (the audio only has ".5" left after his cut).
+- Check stills: `board_v4/_room_sizes_cue_check.png`. No EDL change, master unchanged (1630.1 s).
+
+---
+
+## PART 2 — THE 4 & 5 BEDROOMS (build started 30 Sep 2026)
+
+Concept: `VIDEO5_PART2_CONCEPT.md` (THE CLIMB). Pipeline is a fork of Part 1's, in `E:\REMOTION\work	homson_compare2\`:
+`edl2.py` (8 blocks, 10 retake drops) → `tighten2.py` → `assemble2.py` (master `public_thomson_reserve/compare2/compare2_master.mp4`,
+map `compare2_map.json`) → `make_shots2.py` (91 shots) + `gen_caps2.py` → `run_board2.sh` / `run_mock2.sh` / `run_compare2.sh` (VER=v1, NAME THOMSON_LAYOUTS_PART2).
+Composition `src/ThomsonCompare2.tsx` (navy field, PiP square left, ladder strip right, templates HOOK RING LADDER HEIGHT RULER SWIPE CHEQUE FLICK TXQ),
+board `src/Compare2Board.tsx`, both registered in Root.
+
+Footage: 2a 8:25 · 2b 5:56 · 2c 4:34 → first master 17.7 min before tightening.
+Assets cut this round: TR plans 1,238 / 1,367 / 1,485 / 1,808 (FP PDF p10–13 at 300 dpi, developer pins kept), JadeScape 1,259 / 1,647 / 2,099 (brochure p18/20/21),
+views 1–8 (TF p25–28), DP1/E1 kitchen photos (TF p52–55), 4- and 5-bed sale tables (TF p36/37), distance crops from TF p13, the 1,485 reconfiguration frames.
+
+Not on file (scenes show his words as text until they arrive): JadeScape 1,259 sale printout ($3.2–3.3m), AMO 1,292 plan and sale.
