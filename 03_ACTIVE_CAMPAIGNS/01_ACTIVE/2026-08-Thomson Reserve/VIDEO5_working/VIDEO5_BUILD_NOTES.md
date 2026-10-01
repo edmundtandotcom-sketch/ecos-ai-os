@@ -346,3 +346,22 @@ Assets cut this round: TR plans 1,238 / 1,367 / 1,485 / 1,808 (FP PDF p10–13 a
 views 1–8 (TF p25–28), DP1/E1 kitchen photos (TF p52–55), 4- and 5-bed sale tables (TF p36/37), distance crops from TF p13, the 1,485 reconfiguration frames.
 
 Not on file (scenes show his words as text until they arrive): JadeScape 1,259 sale printout ($3.2–3.3m), AMO 1,292 plan and sale.
+
+---
+
+## PART 2 v2 — Edmund's v1 review (1 Oct)
+
+- **Clip removals**: his ten ranges applied exactly (delivered 1.15x → master → source) in `edl2.py` GAPS; the 10:32 one became
+  new block boundaries (2b now ends after "hidden from sight", 2c starts at "a landscape layout"). Master 969.9 → 945.7 s.
+  The sliver re-transcription (`check_slivers.py` / `check_master.py`) confirmed the audible result; three captions were then
+  re-tokened to match the audio the first-pass Whisper had mis-timed ("350 3-bedrooms", "90 units of 1,238", "So there are no other").
+- **Subtitles**: year, Thomson · developer done · the cost for ducted · two entrances · layout lovers like me, · regular shape.
+- **Captions**: "the size difference"; the four ladder titles read "1,238 / 1,367 / 1,485 / 1,808 sqft size" (no more "rung").
+- **1,238 room highlight**: now bedroom 2, the room beside the master (his "3rd from the right / closest to the master" — flagged).
+- **AMO 5:28**: the Thomson Reserve plan removed; the scene is a wide text card until the AMO 1,292 plan arrives.
+- **Reconfiguration**: redrawn to his sketch (`make_reconfig2.py`): blue = wall the open side; green = a door in that wall hinged
+  on the side opposite the original, and a door through the right wall into the wardrobe. Frames r1/r2/r3, cues "See how" / "voila".
+- Known: at 12:54 the "from level 25" restart is still audible after his cut; left as he cut it.
+
+### PART 2 v3 (1 Oct, later)
+Reconfiguration corrected to Edmund's red-arrow sketch: no door into the wardrobe. DOOR1 = entrance in the new wall (hinge 1262,1812, swings into the corridor); DOOR2 = the original study door swinging inward (hinge 1590,1812). Red arrows drawn on frames 2 and 3. Punchline: "Enclose the study. Enter from the corridor. Voila." Master unchanged (945.7 s).

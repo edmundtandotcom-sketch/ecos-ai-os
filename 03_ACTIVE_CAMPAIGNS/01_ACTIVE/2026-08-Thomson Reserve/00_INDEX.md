@@ -9,8 +9,8 @@ reflect them:
 - `THOMSON_RESERVE_PART2.mp4` (31:46) = Part 2
 - `THOMSON_RESERVE_LAYOUTS.mp4` (16:07) = the Layouts video, posting now
 
-Publishing order: Part 1 -> Part 2 -> Layouts -> **Unit Mix (video 4, in
-production)**.
+Publishing order: Part 1 -> Part 2 -> Layouts -> Unit Mix -> Layout
+Comparison -> **Video 6 (in draft, not yet recorded)**.
 
 Video 4 (Unit Mix) is an **EDIT-ONLY assembly — no new recording**. It is
 cut entirely from existing assets: the 2026-09-16 live webinar recording
@@ -27,8 +27,8 @@ was known that Part 2 had already been filmed and rendered. Treat that
 script as a superseded draft, not as the source of the posted Part 2.
 
 ## Objective
-Full pre-launch review of Thomson Reserve as a YouTube series (4 videos:
-Part 1, Part 2, Layouts, Unit Mix),
+Full pre-launch review of Thomson Reserve as a YouTube series (now 6
+videos: Part 1, Part 2, Layouts, Unit Mix, Layout Comparison, Video 6),
 running Coach Edmund's own **THE REI Method** (Supply → Evidence → Fair
 Price → Walk-Away → Exit) live on the project with his own real money on
 the table ($3.5M–$3.8M budget). This is a standalone public authority
@@ -108,9 +108,9 @@ Coach Edmund Tan.
   belong to `2026-09_Webinar`).
 
 ## Definition of done
-All four videos rendered, Edmund-approved, published to YouTube in order
-(Part 1 -> Part 2 -> Layouts -> Unit Mix), and promoted to Campaign
-Finals.
+All six videos rendered, Edmund-approved, published to YouTube in order
+(Part 1 -> Part 2 -> Layouts -> Unit Mix -> Layout Comparison -> Video 6),
+and promoted to Campaign Finals.
 
 ## Video 5 — THE LAYOUT COMPARISON (in production, added 2026-09-25)
 
@@ -154,6 +154,12 @@ screen — $310,800 more as a cheque today, $325,500 less once adjusted.
 **DELIVERED 30 Sep — v4 (use this one):** `THOMSON_LAYOUTS_PART1_v4.mp4` (23:51) + `THOMSON_LAYOUTS_PART1_v4_chapters.txt`. Fix from the v3 review: the 732 room-by-room sizes scene now starts at 10:13 as he begins reading the sizes, and every size label (732 and 1,055 scenes) slides in on the word he says it, current row highlighted. Same master as v3; verified sync +0.000 s at 8 points, -16.1 LUFS, held-frame proof 0/96. v3 superseded.
 
 **PART 2 DELIVERED 30 Sep — v1:** `THOMSON_LAYOUTS_PART2_v1.mp4` (14:17) + `THOMSON_LAYOUTS_PART2_v1_chapters.txt`. The 4 & 5-bedrooms (1,238 / 1,367 / 1,485 / 1,808 vs JadeScape 1,259 / 1,647 / 2,099, AMO 1,292). Same editing rules as Part 1, different presentation: navy field, speaker square on the left, the CLIMB ladder tracker, 30-floor height strips with the developer's view photos, frontage rulers, swipe comparisons with red zones, cheque bars, kitchen open/closed flicks, the three-move study reconfiguration. Concept: `VIDEO5_PART2_CONCEPT.md`. Verified: sync +0.000 s, -16.0 LUFS, held-frame proof 0/43. Board: `VIDEO5_working/board2_v1/`. Upload pack: `VIDEO5_YOUTUBE_PART2.md`. Missing sources still: JadeScape 1,259 sale printout, AMO 1,292 plan.
+
+**PART 2 DELIVERED 1 Oct — v2 (use this one):** `THOMSON_LAYOUTS_PART2_v2.mp4` (13:56) + `THOMSON_LAYOUTS_PART2_v2_chapters.txt`. Edmund's v1 review applied: ten clip removals, six subtitle fixes, ladder captions renamed to the sizes, the 1,238 room highlight moved beside the master, the AMO scene no longer shows the Thomson Reserve plan, the 1,485 study reconfiguration redrawn to his sketch. Verified sync +0.000 s, -16.0 LUFS, held-frame proof clean. Notes in `VIDEO5_working/VIDEO5_BUILD_NOTES.md` § PART 2 v2. v1 superseded.
+
+**PART 2 DELIVERED 1 Oct — v3 (use this one):** `THOMSON_LAYOUTS_PART2_v3.mp4` (13:56) + `THOMSON_LAYOUTS_PART2_v3_chapters.txt`. Same cut as v2; the 1,485 study reconfiguration redrawn to Edmund's red-arrow sketch: enclose the open side (blue), entrance from the corridor (green, arrow from the left), the study door swings inward (green, arrow pointing in), no opening into the master's wardrobe. Verified sync +0.000 s, -16.0 LUFS. v2 superseded.
+
+**LAYOUTS REELS DELIVERED 1 Oct — 15 reels** in `REELS_LAYOUTS/` (L01–L15, 20–50 s each, 1080x1920 at 1.15x, campaign skin), cut from the Part 1 layouts master with the verified subtitle track; floor-plan scenes ring the zone he is on. Copy pack (hook, caption, hashtags, one CTA block): `REELS_LAYOUTS/LAYOUTS_REELS_COPY.md`. Contact sheet `_contact_sheet.png`.
 
 **To record from — three files:**
 
@@ -202,3 +208,79 @@ assets the composition loads at render time.
 `PART2_cross_check_resources.md` still applies. River Green / Wing Tai are not
 named on camera, and the ballot client's project is never named. Checked: the
 video 5 script names neither.
+
+## Video 6 — THE HONEST WALKTHROUGH (DRAFT v2, updated 2026-10-02)
+
+**Status: DRAFT script written (v2, full 15-point build), pending Edmund
+sign-off — not yet recorded.** Front camera, no new site assets required
+beyond what Video 5 already has.
+
+### The argument
+
+A "controversial" site-walk review, now 15 points across six clusters: the
+original twelve buyer-perspective site-walk concerns (entrance distance,
+side-gate/Grab friction, west sun, stack-to-lift ratio, daily traffic,
+Thomson Plaza weekend parking, the "MRT at your door" and "facilities
+nearby" marketing claims only being true for some blocks) plus three new
+ones surfaced by a second research pass: Bright Hill Temple (Kong Meng San
+Phor Kark See Monastery) proximity as a resale-pool consideration, Cross
+Island Line construction still active at Bright Hill through roughly the
+project's own TOP window, and a corridor-wide 2030/2031 TOP glut distinct
+from the project's own internal 1,268-unit competition (already covered in
+the Likes/Dislike doc — Video 6 explicitly does not repeat that angle, only
+extends it to the wider corridor). Almost every point flips into a
+stack-selection or exit-timing argument rather than a reason to avoid the
+project — positions Edmund's own repeated site visits and market reading as
+the thing a buyer cannot get from a sales deck. Closes on the house "What
+Works / Why I Pause" scorecard (same format as Part 2) and routes to the
+same private show-flat-walkthrough CTA as the rest of the series.
+
+Seeded from Edmund's own 12-point raw list plus live web research run
+2026-10-01, then a second research pass 2026-10-02 (Edmund asked what other
+controversial angles public discussion was raising that hadn't been
+covered yet) against independent review sites, the developer's own
+published project-detail/site-plan pages, Thomson Plaza's parking data,
+LTA's own Cross Island Line and Transit Priority Corridor materials, and
+this campaign's own `VIDEO5_STACK_FACING.md` block-to-block distance map.
+Several points (the Grab/side-gate penalty, the daily lunch/dinner/Sunday
+jam) are **not independently published anywhere** — they are Edmund's own
+site-walk observations and are explicitly labelled as such in-script,
+framed as the video's actual authority/edge rather than softened or
+hidden. The temple-proximity point (new in v2) is written as neutral fact
+plus resale-pool mechanics only — no commentary on belief, no humour — this
+is the single highest-risk section in the script and needs Edmund's own
+review before locking (see cross-check map OPEN ITEM 6).
+
+### Files
+
+- `VIDEO6_SCRIPT_v2.md` — **current draft** (7 scenes, six clusters of
+  findings: Getting in/out, Getting up, Daily friction, Marketing claims
+  only half true, Temple proximity, Construction-and-supply timing; plus
+  the flip, scorecard, CTA). Marked `DRAFT — pending platform verification`
+  and pending Edmund sign-off on the open items below. `VIDEO6_SCRIPT_v1.md`
+  (12-point, four-cluster version) is **superseded** — kept on file, do not
+  record from it.
+- `VIDEO6_cross_check_resources.md` — fact-check map, every figure tagged
+  CONFIRMED / ESTIMATE / OBSERVATION, sourced, now covering all 15 points.
+
+### Open before recording
+
+1. **RESOLVED 2026-10-02** — Edmund corrected the entrance description,
+   tied the Grab friction and the morning/evening jam to Thomson Plaza and
+   current-resident accounts, and confirmed per-stack compass facing IS
+   determinable from the site plan PDFs on file. See
+   `VIDEO6_cross_check_resources.md` rows 1, 2, 3, 6.
+2. Road-expansion claim (#7) correction still stands, no update from
+   Edmund yet.
+3. **NEW — temple proximity distance (#13) unverified.** Script
+   deliberately states no metres figure; needs checking against the actual
+   site plan before recording (same method as `VIDEO5_STACK_FACING.md`).
+4. **NEW — temple proximity tone (#13) needs Edmund's own review**,
+   separate from the rest of the script, before locking — highest-risk
+   section in the video.
+5. **NEW — corridor-wide TOP glut (#15) dates are review-site estimates**,
+   not confirmed primary-source TOP dates; script keeps the claim at "same
+   broad window," tighten only if harder dates are confirmed later.
+6. Subscribe-reminder line still needs writing into Scene 4 on the
+   record-day pass (noted in script's Production Notes, not yet drafted
+   into the scene text).
