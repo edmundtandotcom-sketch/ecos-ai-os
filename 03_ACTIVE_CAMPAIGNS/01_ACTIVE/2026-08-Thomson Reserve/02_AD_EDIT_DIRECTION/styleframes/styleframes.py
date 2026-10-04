@@ -1031,7 +1031,24 @@ def load_photos(folder):
         if th > h: th, tw = h, int(h / 1.25)
         x0, y0 = (w - tw) // 2, max(0, (h - th) // 3)   # bias up: faces sit high
         out.append(im.crop((x0, y0, x0 + tw, y0 + th)).resize((600, 750), Image.LANCZOS))
+        PHOTOS_FULL.append(im)
     PHOTOS = out; print(f"photos: {len(out)} loaded from {folder}")
+
+PHOTOS_FULL = []
+def photo_full(idx, darken=0.0, zoom=1.0, anchor_y=0.45, anchor_x=0.5):
+    """A family photo as a full-frame 9:16 insert (centre-crop, faces kept)."""
+    if idx >= len(PHOTOS_FULL):
+        return broll("deck_p06", cx=2250, darken=darken, zoom=zoom)
+    im = PHOTOS_FULL[idx]; w, h = im.size
+    cw = int(h * W / H)
+    if cw <= w:
+        x0 = int((w - cw) * anchor_x); im = im.crop((x0, 0, x0 + cw, h))
+    else:
+        ch = int(w * H / W); y0 = int((h - ch) * anchor_y); im = im.crop((0, y0, w, y0 + ch))
+    im = grade(im.resize((W, H), Image.LANCZOS))
+    if zoom != 1.0: im = zoom_img(im, zoom, anchor=(0.5, 0.5))
+    if darken: im = Image.blend(im, Image.new("RGB", (W, H), (8, 12, 18)), darken)
+    return im
 
 def next_photo():
     """Rotate through the loaded photos; never the same one twice in a row."""
@@ -1167,6 +1184,72 @@ FRAMES["F20_V1_question_beat_underline"] = F20
 FRAMES["F21_hand_drawn_marks"] = F21
 A11.secs = 14.3
 CLIPS["A11_V1_hook_human_cut_14s"] = A11
+
+
+def F22():  # B1 "preview starts 17 October" - torn split with the showflat-model photo on top
+    top = photo_full(2, zoom=1.04, anchor_y=0.35)
+    bot = plate_z(1.0)
+    seam_y = int(H * 0.52); m = tear_mask(seam_y)
+    out = Image.composite(top, bot.transform((W, H), Image.AFFINE, (1, 0, 0, 0, 1, -int(H * 0.16)), Image.BICUBIC), m)
+    layer = new_layer(); torn_edge(layer, seam_y); stand_in_tag(layer)
+    eyebrow(layer, "THOMSON RESERVE · PREVIEW", y_frac=0.13, size=34, bg=GOLD, fg=INK)
+    caption(layer, ["PREVIEW", "·", "17", "OCTOBER"], 3, emo="1f4c5", y_frac=0.74, size=80)
+    return compose(out, layer)
+
+def F23():  # V3 / Hook 4 "only three units left" - the distribution chart photo, hand circle on the sold block
+    base = photo_full(3, darken=0.18, zoom=1.0, anchor_y=0.40)
+    layer = new_layer()
+    eyebrow(layer, "“ONLY THREE UNITS LEFT”", y_frac=0.13, size=38, bg=RED, fg=WHITE)
+    # the chart sits mid-frame in this photo; circle its right-hand sold cluster
+    hand_circle(layer, (int(W * 0.38), int(H * 0.565), int(W * 0.73), int(H * 0.685)), 1.0, color=RED, width=10)
+    caption(layer, ["I", "DON'T", "CARE"], 1, y_frac=0.76, size=84, box_color=RED)
+    caption(layer, ["HOW", "FAST", "THEY", "MOVE"], 1, y_frac=0.82, size=64)
+    return compose(base, layer)
+
+def F24():  # B31 "a forever million dollar view" - pool photo, slow pull, one caption
+    base = photo_full(4, darken=0.10, zoom=1.0, anchor_y=0.30, anchor_x=1.0)
+    layer = new_layer()
+    scrim(layer, int(H * 0.60), int(H * 0.95), alpha=150)
+    caption(layer, ["A", "FOREVER", "VIEW"], 1, emo="1f333", y_frac=0.76)
+    return compose(base, layer)
+
+FRAMES["F22_V1_preview_photo_split"] = F22
+FRAMES["F23_V3_chart_photo_circle"] = F23
+FRAMES["F24_V1_forever_view_photo"] = F24
+
+
+def dev_photo_flick(layer, t=1.0, idxs=(1, 2, 4), captions=("", "", ""), cx_frac=0.5, cy_frac=0.42, w=520):
+    """Three prints flick in one after another (0.33 of t each), each landing at a
+    different tilt, stacking like photos dropped on a table. For the "move her
+    forward" / "make the next move count" lines - the travel photos go here."""
+    tilts = (-9, 7, -3); offs = ((-190, -150), (190, -40), (0, 130))   # spread so all three stay readable
+    for k, idx in enumerate(idxs):
+        tk = min(1, max(0, (t * 3 - k)))
+        if tk <= 0: continue
+        ph = PHOTOS[idx % len(PHOTOS)] if PHOTOS else None
+        dev_photo_card(layer, ease_out(tk, 4), photo=ph, caption_text=captions[k] if k < len(captions) else "",
+                       x_frac=cx_frac + offs[k][0] / W, y_frac=cy_frac + offs[k][1] / H, rot=tilts[k], w=w)
+
+def F25():  # photo flick at rest, over the speaker - the "what the property is for" beat
+    base = plate_z(1.0)
+    layer = new_layer(); stand_in_tag(layer)
+    layer.alpha_composite(Image.new("RGBA", (W, H), (0, 0, 0, 90)))
+    dev_photo_flick(layer, 1.0, idxs=(1, 2, 4), captions=("", "", ""), cy_frac=0.40, w=400)
+    caption(layer, ["MAKE", "THE", "NEXT", "MOVE"], 3, y_frac=0.76, size=76)
+    caption(layer, ["COUNT."], 0, y_frac=0.82, size=76)
+    return compose(base, layer)
+
+def A12(t, i):  # the flick in motion, 3s
+    base = plate_z(1.0 + 0.03 * t)
+    layer = new_layer()
+    layer.alpha_composite(Image.new("RGBA", (W, H), (0, 0, 0, int(90 * min(1, t * 4)))))
+    dev_photo_flick(layer, min(1, t * 1.25), idxs=(1, 2, 4), cy_frac=0.40, w=400)
+    if t > 0.55: caption_anim(layer, ["MAKE", "THE", "NEXT", "MOVE"], 3, "wordpop", min(1, (t - 0.55) / 0.25), y_frac=0.76, size=76)
+    if t > 0.82: caption_anim(layer, ["COUNT."], 0, "flip", min(1, (t - 0.82) / 0.15), y_frac=0.82, size=76)
+    return compose(base, layer)
+
+FRAMES["F25_photo_flick"] = F25
+CLIPS["A12_photo_flick"] = A12
 
 if __name__ == "__main__":
     args = sys.argv[1:]

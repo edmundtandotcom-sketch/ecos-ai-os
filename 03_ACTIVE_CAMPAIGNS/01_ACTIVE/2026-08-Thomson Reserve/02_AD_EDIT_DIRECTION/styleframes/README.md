@@ -4,9 +4,9 @@ What is here:
 
 | File | What |
 |---|---|
-| `styleframes.py` | Renders 21 styleframes (F01–F21) and 11 motion previews (A1–A11; A11 is the 14.3s hand-timed hook — the reference for "edited like a human"), bold palette (black / yellow / red / orange) at 1080×1920. Every device is a function of `t∈[0,1]`, so each one ports to `E:\REMOTION\ads\devices.py` as a frame generator. |
+| `styleframes.py` | Renders 25 styleframes (F01–F25) and 12 motion previews (A1–A12; A11 is the 14.3s hand-timed hook — the reference for "edited like a human"), bold palette (black / yellow / red / orange) at 1080×1920. Every device is a function of `t∈[0,1]`, so each one ports to `E:\REMOTION\ads\devices.py` as a frame generator. |
 | `prep_assets.py` | One-time: downloads the typefaces (OFL) and Twemoji glyphs, and renders the deck/ebook pages used as b-roll from `../Raw Assets/`. |
-| `contact_sheet.jpg` | The 21 frames at thumbnail size, as inspected on 2026-10-04 (third pass: bold palette, after fixes). |
+| `contact_sheet.jpg` | 20 of the 25 frames at thumbnail size (the five that carry family photos are left out of the repo on purpose), as inspected on 2026-10-04. |
 
 Not committed (bulk media, constitution §9.7): the full-res PNGs, the MP4 previews, fonts, emoji, rendered pages. Regenerate:
 
@@ -26,7 +26,7 @@ Outputs land in `out/` and `out/anim/`.
 python styleframes.py --photos "C:\Users\Admin\Pictures\Family & Daughter" F18_V1_family_photo_card A10_family_photo_drop A11_V1_hook_human_cut_14s
 ```
 
-`--photos` loads every jpg/png in the folder (EXIF-rotated, centre-cropped 4:5, faces biased up). Filename order decides which photo lands first — rename the hook photo `01_...jpg`. The photo card rotates through the folder and never repeats inside one ad.
+`--photos` loads every jpg/png in the folder (EXIF-rotated, centre-cropped 4:5 for prints, full frame kept for inserts). Filename order is the assignment table in the EDB §1: `01_` the balcony hook photo, `02_` facade, `03_` showflat model, `04_` the distribution chart, `05_` pool, then the travel photos for the flick. The photo card never repeats a photo inside one ad.
 
 **Real face instead of the silhouette.** Grab one frame from the take and pass it as the plate; every placement is then checked against the actual face:
 

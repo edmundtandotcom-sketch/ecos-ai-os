@@ -27,7 +27,19 @@ Styleframes: `styleframes/` — 21 stills F01–F21 and 11 motion previews A1–
 | Deck to ICs (34 pp) · Ebook (18 pp) | in `Raw Assets/` | — | Project imagery and facts. Pages used as b-roll: deck 4 (catchment map), 6 (towers aerial), 10 (grand arrival night), 11 (lap pool + tower), 12 (PES view), 16 (leisure pool), 17 (canopy pool aerial), 18 (grand lawn). Pages used for *facts only*, never shown: ebook 5 (unit mix 1,066/84%), 6–7 (TEL), 9 (Ai Tong), 13 (land cost $1,178 psf) |
 
 **Added 2026-10-04 (Edmund):**
-- **Family & Daughter photos** — `C:\Users\Admin\Pictures\Family & Daughter` (desktop only; confirmed 2026-10-04 that nothing from it is in Drive, so the cloud never sees them — `styleframes.py --photos <folder>` loads them on the desktop, see `styleframes/README.md`). Used by the new **photo_card** device **[F18, A10]**: a tilted print that drops in on "my daughter" lines, right column, above the chin. Pick 3–4 photos per ad (never the same one twice); one with the Parc Clematis block in the background if it exists replaces the towers stand-in at H3. Photos of family stay out of this repo and out of Drive folders shared with the agency.
+- **Family & Daughter photos** — `C:\Users\Admin\Pictures\Family & Daughter` on the desktop; nine were shared into the cloud session on 2026-10-04 (five as files, four seen in chat only). They never enter this repo or any shared Drive folder. Assignment for V1 (filename prefix = order the generator uses):
+
+  | # | Photo | Where it lands | Why |
+  |---|---|---|---|
+  | 01 | Balcony selfie, three of you, landed estate below (the **unedited** original if that is the Parc Clematis balcony — **confirm**) | Hook polaroid on "already benefited" **[F18, A10, A11 @1.5s]** | The real home, real sky; the edited-sky version reads composited |
+  | 02 | Outside a condo facade, three of you | Receipt-card beat alternative, or the H3 Parc Clematis split | — |
+  | 03 | Showflat scale model, three of you | Torn split on "preview starts 17 October" **[F22]** | The showflat is the subject of the line |
+  | 04 | Showflat with the unit-distribution chart | V3 / Hook 4 "only three units left", red hand-circle on the sold cluster **[F23]** | The ballot board, literally |
+  | 05 | Poolside at a condo, three of you | "A forever million dollar view" **[F24]**, slow pull | The reward beat, warm |
+  | 06 | Balcony selfie, edited sky | spare (same framing as 01) | — |
+  | 07 | Changi T3 selfie · 08 Zermatt wreath · 09 Colmar bridge | **photo_flick** on "make the next move count" / "move her forward" lines in Hooks 7, 9, 10, 12, 15 **[F25, A12]** — *not* in V1, whose forward line is the hold | "Property was never the goal. Options were." — the travel photos are what the ladder buys |
+
+  Rule: one photo per beat, never the same photo twice in an ad, and the daughter is in every photo used (it is her ad). Used by the new **photo_card** device **[F18, A10]**: a tilted print that drops in on "my daughter" lines, right column, above the chin. Pick 3–4 photos per ad (never the same one twice); one with the Parc Clematis block in the background if it exists replaces the towers stand-in at H3. Photos of family stay out of this repo and out of Drive folders shared with the agency.
 - **Project footage from online sources** — fetch on the desktop, developer/official material only (the agency is marketing the project, so the official flythrough and brand film are the clean sources; third-party drone videos and other agents' reviews are not). Candidates found 2026-10-04: the official Thomson Reserve site lists a *Project Flythrough Video* (3D renders, facilities, views) and the *Close to Nature* brand film (Sep 2026) — [thomsonreservescondo.sg](https://thomsonreservescondo.sg/), [the-thomsonreserve.sg](https://the-thomsonreserve.sg/); for Parc Clematis, the official site [parcclematiscondo.com.sg](https://www.parcclematiscondo.com.sg/home/) and the SRX listing's drone view [srx.com.sg](https://www.srx.com.sg/condo/parc-clematis-84642/condo-map). Verify the source is the developer's before it enters the allowlist; log each clip in `SG_BROLL` with its origin.
 
 **Not in the folder — needed or flagged:**
@@ -238,7 +250,9 @@ A (serif question + gold button, ink over render) · B (black card, Archivo Blac
 | **two_three_split**, **buyer_pool_q** | new | `dev_two_three` | equal clusters, "?" not numbers |
 | **checklist** | new | `dev_checklist` | white pills, tick after the line is spoken, emoji right |
 | **end_card A** | new | `dev_endcard` | 3s, no logo, button overshoot at 0.3–0.8s |
-| **photo_card** | new | `dev_photo_card` | tilted print drops in from above (−520px, ease-out⁴), right column at 0.66W / 0.30H, rotation −7°; never the same photo twice |
+| **photo_card** | new | `dev_photo_card` | tilted print drops in from above (−520px, ease-out⁴), right column at 0.80W / 0.31H, rotation −7°; never the same photo twice |
+| **photo_flick** | new | `dev_photo_flick` | three prints land one after another at −9° / +6° / −4°, stacked; over a 35% darkened plate; the travel photos |
+| **photo_full** | new | `photo_full` | a family photo as a full-frame or torn-split insert; `anchor_x` keeps the people in frame |
 | **caption arrivals** | new | `caption_anim` | six styles; see §2.1 |
 | exit_funnel, plan_abc, strike_through, ten_year_rail | **not yet drawn** — spec only | — | draw as PIL devices in the same style before V2/V3/V6 render |
 
@@ -316,7 +330,11 @@ Deck pages are referenced by name; `styleframes/prep_assets.py` renders them fro
 | F19 | Caption arrival bank: six styles at mid-arrival | all |
 | F20 | The question beat at 13.2s: static caption, hand-drawn underline, face alone | V1 |
 | F21 | Hand-drawn marks (circle, underline) over the price-gap card | all |
-| A1–A10 | hook punch + caption pop · whip to aerial · receipt roll-up · dot-grid fill · bars + flash · flash + slam · VS wipe · end-card build · **caption arrivals (six styles in sequence)** · **photo drop-in** · **A11: the whole hook, 14.3s, hand-timed — the reference for "edited like a human"** | motion timing for the composer |
+| F22 | Torn split with the showflat-model photo on "preview · 17 October" | V1 |
+| F23 | The distribution-chart photo with a red hand-circle on the sold cluster | V3 / Hook 4 |
+| F24 | Pool photo under "a forever view" | V1 |
+| F25 | Three-photo flick on "make the next move count" | Hooks 7/9/10/12/15 |
+| A1–A10 | hook punch + caption pop · whip to aerial · receipt roll-up · dot-grid fill · bars + flash · flash + slam · VS wipe · end-card build · **caption arrivals (six styles in sequence)** · **photo drop-in** · **A11: the whole hook, 14.3s, hand-timed — the reference for "edited like a human"** · **A12 photo flick** | motion timing for the composer |
 
 ## 8. QC gate (run per ad, per aspect)
 
@@ -339,5 +357,5 @@ Ruled: **V1 selected** · bold palette (done, §2.6) · Body 3 parked (V3 on Bod
 
 Still open:
 
-1. **Which family photos** go in (3–4 per ad), and whether any shows Parc Clematis.
+1. **Confirm** the balcony selfie is the Parc Clematis balcony (it anchors the hook), and re-send the four chat-only photos (Changi, balcony original, Zermatt, Colmar) as files — or they simply load from the desktop folder.
 2. **Style Bible** — approve v1.1 §0 so the caption and palette rulings stop being per-brief notes.
