@@ -20,7 +20,17 @@ Single entry point for the actual production step. The pipeline has three tiers 
 1. Identify which tier the task actually needs — don't assume tier 3 just because a prior campaign used it; a simple reel cut is tier 2 only.
 2. **Tiers 1 and 3, cloud/non-desktop session:** produce whatever upstream artifact is possible (script, shot list, cut list, caption copy) and stop there. Tell the user explicitly that the render step needs the desktop machine — do not report a render as done when it wasn't performed.
 3. **Tier 2, either environment:** produce the cut list and caption copy; the user runs the actual export themselves in the browser app.
-4. **Tier 3, desktop, pipeline present:** run the generator against the locked script, then the campaign's verify gate (pattern: `verify_amberwood.py` — a named checklist gate per production, e.g. Amberwood's 10-point check) before marking a version deliverable. Version and log the render (vN naming — never overwrite a previously delivered version silently), update the campaign's `00_INDEX.md` deliverables and status in the same pass.
+4. **Tier 3, desktop, pipeline present:** use the SHARED library in `E:\REMOTION\work\lib\` — do not copy a previous campaign's scripts. Before it existed there were 37 near-duplicate render scripts across Amberwood, Lucerne and Serra, only three of which verified their output and only three of which resumed, and never the same three. Consolidated 2026-08-29; every rule in it is a scar, and the reasoning is in `EDITING_PLAYBOOK.md` CH.2b.
+
+   | Step | Use |
+   |---|---|
+   | Choose the master angle | `prep_lib.pick_master` — by MEASURED detail, never by resolution. The OBS program capture is a low-bitrate re-encode; Serra's "1080p" file held a quarter of the detail of the 720p camera feed beside it. |
+   | Grade | `prep_lib.measure_grade` / `compare_grade` — "washed out" is a measurable claim, and a natural grade holds face exposure while moving colour. |
+   | Build the timeline | `pipeline_checks.collision_pass`, `asset_gate`, `anchor_report` — these fail loudly at build time. A missing asset kills a render outright; an unfound anchor silently drops a display. |
+   | Render | `render_campaign.ps1` via `launch.ps1` — resumable ffprobe-verified parts, per-campaign bundle dir, memory-aware worker sizing. |
+   | Check on it | `status.sh <campaign>` — reports frame PROGRESS. A process killed by the OS writes no success and no failure marker, so a monitor waiting for either reads a dead render as a healthy one. |
+
+   Then run the campaign's verify gate (pattern: `verify_amberwood.py` — a named checklist gate per production) before marking a version deliverable. Version and log the render (vN naming — never overwrite a previously delivered version silently), update the campaign's `00_INDEX.md` deliverables and status in the same pass.
 
 ## If full cloud parity for tier 3 is wanted
 

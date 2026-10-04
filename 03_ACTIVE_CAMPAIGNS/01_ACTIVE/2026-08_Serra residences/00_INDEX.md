@@ -1,8 +1,10 @@
 # Campaign Index — The Serra Residences (YouTube video #5, launch review)
 
 Date: 2026-08-24
-Status: BUILD — look LOCKED (see Locked decisions); full-script build in progress
-Deadline: publish before Preview day (Fri 19 Sep 2026); booking day 3 Oct
+Status: REVISION — v2 rendering 2026-08-29 (Edmund's full v1 review applied)
+Deadline: publish before Preview day. DATES REVISED (Edmund, 2026-08-29):
+preview 2 Oct, launch day 17 Oct — supersedes the 19 Sep / 3 Oct dates
+spoken in the recording, which the on-screen timeline now corrects.
 
 ## Objective
 Full pre-launch review of The Serra Residences (Far East Organization, D11
@@ -102,7 +104,36 @@ types → risks (ABSD-capped foreign pool · 2.5% yield) → scorecard → CTA.
   corrected re-render: the "6 YEARS" slam repeated the spoken line instead
   of adding to it, and "per square foot" printed long in the subtitles
   instead of "psf".
-- Full 16:9 long-form after the look + speed decision
+- **DELIVERED** `SERRA_DRAFT_v1_1.15x.mp4` — 21:00, full script, all 8 takes.
+  366 clips · 133 displays · 345 subtitle cues. Review against
+  `subtitles_review.txt` (indexed, timecodes are on the 1.15x file).
+- **IN RENDER** `SERRA_DRAFT_v2_1.15x.mp4` — Edmund's full review of v1
+  applied (2026-08-29). 363 clips · 155 displays · 344 subtitle cues,
+  ~20:24 at 1.15x. What changed:
+  - **Layout is now solved, not nominated.** `work/lib/layout_gate.py` places
+    the head bubble geometrically and fails the build on any overlap. The
+    section chip no longer sits under the channel logo; plate copy no longer
+    runs under the subtitle bar; the QR no longer covers the CTA card.
+  - **The Serra QR was Amberwood's**, byte for byte. Regenerated and
+    decode-verified at its 210px display size.
+  - **Nine bar/line charts added** for the gains and rentals that were
+    caption-only — Pavilion 11, The Ansley, Zedge, 8 Bassein and Neu, plus
+    a real x/y psf chart for Neu across the period.
+  - **Three-ring OCR/RCR/CCR diagram** with the prices counting up.
+  - **Six of Edmund's assets placed**: the ProTrend gap chart (held, head
+    pinned top-right), the Peck Hay and Vela Bay articles, the GFA
+    harmonisation diagram, the Neu floor plan under its compare column, and
+    the Neu transaction table with the price animating over it.
+  - **Nine subtitle corrections** applied verbatim ("Neu @ Novena" throughout,
+    "within 1KM", "being in CCR", "harmonized").
+  - **Nine clip removals** converted from delivered timecodes to source with
+    `work/lib/final_to_src.py`, never by eye.
+  - **Launch dates corrected on the display** — preview 2 Oct, launch day
+    17 Oct, flagged "UPDATED · LATEST DATES" over what the speaker says.
+  - **Subscribe/CTA cadence** raised from 3 prompts to 19 across the runtime.
+  - Outstanding: a tennis-court stock image for 15:28. Nothing suitable
+    exists in the deck or the asset library and I will not pull an
+    unlicensed web image into a client video — Edmund to supply one.
 - Reels batch after long-form approval
 - Upload kit on request
 

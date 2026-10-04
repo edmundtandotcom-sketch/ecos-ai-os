@@ -1,0 +1,673 @@
+#!/usr/bin/env python3
+"""
+Ad composer - builds a full ad from a VARIATION spec + the device library.
+
+Nothing about an ad is hardcoded here. A variation names its content blocks,
+its device beats, its b-roll and its caption/transition style; the composer
+renders it. Adding a device to E:\\REMOTION\\ads\\devices.py makes it available
+to every variation immediately, and two variations that draw different devices
+in a different order produce genuinely different ads from the same take.
+
+    python render_ad_v4.py --variation A
+    python render_ad_v4.py --all
+
+Foundation docs: E:\\REMOTION\\ADS_PLAYBOOK.md, E:\\REMOTION\\ads\\DEVICE_LIBRARY.md
+"""
+import argparse
+import json
+import math
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, r"E:\REMOTION\ads")
+import devices as DV                                            # noqa: E402
+
+HERE = Path(__file__).parent
+OUT = HERE / "out"
+BUILD = OUT / "v4"
+# SINGAPORE ONLY. Every insert has to read as Singapore/Asian - skyline,
+# HDB, local faces, local streets. The Mixkit fetch brought back US dollars,
+# European trams and Western faces; all of it is quarantined in
+# broll/_rejected_non_sg and must never be used in an ad.
+BROLL_DIRS = [Path(r"E:\REMOTION\public\broll\stock")]
+SG_BROLL = ["sg_aerial.mp4", "sg_skyline2.mp4", "hdb_apartments.mp4",
+            "heartland_roofs.mp4", "cityscape.mp4", "downtown.mp4",
+            "skyline_dusk.mp4", "mbs.mp4", "couple_talk.mp4",
+            "family_dinner.mp4", "family_kitchen.mp4", "senior_couple.mp4",
+            "senior_gate.mp4", "family_sofa.mp4", "family_dance.mp4"]
+AUDIO = Path(r"E:\REMOTION\public\audio")
+
+W, H, FPS = 1080, 1920, 30
+SPEED = 1.15
+LOUDNORM_I = -16
+MUSIC_VOL = 0.09
+PROGRESS_BAR = 12
+
+FACE_CX, EYE_Y = 663, 238
+ZOOMS = [1.00, 1.10, 1.20]
+PUSH, PUNCH_Z, SLAM_Z = 0.05, 0.13, 0.20
+SHOT_MAX, SHOT_TARGET = 6.0, 4.0
+
+CAP_FONT = "Impact"
+CAP_SIZE = 84
+CAP_Y, PUNCH_Y, HOOK_Y = 0.74, 0.72, 0.70
+CAP_MAX_WORDS = 3
+ACCENT = "&H0035FFDF&"
+ACCENT_SCALE = 1.34
+GRADE = "eq=contrast=1.06:brightness=0.012:saturation=1.07,unsharp=5:5:0.35:5:5:0.0"
+
+GLUE = [(("S", "&P"), "S&P")]
+FIXES = {"compiles": "compounds", "compile": "compound"}
+
+
+# ============================================================== VARIATIONS
+# Each is a different ad. Same take, different argument order, different
+# devices, different caption system - so no two look alike.
+
+COMMON_BLOCKS = {
+    "hook":  (0.00, 13.60),
+    "cost":  (13.60, 24.05),
+    "swap":  (24.05, 39.60),
+    "bench": (39.60, 46.60),
+    "proof": (76.30, 86.60),
+}
+
+VARIATIONS = {
+    # ONE ad, modelled on the reference edit of this same script:
+    # fast captions with a single orange-boxed word + emoji, Singapore b-roll
+    # inserted full-frame or as a torn-edge top split. No two inserts repeat.
+    "TEST": dict(
+        blocks=["hook", "cost", "swap", "bench", "proof"],
+        rotation=["narr", "punch", "narr"],       # CTA captions only
+        beats=[
+            dict(at="when you buy", dev=None, secs=3.0, lead=-0.2,
+                 backdrop="hdb_apartments.mp4", split=True),
+            dict(at="you take a 25", dev="cost_stack", secs=3.4, lead=-0.2,
+                 backdrop="heartland_roofs.mp4",
+                 params=dict(items=["$500K-$1M CASH + CPF", "25-YEAR MORTGAGE",
+                                    "STAMP DUTY + INTEREST", "4 YEARS OF WAITING"],
+                             total_label="Before you see a cent")),
+            dict(at="that same money", dev=None, secs=2.6, lead=-0.2,
+                 backdrop="cityscape.mp4", split=True),
+            dict(at="no mortgage", dev="xlist", secs=3.2, lead=-0.2,
+                 backdrop="sg_skyline2.mp4",
+                 params=dict(title="The S&P asks for none of it",
+                             items=["NO MORTGAGE", "NO STAMP DUTY", "NO 4-YEAR WAIT"])),
+            dict(at="so the benchmark", dev="punch_slam", secs=2.6, lead=-0.2,
+                 params=dict(text="THE BENCHMARK IS BEATING THE S&P 500",
+                             accent_word="S&P")),
+            dict(at="another returned 12", dev=None, secs=2.4, lead=-0.2,
+                 backdrop="couple_talk.mp4", split=True),
+            dict(at="returned 22", dev="stat_pop", secs=3.0, lead=-0.3,
+                 backdrop="downtown.mp4",
+                 params=dict(value=22.9, label="a year on capital committed",
+                             sub="my own new launch")),
+        ],
+    ),
+}
+
+
+# ============================================================== helpers
+
+def run(cmd):
+    sys.stdout.flush()
+    subprocess.run(cmd, check=True)
+
+
+def ffprobe(path, entries="format=duration"):
+    return json.loads(subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", entries, "-of", "json", str(path)],
+        capture_output=True, text=True, check=True).stdout)
+
+
+def dur_of(p):
+    return float(ffprobe(p)["format"]["duration"])
+
+
+def broll(name):
+    for d in BROLL_DIRS:
+        p = d / name
+        if p.exists():
+            return p
+    raise FileNotFoundError(f"b-roll not found: {name}")
+
+
+def norm(s):
+    return re.sub(r"[^a-z0-9]", "", s.lower())
+
+
+def fix_tokens(words):
+    out, i = [], 0
+    while i < len(words):
+        hit = False
+        for pair, rep in GLUE:
+            n = len(pair)
+            if tuple(w["w"] for w in words[i:i + n]) == pair:
+                out.append(dict(w=rep, s=words[i]["s"], e=words[i + n - 1]["e"]))
+                i += n
+                hit = True
+                break
+        if hit:
+            continue
+        w = dict(words[i])
+        key = w["w"].strip(".,?!").lower()
+        if key in FIXES:
+            w["w"] = w["w"].lower().replace(key, FIXES[key])
+        out.append(w)
+        i += 1
+    return out
+
+
+def load_words(name):
+    return fix_tokens(json.loads(
+        (OUT / f"words_{name}_tight.json").read_text(encoding="utf-8")))
+
+
+def find_phrase(words, phrase, after=0):
+    flat, owner = [], []
+    for i, w in enumerate(words):
+        t = norm(w["w"])
+        flat.append(t)
+        owner.extend([i] * len(t))
+    flat = "".join(flat)
+    lo = 0
+    while lo < len(owner) and owner[lo] < after:
+        lo += 1
+    pos = flat.find(norm(phrase), lo)
+    return (words[owner[pos]]["s"], owner[pos]) if pos >= 0 else None
+
+
+def cue_split(words):
+    TRAIL = {"a", "an", "the", "and", "or", "but", "to", "of", "for", "in", "on",
+             "at", "is", "are", "was", "your", "my", "i", "we", "you", "it",
+             "that", "this", "so", "if", "as", "with"}
+    cues, cur = [], []
+    for i, w in enumerate(words):
+        cur.append(w)
+        nxt = words[i + 1] if i + 1 < len(words) else None
+        gap = (nxt["s"] - w["e"]) if nxt else 99
+        joined = " ".join(x["w"] for x in cur)
+        hard = w["w"].endswith((".", "?", "!"))
+        over = len(cur) > CAP_MAX_WORDS or len(joined) >= 20
+        if hard or gap > 0.26 or len(cur) >= CAP_MAX_WORDS or len(joined) >= 17:
+            if not hard and nxt is not None and len(cur) < 2:
+                continue
+            if not hard and nxt is not None and not over and norm(w["w"]) in TRAIL:
+                continue
+            cues.append(cur)
+            cur = []
+    if cur:
+        cues.append(cur)
+    return cues
+
+
+def crop_for(z):
+    w = int(round(W / H * 720 / z)) & ~1
+    h = int(round(720 / z)) & ~1
+    x = max(0, min(1280 - w, int(round(FACE_CX - w / 2))))
+    y = max(0, min(720 - h, int(round(EYE_Y - 0.30 * h))))
+    return w, h, x, y
+
+
+def motion(nframes, kind="push"):
+    n = max(1, nframes - 1)
+    if kind == "punch":
+        z = f"1+{PUNCH_Z}*min(1,on/{max(1,int(0.18*FPS))})"
+    elif kind in ("slam", "whip"):
+        z = f"1+{SLAM_Z}*(1-min(1,on/{max(1,int(0.28*FPS))}))"
+    else:
+        z = f"1+{PUSH}*on/{n}"
+    chain = (f"scale={W*2}:{H*2}:flags=lanczos,"
+             f"zoompan=z='{z}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':"
+             f"d=1:s={W}x{H}:fps={FPS},setsar=1")
+    if kind == "whip":
+        # two smeared frames on entry - reads as a whip rather than a plain cut
+        chain += f",boxblur=22:1:enable='lt(t,{2.5/FPS:.3f})'"
+    return chain
+
+
+# ============================================================== shot list
+
+def build_shots(spec, words, work):
+    """Content blocks -> cues -> shots, with device windows marked."""
+    # resolve device beats to time windows on the tightened timeline
+    # Search the whole transcript per beat, not from a moving cursor: a
+    # variation may reorder the blocks, so a later beat can legitimately anchor
+    # to a phrase that occurs earlier in the take. Anchors are unique phrases.
+    beats, used_broll = [], set()
+    for b in spec["beats"]:
+        hit = find_phrase(words, b["at"], 0)
+        if not hit:
+            print(f"  ! device anchor missed: '{b['at']}' ({b['dev']})")
+            continue
+        # Never show the same insert twice in one ad - repeats were the most
+        # obvious tell that this was machine-assembled.
+        bd = b.get("backdrop")
+        if bd:
+            if bd in used_broll:
+                alt = next((x for x in SG_BROLL if x not in used_broll), None)
+                if alt:
+                    print(f"  ! {bd} already used - swapping to {alt}")
+                    b = {**b, "backdrop": alt}
+                    bd = alt
+            used_broll.add(bd)
+        t0 = max(0.0, hit[0] + b.get("lead", 0.0))
+        beats.append({**b, "t0": t0, "t1": t0 + b["secs"]})
+
+    shots = []
+    for name in spec["blocks"]:
+        b0, b1 = COMMON_BLOCKS[name]
+        inner = [w for w in words if w["s"] >= b0 - 0.01 and w["e"] <= b1 + 0.30]
+        if not inner:
+            continue
+        for cue in cue_split(inner):
+            t0 = max(b0, cue[0]["s"] - 0.10)
+            t1 = min(b1, cue[-1]["e"] + 0.12)
+            if t1 - t0 < 0.30:
+                continue
+            dev = next((x for x in beats if x["t0"] - 0.30 < t0 < x["t1"]), None)
+            shots.append(dict(block=name, t0=round(t0, 3), t1=round(t1, 3),
+                              text=" ".join(x["w"] for x in cue),
+                              cue=[dict(w=x["w"], s=x["s"], e=x["e"]) for x in cue],
+                              dev=dev["dev"] if dev else None,
+                              dev_id=beats.index(dev) if dev else None,
+                              backdrop=(dev or {}).get("backdrop"),
+                              split=(dev or {}).get("split", False),
+                              backdrops=(dev or {}).get("backdrops")))
+
+    prev, seen = -1, set()
+    for i, s in enumerate(shots):
+        z = (prev + 1 + (i % 2)) % len(ZOOMS)
+        s["zoom"] = z
+        prev = z
+        if s["block"] not in seen:
+            seen.add(s["block"])
+            s["motion"] = "whip"
+            s["segment_start"] = True
+        elif re.search(r"[\d$%]", s["text"]):
+            s["motion"] = "punch"
+        else:
+            s["motion"] = "push"
+    return shots, beats
+
+
+def render_shots(shots, body, work):
+    sd = work / "shots"
+    sd.mkdir(parents=True, exist_ok=True)
+    for f in sd.glob("*.mp4"):
+        f.unlink()
+    parts, tl = [], 0.0
+    for i, s in enumerate(shots):
+        d = s["t1"] - s["t0"]
+        nf = max(2, int(round(d * FPS)))
+        p = sd / f"s{i:03d}.mp4"
+        if s.get("backdrops"):
+            # split screen: two sources stacked, seam and labels drawn by the
+            # split_labels device on top
+            top, bot = s["backdrops"]
+            half = H // 2
+            vf = (f"[0:v]scale={W}:{half}:force_original_aspect_ratio=increase,"
+                  f"crop={W}:{half},{GRADE}[t];"
+                  f"[1:v]scale={W}:{half}:force_original_aspect_ratio=increase,"
+                  f"crop={W}:{half},{GRADE}[b];[t][b]vstack=inputs=2,"
+                  f"fps={FPS},setsar=1[v]")
+            run(["ffmpeg", "-y", "-loglevel", "error",
+                 "-stream_loop", "-1", "-t", f"{d:.3f}", "-i", str(broll(top)),
+                 "-stream_loop", "-1", "-t", f"{d:.3f}", "-i", str(broll(bot)),
+                 "-ss", f"{s['t0']:.3f}", "-to", f"{s['t1']:.3f}", "-i", str(body),
+                 "-filter_complex", vf, "-map", "[v]", "-map", "2:a",
+                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                 "-pix_fmt", "yuv420p", "-r", str(FPS),
+                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+                 "-video_track_timescale", "90000", str(p)])
+        elif s["backdrop"] and s.get("split"):
+            # b-roll fills the top, speaker stays below, torn edge between
+            top_h = int(H * 0.52) & ~1
+            bot_h = H - top_h
+            w, h, x, y = crop_for(ZOOMS[0])
+            vf = (f"[0:v]scale={W}:{top_h}:force_original_aspect_ratio=increase,"
+                  f"crop={W}:{top_h},{GRADE}[t];"
+                  f"[1:v]crop={w}:{h}:{x}:{y},scale={W}:{H}:flags=lanczos,"
+                  f"crop={W}:{bot_h}:0:{int(H*0.18)},{GRADE}[b];"
+                  f"[t][b]vstack=inputs=2,fps={FPS},setsar=1[v]")
+            run(["ffmpeg", "-y", "-loglevel", "error",
+                 "-stream_loop", "-1", "-t", f"{d:.3f}", "-i", str(broll(s["backdrop"])),
+                 "-ss", f"{s['t0']:.3f}", "-to", f"{s['t1']:.3f}", "-i", str(body),
+                 "-filter_complex", vf, "-map", "[v]", "-map", "1:a",
+                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                 "-pix_fmt", "yuv420p", "-r", str(FPS),
+                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+                 "-video_track_timescale", "90000", str(p)])
+        elif s["backdrop"]:
+            # a backdrop device owns the frame; the narration keeps running
+            vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+                  f"crop={W}:{H},{GRADE},fps={FPS},{motion(nf,'push')}")
+            run(["ffmpeg", "-y", "-loglevel", "error",
+                 "-stream_loop", "-1", "-t", f"{d:.3f}", "-i", str(broll(s["backdrop"])),
+                 "-ss", f"{s['t0']:.3f}", "-to", f"{s['t1']:.3f}", "-i", str(body),
+                 "-filter_complex", f"[0:v]{vf}[v]", "-map", "[v]", "-map", "1:a",
+                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                 "-pix_fmt", "yuv420p", "-r", str(FPS),
+                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+                 "-video_track_timescale", "90000", str(p)])
+        else:
+            w, h, x, y = crop_for(ZOOMS[s["zoom"]])
+            run(["ffmpeg", "-y", "-loglevel", "error",
+                 "-ss", f"{s['t0']:.3f}", "-to", f"{s['t1']:.3f}", "-i", str(body),
+                 "-vf", f"crop={w}:{h}:{x}:{y},{GRADE},fps={FPS},{motion(nf,s['motion'])}",
+                 "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+                 "-pix_fmt", "yuv420p", "-r", str(FPS),
+                 "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+                 "-video_track_timescale", "90000", str(p)])
+        s["out0"] = round(tl, 3)
+        tl += dur_of(p)
+        s["out1"] = round(tl, 3)
+        parts.append(p)
+    lst = work / "shots.txt"
+    lst.write_text("".join(f"file '{q.resolve().as_posix()}'\n" for q in parts),
+                   encoding="utf-8")
+    cut = work / "_cut.mp4"
+    run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
+         "-i", str(lst), "-c", "copy", str(cut)])
+    return cut, tl
+
+
+# ============================================================== captions
+
+def score_accent(cue):
+    STOP = {"a", "an", "the", "and", "or", "but", "to", "of", "for", "in", "on",
+            "at", "is", "are", "was", "your", "my", "i", "we", "you", "it",
+            "that", "this", "so", "if", "as", "with", "have", "has"}
+    best, bi = -1, 0
+    for i, w in enumerate(cue):
+        t = w["w"]
+        s = 10 if re.search(r"[\d$%]", t) else 0
+        if norm(t) in STOP:
+            s -= 6
+        s += min(len(re.sub(r"\W", "", t)), 9) * 0.5
+        if s > best:
+            best, bi = s, i
+    return bi
+
+
+ASS_HEAD = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {W}
+PlayResY: {H}
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Ad,{CAP_FONT},{CAP_SIZE},&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,1,0,1,7,3,5,95,95,0,1
+Style: Punch,{CAP_FONT},150,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,2,0,1,10,5,5,60,60,0,1
+Style: Box,{CAP_FONT},98,&H00FFFFFF,&H00FFFFFF,&H002020E0,&H002020E0,0,0,0,0,100,100,1,0,3,16,0,5,90,90,0,1
+Style: Build,{CAP_FONT},124,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,2,0,1,9,4,5,80,80,0,1
+Style: Hook,{CAP_FONT},116,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00000000,0,0,0,0,100,100,2,0,1,11,5,5,60,60,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+"""
+
+HOOK_BEATS = [
+    ("is this your", "IS THIS YOUR", 108, -3, "white"),
+    ("2nd", "2ND, 3RD\\NOR 4TH", 180, 3, "accent"),
+    ("property", "PROPERTY?", 168, -2, "white"),
+]
+HOOK_END = 3.30
+BAND = 4.0
+
+
+def build_ass(shots, path, rotation, hook=True, words=None):
+    def ts(t):
+        return f"{int(t//3600):d}:{int(t%3600//60):02d}:{t%60:05.2f}"
+
+    lines, flashes = [], []
+    for k, s in enumerate(shots):
+        if hook and s["out0"] < HOOK_END - 0.05:
+            continue
+        # a device that carries its own copy owns the frame; no caption on top
+        if s["dev"] and s["dev"] not in ("lower_ticker",):
+            continue
+        ai = score_accent(s["cue"])
+        words_up = [re.sub(r"[,]$", "", w["w"]).upper() for w in s["cue"]]
+        has_num = any(re.search(r"[\d$%]", w) for w in words_up)
+        tr = "punch" if has_num else rotation[int(s["out0"] // BAND) % len(rotation)]
+        if tr == "punch" and len(words_up) > 4:
+            tr = "narr"
+        if tr == "punch":
+            style = "Punch"
+            rot = -3 if k % 2 else 3
+            anim = ("{\\an5\\pos(%d,%d)\\frz%d\\fscx126\\fscy126"
+                    "\\t(0,110,\\fscx100\\fscy100)}" % (W // 2, int(H * PUNCH_Y), rot))
+            flashes.append(s["out0"])
+        elif tr == "box":
+            style = "Box"
+            anim = "{\\an5\\pos(%d,%d)\\fad(40,0)}" % (W // 2, int(H * 0.62))
+        elif tr == "build":
+            style = "Build"
+            anim = ("{\\an5\\pos(%d,%d)\\fad(70,0)\\fscx112\\fscy112"
+                    "\\t(0,130,\\fscx100\\fscy100)}" % (W // 2, int(H * 0.66)))
+        else:
+            style = "Ad"
+            anim = "{\\an5\\pos(%d,%d)\\fad(60,0)}" % (W // 2, int(H * CAP_Y))
+        base_fs = {"Punch": 150, "Box": 98, "Build": 124}.get(style, CAP_SIZE)
+        big = int(base_fs * ACCENT_SCALE)
+        txt = ""
+        for i, word in enumerate(words_up):
+            if i == ai and style != "Box":
+                txt += (f"{{\\fs{big}\\c{ACCENT}}}{word}"
+                        f"{{\\fs{base_fs}\\c&H00FFFFFF&}} ")
+            else:
+                txt += f"{word} "
+        if s.get("segment_start"):
+            flashes.append(s["out0"])
+        lines.append(f"Dialogue: 0,{ts(s['out0'])},{ts(s['out1'])},{style},,0,0,0,,"
+                     f"{anim}{txt.strip()}")
+
+    if hook and words:
+        beats = []
+        for phrase, text, size, rot, col in HOOK_BEATS:
+            hit = find_phrase(words, phrase, 0)
+            beats.append((hit[0] if hit else 0.0, text, size, rot, col))
+        for k, (at, text, size, rot, col) in enumerate(beats):
+            t1 = beats[k + 1][0] if k + 1 < len(beats) else HOOK_END
+            colour = ACCENT if col == "accent" else "&H00FFFFFF&"
+            tag = ("{\\an5\\pos(%d,%d)\\fs%d\\c%s\\frz%d\\fscx122\\fscy122"
+                   "\\t(0,120,\\fscx100\\fscy100)}"
+                   % (W // 2, int(H * HOOK_Y), size, colour, rot))
+            lines.append(f"Dialogue: 1,{ts(at)},{ts(t1)},Hook,,0,0,0,,{tag}{text}")
+
+    Path(path).write_text(ASS_HEAD + "\n".join(lines) + "\n", encoding="utf-8")
+    return len(lines), sorted(set(flashes)), [s["out0"] for s in shots
+                                              if s.get("segment_start")]
+
+
+def ass_esc(p):
+    return str(p).replace("\\", "/").replace(":", "\\:")
+
+
+def progress_bar(total, src="vs", dst="vout"):
+    b, P = PROGRESS_BAR, 2 * (W + H)
+    prog = f"({P}*t/{total:.3f})"
+    d = f"{total:.3f}"
+    return [
+        f"color=c=red:s={W}x{b}:d={d}:r={FPS}[pgt]",
+        f"color=c=red:s={b}x{H}:d={d}:r={FPS}[pgr]",
+        f"color=c=red:s={W}x{b}:d={d}:r={FPS}[pgb]",
+        f"color=c=red:s={b}x{H}:d={d}:r={FPS}[pgl]",
+        f"[{src}][pgt]overlay=x='min({prog},{W})-{W}':y=0:shortest=1[pg1]",
+        f"[pg1][pgr]overlay=x={W-b}:y='min(max(0,{prog}-{W}),{H})-{H}':shortest=1[pg2]",
+        f"[pg2][pgb]overlay=x='{W}-min(max(0,{prog}-{W+H}),{W})':y={H-b}:shortest=1[pg3]",
+        f"[pg3][pgl]overlay=x=0:y='{H}-min(max(0,{prog}-{2*W+H}),{H})':shortest=1[{dst}]",
+    ]
+
+
+# ============================================================== build
+
+def build(key):
+    spec = VARIATIONS[key]
+    work = BUILD / key
+    work.mkdir(parents=True, exist_ok=True)
+    out_name = f"SP_BENCHMARK_9x16_TEST.mp4"
+    print(f"\n===== VARIATION {key} =====")
+
+    words = load_words("body")
+    body = OUT / "_tight_body.mp4"
+    shots, beats = build_shots(spec, words, work)
+    print(f"  {len(shots)} shots, {len(beats)} device beats: "
+          f"{', '.join(b['dev'] or 'broll-split' for b in beats)}")
+
+    cut, total = render_shots(shots, body, work)
+    lens = sorted(s["out1"] - s["out0"] for s in shots)
+    print(f"  cut {total:.1f}s  median shot {lens[len(lens)//2]:.2f}s  "
+          f"{len(shots)/(total/60):.0f} cuts/min")
+
+    # Body captions render as plates - one PNG per cue. ASS cannot box a
+    # single word or hang a colour emoji off the line, which is the whole
+    # signature of the reference treatment.
+    capdir = work / "caps"
+    if capdir.exists():
+        shutil.rmtree(capdir)
+    capdir.mkdir(parents=True, exist_ok=True)
+    cap_overlays, flashes, segs = [], [], []
+    for k, sh in enumerate(shots):
+        if sh.get("segment_start"):
+            flashes.append(sh["out0"])
+            segs.append(sh["out0"])
+        if sh["dev"]:                       # a device carries its own copy
+            continue
+        cue = [w["w"] for w in sh["cue"]]
+        ai = score_accent(sh["cue"])
+        png = capdir / f"c{k:03d}.png"
+        DV.caption_plate(png, cue, accent=ai,
+                         emoji=DV.pick_emoji(" ".join(cue)))
+        cap_overlays.append((png, sh["out0"], sh["out1"]))
+    print(f"  {len(cap_overlays)} caption plates")
+
+    # ---- device frame sequences, positioned on the output timeline ----
+    devdir = work / "dev"
+    if devdir.exists():
+        shutil.rmtree(devdir)
+    dev_overlays = []
+    for bi, b in enumerate(beats):
+        owners = [s for s in shots if s["dev_id"] == bi]
+        if not owners:
+            print(f"  ! {b['dev']}: no shot claimed it")
+            continue
+        t0 = owners[0]["out0"]
+        t1 = owners[-1]["out1"]
+        secs = max(0.8, t1 - t0)
+        if not b["dev"]:
+            print(f"  insert  {b['backdrop']:22} {t0:6.2f} -> {t1:6.2f}")
+            continue
+        d = devdir / f"{bi:02d}_{b['dev']}"
+        DV.REGISTRY[b["dev"]](d, secs, **b["params"])
+        dev_overlays.append((d, t0, t1))
+        print(f"  device {b['dev']:14} {t0:6.2f} -> {t1:6.2f}")
+
+    filt = ["[0:v]null[base]"]
+    inputs = ["-i", str(cut)]
+    last, idx = "base", 1
+    for png, t0, t1 in cap_overlays:
+        inputs += ["-framerate", str(FPS), "-i", str(png)]
+        # No fade here. A PNG is a single frame at t=0, so a fade-in leaves
+        # that one frame at alpha 0 and overlay's eof_action=repeat then holds
+        # it invisible for the whole cue. Captions cut in hard anyway.
+        filt.append(f"[{idx}:v]format=rgba[c{idx}]")
+        filt.append(f"[{last}][c{idx}]overlay=0:0:"
+                    f"enable='between(t,{t0:.3f},{t1:.3f})'[k{idx}]")
+        last = f"k{idx}"
+        idx += 1
+    for d, t0, t1 in dev_overlays:
+        inputs += ["-framerate", str(FPS), "-i", str(d / "%04d.png")]
+        filt.append(f"[{idx}:v]setpts=PTS-STARTPTS+{t0:.3f}/TB,format=rgba[d{idx}]")
+        filt.append(f"[{last}][d{idx}]overlay=0:0:"
+                    f"enable='between(t,{t0:.3f},{t1:.3f})'[v{idx}]")
+        last = f"v{idx}"
+        idx += 1
+    for t in flashes:
+        filt.append(f"[{last}]drawbox=x=0:y=0:w={W}:h={H}:color=white@0.30:t=fill:"
+                    f"enable='between(t,{t:.3f},{t + 2/FPS:.3f})'[f{idx}]")
+        last = f"f{idx}"
+        idx += 1
+    filt.append(f"[{last}]null[vout]")
+
+    part = work / "_body.mp4"
+    run(["ffmpeg", "-y", "-loglevel", "error", "-stats", *inputs,
+         "-filter_complex", ";".join(filt), "-map", "[vout]", "-map", "0:a",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-pix_fmt", "yuv420p", "-r", str(FPS),
+         "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+         "-video_track_timescale", "90000", str(part)])
+
+    # ---- CTA ----
+    cw, ch, cx, cy = crop_for(ZOOMS[0])
+    cwords = load_words("cta")
+    cshots = [dict(cue=[dict(w=x["w"], s=x["s"], e=x["e"]) for x in c],
+                   out0=c[0]["s"], out1=c[-1]["e"], block="cta", dev=None,
+                   text=" ".join(x["w"] for x in c))
+              for c in cue_split(cwords)]
+    build_ass(cshots, work / "caps_cta.ass", spec["rotation"], hook=False)
+    part_cta = work / "_cta.mp4"
+    run(["ffmpeg", "-y", "-loglevel", "error", "-stats", "-i", str(OUT / "_tight_cta.mp4"),
+         "-filter_complex",
+         f"[0:v]crop={cw}:{ch}:{cx}:{cy},scale={W}:{H}:flags=lanczos,setsar=1,"
+         f"{GRADE},fps={FPS},drawbox=x=0:y=0:w={W}:h={H}:color=red@1.0:t=14,"
+         f"ass='{ass_esc(work / 'caps_cta.ass')}'[vout]",
+         "-map", "[vout]", "-map", "0:a",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-pix_fmt", "yuv420p", "-r", str(FPS),
+         "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2",
+         "-video_track_timescale", "90000", str(part_cta)])
+
+    # ---- final: concat filter (never copy - it drops the CTA audio) ----
+    out_d = (dur_of(part) + dur_of(part_cta)) / SPEED
+    segs = [t for t in segs if t > 0.2]
+    inputs = ["-i", str(part), "-i", str(part_cta),
+              "-stream_loop", "-1", "-i", str(AUDIO / "rei_bed_pulse.mp3")]
+    for _ in segs:
+        inputs += ["-i", str(AUDIO / "whoosh1.mp3")]
+    f = ["[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[cv][ca]"]
+    mixin = "[ca]"
+    for i, t in enumerate(segs):
+        f.append(f"[{3+i}:a]adelay={int(t*1000)}|{int(t*1000)},volume=0.45[wh{i}]")
+        mixin += f"[wh{i}]"
+    if segs:
+        f.append(f"{mixin}amix=inputs={len(segs)+1}:duration=first:"
+                 f"dropout_transition=0,volume={len(segs)+1}[mx]")
+    else:
+        f.append("[ca]anull[mx]")
+    f.append(f"[mx]atempo={SPEED}[sp]")
+    f.append(f"[2:a]volume={MUSIC_VOL},afade=t=out:st={out_d-2.0:.2f}:d=2.0[bed]")
+    f.append(f"[sp][bed]amix=inputs=2:duration=first:dropout_transition=0,"
+             f"loudnorm=I={LOUDNORM_I}:TP=-1.5:LRA=11[a]")
+    f.append(f"[cv]setpts=PTS/{SPEED}[vs]")
+    f.extend(progress_bar(out_d))
+    final = OUT / out_name
+    run(["ffmpeg", "-y", "-loglevel", "error", "-stats", *inputs,
+         "-filter_complex", ";".join(f),
+         "-map", "[vout]", "-map", "[a]", "-t", f"{out_d:.3f}",
+         "-c:v", "libx264", "-preset", "medium", "-crf", "20",
+         "-pix_fmt", "yuv420p", "-r", str(FPS),
+         "-c:a", "aac", "-b:a", "192k", str(final)])
+    print(f"  OK {final.name}  {dur_of(final):.1f}s, {final.stat().st_size/1e6:.1f} MB")
+    return final
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--variation", default="TEST")
+    ap.add_argument("--all", action="store_true")
+    a = ap.parse_args()
+    BUILD.mkdir(parents=True, exist_ok=True)
+    for k in (VARIATIONS if a.all else [a.variation]):
+        build(k)
+    print("\nDone.")
+
+
+if __name__ == "__main__":
+    main()
