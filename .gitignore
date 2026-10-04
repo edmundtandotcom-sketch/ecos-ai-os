@@ -87,3 +87,5 @@ Thumbs.db
 # Thomson Reserve styleframes: one small contact sheet (335 KB) is the inspected record;
 # full-res frames, clips, fonts and rendered pages stay out (regenerate with styleframes/).
 !/03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08-Thomson Reserve/02_AD_EDIT_DIRECTION/styleframes/contact_sheet.jpg
+__pycache__/
+*.pyc
