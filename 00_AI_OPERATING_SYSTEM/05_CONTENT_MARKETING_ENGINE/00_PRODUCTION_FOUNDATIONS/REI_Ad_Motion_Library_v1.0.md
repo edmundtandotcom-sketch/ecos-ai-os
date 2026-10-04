@@ -66,6 +66,8 @@ Companion: Style Bible (look, type, colour) · ADS_PLAYBOOK (measured norms) · 
 | caption typebox | box wipes open left→right revealing the word | numbers |
 | *(rule)* | arrivals rotate by cue group, never the same twice in a row; arrival ≤8 frames then the cue holds still; exits are cuts | reference: `styleframes.py::caption_anim`, preview A9 |
 | photo drop | tilted print falls in from above (−520px, ease-out⁴), lands at −7° | family-proof lines; never the same photo twice |
+| hand underline | two wobbly strokes drawn left→right over 10 frames, yellow | under the accent word on a held caption |
+| hand circle | 1.15 wobbly turns drawn over 12 frames, red | around the number that is the problem |
 | box pop | the orange box scales 0→1.0 with overshoot 1.6 over 6 frames, the word appears at 60% | the boxed word, when the cue is a number or the pivot |
 | roll-up | digits count from 0 to value over 0.6–0.9s, ease-out ³ | prices, %, counts in cards |
 | rise-in | card translates +260px→0 over 10 frames with a soft shadow | bottom-third cards |
@@ -102,6 +104,22 @@ Every arrival has a matching exit: cards drop out the way they came in (−260px
 | Perfect stabilisation on a selfie | phones shake | `handheld` on UGC shots |
 | Every number the same size and colour | nothing is important | gold in cards, orange box in captions, the pivot number gets the slam |
 | The same end card on every ad | the account looks templated | three card styles rotate |
+
+### 6b. The human-edit pass (Edmund, 2026-10-04: "edited like a human, not a rigid AI video")
+
+Regularity is the tell. Nine rules that sit above every rate target:
+
+1. **Shape, not rate** — a density curve (raw open → one long proof hold → rising density through the argument → slower, warmer reward → simple CTA). Cuts/min is the average of the curve, never its rhythm.
+2. **Shot-length jitter** — no two consecutive shots within ±15%; cuts on breaths and consonants.
+3. **Breaths** — face alone, caption off, 0.3–0.6s, at least one per 20s, before pivots.
+4. **Device budget** — one copy device per 6s; some lines get nothing but the face.
+5. **Meta-native imperfection** — handheld micro-shake, hand-drawn underline/circle/arrow, a photo flicked in, a kept laugh. Never flares, leaks or typewriter.
+6. **Cut on the audio** — J/L cuts; sound leads picture.
+7. **Break the zoom ladder** once per 20s.
+8. **One moment of nothing** — the longest hold is on the most personal line.
+9. **Review loop** — render, watch at 1× on a phone, five plain-word edits, re-render. Nothing ships from a first render.
+
+Reference cut: `2026-08-Thomson Reserve/02_AD_EDIT_DIRECTION/styleframes/styleframes.py::A11` — a 14.3s hook timed shot by shot (1.1 · 1.2 · 4.6 hold · 1.55 · 1.1 · 1.6 · 2.6 · 0.4).
 
 **The three-tell test** (ship gate): watch the final once at 1.5×. If you notice (a) a picture you have seen before in the ad, (b) a cut rhythm you could tap along to, or (c) a caption arriving before or after the word, it is not done.
 

@@ -4,9 +4,9 @@ What is here:
 
 | File | What |
 |---|---|
-| `styleframes.py` | Renders 19 styleframes (F01–F19) and 10 motion previews (A1–A10), bold palette (black / yellow / red / orange) at 1080×1920. Every device is a function of `t∈[0,1]`, so each one ports to `E:\REMOTION\ads\devices.py` as a frame generator. |
+| `styleframes.py` | Renders 21 styleframes (F01–F21) and 11 motion previews (A1–A11; A11 is the 14.3s hand-timed hook — the reference for "edited like a human"), bold palette (black / yellow / red / orange) at 1080×1920. Every device is a function of `t∈[0,1]`, so each one ports to `E:\REMOTION\ads\devices.py` as a frame generator. |
 | `prep_assets.py` | One-time: downloads the typefaces (OFL) and Twemoji glyphs, and renders the deck/ebook pages used as b-roll from `../Raw Assets/`. |
-| `contact_sheet.jpg` | The 19 frames at thumbnail size, as inspected on 2026-10-04 (third pass: bold palette, after fixes). |
+| `contact_sheet.jpg` | The 21 frames at thumbnail size, as inspected on 2026-10-04 (third pass: bold palette, after fixes). |
 
 Not committed (bulk media, constitution §9.7): the full-res PNGs, the MP4 previews, fonts, emoji, rendered pages. Regenerate:
 

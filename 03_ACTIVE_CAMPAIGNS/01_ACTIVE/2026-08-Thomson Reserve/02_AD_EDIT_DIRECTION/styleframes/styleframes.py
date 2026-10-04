@@ -792,7 +792,8 @@ def ffmpeg_bin():
         import imageio_ffmpeg; FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
     return FFMPEG
 
-def render_clip(name, fn, secs=3.0, fps=30, scale=0.5):
+def render_clip(name, fn, secs=None, fps=30, scale=0.5):
+    secs = secs or getattr(fn, "secs", 3.0)
     """fn(t01, frame_idx) -> PIL RGB 1080x1920. Writes an mp4 (h264) at scale."""
     d = OUT / "anim" / name; d.mkdir(parents=True, exist_ok=True)
     for f in d.glob("*.jpg"): f.unlink()
@@ -1004,6 +1005,128 @@ def A10(t, i):  # photo card drop-in on "my daughter"
 
 CLIPS["A9_caption_arrivals"] = A9
 CLIPS["A10_family_photo_drop"] = A10
+
+
+# ---------------------------------------------------------------- v1.2: human-edit rhythm preview + hand-drawn marks
+_PLATE = None
+def plate_z(z=1.0, dx=0, dy=0):
+    """Cached plate, re-framed per frame (fast enough for a 14s preview)."""
+    global _PLATE
+    if _PLATE is None:
+        _PLATE = plate(1, zoom=1.0)
+    return zoom_img(_PLATE, z, dx, dy)
+
+def handheld(t, amp=2.0, seed=0.0):
+    """1-2 px micro-shake at 2-4 Hz, two incommensurate sines so it never loops visibly."""
+    return (int(round(amp * (math.sin(2 * math.pi * 2.3 * t + seed) + 0.5 * math.sin(2 * math.pi * 3.7 * t + 1.3 + seed)))),
+            int(round(amp * (math.cos(2 * math.pi * 1.9 * t + 0.7 + seed) + 0.5 * math.sin(2 * math.pi * 4.1 * t + seed)))))
+
+def scribble_underline(layer, x0, x1, y, t=1.0, color=GOLD, width=10, seed=5):
+    """Hand-drawn underline: two slightly different strokes, drawn left->right over t."""
+    rnd = random.Random(seed)
+    d = ImageDraw.Draw(layer)
+    for k, (dy, w) in enumerate(((0, width), (10, int(width * 0.8)))):
+        pts = []
+        n = 26
+        for i in range(n + 1):
+            f = i / n
+            x = x0 + (x1 - x0) * f
+            yy = y + dy + rnd.uniform(-5, 5) + 6 * math.sin(f * math.pi * 1.5 + k)
+            pts.append((x, yy))
+        m = max(2, int(len(pts) * min(1, max(0, t * 1.15 - 0.15 * k))))
+        d.line(pts[:m], fill=color + (255,), width=w, joint="curve")
+
+def hand_circle(layer, box, t=1.0, color=RED, width=9, seed=9):
+    """Rough circle around a region: 1.15 turns, wobbly radius, drawn progressively."""
+    rnd = random.Random(seed)
+    x0, y0, x1, y1 = box
+    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    rx, ry = (x1 - x0) / 2 + 26, (y1 - y0) / 2 + 22
+    pts = []
+    n = 70
+    for i in range(n + 1):
+        a = -math.pi * 0.6 + i / n * math.pi * 2.3
+        wob = 1 + rnd.uniform(-0.035, 0.035) + 0.03 * math.sin(a * 3)
+        pts.append((cx + rx * wob * math.cos(a) + (i / n) * 14, cy + ry * wob * math.sin(a) + (i / n) * 8))
+    m = max(2, int(len(pts) * min(1, max(0, t))))
+    ImageDraw.Draw(layer).line(pts[:m], fill=color + (255,), width=width, joint="curve")
+
+def cue(layer, t_now, t0, style, words, ai, emo=None, dur=0.27, **kw):
+    if t_now >= t0:
+        caption_anim(layer, words, ai, style, min(1, (t_now - t0) / dur), emo=emo, **kw)
+
+def A11(t, i):
+    """V1 hook as a HUMAN would cut it - 14.3s, varied shot lengths, breaths, a
+    long hold on the proof card, one whip, one punch, hand-drawn underline.
+    Captions time to Daughter Hook 1 at ~2.6 words/s."""
+    T = t * 14.3
+    hx, hy = handheld(T)
+    layer = new_layer()
+    # --- picture
+    if T < 1.10:                                   # S1 raw open, flash in
+        base = plate_z(1.00, hx, hy); base = flash(base, max(0, 0.6 - T * 6))
+    elif T < 2.30:                                 # S2 jump cut, tighter
+        base = plate_z(1.10, hx, hy)
+    elif T < 6.90:                                 # S3 back out, long hold under the receipt card
+        base = plate_z(1.00 + 0.04 * (T - 2.30) / 4.6, hx, hy)
+    elif T < 7.05:                                 # whip out to the aerial
+        k = (T - 6.90) / 0.15
+        base = whip_blur(Image.blend(plate_z(1.04), broll("deck_p06", cx=2250), k), int(60 + 120 * (1 - abs(k - 0.5) * 2)))
+    elif T < 8.60:                                 # S5 aerial, slow push
+        base = broll("deck_p06", cx=2250, zoom=1.0 + 0.06 * (T - 7.05) / 1.55)
+    elif T < 9.70:                                 # S6 punch in on the face
+        k = min(1, (T - 8.60) / 0.27)
+        base = plate_z(1.08 + 0.12 * ease_out(k, 4), hx, hy)
+    elif T < 11.30:                                # S7 settle
+        base = plate_z(1.10, hx, hy)
+    elif T < 13.90:                                # S8 the question - hold, breathe
+        base = plate_z(1.00 + 0.03 * (T - 11.30) / 2.6, hx, hy)
+    else:                                          # whip-out to white = detachable hook end
+        k = (T - 13.90) / 0.40
+        base = flash(whip_blur(plate_z(1.03), int(40 + 160 * k)), k)
+    # --- banner (hook only, leaves at the whip)
+    if 0.20 <= T < 6.90:
+        eyebrow(layer, "WOULD I BUY THIS FOR MY DAUGHTER?", slide=ease_out(min(1, (T - 0.20) / 0.30)))
+    # --- devices
+    if 1.50 <= T < 6.90:
+        dev_photo_card(layer, min(1, (T - 1.50) / 0.40))
+    if 3.60 <= T < 6.90:
+        dev_receipt(layer, min(1, (T - 3.60) / 2.9))
+    # --- captions (none while the receipt card owns the frame)
+    if T < 1.10:   cue(layer, T, 0.15, "wordpop", ["MY", "DAUGHTER"], 1, emo="1f467")
+    elif T < 2.30: cue(layer, T, 1.12, "pop", ["ALREADY", "BENEFITED"], 1)
+    elif T < 3.60: cue(layer, T, 2.32, "slide", ["FROM", "PARC", "CLEMATIS"], 2)
+    elif T < 6.90: pass
+    elif T < 8.60: cue(layer, T, 7.08, "pop", ["NOW", "IF", "THOMSON", "RESERVE"], 3, size=80)
+    elif T < 9.70: cue(layer, T, 8.62, "wordpop", ["IS", "HER", "NEXT", "PROPERTY"], 3, emo="1f3e0", size=80)
+    elif T < 11.30: cue(layer, T, 9.75, "slide", ["I'M", "ASKING", "ONE", "THING"], 3, size=80)
+    elif T < 13.60:
+        cue(layer, T, 11.40, "typebox", ["CAN", "IT", "MOVE", "HER"], None, size=76, y_frac=0.665)
+        cue(layer, T, 12.25, "wordpop", ["FORWARD", "AGAIN?"], 0, size=76, y_frac=0.73)
+        if T >= 12.70:
+            f = ANTON(76); tw = text_w(f, "FORWARD") + int(76 * 0.44)
+            x0 = (W - (tw + text_w(f, "AGAIN?") + int(76 * 0.28))) // 2
+            scribble_underline(layer, x0 - 6, x0 + tw + 6, int(H * 0.73) + 60, min(1, (T - 12.70) / 0.35), color=GOLD)
+    # 13.60-13.90: face alone, no caption - the breath before the whip
+    return compose(base, layer)
+
+def F20():  # the question beat with the hand-drawn underline, at T=13.2
+    return A11(13.2 / 14.3, 0)
+
+def F21():  # hand-drawn marks bank over the price-gap card: circle + underline
+    base = plate_z(1.0)
+    layer = new_layer(); stand_in_tag(layer)
+    dev_pricegap(layer, 1.0, y_top=0.50)
+    # circle the TR number, underline the proven one
+    x0, x1 = 70, W - 70; y0 = int(H * 0.50); lx = x0 + 44; rx = x1 - 44; pw = int((rx - lx) * 0.44); ly1 = y0 + 470
+    hand_circle(layer, (rx - pw // 2 - 150, ly1 - 260 - 86, rx - pw // 2 + 150, ly1 - 260 - 6), 1.0, color=RED)
+    scribble_underline(layer, lx + pw // 2 - 150, lx + pw // 2 + 150, ly1 - 170 - 2, 1.0, color=GOLD, width=8)
+    return compose(base, layer)
+
+FRAMES["F20_V1_question_beat_underline"] = F20
+FRAMES["F21_hand_drawn_marks"] = F21
+A11.secs = 14.3
+CLIPS["A11_V1_hook_human_cut_14s"] = A11
 
 if __name__ == "__main__":
     which = sys.argv[1:] or ["frames"]

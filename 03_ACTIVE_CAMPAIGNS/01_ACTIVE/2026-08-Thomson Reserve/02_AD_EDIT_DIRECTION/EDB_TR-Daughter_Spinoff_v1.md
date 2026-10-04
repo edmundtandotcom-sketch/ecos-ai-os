@@ -1,11 +1,11 @@
 # EDB — Thomson Reserve × "Would I buy it for my daughter?" (NL03-B)
-Version: v1.1 · Status: DRAFT FOR APPROVAL · Date: 2026-10-04 (v1.1 same day: Edmund's four rulings applied — bold palette, Body 3 parked, no logo + royalty-free bed, animated captions; family photos and project footage added as inputs)
+Version: v1.2 · Status: **V1 SELECTED FOR RENDER** (Edmund, 2026-10-04) · Date: 2026-10-04 (v1.2: human-edit pass §2b, V1 shape §4.0, composer requirements; v1.1 same day: Edmund's four rulings applied — bold palette, Body 3 parked, no logo + royalty-free bed, animated captions; family photos and project footage added as inputs)
 Engine: Client Advisory · Campaign: Thomson Reserve webinar (preview 17 Oct) · Narrator: Daughter (NL03 variant B)
 Master: 9:16 1080×1920 · crops 4:5 and 1:1 · plus a 15s trim per shipped ad
 Source: selfie phone takes (Drive folder `1Oh1K2aw8K9mMtJDN1BQkKp3VZeSdhlLb`), script doc "Daughter New Spinoff Ads"
 Governs: `REI_Ad_Reel_Edit_Style_Bible_v1.0.md` (§4 motion locks, §7 QC) as reconciled with `E:\REMOTION\ADS_PLAYBOOK.md` (the measured norms) — where they disagree the Playbook wins, see §2.
 Companion: `00_PRODUCTION_FOUNDATIONS/REI_Ad_Motion_Library_v1.0.md` (the transition/effect vocabulary used below)
-Styleframes: `styleframes/` — 19 stills F01–F19 and 10 motion previews A1–A10, rendered 2026-10-04 and inspected frame by frame before this brief was written. Numbers in brackets like **[F05]** point at them.
+Styleframes: `styleframes/` — 21 stills F01–F21 and 11 motion previews A1–A11 (A11 is the 14s human-cut hook), rendered 2026-10-04 and inspected frame by frame before this brief was written. Numbers in brackets like **[F05]** point at them.
 
 ---
 
@@ -51,6 +51,22 @@ Styleframes: `styleframes/` — 19 stills F01–F19 and 10 motion previews A1–
 9. **Hook detachability**: every hook ends on a whip-out so any body can pick up from it.
 10. **End card** 3s, counted in duration, three styles rotate (§5.7).
 
+## 2b. The human-edit pass — "a Meta ad, edited like a human, not a rigid AI video" (Edmund, 2026-10-04)
+
+The machine tells are not the effects; they are the *regularity*. A person cutting this ad would never hit a 1.1s shot forty times in a row, never put a graphic on every line, and would hold on the face when the line is personal. These rules sit on top of §2 and win over any rate target.
+
+1. **Shape, not rate.** The ad has a density curve: hook fast and raw → proof as one long hold → three doubts at rising density (1 → 2 → 3 devices) → likes slower and warmer with longer renders → CTA on the face with nothing but the checklist → card. 40–55 cuts/min is the *average* of that curve, never its rhythm.
+2. **Shot-length jitter.** No two consecutive shots within ±15% of each other. Hook 0.7–1.6s, body 0.9–2.4s, renders 1.5–3s, device holds 2.5–3.5s. Cuts land on a breath or a consonant, never on a grid.
+3. **Breaths.** At least one per 20s: the face alone, caption off, 0.3–0.6s, right before a pivot. The bed drops out for the silence before a slam. V1 has four (§4.0).
+4. **Device budget.** Max one copy-carrying device per 6s of body; max two inserts per doubt; some lines play on the face with a caption and nothing else. If a device does not change what the viewer *understands*, it is cut.
+5. **Meta-native imperfection, not broadcast polish.** Handheld micro-shake on every selfie shot; hand-drawn underline / circle / arrow instead of a second graphic **[F20, F21]**; a family photo flicked in; a "tap-tap" double punch once; a kept laugh or look-away; captions that occasionally arrive a frame late, like someone typed them. No lens flares, no light leaks, no typewriter.
+6. **Cut on the audio.** J-cuts into inserts (hear the next line first), L-cuts out of device holds. Sound leads picture.
+7. **The zoom ladder is a guide.** Break it once per 20s (two 1.00 shots in a row after a punch) so the scale pattern never becomes visible.
+8. **One moment of nothing.** The longest speaker hold in the ad sits on the most personal line ("can it move her forward again?"), caption static, nothing animating but him **[A11, 11.3–13.9s]**.
+9. **Review loop.** Render → watch once at 1× on a phone → write five edits in plain words ("card comes in too early", "too many cuts at 0:41", "let him finish the sentence") → apply → re-render. No ad ships from a first render. The desktop `--human-pass` report (below) makes the regularity visible so the five edits are easy to find.
+
+**Composer requirements** (so `render_ad_v4` *cannot* produce a metronome): per-variation seed (`seed=`) so results are reproducible; `jitter` on every shot boundary (±0.12s, snapped to the nearest word gap); `breath` beats (`dev="breath"`, caption off, 0.3–0.6s); `device_budget` per block; `handheld` move on speaker shots; `no_device_zones` around the personal lines; `ladder_break` every ~20s; and a `--human-pass` report printing the shot-length histogram, cuts/min per 10s window, and every pair of consecutive shots that violate rule 2. Reference timings: `styleframes.py::A11` (14.3s, every shot hand-timed).
+
 ## 3. The six treatments — pick per take
 
 | # | Take | Treatment name | One-line idea | Transition family | Devices (new ones in **bold**) | Length |
@@ -68,7 +84,22 @@ Treatments are take-agnostic within reason: V2's grammar works on Hooks 3, 6, 9,
 
 Anchors are **spoken phrases**, not clock times; the composer resolves them on the tightened transcript (`find_phrase`). `lead` is seconds before the anchor word. Caption column shows the cue with the boxed word in [brackets]; "—" means a copy-carrying device owns the frame.
 
-### 4.1 Hook (Daughter Hook 1) — target 9–11s after tightening
+### 4.0 The shape of V1 (read before the tables)
+
+| Section | Spoken | Density | What a person would do |
+|---|---|---|---|
+| Hook 0–14s | Daughter Hook 1 | 8 shots, 1 device hold | raw open, photo flicked in, one long receipt hold, one whip, one punch, the question on his face. Timed shot-by-shot in **A11**: 1.1 · 1.2 · 4.6 (hold) · 1.55 · 1.1 · 1.6 · 2.6 · 0.4 whip |
+| Preview + 3 things 14–24s | B1–B4 | light | face, two captions per line, chips drop in, **breath** before "What I don't like" |
+| Doubt 1 24–38s | B5–B10 | 1 device (dot grid) + 2 inserts | B8 and B9 play on the face only — drop their inserts |
+| Doubt 2 38–55s | B11–B16 | 1 device (bars) + map | the map is the only picture for 9s; let it be |
+| Doubt 3 55–70s | B17–B22 | 1 device (price gap) | **breath** on "Third. The price." before the card; B19 face only |
+| Likes 70–95s | B23–B31 | VS split then renders at 2–3s each | slower; captions on every other line; the forever-view render runs 3s with a slow pull |
+| CTA 95–112s | C1–C8 | checklist only | no inserts; **breath** before "Click the link"; **longest hold** is on "not after" |
+| Card 112–115s | — | — | — |
+
+Breaths: before "What I don't like" (B4) · before "Third. The price." (B17) · after "a forever million dollar view" (B31) · before "Click the link below" (C8). Devices removed from v1.1 for budget: lower_ticker at B1, inserts at B8/B9/B30, stat chips at B29 (the render carries it).
+
+### 4.1 Hook (Daughter Hook 1) — as cut in A11, 14.3s
 
 | # | Anchor (he says…) | Picture | Device / move | Caption | In | SFX |
 |---|---|---|---|---|---|---|
@@ -142,7 +173,7 @@ Anchors are **spoken phrases**, not clock times; the composer resolves them on t
 **45s cutdown**: H1–H11, B1, B3–B6, B11–B16, B17, B20–B22, C7–C8, E1. Nothing new is designed for it.
 
 ### 4.5 V1 cadence check
-Hook: 11 shots in ~10s (66/min). Body: 31 shots over ~75s (25/min raw) — which is *under* the 40–55 target because the device beats hold. The composer's `cue_split` adds a cut per caption phrase inside each speaker shot, which brings the body to ~45/min. Hold shots (B6, B12–B16, B20–B22) are the only places a frame stays longer than 2s, and every one of them has something moving in it.
+Hook: 8 shots in 14.3s (34/min) with one 4.6s device hold — slower than the Playbook median *on purpose*; the hook earns attention with the photo and the numbers, not with cut rate. Body: 31 shots over ~75s (25/min raw) — which is *under* the 40–55 target because the device beats hold. The composer's `cue_split` adds a cut per caption phrase inside each speaker shot, which brings the body to ~45/min. Hold shots (B6, B12–B16, B20–B22) are the only places a frame stays longer than 2s, and every one of them has something moving in it.
 
 ## 5. V2–V6 — beat sheets
 
@@ -283,7 +314,9 @@ Deck pages are referenced by name; `styleframes/prep_assets.py` renders them fro
 | F17 | Caption anatomy: UI bands, eye-line, face box, caption line, margins | all |
 | F18 | photo_card over the hook, right column, clear of the face | V1 |
 | F19 | Caption arrival bank: six styles at mid-arrival | all |
-| A1–A10 | hook punch + caption pop · whip to aerial · receipt roll-up · dot-grid fill · bars + flash · flash + slam · VS wipe · end-card build · **caption arrivals (six styles in sequence)** · **photo drop-in** | motion timing for the composer |
+| F20 | The question beat at 13.2s: static caption, hand-drawn underline, face alone | V1 |
+| F21 | Hand-drawn marks (circle, underline) over the price-gap card | all |
+| A1–A10 | hook punch + caption pop · whip to aerial · receipt roll-up · dot-grid fill · bars + flash · flash + slam · VS wipe · end-card build · **caption arrivals (six styles in sequence)** · **photo drop-in** · **A11: the whole hook, 14.3s, hand-timed — the reference for "edited like a human"** | motion timing for the composer |
 
 ## 8. QC gate (run per ad, per aspect)
 
@@ -298,13 +331,13 @@ Deck pages are referenced by name; `styleframes/prep_assets.py` renders them fro
 - [ ] End card present, 3s, button legible at 1:1
 - [ ] Hook ends on a whip-out and plays clean against both bodies
 - [ ] The three-tell test (Motion Library §6): no repeated b-roll, no metronomic cut lengths, no caption that drifts from speech
+- [ ] Human-edit pass (§2b): `--human-pass` report shows no consecutive shots within ±15%, ≥1 breath per 20s, device budget respected; the five-edit review loop has run at least once
 
 ## 9. Decisions — rulings received 2026-10-04 and what is still open
 
-Ruled: bold palette (done, §2.6) · Body 3 parked (V3 on Body 2-short) · no logo, royalty-free bed softly · captions animated (§2.1, six arrival styles).
+Ruled: **V1 selected** · bold palette (done, §2.6) · Body 3 parked (V3 on Body 2-short) · no logo, royalty-free bed softly · captions animated (§2.1) · edited like a human (§2b, A11).
 
 Still open:
 
-1. **Assign treatments to takes.** Default: V1 on Daughter Hook 1 + Body 1 (first render), V2 on Hook 3 + Body 2. The rest wait for your pick.
-2. **Which family photos** go in (3–4 per ad), and whether any shows Parc Clematis.
-3. **Style Bible** — approve v1.1 §0 so the caption and palette rulings stop being per-brief notes.
+1. **Which family photos** go in (3–4 per ad), and whether any shows Parc Clematis.
+2. **Style Bible** — approve v1.1 §0 so the caption and palette rulings stop being per-brief notes.
