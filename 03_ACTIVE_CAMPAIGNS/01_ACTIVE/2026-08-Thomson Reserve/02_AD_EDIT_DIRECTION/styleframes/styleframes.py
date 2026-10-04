@@ -901,7 +901,7 @@ CLIPS = {"A1_hook_punch_caption": A1, "A2_whip_pan_to_aerial": A2, "A3_receipt_r
 
 
 # ---------------------------------------------------------------- v2 additions (2026-10-04 feedback)
-def dev_photo_card(layer, t=1.0, photo=None, caption_text="MY DAUGHTER", x_frac=0.80, y_frac=0.31, rot=-7, w=300):
+def dev_photo_card(layer, t=1.0, photo=None, caption_text="PARC CLEMATIS", x_frac=0.80, y_frac=0.31, rot=-7, w=300):
     """Family photo as a tilted print that drops in. `photo` is a PIL image
     (a frame from C:\\Users\\Admin\\Pictures\\Family & Daughter on the desktop);
     here a neutral placeholder. Sits off the face: right column, above the chin."""

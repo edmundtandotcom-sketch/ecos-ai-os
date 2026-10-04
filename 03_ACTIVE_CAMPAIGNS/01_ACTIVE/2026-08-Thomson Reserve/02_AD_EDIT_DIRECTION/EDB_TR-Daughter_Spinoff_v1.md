@@ -31,7 +31,7 @@ Styleframes: `styleframes/` — 21 stills F01–F21 and 11 motion previews A1–
 
   | # | Photo | Where it lands | Why |
   |---|---|---|---|
-  | 01 | Balcony selfie, three of you, landed estate below (the **unedited** original if that is the Parc Clematis balcony — **confirm**) | Hook polaroid on "already benefited" **[F18, A10, A11 @1.5s]** | The real home, real sky; the edited-sky version reads composited |
+  | 01 | Balcony selfie, three of you, landed estate below — **confirmed Parc Clematis (Edmund, 2026-10-04)**; use the unedited original | Hook polaroid on "already benefited" **[F18, A10, A11 @1.5s]**, print captioned PARC CLEMATIS; also the H3 torn-split picture | It *is* the property in the line — the strongest proof frame in the ad |
   | 02 | Outside a condo facade, three of you | Receipt-card beat alternative, or the H3 Parc Clematis split | — |
   | 03 | Showflat scale model, three of you | Torn split on "preview starts 17 October" **[F22]** | The showflat is the subject of the line |
   | 04 | Showflat with the unit-distribution chart | V3 / Hook 4 "only three units left", red hand-circle on the sold cluster **[F23]** | The ballot board, literally |
@@ -117,7 +117,7 @@ Breaths: before "What I don't like" (B4) · before "Third. The price." (B17) · 
 |---|---|---|---|---|---|---|
 | H1 | "My daughter" | Speaker, zoom 1.00 | **punch-in** 1.00→1.13 over 10 frames; eyebrow banner slides in from left: *WOULD I BUY THIS FOR MY DAUGHTER?* (black/gold, from the script's banner table) **[F01, A1]** | MY DAUGHTER | 4-frame white flash from black | soft hit |
 | H2 | "already benefited" | Speaker, 1.10 | push; **photo_card** drops in top-right (a Family & Daughter photo) **[F18, A10]** | ALREADY [BENEFITED] | cut | — |
-| H3 | "Parc Clematis" | Torn split: top = Parc Clematis (official-site still or drone view, desktop-fetched; towers render as fallback), speaker below | torn_split in from top with a 6-frame slide | [PARC CLEMATIS] | whip-down | whoosh |
+| H3 | "Parc Clematis" | Torn split: top = the Parc Clematis balcony photo (photo 01, full frame, people kept right), speaker below — the polaroid of the same photo is already on screen, so this is the same picture opening up: a match cut | torn_split in from top with a 6-frame slide | [PARC CLEMATIS] | whip-down | whoosh |
 | H4 | "bought at" | Speaker, 1.00 | **receipt_card** rises from bottom; BOUGHT $1.15M rolls up **[F02, A3]** | — | cut | tick |
 | H5 | "sold at" | hold | SOLD $1.525M rolls up, gold | — | — | tick |
 | H6 | "1.525" (end) | hold | +$375,000 FORWARD pill pops (overshoot 1.6) | — | — | hit |
@@ -353,9 +353,9 @@ Deck pages are referenced by name; `styleframes/prep_assets.py` renders them fro
 
 ## 9. Decisions — rulings received 2026-10-04 and what is still open
 
-Ruled: **V1 selected** · bold palette (done, §2.6) · Body 3 parked (V3 on Body 2-short) · no logo, royalty-free bed softly · captions animated (§2.1) · edited like a human (§2b, A11).
+Ruled: **V1 selected** · bold palette (done, §2.6) · Body 3 parked (V3 on Body 2-short) · no logo, royalty-free bed softly · captions animated (§2.1) · edited like a human (§2b, A11) · **balcony photo = Parc Clematis** (hook anchor confirmed).
 
 Still open:
 
-1. **Confirm** the balcony selfie is the Parc Clematis balcony (it anchors the hook), and re-send the four chat-only photos (Changi, balcony original, Zermatt, Colmar) as files — or they simply load from the desktop folder.
+1. The four chat-only photos (Changi, balcony original, Zermatt, Colmar) load from the desktop folder; re-send as files only if you want them in the cloud previews.
 2. **Style Bible** — approve v1.1 §0 so the caption and palette rulings stop being per-brief notes.
