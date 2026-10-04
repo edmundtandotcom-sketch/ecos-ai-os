@@ -20,8 +20,21 @@ python styleframes.py F05_V1_dotgrid_84pct A4_dotgrid_84pct   # just one of each
 
 Outputs land in `out/` and `out/anim/`.
 
-**Family photos.** `dev_photo_card(layer, t, photo=Image.open(r'C:\Users\Admin\Pictures\Family & Daughter\<file>.jpg'))` places a real photo; the committed frames use a grey placeholder.
+**Family photos — the desktop one-liner.** The cloud session cannot see `C:\Users\Admin\Pictures\Family & Daughter`, so the committed frames use a grey placeholder. On the desktop:
 
-**The speaker is a stand-in plate.** The selfie takes were not reachable from the cloud session, so `plate()` draws a neutral grey-blue room with a head-and-shoulders silhouette at the spec framing (eye-line 38%, head 16% of frame height). On the desktop, swap `plate()` for a real frame grab (`ffmpeg -ss 12 -i "Selfie Body1.mp4" -frames:v 1 plate.png`) and re-run — every device placement is then checked against the real face.
+```powershell
+python styleframes.py --photos "C:\Users\Admin\Pictures\Family & Daughter" F18_V1_family_photo_card A10_family_photo_drop A11_V1_hook_human_cut_14s
+```
+
+`--photos` loads every jpg/png in the folder (EXIF-rotated, centre-cropped 4:5, faces biased up). Filename order decides which photo lands first — rename the hook photo `01_...jpg`. The photo card rotates through the folder and never repeats inside one ad.
+
+**Real face instead of the silhouette.** Grab one frame from the take and pass it as the plate; every placement is then checked against the actual face:
+
+```powershell
+ffmpeg -ss 12 -i "Selfie Body1.mp4" -frames:v 1 plate.png
+python styleframes.py --plate plate.png --photos "C:\Users\Admin\Pictures\Family & Daughter" frames
+```
+
+**The speaker is a stand-in plate** unless `--plate` is given: a neutral grey-blue room with a head-and-shoulders silhouette at the spec framing (eye-line 38%, head 16% of frame height).
 
 **What the frames are for**: deciding, before the full render, whether a device is right, where it sits, and how big the type is. Read with `../EDB_TR-Daughter_Spinoff_v1.md` §7, which says what each frame proves.

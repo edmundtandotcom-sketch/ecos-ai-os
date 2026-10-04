@@ -901,7 +901,7 @@ CLIPS = {"A1_hook_punch_caption": A1, "A2_whip_pan_to_aerial": A2, "A3_receipt_r
 
 
 # ---------------------------------------------------------------- v2 additions (2026-10-04 feedback)
-def dev_photo_card(layer, t=1.0, photo=None, caption_text="PARC CLEMATIS · 2021", x_frac=0.80, y_frac=0.31, rot=-7, w=300):
+def dev_photo_card(layer, t=1.0, photo=None, caption_text="MY DAUGHTER", x_frac=0.80, y_frac=0.31, rot=-7, w=300):
     """Family photo as a tilted print that drops in. `photo` is a PIL image
     (a frame from C:\\Users\\Admin\\Pictures\\Family & Daughter on the desktop);
     here a neutral placeholder. Sits off the face: right column, above the chin."""
@@ -911,6 +911,8 @@ def dev_photo_card(layer, t=1.0, photo=None, caption_text="PARC CLEMATIS · 2021
     card = Image.new("RGBA", (w + 40, h + 110), (0, 0, 0, 0))
     cd = ImageDraw.Draw(card)
     cd.rounded_rectangle((0, 0, w + 40, h + 110), 10, fill=(250, 250, 250, 255))
+    if photo is None and PHOTOS:
+        photo = PHOTOS[0]            # the hook photo is always the first in the folder
     if photo is None:
         cd.rectangle((20, 20, w + 20, h + 20), fill=(190, 196, 206, 255))
         cd.text(((w + 40) // 2, h // 2 + 20), "FAMILY PHOTO\nGOES HERE", font=INTER(24, 600), fill=(90, 96, 110, 255), anchor="mm", align="center")
@@ -1009,12 +1011,49 @@ CLIPS["A10_family_photo_drop"] = A10
 
 
 # ---------------------------------------------------------------- v1.2: human-edit rhythm preview + hand-drawn marks
+PHOTOS = []          # real family photos, loaded by --photos <dir>; empty -> grey placeholder
+_photo_cursor = 0
+def load_photos(folder):
+    """Load every jpg/png in a folder (e.g. C:\\Users\\Admin\\Pictures\\Family & Daughter),
+    EXIF-rotated, centre-cropped to the card's 4:5. Order = filename order, so
+    rename with a prefix (01_, 02_...) to control which photo lands first."""
+    global PHOTOS
+    from PIL import ImageOps
+    out = []
+    for f in sorted(Path(folder).iterdir()):
+        if f.suffix.lower() not in (".jpg", ".jpeg", ".png", ".heic"):
+            continue
+        try:
+            im = ImageOps.exif_transpose(Image.open(f)).convert("RGB")
+        except Exception as e:
+            print("skip", f.name, e); continue
+        w, h = im.size; tw, th = w, int(w * 1.25)
+        if th > h: th, tw = h, int(h / 1.25)
+        x0, y0 = (w - tw) // 2, max(0, (h - th) // 3)   # bias up: faces sit high
+        out.append(im.crop((x0, y0, x0 + tw, y0 + th)).resize((600, 750), Image.LANCZOS))
+    PHOTOS = out; print(f"photos: {len(out)} loaded from {folder}")
+
+def next_photo():
+    """Rotate through the loaded photos; never the same one twice in a row."""
+    global _photo_cursor
+    if not PHOTOS: return None
+    im = PHOTOS[_photo_cursor % len(PHOTOS)]; _photo_cursor += 1; return im
+
 _PLATE = None
+PLATE_FILE = None    # --plate <png>: a real frame grab from the selfie take replaces the silhouette
 def plate_z(z=1.0, dx=0, dy=0):
     """Cached plate, re-framed per frame (fast enough for a 14s preview)."""
     global _PLATE
     if _PLATE is None:
-        _PLATE = plate(1, zoom=1.0)
+        if PLATE_FILE:
+            im = Image.open(PLATE_FILE).convert("RGB")
+            sw, sh = im.size; cw = int(sh * W / H)
+            if cw <= sw: im = im.crop(((sw - cw) // 2, 0, (sw - cw) // 2 + cw, sh))
+            else:
+                ch = int(sw * H / W); im = im.crop((0, max(0, (sh - ch) // 3), sw, max(0, (sh - ch) // 3) + ch))
+            _PLATE = grade(im.resize((W, H), Image.LANCZOS))
+        else:
+            _PLATE = plate(1, zoom=1.0)
     return zoom_img(_PLATE, z, dx, dy)
 
 def handheld(t, amp=2.0, seed=0.0):
@@ -1130,7 +1169,12 @@ A11.secs = 14.3
 CLIPS["A11_V1_hook_human_cut_14s"] = A11
 
 if __name__ == "__main__":
-    which = sys.argv[1:] or ["frames"]
+    args = sys.argv[1:]
+    if "--photos" in args:
+        i = args.index("--photos"); load_photos(args[i + 1]); del args[i:i + 2]
+    if "--plate" in args:
+        i = args.index("--plate"); PLATE_FILE = args[i + 1]; del args[i:i + 2]
+    which = args or ["frames"]
     if "frames" in which or "all" in which:
         for n, fn in FRAMES.items(): save(fn(), n)
     if "clips" in which or "all" in which:
