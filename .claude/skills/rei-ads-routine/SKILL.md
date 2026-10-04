@@ -9,7 +9,7 @@ Scope: the presentation layer ONLY. Script, raw takes, and image assets arrive a
 
 ## 0. Load first
 
-`00_AI_OPERATING_SYSTEM/05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/REI_Ad_Reel_Edit_Style_Bible_v1.0.md` — the governing document for this skill. Everything below assumes its contents: two palette families, typography system, locked motion rules, caption preset bank, QC gate, variation engine. If the Bible has a newer approved version, that wins.
+`00_AI_OPERATING_SYSTEM/05_CONTENT_MARKETING_ENGINE/00_PRODUCTION_FOUNDATIONS/REI_Ad_Reel_Edit_Style_Bible_v1.0.md` (look, type, colour) and `.../REI_Ad_Motion_Library_v1.0.md` (how things move and join) — the governing documents for this skill. Everything below assumes its contents: two palette families, typography system, locked motion rules, caption preset bank, QC gate, variation engine. If the Bible has a newer approved version, that wins.
 
 Confirm before starting (Ask-First Gate): which campaign/engine (Client Advisory vs Agent Edition — never blend), which palette family that campaign uses, target durations and aspect ratios, and where the raw assets live. If a Variation Register already exists for the campaign, read it.
 
@@ -27,6 +27,13 @@ Missing input → name it and stop; never art-direct against imagined footage.
 1. Read the previous ad's 8-axis combo from the Variation Register.
 2. Choose this ad's combo: differ on ≥3 axes, no combo repeat in the campaign, never share Genre+Caption-preset with an ad in the same ad set.
 3. State the chosen combo at the top of the EDB and justify the genre choice against the script's tone in one line (a narrative script forced into infographic genre is a mismatch — the axis spin must respect the script, not fight it).
+
+## 2b. Reconcile with the measured norms, then prove the devices before writing
+
+- `/rei-ad-build` carries the measured Playbook norms (40–55 cuts/min, boxed-word caption plates, a move on every shot, full-bleed speaker, SG-only inserts, no repeated insert). Where the Bible and the Playbook disagree, **the Playbook wins** and the EDB says so in its header.
+- Transitions, moves and type motion are called by name from `00_PRODUCTION_FOUNDATIONS/REI_Ad_Motion_Library_v1.0.md`. Pick one transition family per ad (axis 7); adjacent ads in a set never share one.
+- **One treatment per take.** When a campaign hands over several takes, write a treatment table first (name · one-line idea · transition family · signature devices · length), one row per take, each row ≥3 axes from its neighbours. Precedent: `2026-08-Thomson Reserve/02_AD_EDIT_DIRECTION/EDB_TR-Daughter_Spinoff_v1.md` §3.
+- **Render styleframes before the brief is final.** Every new device gets drawn at 1080×1920 (PIL, `t∈[0,1]` so it animates), placed over a plate at spec framing, and *looked at*. Fix what is wrong, then write the brief against the frames. Generator precedent: `.../02_AD_EDIT_DIRECTION/styleframes/styleframes.py`. Cloud sessions can do this step; the full render still runs on the desktop.
 
 ## 3. Write the Edit Direction Brief
 
