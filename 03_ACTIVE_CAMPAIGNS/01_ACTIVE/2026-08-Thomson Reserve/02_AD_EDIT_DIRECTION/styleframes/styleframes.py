@@ -21,16 +21,16 @@ OUT.mkdir(exist_ok=True, parents=True)
 W, H = 1080, 1920
 
 # ---------------------------------------------------------------- palette
-INK      = (15, 26, 43)        # #0F1A2B  Family-A dark base (cards)
-INK2     = (22, 36, 58)
-GOLD     = (201, 164, 92)      # #C9A45C  numbers / prices
-GOLD2    = (232, 201, 134)
-IVORY    = (244, 241, 234)     # #F4F1EA
+INK      = (11, 11, 15)        # #0B0B0F  black card ground (bold system)
+INK2     = (20, 20, 26)
+GOLD     = (255, 230, 0)       # #FFE600  signal yellow: numbers / prices (was gold)
+GOLD2    = (255, 240, 120)
+IVORY    = (255, 255, 255)     # white (was ivory)
 WHITE    = (255, 255, 255)
 ORANGE   = (255, 106, 0)       # caption boxed word (ADS_PLAYBOOK lock)
-RED      = (226, 54, 54)
+RED      = (255, 45, 45)
 GREEN    = (46, 171, 110)
-FOREST   = (31, 61, 43)        # Thomson Reserve brand world
+FOREST   = (8, 8, 12)          # near-black tint for interstitials (was forest green)
 SAND     = (237, 230, 214)
 SHADOW   = (0, 0, 0)
 
@@ -66,12 +66,12 @@ def overshoot(t, k=1.6):
     t -= 1; return t * t * ((s + 1) * t + s) + 1
 
 # ---------------------------------------------------------------- plates
-def plate(seed=1, warm=True, zoom=1.0, dx=0, dy=0):
+def plate(seed=1, warm=False, zoom=1.0, dx=0, dy=0):
     """Stand-in for the selfie footage: warm room gradient, bokeh, soft
     head-and-shoulders silhouette with eye-line at ~38% and head ~16% tall."""
     rnd = random.Random(seed)
-    top = np.array([46, 36, 32]) if warm else np.array([26, 30, 38])
-    bot = np.array([92, 72, 58]) if warm else np.array([52, 60, 74])
+    top = np.array([46, 36, 32]) if warm else np.array([34, 38, 46])
+    bot = np.array([92, 72, 58]) if warm else np.array([78, 84, 98])
     g = np.linspace(0, 1, H)[:, None, None]
     arr = (top * (1 - g) + bot * g).astype(np.uint8)
     arr = np.repeat(arr, W, axis=1)
@@ -80,7 +80,7 @@ def plate(seed=1, warm=True, zoom=1.0, dx=0, dy=0):
     bd = ImageDraw.Draw(bok)
     for _ in range(14):
         x, y, r = rnd.randint(-100, W + 100), rnd.randint(-100, int(H * 0.55)), rnd.randint(40, 160)
-        c = (255, 214, 160, rnd.randint(18, 48))
+        c = (220, 228, 240, rnd.randint(14, 36))
         bd.ellipse((x - r, y - r, x + r, y + r), fill=c)
     bok = bok.filter(ImageFilter.GaussianBlur(28))
     im = Image.alpha_composite(im.convert("RGBA"), bok)
@@ -89,14 +89,14 @@ def plate(seed=1, warm=True, zoom=1.0, dx=0, dy=0):
     ld = ImageDraw.Draw(light)
     ld.polygon([(0, 0), (int(W * 0.55), 0), (int(W * 0.25), H), (0, H)], fill=70)
     light = light.filter(ImageFilter.GaussianBlur(140))
-    im = Image.composite(Image.new("RGBA", (W, H), (255, 232, 200, 255)), im, light.point(lambda v: v))
+    im = Image.composite(Image.new("RGBA", (W, H), (235, 240, 250, 255)), im, light.point(lambda v: v))
     # silhouette: eyes at 38% H, head 16% H tall
     sil = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     sd = ImageDraw.Draw(sil)
     eye_y = int(H * 0.38); head_h = int(H * 0.16); head_w = int(head_h * 0.74)
     cx = int(W * 0.5)
     top_y = eye_y - int(head_h * 0.42)
-    body = (38, 30, 28, 255)
+    body = (24, 26, 32, 255)
     sd.ellipse((cx - head_w // 2, top_y, cx + head_w // 2, top_y + head_h), fill=body)
     neck_y = top_y + int(head_h * 0.92)
     sd.rounded_rectangle((cx - 70, neck_y, cx + 70, neck_y + 120), 40, fill=body)
@@ -106,7 +106,7 @@ def plate(seed=1, warm=True, zoom=1.0, dx=0, dy=0):
     # faint skin tone so the silhouette does not read as a hole
     face = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     fd = ImageDraw.Draw(face)
-    fd.ellipse((cx - head_w // 2 + 14, top_y + 14, cx + head_w // 2 - 14, top_y + head_h - 10), fill=(120, 92, 74, 110))
+    fd.ellipse((cx - head_w // 2 + 14, top_y + 14, cx + head_w // 2 - 14, top_y + head_h - 10), fill=(140, 120, 104, 110))
     face = face.filter(ImageFilter.GaussianBlur(10))
     im = Image.alpha_composite(im, face)
     # vignette
@@ -223,7 +223,7 @@ def caption_multiline(layer, cues, y_frac=0.70, size=92, **kw):
     for i, (words, ai) in enumerate(cues):
         caption(layer, words, ai, y_frac=start + i * lh / H, size=size, **kw)
 
-def eyebrow(layer, s, bg=(12, 12, 12), fg=GOLD, y_frac=0.13, size=46, font_fn=OSWALD, slide=1.0):
+def eyebrow(layer, s, bg=(8, 8, 8), fg=GOLD, y_frac=0.13, size=46, font_fn=OSWALD, slide=1.0):
     f = font_fn(size, 700) if font_fn in (OSWALD, INTER, MONT) else font_fn(size)
     tw = text_w(f, s); pad = 34
     bw = tw + pad * 2; bh = int(size * 1.7)
@@ -327,9 +327,9 @@ def dev_receipt(layer, t=1.0, y=0.74):
         sc = overshoot(min(1, (t - 0.45) / 0.35))
         cxm, cym = px0 + (tw + 48) / 2, py0 + 34
         hw, hh = (tw + 48) / 2 * sc, 34 * sc
-        rrect(layer, (cxm - hw, cym - hh, cxm + hw, cym + hh), 34, GREEN + (255,))
+        rrect(layer, (cxm - hw, cym - hh, cxm + hw, cym + hh), 34, GOLD + (255,))
         if sc > 0.5:
-            d.text((cxm, cym), s, font=f, fill=WHITE + (255,), anchor="mm")
+            d.text((cxm, cym), s, font=f, fill=INK + (255,), anchor="mm")
 
 def dev_dotgrid(layer, t=1.0, total=1268, lit=1066, cols=32, top=0.16, bottom=0.60):
     """1,268 dots; 84% of them light up orange = the competition lives next door."""
@@ -426,11 +426,11 @@ def dev_vs_split(base_left, base_right, seam=0.5, left_title="WHAT I DON'T LIKE"
     layer = new_layer(); ld = ImageDraw.Draw(layer)
     ld.line((sx + skew, 0, sx - skew, H), fill=IVORY + (255,), width=6)
     # titles
-    for title, col, x, items, anc in ((left_title, RED, 60, left_items, "la"), (right_title, GREEN, W - 60, right_items, "ra")):
+    for title, col, x, items, anc in ((left_title, RED, 60, left_items, "la"), (right_title, GOLD, W - 60, right_items, "ra")):
         f = ARCHIVO(44); tw = text_w(f, title)
         bx0 = x if anc == "la" else x - tw - 40
         rrect(layer, (bx0, int(H * 0.14), bx0 + tw + 40, int(H * 0.14) + 72), 12, col + (255,), shadow=8)
-        ld.text((bx0 + 20, int(H * 0.14) + 36), title, font=f, fill=WHITE + (255,), anchor="lm")
+        ld.text((bx0 + 20, int(H * 0.14) + 36), title, font=f, fill=(WHITE if col == RED else INK) + (255,), anchor="lm")
         yy = int(H * 0.14) + 110
         for k, it in enumerate(items):
             if k / max(1, len(items)) > t: break
@@ -590,9 +590,9 @@ def dev_checklist(layer, t=1.0, y_top=0.49):
         y += 112
 
 def dev_endcard(t=1.0):
-    base = broll("deck_p06", cx=2250, darken=0.55, zoom=1.0 + 0.03 * (1 - t))
+    base = broll("deck_p06", cx=2250, darken=0.45, zoom=1.0 + 0.03 * (1 - t))
     layer = new_layer(); d = ImageDraw.Draw(layer)
-    layer.alpha_composite(Image.new("RGBA", (W, H), INK + (140,)))
+    layer.alpha_composite(Image.new("RGBA", (W, H), INK + (120,)))
     scrim(layer, int(H * 0.30), int(H * 0.75), alpha=200, color=INK)
     # eyebrow
     f = OSWALD(34, 500); s = "LIVE 60-MINUTE WEBINAR"
@@ -616,8 +616,7 @@ def dev_endcard(t=1.0):
         d.text((cx, cy), s, font=f, fill=INK + (255,), anchor="mm")
     d.text((W // 2, int(H * 0.80)), "Click the link below · free · live Q&A", font=INTER(28, 500), fill=IVORY + (190,), anchor="mm")
     # wordmark lockup
-    d.text((W // 2, int(H * 0.90)), "SINGAPORE REAL ESTATE INSIDER", font=MONT(28, 800), fill=IVORY + (220,), anchor="mm")
-    d.text((W // 2, int(H * 0.925)), "with Coach Edmund Tan", font=SERIF_I(30), fill=GOLD + (230,), anchor="mm")
+    d.text((W // 2, int(H * 0.90)), "LIVE · 60 MIN · FREE", font=OSWALD(30, 600), fill=IVORY + (200,), anchor="mm")
     return compose(base, layer)
 
 def anatomy():
@@ -680,7 +679,7 @@ def F04():  # torn split: b-roll top, speaker bottom
     out = Image.composite(top, bot.transform((W, H), Image.AFFINE, (1, 0, 0, 0, 1, -int(H * 0.16)), Image.BICUBIC), m)
     layer = new_layer(); torn_edge(layer, seam_y); stand_in_tag(layer)
     caption(layer, ["1,268", "UNITS"], 0, emo="1f3e2", y_frac=0.74)
-    eyebrow(layer, "THOMSON RESERVE · 1,268 UNITS · 2 COLLECTIONS", y_frac=0.13, size=30, bg=(12, 12, 12), fg=IVORY)
+    eyebrow(layer, "THOMSON RESERVE · 1,268 UNITS · 2 COLLECTIONS", y_frac=0.13, size=30, bg=GOLD, fg=INK)
     return compose(out, layer)
 
 def F05():  # dot grid 84%
@@ -725,7 +724,7 @@ def F09():  # NOT YET slam with flash
     layer = new_layer(); stand_in_tag(layer)
     layer.alpha_composite(Image.new("RGBA", (W, H), (0, 0, 0, 110)))
     dev_slam(layer, "NOT YET.", 1.0, y=0.62, size=210)
-    eyebrow(layer, "“DAD, WOULD YOU BUY THOMSON RESERVE?”", y_frac=0.13, size=36, bg=IVORY, fg=INK)
+    eyebrow(layer, "“DAD, WOULD YOU BUY THOMSON RESERVE?”", y_frac=0.13, size=36, bg=GOLD, fg=INK)
     return compose(base, layer)
 
 def F10():  # interstitial
@@ -897,6 +896,114 @@ def A8(t, i):  # end card
 CLIPS = {"A1_hook_punch_caption": A1, "A2_whip_pan_to_aerial": A2, "A3_receipt_rollup": A3,
          "A4_dotgrid_84pct": A4, "A5_TEL_bars_flash": A5, "A6_flash_NOT_YET_slam": A6,
          "A7_VS_split_wipe": A7, "A8_end_card": A8}
+
+
+# ---------------------------------------------------------------- v2 additions (2026-10-04 feedback)
+def dev_photo_card(layer, t=1.0, photo=None, caption_text="PARC CLEMATIS · 2021", x_frac=0.80, y_frac=0.31, rot=-7, w=300):
+    """Family photo as a tilted print that drops in. `photo` is a PIL image
+    (a frame from C:\\Users\\Admin\\Pictures\\Family & Daughter on the desktop);
+    here a neutral placeholder. Sits off the face: right column, above the chin."""
+    h = int(w * 1.25)
+    drop = int((1 - ease_out(t, 4)) * -520)
+    cx, cy = int(W * x_frac), int(H * y_frac) + drop
+    card = Image.new("RGBA", (w + 40, h + 110), (0, 0, 0, 0))
+    cd = ImageDraw.Draw(card)
+    cd.rounded_rectangle((0, 0, w + 40, h + 110), 10, fill=(250, 250, 250, 255))
+    if photo is None:
+        cd.rectangle((20, 20, w + 20, h + 20), fill=(190, 196, 206, 255))
+        cd.text(((w + 40) // 2, h // 2 + 20), "FAMILY PHOTO\nGOES HERE", font=INTER(24, 600), fill=(90, 96, 110, 255), anchor="mm", align="center")
+    else:
+        ph = photo.convert("RGB").resize((w, h), Image.LANCZOS)
+        card.paste(ph, (20, 20))
+    cd.text(((w + 40) // 2, h + 62), caption_text, font=OSWALD(24, 500), fill=(30, 30, 36, 255), anchor="mm")
+    card = card.rotate(rot * ease_out(t), resample=Image.BICUBIC, expand=True)
+    sh = Image.new("RGBA", layer.size, (0, 0, 0, 0))
+    sm = Image.new("RGBA", card.size, (0, 0, 0, 0)); ImageDraw.Draw(sm).rectangle((0, 0, card.width, card.height), fill=(0, 0, 0, 0))
+    a = card.split()[3]
+    shadow = Image.new("RGBA", card.size, (0, 0, 0, 160)); shadow.putalpha(a)
+    sh.alpha_composite(shadow, (cx - card.width // 2, cy - card.height // 2 + 18))
+    layer.alpha_composite(sh.filter(ImageFilter.GaussianBlur(16)))
+    layer.alpha_composite(card, (cx - card.width // 2, cy - card.height // 2))
+
+def caption_anim(layer, words, accent_idx, style, t, emo=None, y_frac=0.70, size=92, box_color=ORANGE):
+    """Animated caption arrivals. style in: pop | slide | wordpop | shake | flip | typebox.
+    t in [0,1] over the arrival (~8 frames); the cue then holds."""
+    if style == "pop":            # whole line 1.15 -> 1.0
+        caption(layer, words, accent_idx, emo=emo, y_frac=y_frac, size=size, box_color=box_color,
+                scale=1 + 0.15 * (1 - ease_out(t)))
+    elif style == "slide":        # line slides up 60px with fade; box pops after
+        dy = int((1 - ease_out(t)) * 60)
+        tmp = new_layer()
+        caption(tmp, words, accent_idx, emo=emo, y_frac=y_frac, size=size, box_color=box_color,
+                pop=overshoot(min(1, max(0, (t - 0.3) / 0.6))))
+        tmp = tmp.transform((W, H), Image.AFFINE, (1, 0, 0, 0, 1, -dy))
+        a = tmp.split()[3].point(lambda v: int(v * min(1, t * 2.5)))
+        tmp.putalpha(a); layer.alpha_composite(tmp)
+    elif style == "wordpop":      # words appear one by one, each with its own pop
+        n = len(words); k = min(n, int(t * n) + 1)
+        shown = words[:k]
+        ai = accent_idx if (accent_idx is not None and accent_idx < k) else None
+        local = (t * n) - (k - 1)
+        caption(layer, shown, ai, emo=emo if k == n else None, y_frac=y_frac, size=size, box_color=box_color,
+                scale=1 + 0.18 * (1 - ease_out(min(1, local))))
+    elif style == "shake":        # red warning: 2-frame horizontal jitter then settle
+        dx = int(math.sin(t * 40) * 14 * (1 - t))
+        tmp = new_layer()
+        caption(tmp, words, accent_idx, emo=emo, y_frac=y_frac, size=size, box_color=RED)
+        layer.alpha_composite(tmp.transform((W, H), Image.AFFINE, (1, 0, -dx, 0, 1, 0)))
+    elif style == "flip":         # box flips from black to accent colour (vertical squash)
+        sq = abs(math.cos(t * math.pi)) if t < 0.5 else 1.0
+        col = INK if t < 0.5 else box_color
+        caption(layer, words, accent_idx, emo=emo, y_frac=y_frac, size=size, box_color=col,
+                pop=max(0.6, sq))
+    elif style == "typebox":      # box width wipes open left->right, word revealed inside
+        caption(layer, words, accent_idx, emo=emo, y_frac=y_frac, size=size, box_color=box_color,
+                pop=ease_out(t))
+
+def F18():  # photo card over the hook
+    base = plate(1, zoom=1.06)
+    layer = new_layer(); stand_in_tag(layer)
+    eyebrow(layer, "WOULD I BUY THIS FOR MY DAUGHTER?")
+    dev_photo_card(layer, 1.0)
+    caption(layer, ["MY", "DAUGHTER"], 1, emo="1f467", y_frac=0.70)
+    return compose(base, layer)
+
+def F19():  # caption animation bank, six styles at rest + mid-arrival
+    base = Image.new("RGB", (W, H), (18, 18, 22))
+    layer = new_layer(); d = ImageDraw.Draw(layer)
+    d.text((W // 2, int(H * 0.06)), "CAPTION ARRIVALS — six styles, rotated per cue group", font=OSWALD(34, 600), fill=GOLD + (255,), anchor="mm")
+    rows = [("pop", ["MY", "DAUGHTER", "MADE"], None, 0.55), ("slide", ["$375,000"], 0, 0.55), ("wordpop", ["NOT", "THE", "2-BEDDER"], 2, 0.75),
+            ("shake", ["HIGH", "SUPPLY", "RISK"], 1, 0.3), ("flip", ["AFTER", "IT", "OPENED?"], 2, 0.45), ("typebox", ["84%", "ONE", "TYPE"], 0, 0.6)]
+    for i, (st, ws, ai, tt) in enumerate(rows):
+        y = 0.16 + i * 0.13
+        d.text((60, int(H * y) - 70), st.upper() + f"   t={tt}", font=INTER(24, 600), fill=(150, 156, 170, 255))
+        caption_anim(layer, ws, ai, st, tt, y_frac=y, size=76)
+    return compose(base, layer)
+
+FRAMES["F18_V1_family_photo_card"] = F18
+FRAMES["F19_caption_arrival_bank"] = F19
+
+def A9(t, i):   # caption arrival showcase: 6 cues, ~0.5s each, each a different style
+    base = plate(1, zoom=1.0 + 0.04 * t)
+    layer = new_layer()
+    cues = [("pop", ["MY", "DAUGHTER", "MADE"], None, None), ("slide", ["$375,000"], 0, "1f4b0"),
+            ("wordpop", ["NOT", "THE", "2-BEDDER"], 2, None), ("shake", ["HIGH", "SUPPLY", "RISK"], 1, "26a0"),
+            ("flip", ["AFTER", "IT", "OPENED?"], 2, "1f4c9"), ("typebox", ["84%", "ONE", "TYPE"], 0, None)]
+    k = min(5, int(t * 6)); local = (t * 6) - k
+    st, ws, ai, em = cues[k]
+    caption_anim(layer, ws, ai, st, min(1, local * 2.2), emo=em, y_frac=0.70)
+    return compose(base, layer)
+
+def A10(t, i):  # photo card drop-in on "my daughter"
+    base = plate(1, zoom=1.0 + 0.06 * ease_out(min(1, t * 2)))
+    layer = new_layer()
+    eyebrow(layer, "WOULD I BUY THIS FOR MY DAUGHTER?", slide=ease_out(min(1, t * 3)))
+    if t > 0.15: dev_photo_card(layer, min(1, (t - 0.15) / 0.35))
+    if t > 0.25: caption_anim(layer, ["MY", "DAUGHTER"], 1, "wordpop", min(1, (t - 0.25) / 0.25), emo="1f467", y_frac=0.70)
+    return compose(base, layer)
+
+CLIPS["A9_caption_arrivals"] = A9
+CLIPS["A10_family_photo_drop"] = A10
 
 if __name__ == "__main__":
     which = sys.argv[1:] or ["frames"]

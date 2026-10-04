@@ -1,6 +1,6 @@
 # REI Ad Motion Library — transitions, moves, type motion, and the anti-tell rules
 Version: v1.0
-Status: CANDIDATE (first use: Thomson Reserve × Daughter EDB, 2026-10-04)
+Status: CANDIDATE (first use: Thomson Reserve × Daughter EDB, 2026-10-04; caption-arrival bank added same day on Edmund's ruling)
 Date: 2026-10-04
 Sources: `E:\REMOTION\ADS_PLAYBOOK.md` norms as surfaced in `/rei-ad-build` (171 vertical ads measured); `render_ad_v4.py` (`motion()`, `build_shots()` zoom ladder and whip/punch/push assignment); `REI_Ad_Reel_Edit_Style_Bible_v1.0.md` §4; the professionally cut S&P reference edit (2026-08-26); the Thomson Reserve styleframes and motion previews rendered 2026-10-04.
 Companion: Style Bible (look, type, colour) · ADS_PLAYBOOK (measured norms) · DEVICE_LIBRARY (graphic devices). This file owns **how things move and how shots join**.
@@ -58,7 +58,14 @@ Companion: Style Bible (look, type, colour) · ADS_PLAYBOOK (measured norms) · 
 
 | Name | Spec | Where |
 |---|---|---|
-| caption pop | line scales 1.15→1.00 in 4 frames, ease-out | every caption cue |
+| caption pop | line scales 1.15→1.00 in 4 frames, ease-out | the resting arrival |
+| caption slide | line rises 60px with fade over 6 frames, box pops after | body cues after a hold |
+| caption wordpop | words appear one by one, each 1.18→1.00 | hooks, question cues |
+| caption shake | red box, 2-frame horizontal jitter that settles | warnings only (≤2 per ad) |
+| caption flip | box squashes vertically from black to orange | the pivot word |
+| caption typebox | box wipes open left→right revealing the word | numbers |
+| *(rule)* | arrivals rotate by cue group, never the same twice in a row; arrival ≤8 frames then the cue holds still; exits are cuts | reference: `styleframes.py::caption_anim`, preview A9 |
+| photo drop | tilted print falls in from above (−520px, ease-out⁴), lands at −7° | family-proof lines; never the same photo twice |
 | box pop | the orange box scales 0→1.0 with overshoot 1.6 over 6 frames, the word appears at 60% | the boxed word, when the cue is a number or the pivot |
 | roll-up | digits count from 0 to value over 0.6–0.9s, ease-out ³ | prices, %, counts in cards |
 | rise-in | card translates +260px→0 over 10 frames with a soft shadow | bottom-third cards |

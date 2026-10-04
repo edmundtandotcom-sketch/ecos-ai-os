@@ -1,11 +1,11 @@
 # EDB — Thomson Reserve × "Would I buy it for my daughter?" (NL03-B)
-Version: v1 · Status: DRAFT FOR APPROVAL · Date: 2026-10-04
+Version: v1.1 · Status: DRAFT FOR APPROVAL · Date: 2026-10-04 (v1.1 same day: Edmund's four rulings applied — bold palette, Body 3 parked, no logo + royalty-free bed, animated captions; family photos and project footage added as inputs)
 Engine: Client Advisory · Campaign: Thomson Reserve webinar (preview 17 Oct) · Narrator: Daughter (NL03 variant B)
 Master: 9:16 1080×1920 · crops 4:5 and 1:1 · plus a 15s trim per shipped ad
 Source: selfie phone takes (Drive folder `1Oh1K2aw8K9mMtJDN1BQkKp3VZeSdhlLb`), script doc "Daughter New Spinoff Ads"
 Governs: `REI_Ad_Reel_Edit_Style_Bible_v1.0.md` (§4 motion locks, §7 QC) as reconciled with `E:\REMOTION\ADS_PLAYBOOK.md` (the measured norms) — where they disagree the Playbook wins, see §2.
 Companion: `00_PRODUCTION_FOUNDATIONS/REI_Ad_Motion_Library_v1.0.md` (the transition/effect vocabulary used below)
-Styleframes: `styleframes/` — 17 stills F01–F17 and 8 motion previews A1–A8, rendered 2026-10-04 and inspected frame by frame before this brief was written. Numbers in brackets like **[F05]** point at them.
+Styleframes: `styleframes/` — 19 stills F01–F19 and 10 motion previews A1–A10, rendered 2026-10-04 and inspected frame by frame before this brief was written. Numbers in brackets like **[F05]** point at them.
 
 ---
 
@@ -26,21 +26,26 @@ Styleframes: `styleframes/` — 17 stills F01–F17 and 8 motion previews A1–A
 | Selfie Body2 | `1u0d4zy-Vt8TPcVUtCUSsBe1xY_CZoZKZ` | 85 MB | "Test Exit" body + CTA |
 | Deck to ICs (34 pp) · Ebook (18 pp) | in `Raw Assets/` | — | Project imagery and facts. Pages used as b-roll: deck 4 (catchment map), 6 (towers aerial), 10 (grand arrival night), 11 (lap pool + tower), 12 (PES view), 16 (leisure pool), 17 (canopy pool aerial), 18 (grand lawn). Pages used for *facts only*, never shown: ebook 5 (unit mix 1,066/84%), 6–7 (TEL), 9 (Ai Tong), 13 (land cost $1,178 psf) |
 
+**Added 2026-10-04 (Edmund):**
+- **Family & Daughter photos** — `C:\Users\Admin\Pictures\Family & Daughter` (desktop only). Used by the new **photo_card** device **[F18, A10]**: a tilted print that drops in on "my daughter" lines, right column, above the chin. Pick 3–4 photos per ad (never the same one twice); one with the Parc Clematis block in the background if it exists replaces the towers stand-in at H3. Photos of family stay out of this repo and out of Drive folders shared with the agency.
+- **Project footage from online sources** — fetch on the desktop, developer/official material only (the agency is marketing the project, so the official flythrough and brand film are the clean sources; third-party drone videos and other agents' reviews are not). Candidates found 2026-10-04: the official Thomson Reserve site lists a *Project Flythrough Video* (3D renders, facilities, views) and the *Close to Nature* brand film (Sep 2026) — [thomsonreservescondo.sg](https://thomsonreservescondo.sg/), [the-thomsonreserve.sg](https://the-thomsonreserve.sg/); for Parc Clematis, the official site [parcclematiscondo.com.sg](https://www.parcclematiscondo.com.sg/home/) and the SRX listing's drone view [srx.com.sg](https://www.srx.com.sg/condo/parc-clematis-84642/condo-map). Verify the source is the developer's before it enters the allowlist; log each clip in `SG_BROLL` with its origin.
+
 **Not in the folder — needed or flagged:**
-- **Body 3 (Ballot Test)** is scripted but not shot. V3 is written for it; until it exists V3 runs on Hook 4 + Body 2-short.
+- **Body 3 (Ballot Test)** — parked by Edmund (2026-10-04). V3 runs on Hook 4 + Body 2-short; the ballot_tiles device moves to the "first choice gone" line in Hook 4.
 - **Super-short selfie V1/V2** — not identifiable in the file names. If they are inside one of the hook files, slate-split finds them; otherwise V5 runs on Hook 5 + the 3-line selfie CTA.
-- **SRE logo file** for the end card — the styleframes use a type-set wordmark as a placeholder.
-- **Music bed** — Playbook default is a bed at 9% under VO. Only beds from `E:\REMOTION\public\audio` (owned). No third-party music.
+- **No logo** (Edmund, 2026-10-04). End cards carry the question, the date chip and the button only.
+- **Music bed** — royalty-free, soft: 6–9% under VO, from a licence-clear library (YouTube Audio Library / Pixabay Music class — keep the licence file with the bed in `E:\REMOTION\public\audio`). Only where the cut needs it; V5 runs dry until the CTA.
 - **Footage framing is unknown from here.** Selfie takes are usually tighter than the 12–16% head-height target. Per `/rei-ad-build` §3.4: a 9:16 crop only magnifies; if crown-to-chin exceeds ~14% of the source frame, say so and do not letterbox — the zoom ladder (§2.3) is designed to run at 1.00 / 1.06 / 1.12 on tight footage instead of 1.00 / 1.10 / 1.20.
 
 ## 2. The system for this campaign (locked across all six)
 
 1. **Captions** **[F17]**: Anton, white, ALL CAPS, 92px at 1080-wide (Punch preset 150px, 1–2 words), 2–3 words per cue, line at 65–74% of frame height, 6% side margins. **Exactly one word per cue in an orange rounded box** (`#FF6A00`), red box (`#E23636`) only on a warning word, one small emoji (0.7× cap height) under the line on ~every third cue, never on consecutive cues. Rendered as plates (`devices.caption_plate`), not ASS. A device that carries its own copy owns the frame — no caption on top of it (receipt card, price gap, interstitial).
+   **Animated arrivals (Edmund: "yes to captions — animated to capture attention")** **[F19, A9]**: six arrival styles rotate by cue group, never the same twice in a row — `pop` (line 1.15→1.0), `slide` (up 60px + box pops after), `wordpop` (word by word, each with its own pop — the default on hooks), `shake` (red box, 2-frame jitter — warnings only), `flip` (box squashes from black to orange — pivots), `typebox` (box wipes open left→right — numbers). Arrival ≤8 frames; the cue then holds still. Exits are cuts.
 2. **The face is sacred.** Eye-line 38–42%, nothing crosses the face box at any frame. Cards sit below the chin (≥0.49H on the stand-in; measure on the real take) or run over b-roll. Top 10% and bottom 17% hold no information (platform UI).
 3. **Never static.** Every shot carries a move from the Motion Library: push for narration, punch on numbers, whip into a new section. Zoom ladder alternates 1.00 → 1.10 → 1.20 (or the tight-footage ladder) so consecutive speaker shots never share a scale.
 4. **Inserts**: project renders from the deck (listed above, cropped below the developer's logo strip) alternated with the vetted SG stock allowlist. **No insert appears twice in one ad.** Inserts run full-frame on a push, or as a **torn split** (b-roll top 52%, speaker below, torn-paper seam) **[F04]** — the split keeps the speaker on screen while the picture changes, which is what makes 50 cuts/min feel like one conversation rather than a slideshow.
 5. **Numbers** always get a treatment: gold (`#C9A45C`) inside ink cards (`#0F1A2B`), orange box in captions. Never split a number across cues.
-6. **Palette**: captions are the house system; cards are Family A dark; the project's own forest/sand world comes in through the renders. No brand blue anywhere in this set.
+6. **Palette — BOLD (Edmund, 2026-10-04: "it needs to stand out and call out bold")**: black card ground `#0B0B0F`, **signal yellow `#FFE600`** for every number and price, **red `#FF2D2D`** for warnings, orange `#FF6A00` for the boxed caption word, white type. Banners rotate yellow/black, red/white, black/yellow — the combos from Edmund's own banner table. The navy/gold "luxe" family is retired from this campaign; the project's renders bring the only green in the frame. (The brown in the first pass was the stand-in plate, not a grade; the plate is now neutral so it cannot read as a colour treatment.)
 7. **Audio**: VO loudnorm −16 LUFS; bed at 9%; a whoosh on every whip and a soft hit on every slam/number pop at about −18 dBFS, from the owned SFX set only; music ducks 3 dB under every device hit.
 8. **Grade**: S5 clean + bright on the speaker; renders get a 6% contrast lift and nothing else.
 9. **Hook detachability**: every hook ends on a whip-out so any body can pick up from it.
@@ -68,8 +73,8 @@ Anchors are **spoken phrases**, not clock times; the composer resolves them on t
 | # | Anchor (he says…) | Picture | Device / move | Caption | In | SFX |
 |---|---|---|---|---|---|---|
 | H1 | "My daughter" | Speaker, zoom 1.00 | **punch-in** 1.00→1.13 over 10 frames; eyebrow banner slides in from left: *WOULD I BUY THIS FOR MY DAUGHTER?* (black/gold, from the script's banner table) **[F01, A1]** | MY DAUGHTER | 4-frame white flash from black | soft hit |
-| H2 | "already benefited" | Speaker, 1.10 | push | ALREADY [BENEFITED] | cut | — |
-| H3 | "Parc Clematis" | Torn split: top = deck p06 towers (stand-in for a Parc Clematis still if one exists — **ask**), speaker below | torn_split in from top with a 6-frame slide | [PARC CLEMATIS] | whip-down | whoosh |
+| H2 | "already benefited" | Speaker, 1.10 | push; **photo_card** drops in top-right (a Family & Daughter photo) **[F18, A10]** | ALREADY [BENEFITED] | cut | — |
+| H3 | "Parc Clematis" | Torn split: top = Parc Clematis (official-site still or drone view, desktop-fetched; towers render as fallback), speaker below | torn_split in from top with a 6-frame slide | [PARC CLEMATIS] | whip-down | whoosh |
 | H4 | "bought at" | Speaker, 1.00 | **receipt_card** rises from bottom; BOUGHT $1.15M rolls up **[F02, A3]** | — | cut | tick |
 | H5 | "sold at" | hold | SOLD $1.525M rolls up, gold | — | — | tick |
 | H6 | "1.525" (end) | hold | +$375,000 FORWARD pill pops (overshoot 1.6) | — | — | hit |
@@ -201,7 +206,9 @@ A (serif question + gold button, ink over render) · B (black card, Archivo Blac
 | **ballot_tiles** | new | `dev_ballot` | over b-roll; stamps rotated −12°/+9°; third tile outlined (fill=None — a filled transparent rect erases the tile) |
 | **two_three_split**, **buyer_pool_q** | new | `dev_two_three` | equal clusters, "?" not numbers |
 | **checklist** | new | `dev_checklist` | white pills, tick after the line is spoken, emoji right |
-| **end_card A** | new | `dev_endcard` | 3s, button overshoot at 0.3–0.8s |
+| **end_card A** | new | `dev_endcard` | 3s, no logo, button overshoot at 0.3–0.8s |
+| **photo_card** | new | `dev_photo_card` | tilted print drops in from above (−520px, ease-out⁴), right column at 0.66W / 0.30H, rotation −7°; never the same photo twice |
+| **caption arrivals** | new | `caption_anim` | six styles; see §2.1 |
 | exit_funnel, plan_abc, strike_through, ten_year_rail | **not yet drawn** — spec only | — | draw as PIL devices in the same style before V2/V3/V6 render |
 
 Every PIL device in `styleframes.py` takes `t∈[0,1]` and renders the animated state, so each ports to `devices.py` as a frame generator (loop the PNG sequence at `-framerate 30`; never fade a single PNG — see `/rei-ad-build` §5).
@@ -274,7 +281,9 @@ Deck pages are referenced by name; `styleframes/prep_assets.py` renders them fro
 | F15 | checklist over the speaker, pills right of the face line | V5 / V1 CTA |
 | F16 | End card A | V1, V4 |
 | F17 | Caption anatomy: UI bands, eye-line, face box, caption line, margins | all |
-| A1–A8 | hook punch + caption pop · whip to aerial · receipt roll-up · dot-grid fill · bars + flash · flash + slam · VS wipe · end-card build | motion timing for the composer |
+| F18 | photo_card over the hook, right column, clear of the face | V1 |
+| F19 | Caption arrival bank: six styles at mid-arrival | all |
+| A1–A10 | hook punch + caption pop · whip to aerial · receipt roll-up · dot-grid fill · bars + flash · flash + slam · VS wipe · end-card build · **caption arrivals (six styles in sequence)** · **photo drop-in** | motion timing for the composer |
 
 ## 8. QC gate (run per ad, per aspect)
 
@@ -290,10 +299,12 @@ Deck pages are referenced by name; `styleframes/prep_assets.py` renders them fro
 - [ ] Hook ends on a whip-out and plays clean against both bodies
 - [ ] The three-tell test (Motion Library §6): no repeated b-roll, no metronomic cut lengths, no caption that drifts from speech
 
-## 9. Decisions for Edmund
+## 9. Decisions — rulings received 2026-10-04 and what is still open
+
+Ruled: bold palette (done, §2.6) · Body 3 parked (V3 on Body 2-short) · no logo, royalty-free bed softly · captions animated (§2.1, six arrival styles).
+
+Still open:
 
 1. **Assign treatments to takes.** Default: V1 on Daughter Hook 1 + Body 1 (first render), V2 on Hook 3 + Body 2. The rest wait for your pick.
-2. **Parc Clematis still** — is there a photo to use at H3? If not, the towers render stands in and the caption carries the name.
-3. **Body 3** — shoot it, or let V3 run on Body 2-short?
-4. **Logo file and music bed** for the end card.
-5. **Style Bible** — approve the §2 reconciliation (orange boxed-word captions replace the yellow-karaoke lock for paid ads) so it stops being a per-brief note.
+2. **Which family photos** go in (3–4 per ad), and whether any shows Parc Clematis.
+3. **Style Bible** — approve v1.1 §0 so the caption and palette rulings stop being per-brief notes.
