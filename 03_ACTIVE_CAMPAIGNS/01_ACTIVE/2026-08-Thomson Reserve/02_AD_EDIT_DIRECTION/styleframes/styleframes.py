@@ -309,9 +309,10 @@ def dev_receipt(layer, t=1.0, y=0.74):
     d.text((x1 - 40, y0 + 34), "HER LAST PROPERTY", font=INTER(26, 500), fill=IVORY + (130,), anchor="ra")
     d.line((x0 + 40, y0 + 96, x1 - 40, y0 + 96), fill=GOLD + (80,), width=2)
     # roll-up numbers
-    v_in  = 1.15  * ease_out(min(1, t * 1.4))
-    v_out = 1.525 * ease_out(max(0, (t - 0.25) / 0.75))
-    gain  = 375000 * ease_out(max(0, (t - 0.45) / 0.55))
+    # a person lets each number land before the next one starts
+    v_in  = 1.15  * ease_out(min(1, t / 0.30))
+    v_out = 1.525 * ease_out(max(0, (t - 0.30) / 0.38))
+    gain  = 375000 * ease_out(max(0, (t - 0.72) / 0.28))
     d.text((x0 + 40, y0 + 122), "BOUGHT", font=INTER(28, 600), fill=IVORY + (150,))
     card_number(layer, (x0 + 40, y0 + 156), f"${v_in:.2f}M", ANTON(78), fill=IVORY)
     # arrow
@@ -320,11 +321,11 @@ def dev_receipt(layer, t=1.0, y=0.74):
     d.text((x0 + 560, y0 + 122), "SOLD", font=INTER(28, 600), fill=IVORY + (150,))
     card_number(layer, (x0 + 560, y0 + 156), f"${v_out:.3f}M", ANTON(78), fill=GOLD)
     # gain pill
-    if t > 0.45:
+    if t > 0.72:
         s = f"+${gain:,.0f} FORWARD"
         f = ARCHIVO(40); tw = text_w(f, s)
         px0 = x1 - 40 - tw - 48; py0 = y1 - 86
-        sc = overshoot(min(1, (t - 0.45) / 0.35))
+        sc = overshoot(min(1, (t - 0.72) / 0.22))
         cxm, cym = px0 + (tw + 48) / 2, py0 + 34
         hw, hh = (tw + 48) / 2 * sc, 34 * sc
         rrect(layer, (cxm - hw, cym - hh, cxm + hw, cym + hh), 34, GOLD + (255,))
