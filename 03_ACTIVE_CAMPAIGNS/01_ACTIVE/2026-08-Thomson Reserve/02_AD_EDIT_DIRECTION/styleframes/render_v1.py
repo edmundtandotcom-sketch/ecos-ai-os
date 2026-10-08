@@ -634,7 +634,7 @@ def pick_takes(folder):
         c = [r for r in rows if r["dur"] >= min_dur and r[key] >= 0.35 and r[key] > r[other]]
         if not c: raise SystemExit(f"no take matches the {key} script well enough (best {max(r[key] for r in rows):.2f}) — is the right folder selected?")
         return max(c, key=lambda r: (round(r[key], 1), r["w"] * r["h"], r["dur"]))
-    hook = best("hook", 5, "body"); body = best("body", 30, "body2")
+    hook = best("hook", 5, "body"); body = best("body", 15, "body2")
     print(f"→ hook: {Path(hook['path']).name}  ({hook['w']}x{hook['h']}, match {hook['hook']:.2f})")
     print(f"→ body: {Path(body['path']).name}  ({body['w']}x{body['h']}, match {body['body']:.2f})")
     return hook["path"], body["path"]
