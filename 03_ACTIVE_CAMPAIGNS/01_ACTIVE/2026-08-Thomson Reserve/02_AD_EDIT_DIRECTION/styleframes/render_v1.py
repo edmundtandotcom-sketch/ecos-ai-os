@@ -161,10 +161,29 @@ def stage_audio(a):
     pf.save(OUT / "frame_framing_check.png"); print("wrote frame_framing_check.png")
 
 # ------------------------------------------------------------------ stage: asr + align
+MODEL_URL = "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-zipformer-en-2023-06-26.tar.bz2"
+def ensure_model():
+    """Fetch + unpack the speech model on first run (one ~290 MB tarball from the sherpa-onnx GitHub release)."""
+    if (ASR_DIR / "tokens.txt").exists(): return
+    import tarfile, urllib.request
+    ASR_DIR.parent.mkdir(parents=True, exist_ok=True)
+    tgz = ASR_DIR.parent / "model.tar.bz2"
+    print("downloading speech model (~290 MB, once) …"); urllib.request.urlretrieve(MODEL_URL, tgz)
+    with tarfile.open(tgz, "r:bz2") as t: t.extractall(ASR_DIR.parent)
+    tgz.unlink(); print("model ready:", ASR_DIR)
+
+def ensure_assets():
+    """Fonts, emoji and the deck pages: run prep_assets.py if anything is missing."""
+    need = not (SF.FONTS / "Anton-Regular.ttf").exists() or not (SF.ASSETS / "deck_p06.png").exists() or not (SF.EMOJI / "1f4b0.png").exists()
+    if need:
+        print("fetching fonts / emoji / deck pages (once) …")
+        subprocess.run([sys.executable, str(HERE / "prep_assets.py")], check=True)
+
 _rec = None
 def recognizer():
     global _rec
     if _rec is None:
+        ensure_model()
         import sherpa_onnx
         d = str(ASR_DIR)
         _rec = sherpa_onnx.OfflineRecognizer.from_transducer(
@@ -654,6 +673,7 @@ if __name__ == "__main__":
         for cand in (r"C:\Users\Admin\Pictures\Family & Daughter", str(HERE.parent / "photos")):
             if Path(cand).is_dir(): a.photos = cand; break
     if a.photos: SF.load_photos(a.photos)
+    ensure_assets(); ensure_model()
     stages = ["audio", "asr", "tighten", "plan", "render", "qc"] if a.stage == "all" else a.stage.split(",")
     if a.folder and not (a.hook and a.body):
         print("\n== PICK TAKES =="); a.hook, a.body = pick_takes(a.folder)

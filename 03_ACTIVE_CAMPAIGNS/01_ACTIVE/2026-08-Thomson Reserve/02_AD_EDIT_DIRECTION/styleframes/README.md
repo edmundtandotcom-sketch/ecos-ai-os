@@ -62,7 +62,15 @@ python render_v1.py --hook "H:\...\Selfie Daughter Hook 1.mp4" --body "H:\...\Se
 | `render` | frame-by-frame compositor: moves, torn splits, inserts, devices, captions, whips/flashes, end card; loudnorm −16 | `TR_V1_Receipt_9x16.mp4` |
 | `qc` | 1 fps contact sheet + scene-cut count | `qc/contact_sheet.jpg` |
 
-### The no-complications way: point it at the folder
+### The no-complications way: one script
+
+```powershell
+.\run_v1.ps1
+```
+
+`run_v1.ps1` (in this folder) installs the Python packages, and `render_v1.py` fetches the speech model, fonts, emoji and deck pages by itself on first run. Then it renders from the takes folder and opens the result. Nothing else to set up.
+
+### Or point it at the folder yourself
 
 ```powershell
 python render_v1.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04_Video Editor\Webinar Daughter Spin Off"
