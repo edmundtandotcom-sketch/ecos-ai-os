@@ -83,3 +83,9 @@ Thumbs.db
 # place and carries the same content. Per constitution §9 rule 7, the full-res
 # original's home is the Asset Library, not Git.
 03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08_Serra residences/Raw Assets/THE SERRA ICB DECK.pdf
+
+# Thomson Reserve styleframes: one small contact sheet (335 KB) is the inspected record;
+# full-res frames, clips, fonts and rendered pages stay out (regenerate with styleframes/).
+!/03_ACTIVE_CAMPAIGNS/01_ACTIVE/2026-08-Thomson Reserve/02_AD_EDIT_DIRECTION/styleframes/contact_sheet.jpg
+__pycache__/
+*.pyc

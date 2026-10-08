@@ -1,13 +1,26 @@
 # REI Ad Reel — Edit Style Bible
-Version: v1.0
-Status: CANDIDATE (Edmund to approve; motion-frame verification pass pending — see §9)
-Date: 2026-08-25
-Supersedes: none (first consolidation of editing/presentation rules for paid ad reels)
+Version: v1.1
+Status: CANDIDATE (Edmund to approve; §0 reconciliation added 2026-10-04)
+Date: 2026-10-04
+Supersedes: v1.0 (2026-08-25) — adds §0 reconciliation with the measured ADS_PLAYBOOK norms and hands motion/transition rules to the Motion Library; no other section changed
 Sources: 10 approved static finals read at pixel level (`01_ASSET_LIBRARY/.../08_LL_CONTENT_SERIES_16_REVIEW/03_STATIC_CREATIVES_REVIEW`, 2026-06-27 vintage); `REI_VSL_Video_Style_Rules_RESCUED.md` (Edmund's locked v5-review rules, Jun 2026); `REI_VSL_Pipeline_Recurring_Bugs_RESCUED.md`; SharpCut Studio `captionLayout.ts` (12-preset caption engine, live code); Serra `LOOK_TEST/README.md` (S5 grade + compositing chain, 2026-08-24); Amberwood `00_INDEX.md` VA1 dynamic-layer vocabulary; `REI_Video_Production_Foundation_v1.3.md` Format 1; LL post-launch hook/body export library structure; Meta ad account finals inventory (titles/durations, 3 accounts, 2026-08-25).
 
 **What this file is:** the presentation/editing DNA for paid ad reels — look, type, color, captions, motion, pacing, and the variation engine that keeps every ad visually distinct. It deliberately contains **no script rules** (that's `LAYER_3A` + campaign angle masters). `/rei-ads-routine` executes this file.
 
 ---
+
+## 0. Reconciliation with the measured norms (2026-10-04)
+
+`E:\REMOTION\ADS_PLAYBOOK.md` (171 vertical ads measured, surfaced through `/rei-ad-build`) post-dates this file and wins where they disagree:
+
+| This file said | Playbook measures | Ruling for paid ads |
+|---|---|---|
+| §4.1 visual layer changes every ~3s | 40–55 cuts/min, ~1.1s median shot | 3s is the *slow* end, for device holds only |
+| §4.6 yellow karaoke, Impact, 88px | white caps, **one word in an orange rounded box**, emoji under the line, ~65–74% height, 2–3 words, rendered as plates | boxed-word plate is the paid-ad caption; karaoke stays for organic reels |
+| §4.2 white-flash + zoom-punch mix | a camera move on every shot; transitions rotate, never repeat | expanded into `REI_Ad_Motion_Library_v1.0.md` §1–§3 |
+| §4.5 ~50/50 stock vs motion graphics | SG-only inserts, never repeated, project renders where they exist | SG allowlist + the project's own deck pages |
+
+§4 remains the law for everything the Playbook does not measure (face never covered, designed punchlines, grade, end card). Motion, transitions and type motion now live in the Motion Library; this file keeps look, type, colour, caption presets, hook anatomy, QC and the variation engine.
 
 ## 1. The two palette families — pick ONE per ad, never mix
 

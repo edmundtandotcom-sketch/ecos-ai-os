@@ -6,9 +6,9 @@ Skill: `/rei-ads-routine` v1 (test run)
 ## 0. Flags before anything else
 
 1. **Register mismatch.** This script is verbatim NL01 — "THE BENCHMARK" from the New Launch Ladder™ campaign (`00_CONTROL/NewLaunchLadder_Ad_Consolidation_Master_v1.0.md`), and the body itself names "the New Launch Ladder™" at the framework beat. It was recorded and filed under `2026-07_SecondPropertyLadder_AdProduction/03_RECORDING_OUTPUTS/10-S&P Angle/`, a different campaign whose canonical register (A01–A20/B01–B20) explicitly says not to cross-reference IDs with NL01–NL06. I'm proceeding — you confirmed the script and want this produced — but the raw footage and this EDB should probably live in the New Launch Ladder campaign folder, not here. Your call on whether to move it or leave SPL as the production home.
-2. **CTA locked: C.** Confirmed by Edmund. "…click the link below. Tell me the project you're looking at and I'll show you whether it can beat the S&P 500." §4/§6 below are written to this. If the actual `S&P CTA-DSLR.mp4` take turns out to have spoken A or B instead, only the CTA caption/chip text needs swapping — nothing else changes.
-3. **Timing is estimated, not measured.** Cloud cannot open the raw files (all 6 exceed the Drive connector's 10MB cap) — so I cannot verify actual take length, delivery pace, or current framing. Script is 483 words; at a natural direct-response pace (150–190 wpm) that's **~155–195s** for the body, +~15s for CTA-C, **+3s end card ⇒ ~175–215s total**. Timestamps below are built on 170 wpm as the working assumption and are flagged `[EST]`. **A desktop pass must confirm real cut points against the actual take before this locks** — see §9.
-4. **Length call.** 483 words is long for the Bible's 120–180s reel spec — it sits in VSL territory (Format 2). **My pick: ship this as the primary VSL-length reel** (the full take that was actually recorded), and separately have a 30–35s cutdown scripted later using the pattern NL01's own master doc already established, for cold-traffic placements. Reason: a full take exists and matches what was filmed; a cutdown from scratch is separate work, not part of this test.
+2. **CTA locked: C — and RESOLVED against the real take (2026-08-25, desktop).** The recorded `S&P CTA-DSLR.mp4` does not contain one variant, it contains **all three**, read back to back and each slated aloud "Call to Action 1 / 2 / 3". The renderer finds the slates and cuts out only the one named in `CTA_VARIANT` — currently `"C"` ("…tell me the project you're looking at"). Switching to A or B is now a one-word config change, no re-record and no re-edit.
+3. **Timing — the estimates below are superseded by measurement (2026-08-25, desktop).** The raw body take is a teleprompter read with **57% dead air across 31 gaps of up to 12 seconds**; untightened the ad runs about **7.5 minutes**, not the ~180–215s estimated here from word count. The renderer now caps every internal pause (`MAX_GAP = 0.38s`) and drops head/tail silence entirely, then remaps all word timings onto the tightened timeline. The `[EST]` timestamps in §4 remain as the *intended structure and order*; the real times come out of the render and land in `out/beats_resolved.json`. **Do not treat §4's clock values as the edit — treat the sequence as the edit.**
+4. **Length call.** 483 words put this in VSL territory (Format 2) rather than the Bible's 120–180s reel spec. Ship it as the primary VSL-length asset; a 30–35s cold-traffic cutdown is separate later work. Note the tightening in flag 3 pulls the finished runtime well below the raw take — final duration comes from the render, not from this estimate.
 
 ## 1. Header
 
@@ -45,8 +45,8 @@ Since I can't inspect `S&P-DSLR.mp4`'s current framing, this is a **target the e
 - **Headroom:** ≥8% of frame height above the crown — never crop the top of the head.
 - **Reserved bands (do not place face or hands here):** top 10% (safety/eyebrow text), bottom 17% (caption anchor at 83% + karaoke line height per Bible §5 geometry).
 - **If the DSLR source is landscape 16:9** (typical interview rig) being center-cropped to 9:16: crop inward evenly around the eye-line, not from a fixed edge. If the resulting crop would exceed the 12–16% head-size target (i.e. speaker reads bigger than that after a straight center crop), **pull back the crop** — add letterbox/blur-fill or reframe wider — rather than accepting an oversized face that fills the frame. That's the direct fix for your framing note.
-- **If source is already tighter than the 12–16% target** (unlikely for a DSLR setup, but possible): do not synthetically zoom out. Flag for a reshoot at wider framing rather than publishing an over-tight ad.
-- **Verification gate:** this section is unverified against real pixels. Desktop must confirm actual head-size % before export — see §9.
+- **If source is already tighter than the 12–16% target:** ← **this is what the footage actually is.** Measured on the real DSLR frame (2026-08-25): crown at y=55, chin at y=428, pupils at y=238. The head is larger than target, and since cropping can only make a head *bigger*, no crop can fix it. The renderer therefore **scales the whole picture back** inside the 9:16 canvas until the head hits 15%, and fills the surround with **flat brand navy** (`FILL_MODE = "navy"` — a blurred copy at this magnification is just a smear of face). It never upscales and never exceeds canvas width, so the head can only land at or below target. A reshoot at wider framing would still be the better long-term fix.
+- **Verification status: MEASURED, not estimated.** The numbers above are read off a real frame. The proof frame (`out/frame_framing_check.png`) still gets a human look before export.
 
 ## 4. Timeline [EST — see flag 3]
 
@@ -98,9 +98,25 @@ Route via `/video-produce`: this is cut/caption/crop/export-class work (no compo
 - Logged as combo #1 in `VARIATION_REGISTER.md` (this folder).
 - Campaign `_INDEX.md` folder map updated to include `06_EDIT_DIRECTION_BRIEFS/`.
 
-## 9. What desktop needs to confirm before this locks
+## 9. Desktop confirmation — status
 
-1. Actual duration and pace of `S&P-DSLR.mp4` + `S&P CTA-DSLR.mp4` — replace every `[EST]` timestamp with measured cuts.
-2. Actual head-size % in the DSLR frame against the §3 target — confirm the crop plan works or needs adjusting.
-3. Which CTA variant is spoken in `S&P CTA-DSLR.mp4` — confirm or correct §4's CTA-C assumption.
-4. Whether this recording/EDB should move to a New Launch Ladder campaign folder (flag 1).
+Worked through on the desktop 2026-08-25 (`desktop_render/render_ad.py`).
+
+| # | Item | Status |
+|---|---|---|
+| 1 | Actual duration and pace | **Measured.** Teleprompter read, 57% dead air over 31 gaps (up to 12s); ~7.5 min raw. Renderer tightens it; real beat times land in `out/beats_resolved.json`. |
+| 2 | Head-size % against §3 | **Measured.** Source is tighter than target — crown y=55, chin y=428, pupils y=238. Fixed by scaling back over navy fill, not by cropping. See §3. |
+| 3 | Which CTA variant is spoken | **Resolved.** The take holds all three, slated aloud. Renderer selects by `CTA_VARIANT`; set to C. |
+| 4 | Should this move to a New Launch Ladder folder? | **Still open — Edmund's call** (flag 1). |
+
+Also found and fixed while running it, worth carrying to the next ad:
+
+- **Whisper auto-detect mis-set the language**, transcribing the first ~55s as Malay and producing gibberish — which silently broke every beat anchor inside that stretch. Language is now forced to English, and a domain prompt stops "S&P 500"→"SMP 500", "stamp duty"→"stem beauty", "walkaway price"→"work away price". Model raised to `medium`, since captions burn straight from this transcript.
+- **Whisper writes numbers as digits**, so anchors phrased "wait four years" never matched "wait 4 years". Two anchors needed that fix.
+- **Anchors now resolve in script order** from a moving cursor, so a phrase said twice (e.g. "your future buyer") attaches to the right occurrence.
+
+## 10. Still to do
+
+- Run the render to completion and QC it by eye (contact sheet + framing proof).
+- Decide the campaign-folder question (flag 1).
+- Log the finished asset in `VARIATION_REGISTER.md` once it ships.
