@@ -38,3 +38,28 @@ python styleframes.py --plate plate.png --photos "C:\Users\Admin\Pictures\Family
 **The speaker is a stand-in plate** unless `--plate` is given: a neutral grey-blue room with a head-and-shoulders silhouette at the spec framing (eye-line 38%, head 16% of frame height).
 
 **What the frames are for**: deciding, before the full render, whether a device is right, where it sits, and how big the type is. Read with `../EDB_TR-Daughter_Spinoff_v1.md` §7, which says what each frame proves.
+
+---
+
+## Full render — `render_v1.py` (added 2026-10-08)
+
+The finished V1 ad from the two selfie takes, end to end, on any machine with Python + ffmpeg (no GPU):
+
+```powershell
+pip install pillow numpy opencv-python-headless imageio-ffmpeg sherpa-onnx pymupdf
+# speech model (one tarball, ~290 MB) from the sherpa-onnx GitHub release, unpacked to ..\asr\
+#   https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-zipformer-en-2023-06-26.tar.bz2
+python prep_assets.py
+python render_v1.py --hook "H:\...\Selfie Daughter Hook 1.mp4" --body "H:\...\Selfie Body1.mp4" --photos "C:\Users\Admin\Pictures\Family & Daughter" --stage all
+```
+
+| Stage | What it does | Output |
+|---|---|---|
+| `audio` | wav per take, resolution/duration, Haar face → crop column + head-size check | `meta.json`, `frame_framing_check.png` |
+| `asr` | sherpa-onnx zipformer (word timestamps) → **aligned to the script**, so captions carry the script's spelling and digits with the take's real timing | `words_*.json` |
+| `tighten` | silence detection, pauses carved (gap cap 0.38s), one re-encode per take, hook + body joined | `base_cut.mp4`, `words.json` |
+| `plan` | phrase-anchored beats (EDB §4), caption cues (2–3 words, one boxed word, six arrival styles), zoom ladder with jitter and a ladder break, breaths, the hold on the question; prints the **human-pass report** | `plan.json` |
+| `render` | frame-by-frame compositor: moves, torn splits, inserts, devices, captions, whips/flashes, end card; loudnorm −16 | `TR_V1_Receipt_9x16.mp4` |
+| `qc` | 1 fps contact sheet + scene-cut count | `qc/contact_sheet.jpg` |
+
+`test_v1.py` runs the whole chain on synthetic footage (stand-in plate + the model's sample speech) so the mechanics can be checked without the takes — that is how it was proven on 2026-10-08.
