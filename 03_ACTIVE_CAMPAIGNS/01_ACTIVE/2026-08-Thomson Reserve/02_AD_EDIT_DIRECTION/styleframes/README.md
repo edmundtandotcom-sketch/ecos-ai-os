@@ -62,4 +62,16 @@ python render_v1.py --hook "H:\...\Selfie Daughter Hook 1.mp4" --body "H:\...\Se
 | `render` | frame-by-frame compositor: moves, torn splits, inserts, devices, captions, whips/flashes, end card; loudnorm −16 | `TR_V1_Receipt_9x16.mp4` |
 | `qc` | 1 fps contact sheet + scene-cut count | `qc/contact_sheet.jpg` |
 
+### The no-complications way: point it at the folder
+
+```powershell
+python render_v1.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04_Video Editor\Webinar Daughter Spin Off"
+```
+
+`--folder` listens to the first 30–45s of every video in the folder, matches each against the Daughter Hook 1 and Body 1 scripts, and picks the best take for each (ties go to the larger picture, so a DSLR take beats the phone). Photos come from `C:\Users\Admin\Pictures\Family & Daughter` automatically if it exists. Work files go to `<folder>\_render_v1\`; the finished ad lands next to the takes as **`TR_V1_Receipt_9x16.mp4`** with `TR_V1_contact_sheet.jpg` beside it.
+
+**Paste-into-desktop-Claude-Code version** (does the install, the model download and the run):
+
+> In the repo folder `03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-08-Thomson Reserve\02_AD_EDIT_DIRECTION\styleframes`: run `pip install pillow numpy opencv-python-headless imageio-ffmpeg sherpa-onnx pymupdf`; download `https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-zipformer-en-2023-06-26.tar.bz2` and extract it so that `..\asr\sherpa-onnx-zipformer-en-2023-06-26\tokens.txt` exists; run `python prep_assets.py`; then run `python render_v1.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04_Video Editor\Webinar Daughter Spin Off"`. Show me the human-pass report it prints, then open `TR_V1_Receipt_9x16.mp4` and `TR_V1_contact_sheet.jpg` from that folder.
+
 `test_v1.py` runs the whole chain on synthetic footage (stand-in plate + the model's sample speech) so the mechanics can be checked without the takes — that is how it was proven on 2026-10-08.

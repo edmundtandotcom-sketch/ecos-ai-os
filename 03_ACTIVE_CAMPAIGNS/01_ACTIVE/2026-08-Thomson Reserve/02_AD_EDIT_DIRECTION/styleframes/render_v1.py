@@ -28,7 +28,7 @@ from styleframes import W, H, INK, GOLD, RED, ORANGE, WHITE, IVORY
 
 FPS = 30
 OUT = HERE / "out" / "v1"
-ASR_DIR = HERE.parent / "asr" / "sherpa-onnx-zipformer-en-2023-06-26"   # see README: one tarball from the sherpa-onnx GitHub release
+ASR_DIR = HERE.parent / "asr" / "sherpa-onnx-zipformer-en-2023-06-26"
 FFMPEG = SF.ffmpeg_bin()
 
 # ------------------------------------------------------------------ the script (what he was asked to say)
@@ -596,14 +596,70 @@ def stage_qc(a):
     print(f"QC: {dur:.1f}s, {cuts} scene changes detected → {cuts / dur * 60:.0f}/min (speaker jump-cuts under the threshold are not counted)")
     print("contact sheet:", q / "contact_sheet.jpg")
 
+
+# ------------------------------------------------------------------ folder mode: pick the takes by listening to them
+SCRIPT_BODY2_HEAD = ("Thomson Reserve showflat preview is on 17 October. And because I'm looking at this as a potential next "
+                     "property for my own daughter I'm running a live 60-minute webinar before the preview. The exit.")
+
+def head_ratio(clip, text, secs=45):
+    """How well the first `secs` of a take match the start of a script (0..1)."""
+    wav = OUT / ("probe_" + re.sub(r"[^A-Za-z0-9]+", "_", Path(clip).stem) + ".wav")
+    run([FFMPEG, "-y", "-loglevel", "error", "-t", str(secs), "-i", str(clip), "-vn", "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", str(wav)])
+    heard = asr_words(wav)
+    if not heard: return 0.0, ""
+    sk = [align_key(w["w"]) for w in script_words(text)][:len(heard) + 10]
+    ak = [align_key(w["w"]) for w in heard]
+    sm = SequenceMatcher(None, sk, ak, autojunk=False)
+    m = sum(b.size for b in sm.get_matching_blocks())
+    return m / max(1, len(ak)), " ".join(w["w"] for w in heard[:12]).lower()
+
+def pick_takes(folder):
+    """Every video in the folder is listened to; the best match for the hook script and for the
+    Body 1 script wins. Ties go to the larger picture (the DSLR take over the phone)."""
+    vids = sorted([p for p in Path(folder).iterdir() if p.suffix.lower() in (".mp4", ".mov", ".m4v")])
+    if not vids: raise SystemExit(f"no videos in {folder}")
+    OUT.mkdir(parents=True, exist_ok=True)
+    rows = []
+    for v in vids:
+        try: m = probe(v)
+        except Exception: continue
+        if not m["w"] or m["dur"] < 5: continue
+        rh, heard = head_ratio(v, SCRIPT_HOOK, 30)
+        rb, _ = head_ratio(v, SCRIPT_BODY, 45)
+        r2, _ = head_ratio(v, SCRIPT_BODY2_HEAD, 30)
+        rows.append(dict(path=str(v), w=m["w"], h=m["h"], dur=m["dur"], hook=rh, body=rb, body2=r2, heard=heard))
+        print(f"  {v.name[:40]:40s} {m['w']}x{m['h']} {m['dur']:6.1f}s  hook {rh:.2f}  body1 {rb:.2f}  body2 {r2:.2f}  | {heard[:60]}")
+    (OUT / "takes.json").write_text(json.dumps(rows, indent=1))
+    def best(key, min_dur, other):
+        c = [r for r in rows if r["dur"] >= min_dur and r[key] >= 0.35 and r[key] > r[other]]
+        if not c: raise SystemExit(f"no take matches the {key} script well enough (best {max(r[key] for r in rows):.2f}) — is the right folder selected?")
+        return max(c, key=lambda r: (round(r[key], 1), r["w"] * r["h"], r["dur"]))
+    hook = best("hook", 5, "body"); body = best("body", 30, "body2")
+    print(f"→ hook: {Path(hook['path']).name}  ({hook['w']}x{hook['h']}, match {hook['hook']:.2f})")
+    print(f"→ body: {Path(body['path']).name}  ({body['w']}x{body['h']}, match {body['body']:.2f})")
+    return hook["path"], body["path"]
+
 # ------------------------------------------------------------------ main
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--hook", required=False); ap.add_argument("--body", required=False)
     ap.add_argument("--photos"); ap.add_argument("--stage", default="all"); ap.add_argument("--seed", type=int, default=7)
-    ap.add_argument("--out"); a = ap.parse_args()
+    ap.add_argument("--out"); ap.add_argument("--folder", help="the takes folder; the hook and body takes are picked by listening to them")
+    a = ap.parse_args()
+    if a.folder:
+        OUT = Path(a.folder) / "_render_v1"
     if a.out: OUT = Path(a.out)
+    import shutil
+    if not a.photos:
+        for cand in (r"C:\Users\Admin\Pictures\Family & Daughter", str(HERE.parent / "photos")):
+            if Path(cand).is_dir(): a.photos = cand; break
     if a.photos: SF.load_photos(a.photos)
     stages = ["audio", "asr", "tighten", "plan", "render", "qc"] if a.stage == "all" else a.stage.split(",")
+    if a.folder and not (a.hook and a.body):
+        print("\n== PICK TAKES =="); a.hook, a.body = pick_takes(a.folder)
     for s in stages:
         print(f"\n== {s.upper()} =="); globals()[f"stage_{s}"](a)
+    if a.folder and (OUT / "TR_V1_Receipt_9x16.mp4").exists() and ("render" in stages or "qc" in stages):
+        dest = Path(a.folder) / "TR_V1_Receipt_9x16.mp4"; shutil.copy(OUT / "TR_V1_Receipt_9x16.mp4", dest)
+        shutil.copy(OUT / "qc" / "contact_sheet.jpg", Path(a.folder) / "TR_V1_contact_sheet.jpg")
+        print("\nFINAL →", dest)
