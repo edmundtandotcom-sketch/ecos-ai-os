@@ -406,7 +406,7 @@ def stage_plan(a):
         if not hit: return
         t0 = max(0.0, hit[0] + lead)
         if until:
-            h2 = F(until, hit[1]); t1 = (h2[1] if h2 else hit[1] + 2.0) + tail
+            h2 = F(until, hit[0]); t1 = (h2[1] if h2 else hit[1] + 2.0) + tail
         else: t1 = (hit[1] if dur is None else t0 + dur) + tail
         beats.append(dict(kind=kind, t0=round(t0, 3), t1=round(t1, 3), anchor=ph, **kw))
     # hook (the A11 grammar on real timing)
@@ -438,7 +438,7 @@ def stage_plan(a):
         h = F(ph)
         if h: breaths.append((round(max(0, h[0] - 0.45), 3), round(h[0] - 0.02, 3)))
     # the longest hold: the question on his face, caption static
-    hq = F("can it move her forward")
+    hq = F(" ".join(w["w"] for w in script_words(SCRIPT_HOOK)[-5:]))   # the question that ends the hook
 
     # ---------- caption cues; suppressed where a copy-carrying device owns the frame or in a breath
     owns = [(b["t0"], b["t1"]) for b in beats if b["kind"] in ("receipt", "pricegap")]
@@ -489,7 +489,13 @@ def stage_plan(a):
         q0, q1 = hq[0] - 0.1, hook_end + 0.3
         shots = [s for s in shots if s["t1"] <= q0 or s["t0"] >= q1] + [dict(t0=round(q0, 3), t1=round(q1, 3), zoom=1.0, move="push", hold=True)]
         shots.sort(key=lambda s: s["t0"])
-        for i in range(1, len(shots)): shots[i]["t0"] = shots[i-1]["t1"] if shots[i]["t0"] < shots[i-1]["t1"] else shots[i]["t0"]
+    # contiguous, no gaps, no overlaps, nothing shorter than 0.15s: every frame has exactly one shot
+    for i in range(1, len(shots)):
+        if shots[i]["t0"] > shots[i-1]["t1"]: shots[i-1]["t1"] = shots[i]["t0"]      # fill the gap
+        else: shots[i]["t0"] = shots[i-1]["t1"]                                      # trim the overlap
+    shots = [s for s in shots if s["t1"] - s["t0"] >= 0.15]
+    for i in range(1, len(shots)): shots[i]["t0"] = shots[i-1]["t1"]
+    if shots: shots[0]["t0"] = 0.0; shots[-1]["t1"] = round(total, 3)
     # transitions
     seams = [hook_end] + [F(p)[0] for p in ("what i don't like", "what i like about", "thomson reserve preview is on") if F(p)]
     plan = dict(total=total, hook_end=hook_end, shots=shots, cues=cue_list, beats=beats, breaths=breaths, seams=seams, seed=a.seed)
@@ -580,9 +586,9 @@ def stage_render(a):
                 base = src_image(full["src"], cx=full.get("cx"), darken=dark, zoom=z, anchor_x=full.get("anchor_x", 0.5))
         else:
             # speaker: zoom ladder + move, handheld
-            k = (t - shot["t0"]) / max(0.1, shot["t1"] - shot["t0"])
+            k = min(1.0, max(0.0, (t - shot["t0"]) / max(0.1, shot["t1"] - shot["t0"])))
             z = shot["zoom"] + (0.05 * k if shot["move"] == "push" else 0.13 * SF.ease_out(min(1, k * 3), 4))
-            base = SF.zoom_img(frame, z, hx, hy)
+            base = SF.zoom_img(frame, max(1.0, z), hx, hy)
             if split:
                 top = src_image(split["src"], cx=split.get("cx"), zoom=1.04 + 0.03 * (t - split["t0"]) / max(0.1, split["t1"] - split["t0"]))
                 seam_y = int(H * 0.52)
@@ -763,4 +769,10 @@ if __name__ == "__main__":
     if a.folder and (OUT / "TR_V1_Receipt_9x16.mp4").exists() and ("render" in stages or "qc" in stages):
         dest = Path(a.folder) / "TR_V1_Receipt_9x16.mp4"; shutil.copy(OUT / "TR_V1_Receipt_9x16.mp4", dest)
         shutil.copy(OUT / "qc" / "contact_sheet.jpg", Path(a.folder) / "TR_V1_contact_sheet.jpg")
+        # a small preview (under 9 MB) so the cut can be reviewed from the cloud session through the Drive connector
+        dur = probe(dest)["dur"]; vb = max(150, int(8.0 * 8 * 1024 * 1024 / max(1, dur) / 1000) - 64)
+        run([FFMPEG, "-y", "-loglevel", "error", "-i", str(dest), "-vf", "scale=540:-2", "-c:v", "libx264", "-preset", "fast",
+             "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "64k",
+             "-movflags", "+faststart", str(Path(a.folder) / "TR_V1_preview_small.mp4")])
         print("\nFINAL →", dest)
+        print("preview →", Path(a.folder) / "TR_V1_preview_small.mp4")
