@@ -759,6 +759,17 @@ if __name__ == "__main__":
     stages = ["audio", "asr", "tighten", "plan", "render", "qc"] if a.stage == "all" else a.stage.split(",")
     if a.folder and not (a.hook and a.body):
         print("\n== PICK TAKES =="); a.hook, a.body = pick_takes(a.folder)
+        # small copies of the chosen takes (each under 9 MB) go next to them, so the cloud session can pull
+        # them through the Drive connector and render or review the cut without the PC
+        for name, clip in (("hook", a.hook), ("body", a.body)):
+            if clip == a.hook and name == "body": continue
+            small = Path(a.folder) / f"TR_V1_take_{name}_small.mp4"
+            if small.exists() and small.stat().st_size > 1000: continue
+            d = probe(clip)["dur"]; vb = max(120, int(8.0 * 8 * 1024 * 1024 / max(1, d) / 1000) - 48)
+            run([FFMPEG, "-y", "-loglevel", "error", "-i", str(clip), "-vf", "scale=540:-2", "-c:v", "libx264", "-preset", "fast",
+                 "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "48k", "-ac", "1",
+                 "-movflags", "+faststart", str(small)])
+            print(f"small copy for the cloud → {small.name} ({small.stat().st_size / 1e6:.1f} MB)")
     try:
         for s in stages:
             print(f"\n== {s.upper()} =="); globals()[f"stage_{s}"](a)
