@@ -76,7 +76,7 @@ python render_v1.py --hook "H:\...\Selfie Daughter Hook 1.mp4" --body "H:\...\Se
 python render_v1.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04_Video Editor\Webinar Daughter Spin Off"
 ```
 
-`--folder` listens to the first 30–45s of every video in the folder, matches each against the Daughter Hook 1 and Body 1 scripts, and picks the best take for each (ties go to the larger picture, so a DSLR take beats the phone). Photos come from `C:\Users\Admin\Pictures\Family & Daughter` automatically if it exists. Work files go to `<folder>\_render_v1\`; the finished ad lands next to the takes as **`TR_V1_Receipt_9x16.mp4`** with `TR_V1_contact_sheet.jpg` beside it.
+`--folder` listens to the first 75s of every video in the folder **and its subfolders** (so a `Longer Ads` folder inside it is fine), matches each against the Daughter Hook 1 and Body 1 scripts wherever they start in the take, and picks the best take for each (ties go to the larger picture, so a DSLR take beats the phone). A take that carries the hook and the body in one recording is used for both. Filenames do not matter; only what is said does. Photos come from `C:\Users\Admin\Pictures\Family & Daughter` automatically if it exists. Work files go to `%LOCALAPPDATA%\TR_render_v1\`; the log is written to `<folder>\TR_V1_render_log.txt`; the finished ad lands next to the takes as **`TR_V1_Receipt_9x16.mp4`** with `TR_V1_contact_sheet.jpg` beside it.
 
 **Paste-into-desktop-Claude-Code version** (does the install, the model download and the run):
 

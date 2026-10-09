@@ -204,8 +204,9 @@ def recognizer():
             joiner=f"{d}/joiner-epoch-99-avg-1.int8.onnx", tokens=f"{d}/tokens.txt", num_threads=4, decoding_method="greedy_search")
     return _rec
 
-def asr_words(wav_path, chunk=25.0):
-    """Recognise in ~25s chunks on silence-ish boundaries; return [{w,s,e}] (ASR spelling)."""
+def asr_words(wav_path, chunk=12.0):
+    """Recognise in ~12s chunks cut at silence-ish boundaries; return [{w,s,e}] (ASR spelling).
+    (The zipformer drops the opening seconds of a chunk once it runs past ~20s — keep chunks short.)"""
     w = wave.open(str(wav_path)); sr = w.getframerate(); x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
     rec = recognizer(); words = []; n = len(x); pos = 0
     while pos < n:
@@ -261,11 +262,29 @@ def align(script, asr):
     out = [dict(w=sw["w"], s=round(t[0], 3), e=round(t[1], 3), punct=sw["punct"], num=sw["num"]) for sw, t in zip(script, times)]
     return out, matched / max(1, len(script))
 
+def best_window(script, asr, pad=8):
+    """The stretch of ASR words most likely to be this script. A take may carry the hook in front
+    of the body, or a CTA after the hook; aligning inside the window stops stray matches far away."""
+    n = len(asr); L = int(len(script) * 1.35) + 12
+    if n <= L + pad: return 0, n
+    sk = [align_key(w["w"]) for w in script]; ak = [align_key(w["w"]) for w in asr]
+    best = (-1, 0)
+    for j0 in range(0, n - L + 1, 6):
+        m = sum(b.size for b in SequenceMatcher(None, sk, ak[j0:j0 + L], autojunk=False).get_matching_blocks())
+        if m > best[0]: best = (m, j0)
+    j0 = best[1]
+    return max(0, j0 - pad), min(n, j0 + L + pad)
+
 def stage_asr(a):
+    cache = {}
     for name, text in (("hook", SCRIPT_HOOK), ("body", SCRIPT_BODY)):
-        asr = asr_words(OUT / f"{name}.wav")
+        clip = getattr(a, name)
+        if clip in cache: asr = cache[clip]          # hook and body in one take → listen once
+        else: asr = cache[clip] = asr_words(OUT / f"{name}.wav")
         (OUT / f"asr_{name}.json").write_text(json.dumps(asr, indent=0))
-        words, ratio = align(script_words(text), asr)
+        sw = script_words(text); j0, j1 = best_window(sw, asr)
+        if (j0, j1) != (0, len(asr)): print(f"{name}: script found at ASR words {j0}–{j1} of {len(asr)} ({asr[j0]['s']:.1f}s → {asr[j1-1]['e']:.1f}s)")
+        words, ratio = align(sw, asr[j0:j1])
         (OUT / f"words_{name}.json").write_text(json.dumps(words, indent=0))
         print(f"{name}: {len(asr)} words heard → {len(words)} script words timed, {ratio*100:.0f}% exact matches")
         print("   heard:", " ".join(w["w"] for w in asr[:18]).lower(), "…")
@@ -643,42 +662,69 @@ def stage_qc(a):
 SCRIPT_BODY2_HEAD = ("Thomson Reserve showflat preview is on 17 October. And because I'm looking at this as a potential next "
                      "property for my own daughter I'm running a live 60-minute webinar before the preview. The exit.")
 
-def head_ratio(clip, text, secs=45):
-    """How well the first `secs` of a take match the start of a script (0..1)."""
+LISTEN_SECS = 75   # enough to hear a hook (~15s) and the opening of a body behind it
+
+def listen(clip, secs=LISTEN_SECS):
+    """ASR words for the first `secs` of a take."""
     wav = OUT / ("probe_" + re.sub(r"[^A-Za-z0-9]+", "_", Path(clip).stem) + ".wav")
     run([FFMPEG, "-y", "-loglevel", "error", "-t", str(secs), "-i", str(clip), "-vn", "-ac", "1", "-ar", "16000", "-c:a", "pcm_s16le", str(wav)])
-    heard = asr_words(wav)
-    if not heard: return 0.0, ""
-    sk = [align_key(w["w"]) for w in script_words(text)][:len(heard) + 10]
+    return asr_words(wav)
+
+def script_score(heard, text, start=0):
+    """How much of a script's opening is heard in the take, 0..1, wherever in the take it starts.
+    Returns (score, index of the last matched ASR word)."""
+    heard = heard[start:]
+    if not heard: return 0.0, start
     ak = [align_key(w["w"]) for w in heard]
-    sm = SequenceMatcher(None, sk, ak, autojunk=False)
-    m = sum(b.size for b in sm.get_matching_blocks())
-    return m / max(1, len(ak)), " ".join(w["w"] for w in heard[:12]).lower()
+    sk = [align_key(w["w"]) for w in script_words(text)][:len(ak) + 10]
+    blocks = [b for b in SequenceMatcher(None, sk, ak, autojunk=False).get_matching_blocks() if b.size]
+    m = sum(b.size for b in blocks)
+    end = start + (max(b.b + b.size for b in blocks) if blocks else 0)
+    return m / max(1, min(len(sk), len(ak))), end
+
+def find_videos(folder):
+    """Every video in the folder and its subfolders, skipping work/output folders and our own renders."""
+    out = []
+    for p in sorted(Path(folder).rglob("*")):
+        if p.is_dir() or p.suffix.lower() not in (".mp4", ".mov", ".m4v", ".mkv"): continue
+        if any(part.startswith(("_", ".")) for part in p.relative_to(folder).parts[:-1]): continue
+        if p.name.startswith("TR_V1"): continue
+        out.append(p)
+    return out
+
+HOOK_MIN, BODY_MIN = 0.45, 0.35
 
 def pick_takes(folder):
-    """Every video in the folder is listened to; the best match for the hook script and for the
-    Body 1 script wins. Ties go to the larger picture (the DSLR take over the phone)."""
-    vids = sorted([p for p in Path(folder).iterdir() if p.suffix.lower() in (".mp4", ".mov", ".m4v")])
-    if not vids: raise SystemExit(f"no videos in {folder}")
+    """Every video in the folder (and its subfolders) is listened to; the best match for the hook
+    script and for the Body 1 script wins. A take that carries the hook and the body together may
+    serve as both. Ties go to the larger picture (the DSLR take over the phone)."""
+    vids = find_videos(folder)
+    if not vids: raise SystemExit(f"no videos in {folder} or its subfolders")
     OUT.mkdir(parents=True, exist_ok=True)
     rows = []
     for v in vids:
         try: m = probe(v)
         except Exception: continue
         if not m["w"] or m["dur"] < 5: continue
-        rh, heard = head_ratio(v, SCRIPT_HOOK, 30)
-        rb, _ = head_ratio(v, SCRIPT_BODY, 45)
-        r2, _ = head_ratio(v, SCRIPT_BODY2_HEAD, 30)
-        rows.append(dict(path=str(v), w=m["w"], h=m["h"], dur=m["dur"], hook=rh, body=rb, body2=r2, heard=heard))
-        print(f"  {v.name[:40]:40s} {m['w']}x{m['h']} {m['dur']:6.1f}s  hook {rh:.2f}  body1 {rb:.2f}  body2 {r2:.2f}  | {heard[:60]}")
+        heard = listen(v)
+        rh, hook_end = script_score(heard, SCRIPT_HOOK)
+        rb, _ = script_score(heard, SCRIPT_BODY, hook_end if rh >= HOOK_MIN else 0)   # body judged after the hook, if the take has one
+        r2, _ = script_score(heard, SCRIPT_BODY2_HEAD, hook_end if rh >= HOOK_MIN else 0)
+        rel = str(v.relative_to(folder))
+        rows.append(dict(path=str(v), rel=rel, w=m["w"], h=m["h"], dur=m["dur"], hook=rh, body=rb, body2=r2,
+                         heard=" ".join(w["w"] for w in heard[:12]).lower()))
+        print(f"  {rel[:44]:44s} {m['w']}x{m['h']} {m['dur']:6.1f}s  hook {rh:.2f}  body1 {rb:.2f}  body2 {r2:.2f}  | {rows[-1]['heard'][:60]}")
     (OUT / "takes.json").write_text(json.dumps(rows, indent=1))
-    def best(key, min_dur, other):
-        c = [r for r in rows if r["dur"] >= min_dur and r[key] >= 0.35 and r[key] > r[other]]
-        if not c: raise SystemExit(f"no take matches the {key} script well enough (best {max(r[key] for r in rows):.2f}) — is the right folder selected?")
+    def best(key, min_dur, other, floor):
+        c = [r for r in rows if r["dur"] >= min_dur and r[key] >= floor and r[key] > r[other]]
+        if not c: raise SystemExit(f"no take matches the {key} script well enough (best {max(r[key] for r in rows):.2f}, need {floor:.2f}) — is the right folder selected?")
         return max(c, key=lambda r: (round(r[key], 1), r["w"] * r["h"], r["dur"]))
-    hook = best("hook", 5, "body"); body = best("body", 15, "body2")
-    print(f"→ hook: {Path(hook['path']).name}  ({hook['w']}x{hook['h']}, match {hook['hook']:.2f})")
-    print(f"→ body: {Path(body['path']).name}  ({body['w']}x{body['h']}, match {body['body']:.2f})")
+    body = best("body", 15, "body2", BODY_MIN)
+    hook = best("hook", 5, "body2", HOOK_MIN)
+    # the body take carries the hook too → use it for both (one framing, one sound, no seam to hide)
+    if body["hook"] >= HOOK_MIN and body["hook"] >= hook["hook"] - 0.15: hook = body
+    print(f"→ hook: {hook['rel']}  ({hook['w']}x{hook['h']}, match {hook['hook']:.2f})")
+    print(f"→ body: {body['rel']}  ({body['w']}x{body['h']}, match {body['body']:.2f})" + ("  [same take: hook + body recorded together]" if hook is body else ""))
     return hook["path"], body["path"]
 
 # ------------------------------------------------------------------ main
