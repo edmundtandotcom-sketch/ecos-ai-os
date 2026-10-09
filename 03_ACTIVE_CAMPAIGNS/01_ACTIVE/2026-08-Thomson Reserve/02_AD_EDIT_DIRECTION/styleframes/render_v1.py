@@ -15,7 +15,7 @@ words are ALIGNED TO THE SCRIPT, so captions show the script's spelling and
 digits ("$1.15M", "1,268") with the take's real timing. Misheard words cannot
 reach the screen.
 """
-import argparse, json, math, random, re, subprocess, sys, wave
+import argparse, json, math, os, random, re, subprocess, sys, wave
 from difflib import SequenceMatcher
 from pathlib import Path
 import numpy as np
@@ -23,6 +23,19 @@ from PIL import Image, ImageDraw, ImageFilter
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+
+class _Tee:
+    """Everything printed (and every traceback) also goes to a log file."""
+    def __init__(self, path, stream):
+        self.f = open(path, "a", encoding="utf-8"); self.s = stream
+    def write(self, x):
+        self.s.write(x); self.f.write(x); self.f.flush()
+    def flush(self):
+        self.s.flush(); self.f.flush()
+def start_log(path):
+    import datetime
+    sys.stdout = _Tee(path, sys.stdout); sys.stderr = _Tee(path, sys.stderr)
+    print(f"\n===== render_v1 run {datetime.datetime.now():%Y-%m-%d %H:%M} =====")
 import styleframes as SF                                   # devices, captions, palette
 from styleframes import W, H, INK, GOLD, RED, ORANGE, WHITE, IVORY
 
@@ -73,13 +86,13 @@ ZOOM_LADDER = [1.00, 1.10, 1.20, 1.10]
 STOP = set("a an the and or but to of for in on at is are was your my i we you it that this so if as with have has be been".split())
 
 def run(cmd, quiet=True):
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if r.returncode != 0:
         print(r.stderr[-2000:]); raise SystemExit(f"ffmpeg failed: {' '.join(map(str, cmd[:6]))}…")
     return r
 
 def probe(path):
-    r = subprocess.run([FFMPEG, "-i", str(path)], capture_output=True, text=True)
+    r = subprocess.run([FFMPEG, "-i", str(path)], capture_output=True, text=True, encoding="utf-8", errors="replace")
     m = re.search(r"(\d{2,5})x(\d{2,5})[,\s]", r.stderr); d = re.search(r"Duration: (\d+):(\d+):([\d.]+)", r.stderr)
     fps = re.search(r"([\d.]+) fps", r.stderr)
     w, h = (int(m.group(1)), int(m.group(2))) if m else (None, None)   # audio-only files have no dims
@@ -259,7 +272,7 @@ def stage_asr(a):
 
 # ------------------------------------------------------------------ stage: tighten
 def silences(wav):
-    r = subprocess.run([FFMPEG, "-i", str(wav), "-af", f"silencedetect=noise={SILENCE_DB}dB:d={SILENCE_MIN}", "-f", "null", "-"], capture_output=True, text=True)
+    r = subprocess.run([FFMPEG, "-i", str(wav), "-af", f"silencedetect=noise={SILENCE_DB}dB:d={SILENCE_MIN}", "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     starts = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", r.stderr)]
     ends = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", r.stderr)]
     return list(zip(starts, ends[:len(starts)]))
@@ -312,10 +325,20 @@ def stage_tighten(a):
         dur = probe(p)["dur"]
         for w in words: w["s"] = round(w["s"] + total, 3); w["e"] = round(w["e"] + total, 3); w["clip"] = name
         all_words += words; total += dur; parts.append(p)
-    # join hook + body (same params → concat filter, never -c copy)
-    run([FFMPEG, "-y", "-loglevel", "error", "-i", str(parts[0]), "-i", str(parts[1]), "-filter_complex",
-         "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]", "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "fast", "-crf", "16",
-         "-c:a", "aac", "-b:a", "256k", "-video_track_timescale", "90000", str(OUT / "base_cut.mp4")])
+    # join hook + body: both parts were encoded with identical params, so the concat demuxer
+    # (re-encoded, never -c copy) is the safe path; the concat filter is the fallback
+    lst = OUT / "join.txt"
+    lst.write_text("".join(f"file '{p.resolve().as_posix()}'\n" for p in parts), encoding="utf-8")
+    enc = ["-c:v", "libx264", "-preset", "fast", "-crf", "16", "-pix_fmt", "yuv420p", "-r", str(FPS),
+           "-c:a", "aac", "-b:a", "256k", "-ar", "48000", "-ac", "2", "-video_track_timescale", "90000", str(OUT / "base_cut.mp4")]
+    try:
+        run([FFMPEG, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst)] + enc)
+    except SystemExit:
+        print("  concat demuxer failed — trying the concat filter")
+        run([FFMPEG, "-y", "-loglevel", "error", "-i", str(parts[0]), "-i", str(parts[1]), "-filter_complex",
+             "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]", "-map", "[v]", "-map", "[a]"] + enc)
+    if not (OUT / "base_cut.mp4").exists() or (OUT / "base_cut.mp4").stat().st_size < 1000:
+        raise SystemExit("join produced an empty file — see the ffmpeg message above")
     (OUT / "words.json").write_text(json.dumps(all_words, indent=0))
     print(f"base_cut.mp4 {total:.1f}s, {len(all_words)} timed words")
 
@@ -610,7 +633,7 @@ def find_t(plan, phrase, after=0.0):
 def stage_qc(a):
     final = OUT / "TR_V1_Receipt_9x16.mp4"; q = OUT / "qc"; q.mkdir(exist_ok=True)
     run([FFMPEG, "-y", "-loglevel", "error", "-i", str(final), "-vf", "fps=1,scale=270:-2,tile=8x8", "-frames:v", "1", str(q / "contact_sheet.jpg")])
-    r = subprocess.run([FFMPEG, "-i", str(final), "-vf", "select='gt(scene,0.24)',metadata=print", "-an", "-f", "null", "-"], capture_output=True, text=True)
+    r = subprocess.run([FFMPEG, "-i", str(final), "-vf", "select='gt(scene,0.24)',metadata=print", "-an", "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     cuts = len(re.findall(r"pts_time", r.stderr)); dur = probe(final)["dur"]
     print(f"QC: {dur:.1f}s, {cuts} scene changes detected → {cuts / dur * 60:.0f}/min (speaker jump-cuts under the threshold are not counted)")
     print("contact sheet:", q / "contact_sheet.jpg")
@@ -665,10 +688,17 @@ if __name__ == "__main__":
     ap.add_argument("--photos"); ap.add_argument("--stage", default="all"); ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--out"); ap.add_argument("--folder", help="the takes folder; the hook and body takes are picked by listening to them")
     a = ap.parse_args()
+    import shutil, tempfile
     if a.folder:
-        OUT = Path(a.folder) / "_render_v1"
+        start_log(Path(a.folder) / "TR_V1_render_log.txt")
+        # work files stay on the local disk; only the finished ad goes back into the Drive folder
+        base = Path(os.environ.get("LOCALAPPDATA") or tempfile.gettempdir())
+        OUT = base / "TR_render_v1"
+        old = Path(a.folder) / "_render_v1"
+        if old.is_dir():
+            shutil.rmtree(old, ignore_errors=True); print("removed old work folder from the Drive folder")
+        print("work folder:", OUT)
     if a.out: OUT = Path(a.out)
-    import shutil
     if not a.photos:
         for cand in (r"C:\Users\Admin\Pictures\Family & Daughter", str(HERE.parent / "photos")):
             if Path(cand).is_dir(): a.photos = cand; break
@@ -677,8 +707,13 @@ if __name__ == "__main__":
     stages = ["audio", "asr", "tighten", "plan", "render", "qc"] if a.stage == "all" else a.stage.split(",")
     if a.folder and not (a.hook and a.body):
         print("\n== PICK TAKES =="); a.hook, a.body = pick_takes(a.folder)
-    for s in stages:
-        print(f"\n== {s.upper()} =="); globals()[f"stage_{s}"](a)
+    try:
+        for s in stages:
+            print(f"\n== {s.upper()} =="); globals()[f"stage_{s}"](a)
+    except SystemExit as e:
+        print(f"\nSTOPPED: {e}"); raise
+    except Exception:
+        import traceback; print("\nCRASHED:"); traceback.print_exc(); raise
     if a.folder and (OUT / "TR_V1_Receipt_9x16.mp4").exists() and ("render" in stages or "qc" in stages):
         dest = Path(a.folder) / "TR_V1_Receipt_9x16.mp4"; shutil.copy(OUT / "TR_V1_Receipt_9x16.mp4", dest)
         shutil.copy(OUT / "qc" / "contact_sheet.jpg", Path(a.folder) / "TR_V1_contact_sheet.jpg")
