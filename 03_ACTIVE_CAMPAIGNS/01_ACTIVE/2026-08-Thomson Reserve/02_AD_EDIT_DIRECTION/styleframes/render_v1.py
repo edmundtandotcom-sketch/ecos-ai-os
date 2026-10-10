@@ -527,6 +527,8 @@ def stage_plan(a):
 
     # ---------- caption cues; suppressed where a copy-carrying device owns the frame or in a breath
     owns = [(b["t0"], b["t1"], (0.64 if SINGLE else 0.57) if b["kind"] == "receipt" else 0.42) for b in beats if b["kind"] in ("receipt", "pricegap")]
+    if SINGLE:   # the checklist and the price gap sit under the chin (like the receipt); the caption goes just above them
+        owns = [(b["t0"], b["t1"], 0.64) for b in beats if b["kind"] in ("receipt", "pricegap", "checklist")]
     cue_list = []
     for c in cues(words):
         s, e = c[0]["s"] - 0.08, c[-1]["e"] + 0.10
@@ -632,7 +634,7 @@ def plan_beats(beat, F, total, hook_end):
         beat("eyebrow", "running a live webinar", until="click the link", tail=0.5, text="LIVE WEBINAR · 17 OCT", after=hook_end)
     elif BODY_ID == "EXIT":
         beat("insert", "there are 1,268 units", until="units here", lead=-0.1, tail=0.3, src="deck_p17", whip=True)
-        beat("label", "the exit is where", until="right unit", lead=-0.1, tail=0.2, text="THE EXIT", y=0.47)
+        beat("label", "the exit is where", until="right unit", lead=-0.1, tail=0.2, text="THE EXIT", y=0.615)     # under the chin, above the caption
         beat("checklist", "2-bedroom or 3-bedroom", until="wouldn't touch", lead=-0.2, tail=0.4, y=0.40,
              items=[("2-BED OR 3-BED?", "1f3e2"), ("WHICH STACKS EXIT STRONGER?", "1f4cd"), ("WHAT PRICE LEAVES UPSIDE?", "1f4b0"), ("UNITS I WOULDN'T TOUCH", "1f6ab")],
              ticks=["2-bedroom or 3-bedroom", "which stacks", "what price", "wouldn't touch"])
@@ -641,7 +643,7 @@ def plan_beats(beat, F, total, hook_end):
         beat("checklist", "my maximum price", until="only ones left", lead=-0.2, tail=0.4, y=0.40,
              items=[("MY MAXIMUM PRICE", "1f6ab"), ("MY PREFERRED STACKS", "1f4cd"), ("PLAN A, B AND C", "1f5f3"), ("UNITS I'D WALK AWAY FROM", "1f3e2")],
              ticks=["maximum price", "preferred stacks", "plan a", "walk away"])
-        beat("label", "ballot day should be", until="under pressure", lead=-0.1, tail=0.2, text="BALLOT DAY", y=0.47)
+        beat("label", "ballot day should be", until="under pressure", lead=-0.1, tail=0.2, text="BALLOT DAY", y=0.615)
         beat("eyebrow", "live 60-minute webinar", until=END, text="LIVE WEBINAR · 17 OCT", after=hook_end)
     elif BODY_ID == "CTA":
         beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · 17 OCT", after=hook_end)
@@ -674,6 +676,13 @@ def src_image(src, cx=None, darken=0.0, zoom=1.0, anchor_x=0.5):
     if src.startswith("photo:"):
         return SF.photo_full(int(src.split(":")[1]), darken=darken, zoom=zoom, anchor_x=anchor_x, anchor_y=0.35)
     return SF.broll(src, cx=cx, darken=darken, zoom=zoom)
+
+def device_small(layer, draw, scale=0.78, y_frac=0.70):
+    """A card device drawn at its native size with its top at y=0, then shrunk and placed with its top at y_frac.
+    One-file (selfie) framing: the face fills the frame down to ~0.58, so cards live under the chin, like the receipt."""
+    tmp = SF.new_layer(); draw(tmp)
+    tw, th = int(W * scale), int(H * scale)
+    layer.alpha_composite(tmp.resize((tw, th), Image.LANCZOS), ((W - tw) // 2, int(H * y_frac)))
 
 class CaptionCache:
     def __init__(self): self.c = {}
@@ -771,11 +780,14 @@ def stage_render(a):
                 tt = min(0.39, (t - b["t0"]) / 1.0 * 0.39)
                 if t >= wl: tt = 0.4 + 0.5 * min(1, (t - wl) / 0.8)
                 if t >= wg: tt = 0.95 + 0.05 * min(1, (t - wg) / 0.3)
-                SF.dev_pricegap(layer, tt, y_top=0.50)
+                if SINGLE: device_small(layer, lambda L: SF.dev_pricegap(L, tt, y_top=0.0), scale=0.74, y_frac=0.70)
+                else: SF.dev_pricegap(layer, tt, y_top=0.50)
             elif b["kind"] == "checklist":
                 ticks = [find_t(plan, p, b["t0"]) for p in b["ticks"]]
                 done = sum(1 for x in ticks if t >= x + 0.4)
-                SF.dev_checklist(layer, min(1, 0.25 + 0.25 * done + 0.2 * min(1, (t - b["t0"]) / 0.5)), y_top=b.get("y", 0.46), items=[tuple(x) for x in b["items"]])
+                ct = min(1, 0.25 + 0.25 * done + 0.2 * min(1, (t - b["t0"]) / 0.5)); items = [tuple(x) for x in b["items"]]
+                if SINGLE: device_small(layer, lambda L: SF.dev_checklist(L, ct, y_top=0.0, items=items), scale=0.78, y_frac=0.70)
+                else: SF.dev_checklist(layer, ct, y_top=b.get("y", 0.46), items=items)
         # ---- captions
         cue = next((c for c in cues if c["s"] <= t < c["e"]), None)
         if cue and not (full and full["kind"] == "dotgrid" and t < full["t0"] + 1.2):
