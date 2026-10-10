@@ -30,56 +30,67 @@ def sheet(ad_id, look):
     hook_id = int(m.group(1)) if m else "DH1"; body_id = m.group(2) if m else "FULL"
     headline = TS.HOOKS[hook_id][0] if m else "WOULD I BUY THIS FOR MY DAUGHTER?"
     hook_text = TS.HOOKS[hook_id][1] if m else TS.DAUGHTER_HOOK_1
-    frames = []
+    P = LK.pal(look); frames = []
+    def bordered(im, progress):
+        L = SF.new_layer(); LK.draw_border(L, look, progress); return SF.compose(im, L)
     # 1. open: headline + first caption (title looks show the title card)
-    L = SF.new_layer(); plate = PLATES[0]
-    LK.draw_headline(L, headline, look, t=1.0, t_abs=0.6)
+    L = SF.new_layer(); LK.draw_headline(L, headline, look, t=1.0, t_abs=0.6)
     if look["headline"] != "title": LK.draw_caption(L, words_of(hook_text, 3), 1, look)
-    frames.append((SF.compose(plate, L), "0:00 open · " + LK.HEADLINES[look["headline"]].split(",")[0]))
-    # 2. hook caption on the talking head (no device) — how a plain line reads
+    frames.append((SF.compose(PLATES[0], L), "0:00 open · " + LK.HEADLINES[look["headline"]].split(" (")[0]))
+    # 2. a plain caption on the talking head
     L = SF.new_layer(); LK.draw_headline(L, headline, look, t=1.0, t_abs=3.0); LK.draw_caption(L, words_of(hook_text, 3, 6), 2, look)
-    frames.append((SF.compose(PLATES[1], L), "talking head · captions in this style"))
-    # 3. proof device / scene
+    talk2 = SF.compose(PLATES[1], L); frames.append((talk2, "talking head · captions in this style, size " + look["size"]))
+    # 3. proof device / scene, with the cut into it
     pw, pa = proof_words(hook_id)
     im, kind = LK.hook_scene(PLATES[2], look, hook_id)
     L = SF.new_layer()
     if kind != "SCENE": LK.draw_headline(L, headline, look, t=1.0, t_abs=5.0)
     LK.draw_caption(L, pw, pa, look, y=0.64 if look["hook_dev"] in ("receipt", "card", "priceline") else (0.82 if kind == "SCENE" else 0.70))
-    frames.append((SF.compose(im, L), ("SCENE, no talking head · " if kind == "SCENE" else "talking head · ") + LK.HOOK_DEVS[look["hook_dev"]].replace("SCENE · ", "")))
-    # 4. back to the talking head: the question, underline
+    proof = SF.compose(im, L)
+    if kind == "SCENE": frames.append((LK.cut_frame(talk2, proof, look), "CUT · " + LK.CUTS[look["cut"]]))
+    frames.append((proof, ("SCENE, no talking head · " if kind == "SCENE" else "talking head · ") + LK.HOOK_DEVS[look["hook_dev"]].replace("SCENE · ", "")))
+    # 4. back to the talking head: the question
     qw, qa = question_words(hook_id); L = SF.new_layer(); LK.draw_headline(L, headline, look, t=1.0, t_abs=9.0); LK.draw_caption(L, qw, qa, look)
-    frames.append((SF.compose(PLATES[3], L), "back to the talking head · the question"))
-    # 5. body device / scene
+    talk4 = SF.compose(PLATES[3], L); frames.append((talk4, "back to the talking head · the question"))
+    # 5. body device / scene, with the cut into it
     bw = BODY_WORDS[body_id]
     if body_id == "FULL":
         im = SF.compose(SF.broll("deck_p17", darken=0.78), (lambda L: (SF.dev_dotgrid(L, 1.0), SF.card_number(L, (W // 2, int(H * 0.675)), "84%", SF.ANTON(220), fill=SF.ORANGE, anchor="mm"), L)[2])(SF.new_layer())); kind = "SCENE"
-        desc = "SCENE · 1,268 dots, 84% light up (one of the Body 1 devices)"
+        desc = "1,268 dots, 84% light up (one of the Body 1 devices)"
     else:
         im, kind = LK.body_scene(PLATES[4], look, body_id); desc = LK.BODY_DEVS[look["body_dev"]].replace("SCENE · ", "")
     L = SF.new_layer()
-    if kind != "SCENE": SF.eyebrow(L, "LIVE WEBINAR · 17 OCT")
+    if kind != "SCENE": SF.eyebrow(L, "LIVE WEBINAR · 17 OCT", bg=P["acc"], fg=P["on"])
     LK.draw_caption(L, bw[2], bw[3], look, y=0.64 if kind != "SCENE" else 0.84)
-    frames.append((SF.compose(im, L), ("SCENE, no talking head · " if kind == "SCENE" else "talking head · ") + desc))
+    body = SF.compose(im, L)
+    if kind == "SCENE": frames.append((LK.cut_frame(talk4, body, look), "CUT · " + LK.CUTS[look["cut"]]))
+    frames.append((body, ("SCENE, no talking head · " if kind == "SCENE" else "talking head · ") + desc))
     # 6. CTA on the talking head
-    L = SF.new_layer(); SF.eyebrow(L, "LIVE WEBINAR · 17 OCT"); LK.draw_caption(L, bw[4], bw[5], look)
+    L = SF.new_layer(); SF.eyebrow(L, "LIVE WEBINAR · 17 OCT", bg=P["acc"], fg=P["on"]); LK.draw_caption(L, bw[4], bw[5], look)
     frames.append((SF.compose(PLATES[6], L), "talking head · the call to action"))
     # 7. end card
-    frames.append((LK.endcard(look), "end card · " + LK.ENDS[look["end"]]))
+    frames.append((LK.endcard(look), "end card · " + LK.ENDS[look["end"]].replace(" (as approved)", "")))
+    # the progress border runs around every frame of the ad
+    n = len(frames); frames = [(bordered(im, (i + 0.5) / n), lab) for i, (im, lab) in enumerate(frames)]
     # ---- the sheet
-    fw, fh = 300, 533; pad = 14; top = 150; cap = 70
-    S = Image.new("RGB", (pad + len(frames) * (fw + pad), top + fh + cap + pad), (245, 244, 240)); d = ImageDraw.Draw(S)
+    fw, fh = 258, 459; pad = 12; top = 164; cap = 74
+    S = Image.new("RGB", (pad + n * (fw + pad), top + fh + cap + pad), (245, 244, 240)); d = ImageDraw.Draw(S)
     d.rectangle((0, 0, S.width, top), fill=INK)
-    d.text((pad + 4, 22), ad_id, font=SF.ARCHIVO(40), fill=GOLD)
-    d.text((pad + 4, 74), f"HOOK {hook_id}: {headline}   +   BODY: {body_id}", font=SF.OSWALD(28, 600), fill=WHITE)
-    d.text((pad + 4, 110), LK.recipe(look)[:230], font=SF.INTER(19, 500), fill=(200, 200, 210))
+    d.text((pad + 4, 20), ad_id, font=SF.ARCHIVO(40), fill=P["acc"] if P["acc"] != INK else WHITE)
+    sw = 56
+    for i, c in enumerate((P["acc"], P["on"], P["bg"])): d.rectangle((S.width - pad - (3 - i) * (sw + 6), 22, S.width - pad - (3 - i) * (sw + 6) + sw, 22 + 40), fill=c, outline=(80, 80, 90))
+    d.text((S.width - pad - 3 * (sw + 6), 68), P["name"], font=SF.INTER(17, 500), fill=(200, 200, 210))
+    d.text((pad + 4, 72), f"HOOK {hook_id}: {headline}   +   BODY: {body_id}", font=SF.OSWALD(28, 600), fill=WHITE)
+    rec = LK.recipe(look); d.text((pad + 4, 108), rec[:rec.index("|  cuts")].strip()[:220], font=SF.INTER(18, 500), fill=(200, 200, 210))
+    d.text((pad + 4, 134), rec[rec.index("cuts"):][:220], font=SF.INTER(18, 500), fill=(200, 200, 210))
     for i, (im, label) in enumerate(frames):
         x = pad + i * (fw + pad); S.paste(im.resize((fw, fh), Image.LANCZOS), (x, top))
         words = label.split(); lines = []; cur = ""
         for w in words:
-            if len(cur) + len(w) > 34: lines.append(cur); cur = w
+            if len(cur) + len(w) > 30: lines.append(cur); cur = w
             else: cur = (cur + " " + w).strip()
         lines.append(cur)
-        for j, ln in enumerate(lines[:3]): d.text((x, top + fh + 8 + j * 20), ln, font=SF.INTER(16, 600 if j == 0 else 500), fill=(30, 30, 36) if j == 0 else (90, 90, 100))
+        for j, ln in enumerate(lines[:3]): d.text((x, top + fh + 8 + j * 20), ln, font=SF.INTER(15, 600 if j == 0 else 500), fill=(30, 30, 36) if j == 0 else (90, 90, 100))
     p = out / f"{ad_id}_format.jpg"; S.save(p, quality=84); return p
 
 only = sys.argv[4].split(",") if len(sys.argv) > 4 else None
