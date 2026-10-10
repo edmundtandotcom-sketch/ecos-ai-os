@@ -416,7 +416,7 @@ def stage_plan(a):
     beat("insert", "now if thomson reserve", until="thomson reserve", tail=0.3, lead=-0.1, src="deck_p06", cx=2250, whip=True)
     beat("underline", "forward again", dur=1.6, lead=0.25)
     # body — the reduced device set of §4.0
-    beat("split", "preview starts 17 october", until="17 october", lead=-0.1, tail=0.2, src="photo:2", whip=True)
+    beat("split", "preview starts 17 october", until="17 october", lead=-0.1, tail=0.2, src="deck_p16", whip=True)
     beat("split", "there are 1,268 units", until="1,268 units", lead=-0.2, tail=0.2, src="deck_p17", whip=True)
     beat("dotgrid", "1,066 of them", until="3 bedrooms", lead=-0.3, tail=0.5, src="deck_p17")
     beat("split", "your direct neighbours", until="direct neighbours", lead=-0.1, tail=0.3, src="deck_p11", whip=True)
@@ -426,7 +426,7 @@ def stage_plan(a):
     beat("vs", "three reasons", dur=3.0, lead=-0.2, whip=True)
     beat("insert", "two minutes", until="sheltered", lead=-0.1, tail=0.2, src="deck_p06", cx=2250)
     beat("insert", "central catchment", until="20km of trails", lead=-0.1, tail=0.2, src="deck_p12", cx=900, whip=True)
-    beat("insert", "a forever million dollar view", until="dollar view", lead=-0.2, tail=0.6, src="photo:4", anchor_x=1.0, pull=True, dip=True)
+    beat("insert", "a forever million dollar view", until="dollar view", lead=-0.2, tail=0.6, src="deck_p12", cx=900, pull=True, dip=True)
     beat("checklist", "exact price i walk away", until="own-stay", lead=-0.2, tail=0.3,
          items=["THE PRICE I WON'T CROSS", "STACKS TO PICK · TO AVOID", "PREP BEFORE BALLOT DAY", "2ND PROPERTY OR OWN-STAY"],
          ticks=["walk away at", "which stacks", "before and during", "own-stay"])
@@ -515,7 +515,10 @@ def human_pass(plan):
 
 # ------------------------------------------------------------------ stage: render
 def read_frames(path):
-    p = subprocess.Popen([FFMPEG, "-loglevel", "error", "-i", str(path), "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE, bufsize=W*H*3*4)
+    """Frames of the cut as 1080x1920 RGB. -noautorotate: the cut's pixels are already upright; an older
+    ffmpeg keeps the phone's rotation flag on it and would rotate again. The scale pins the size."""
+    p = subprocess.Popen([FFMPEG, "-loglevel", "error", "-noautorotate", "-i", str(path), "-vf", f"scale={W}:{H}:flags=bicubic,format=rgb24",
+                          "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE, bufsize=W*H*3*4)
     n = W * H * 3
     while True:
         b = p.stdout.read(n)
@@ -560,6 +563,8 @@ def stage_render(a):
         if not kept or x - kept[-1] > 6.0: kept.append(x)
     whip_at = kept
     flashes = [plan["seams"][0]] + [b["t0"] for b in beats if b["kind"] == "insert" and b.get("dip")]
+    r = subprocess.run([FFMPEG, "-i", str(OUT / "base_cut.mp4")], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    print("cut stream:", " | ".join(l.strip() for l in r.stderr.splitlines() if "Stream #0:0" in l or "rotat" in l.lower() or "displaymatrix" in l))
     print(f"rendering {n_frames + end_frames} frames …")
     src = read_frames(OUT / "base_cut.mp4")
     last_frame = None
@@ -657,7 +662,7 @@ def find_t(plan, phrase, after=0.0):
 # ------------------------------------------------------------------ stage: qc
 def stage_qc(a):
     final = OUT / "TR_V1_Receipt_9x16.mp4"; q = OUT / "qc"; q.mkdir(exist_ok=True)
-    run([FFMPEG, "-y", "-loglevel", "error", "-i", str(final), "-vf", "fps=1,scale=270:-2,tile=8x8", "-frames:v", "1", str(q / "contact_sheet.jpg")])
+    run([FFMPEG, "-y", "-loglevel", "error", "-i", str(final), "-vf", "fps=1/3,scale=270:-2,tile=8x8", "-frames:v", "1", str(q / "contact_sheet.jpg")])
     r = subprocess.run([FFMPEG, "-i", str(final), "-vf", "select='gt(scene,0.24)',metadata=print", "-an", "-f", "null", "-"], capture_output=True, text=True, encoding="utf-8", errors="replace")
     cuts = len(re.findall(r"pts_time", r.stderr)); dur = probe(final)["dur"]
     print(f"QC: {dur:.1f}s, {cuts} scene changes detected → {cuts / dur * 60:.0f}/min (speaker jump-cuts under the threshold are not counted)")
@@ -755,6 +760,10 @@ if __name__ == "__main__":
         for cand in (r"C:\Users\Admin\Pictures\Family & Daughter", str(HERE.parent / "photos")):
             if Path(cand).is_dir(): a.photos = cand; break
     if a.photos: SF.load_photos(a.photos)
+    r = subprocess.run([FFMPEG, "-version"], capture_output=True, text=True, encoding="utf-8", errors="replace"); print(r.stdout.splitlines()[0] if r.stdout else "ffmpeg: ?")
+    if a.photos and SF.PHOTOS:
+        names = [f.name for f in sorted(Path(a.photos).iterdir()) if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".heic")]
+        print("photo card uses the first photo by filename:", names[0] if names else "?", "(rename with 01_, 02_ … to choose)")
     ensure_assets(); ensure_model()
     stages = ["audio", "asr", "tighten", "plan", "render", "qc"] if a.stage == "all" else a.stage.split(",")
     if a.folder and not (a.hook and a.body):
@@ -765,7 +774,7 @@ if __name__ == "__main__":
             if clip == a.hook and name == "body": continue
             small = Path(a.folder) / f"TR_V1_take_{name}_small.mp4"
             if small.exists() and small.stat().st_size > 1000: continue
-            d = probe(clip)["dur"]; vb = max(120, int(8.0 * 8 * 1024 * 1024 / max(1, d) / 1000) - 48)
+            d = probe(clip)["dur"]; vb = max(100, int(5.0 * 8 * 1024 * 1024 / max(1, d) / 1000) - 48)
             run([FFMPEG, "-y", "-loglevel", "error", "-i", str(clip), "-vf", "scale=540:-2", "-c:v", "libx264", "-preset", "fast",
                  "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "48k", "-ac", "1",
                  "-movflags", "+faststart", str(small)])
@@ -781,9 +790,9 @@ if __name__ == "__main__":
         dest = Path(a.folder) / "TR_V1_Receipt_9x16.mp4"; shutil.copy(OUT / "TR_V1_Receipt_9x16.mp4", dest)
         shutil.copy(OUT / "qc" / "contact_sheet.jpg", Path(a.folder) / "TR_V1_contact_sheet.jpg")
         # a small preview (under 9 MB) so the cut can be reviewed from the cloud session through the Drive connector
-        dur = probe(dest)["dur"]; vb = max(150, int(8.0 * 8 * 1024 * 1024 / max(1, dur) / 1000) - 64)
+        dur = probe(dest)["dur"]; vb = max(100, int(5.0 * 8 * 1024 * 1024 / max(1, dur) / 1000) - 48)
         run([FFMPEG, "-y", "-loglevel", "error", "-i", str(dest), "-vf", "scale=540:-2", "-c:v", "libx264", "-preset", "fast",
-             "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "64k",
+             "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "48k", "-ac", "1",
              "-movflags", "+faststart", str(Path(a.folder) / "TR_V1_preview_small.mp4")])
         print("\nFINAL →", dest)
         print("preview →", Path(a.folder) / "TR_V1_preview_small.mp4")
