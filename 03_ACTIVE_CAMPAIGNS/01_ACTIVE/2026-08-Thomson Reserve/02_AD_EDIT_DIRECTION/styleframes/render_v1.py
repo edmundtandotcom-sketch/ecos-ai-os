@@ -329,6 +329,17 @@ def remap(words, segs):
         return best[2] + (0 if abs(t - best[0]) < abs(t - best[1]) else best[1] - best[0])
     for w in words:
         out.append({**w, "s": round(f(w["s"]), 3), "e": round(max(f(w["s"]) + 0.06, f(w["e"])), 3)})
+    # words that snapped onto the same instant (they sat inside a removed pause) are spread to the next distinct word
+    i = 0
+    while i < len(out):
+        j = i
+        while j + 1 < len(out) and abs(out[j + 1]["s"] - out[i]["s"]) < 0.05: j += 1
+        if j > i:
+            nxt = out[j + 1]["s"] if j + 1 < len(out) else out[j]["s"] + 0.35 * (j - i + 1)
+            step = max(0.12, (nxt - out[i]["s"]) / (j - i + 1))
+            for k in range(i, j + 1):
+                out[k]["s"] = round(out[i]["s"] + (k - i) * step, 3); out[k]["e"] = round(out[k]["s"] + step - 0.02, 3)
+        i = j + 1
     return out, off
 
 def stage_tighten(a):
@@ -479,7 +490,7 @@ def stage_plan(a):
     if SINGLE:
         beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · 17 OCT")
         beat("insert", "parc clematis", dur=0.85, lead=-0.05, src="photo:0", anchor_x=0.5, dip=True)              # the photo full size, briefly
-        beat("label", "now if thomson reserve", until="thomson reserve", lead=-0.1, tail=0.3, text="THOMSON RESERVE", y=0.60)
+        beat("label", "now if thomson reserve", until="thomson reserve", lead=-0.1, tail=0.3, text="THOMSON RESERVE", y=0.47)
         beats = [b for b in beats if b["kind"] != "split"]      # the split shifts the speaker; the take's framing stays as shot
     beats.sort(key=lambda b: b["t0"])
 
@@ -492,15 +503,20 @@ def stage_plan(a):
     hq = F(" ".join(w["w"] for w in script_words(SCRIPT_HOOK)[-5:]))   # the question that ends the hook
 
     # ---------- caption cues; suppressed where a copy-carrying device owns the frame or in a breath
-    owns = [(b["t0"], b["t1"]) for b in beats if b["kind"] in ("receipt", "pricegap")]
+    owns = [(b["t0"], b["t1"], 0.57 if b["kind"] == "receipt" else 0.42) for b in beats if b["kind"] in ("receipt", "pricegap")]
     cue_list = []
     for c in cues(words):
         s, e = c[0]["s"] - 0.08, c[-1]["e"] + 0.10
-        if any(s < o1 and e > o0 for o0, o1 in owns): continue
         if any(b0 <= s <= b1 for b0, b1 in breaths): s = max(s, [b1 for b0, b1 in breaths if b0 <= s <= b1][0] + 0.02)
-        if e - s < 0.25: continue
+        if e - s < 0.2: e = s + 0.2
+        y = next((yy for o0, o1, yy in owns if s < o1 and e > o0), None)   # above the receipt / price gap, never hidden
         cue_list.append(dict(s=round(s, 3), e=round(e, 3), words=[w["w"] for w in c], accent=accent(c),
-                             num=any(w["num"] for w in c), clip=c[0]["clip"]))
+                             num=any(w["num"] for w in c), clip=c[0]["clip"], y=y))
+    # a caption stays up until the next one arrives (a breath is the only planned silence)
+    for i in range(len(cue_list) - 1):
+        nxt = cue_list[i + 1]["s"]
+        if nxt - cue_list[i]["e"] < 1.5 and not any(cue_list[i]["e"] < b0 < nxt for b0, b1 in breaths): cue_list[i]["e"] = round(nxt - 0.02, 3)
+        cue_list[i]["e"] = min(cue_list[i]["e"], round(nxt - 0.02, 3))                 # never two cues at once
     # caption arrival styles rotate; never the same twice in a row; numbers → typebox, warnings → shake
     styles = ["pop", "slide", "wordpop", "flip"]; last = None
     for i, c in enumerate(cue_list):
@@ -685,11 +701,10 @@ def stage_render(a):
                 done = sum(1 for x in ticks if t >= x + 0.4)
                 SF.dev_checklist(layer, min(1, 0.25 + 0.25 * done + 0.2 * min(1, (t - b["t0"]) / 0.5)), y_top=0.46)
         # ---- captions
-        if not full or full["kind"] in ("bars", "dotgrid", "vs"):
-            cue = next((c for c in cues if c["s"] <= t < c["e"]), None)
-            if cue and not (full and full["kind"] == "dotgrid" and t < full["t0"] + 1.2):
-                y = 0.80 if (full and full["kind"] == "dotgrid") else (0.74 if split else 0.70)
-                layer.alpha_composite(cc.layer(cue, t, y))
+        cue = next((c for c in cues if c["s"] <= t < c["e"]), None)
+        if cue and not (full and full["kind"] == "dotgrid" and t < full["t0"] + 1.2):
+            y = cue.get("y") or (0.80 if (full and full["kind"] == "dotgrid") else (0.74 if split else 0.70))
+            layer.alpha_composite(cc.layer(cue, t, y))
         out = SF.compose(base, layer)
         # ---- transitions
         for wt in whip_at:
