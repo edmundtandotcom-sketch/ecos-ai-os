@@ -459,7 +459,7 @@ def stage_plan(a):
     cue_list = []
     for c in cues(words):
         s, e = c[0]["s"] - 0.08, c[-1]["e"] + 0.10
-        if any(o0 - 0.05 < s < o1 for o0, o1 in owns): continue
+        if any(s < o1 and e > o0 for o0, o1 in owns): continue
         if any(b0 <= s <= b1 for b0, b1 in breaths): s = max(s, [b1 for b0, b1 in breaths if b0 <= s <= b1][0] + 0.02)
         if e - s < 0.25: continue
         cue_list.append(dict(s=round(s, 3), e=round(e, 3), words=[w["w"] for w in c], accent=accent(c),
@@ -620,7 +620,9 @@ def stage_render(a):
         for b in active:
             k = (t - b["t0"]) / max(0.1, b["t1"] - b["t0"])
             if b["kind"] == "eyebrow": SF.eyebrow(layer, b["text"], slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
-            elif b["kind"] == "photo_card": SF.dev_photo_card(layer, min(1, (t - b["t0"]) / 0.4), photo=(SF.PHOTOS[b["photo"]] if SF.PHOTOS else None))
+            elif b["kind"] == "photo_card":
+                card = dict(x_frac=0.85, y_frac=0.27, w=200, rot=-6) if SINGLE else {}   # right of the face, below the eyebrow
+                SF.dev_photo_card(layer, min(1, (t - b["t0"]) / 0.4), photo=(SF.PHOTOS[b["photo"]] if SF.PHOTOS else None), **card)
             elif b["kind"] == "receipt": SF.dev_receipt(layer, min(1, (t - b["t0"]) / max(1.5, (b["t1"] - b["t0"]) * 0.8)))
             elif b["kind"] == "underline":
                 f = SF.ANTON(88); tw = SF.text_w(f, "FORWARD")
