@@ -15,7 +15,7 @@ words are ALIGNED TO THE SCRIPT, so captions show the script's spelling and
 digits ("$1.15M", "1,268") with the take's real timing. Misheard words cannot
 reach the screen.
 """
-import argparse, json, math, os, random, re, subprocess, sys, wave
+import argparse, json, math, os, random, re, shutil, subprocess, sys, wave
 from difflib import SequenceMatcher
 from pathlib import Path
 import numpy as np
@@ -369,8 +369,43 @@ def stage_tighten(a):
              "[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]", "-map", "[v]", "-map", "[a]"] + enc)
     if not (OUT / "base_cut.mp4").exists() or (OUT / "base_cut.mp4").stat().st_size < 1000:
         raise SystemExit("join produced an empty file — see the ffmpeg message above")
+    all_words, total = postcut(a, all_words, total)
     (OUT / "words.json").write_text(json.dumps(all_words, indent=0))
     print(f"base_cut.mp4 {total:.1f}s, {len(all_words)} timed words")
+
+def postcut(a, words, total):
+    """Editor's notes on the cut: --drop "15.7-16.7,..." removes ranges (in the cut's own timeline),
+    --speed 1.15 plays the whole cut faster (pitch kept). Word timings follow."""
+    drops = [tuple(float(x) for x in r.split("-")) for r in (getattr(a, "drop", None) or "").split(",") if r.strip()]
+    speed = float(getattr(a, "speed", None) or 1.0)
+    src = OUT / "base_cut.mp4"
+    if drops:
+        drops.sort(); keep = []; cur = 0.0
+        for d0, d1 in drops:
+            if d0 > cur + 0.05: keep.append((cur, d0))
+            cur = max(cur, d1)
+        if total > cur + 0.05: keep.append((cur, total))
+        vf = "".join(f"[0:v]trim={s0:.3f}:{s1:.3f},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={s0:.3f}:{s1:.3f},asetpts=PTS-STARTPTS[a{i}];" for i, (s0, s1) in enumerate(keep))
+        vf += "".join(f"[v{i}][a{i}]" for i in range(len(keep))) + f"concat=n={len(keep)}:v=1:a=1[v][a]"
+        out = OUT / "base_cut_drop.mp4"
+        run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src), "-filter_complex", vf, "-map", "[v]", "-map", "[a]",
+             "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "256k", "-video_track_timescale", "90000", str(out)])
+        def shift(t):
+            off = 0.0
+            for d0, d1 in drops:
+                if t >= d1: off += d1 - d0
+            return t - off
+        words = [{**w, "s": round(shift(w["s"]), 3), "e": round(shift(w["e"]), 3)} for w in words if not any(d0 - 0.02 < w["s"] < d1 or d0 < w["e"] < d1 + 0.02 for d0, d1 in drops)]
+        shutil.copy(out, src); total = probe(src)["dur"]
+        print(f"dropped {', '.join(f'{d0:.1f}-{d1:.1f}s' for d0, d1 in drops)} → {total:.1f}s")
+    if abs(speed - 1.0) > 0.001:
+        out = OUT / "base_cut_fast.mp4"
+        run([FFMPEG, "-y", "-loglevel", "error", "-i", str(src), "-filter_complex", f"[0:v]setpts=PTS/{speed:.4f}[v];[0:a]atempo={speed:.4f}[a]",
+             "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "256k", "-video_track_timescale", "90000", str(out)])
+        words = [{**w, "s": round(w["s"] / speed, 3), "e": round(w["e"] / speed, 3)} for w in words]
+        shutil.copy(out, src); total = probe(src)["dur"]
+        print(f"speed ×{speed:.2f} → {total:.1f}s")
+    return words, total
 
 # ------------------------------------------------------------------ stage: plan
 def find(words, phrase, after=0.0):
@@ -442,7 +477,9 @@ def stage_plan(a):
          items=["THE PRICE I WON'T CROSS", "STACKS TO PICK · TO AVOID", "PREP BEFORE BALLOT DAY", "2ND PROPERTY OR OWN-STAY"],
          ticks=["walk away at", "which stacks", "before and during", "own-stay"])
     if SINGLE:
-        beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · BEFORE THE 17 OCT PREVIEW")
+        beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · 17 OCT")
+        beat("insert", "parc clematis", dur=0.85, lead=-0.05, src="photo:0", anchor_x=0.5, dip=True)              # the photo full size, briefly
+        beat("label", "now if thomson reserve", until="thomson reserve", lead=-0.1, tail=0.3, text="THOMSON RESERVE", y=0.60)
         beats = [b for b in beats if b["kind"] != "split"]      # the split shifts the speaker; the take's framing stays as shot
     beats.sort(key=lambda b: b["t0"])
 
@@ -561,7 +598,7 @@ class CaptionCache:
 
 def stage_render(a):
     plan = json.loads((OUT / "plan.json").read_text()); meta = json.loads((OUT / "meta.json").read_text())
-    total = plan["total"]; n_frames = int(round(total * FPS)); end_frames = 3 * FPS
+    total = plan["total"]; n_frames = int(round(total * FPS)); end_frames = int(round((2.2 if SINGLE else 3.0) * FPS))
     shots, cues, beats = plan["shots"], plan["cues"], plan["beats"]
     cc = CaptionCache()
     enc = subprocess.Popen([FFMPEG, "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
@@ -620,8 +657,9 @@ def stage_render(a):
         for b in active:
             k = (t - b["t0"]) / max(0.1, b["t1"] - b["t0"])
             if b["kind"] == "eyebrow": SF.eyebrow(layer, b["text"], slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
-            elif b["kind"] == "photo_card":
-                card = dict(x_frac=0.85, y_frac=0.27, w=200, rot=-6) if SINGLE else {}   # right of the face, below the eyebrow
+            elif b["kind"] == "label": SF.eyebrow(layer, b["text"], y_frac=b["y"], size=58, bg=GOLD, fg=INK, slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
+            elif b["kind"] == "photo_card" and not full:      # the card steps aside while the photo is full size
+                card = dict(x_frac=0.84, y_frac=0.28, w=260, rot=-6) if SINGLE else {}   # right of the face, below the eyebrow
                 SF.dev_photo_card(layer, min(1, (t - b["t0"]) / 0.4), photo=(SF.PHOTOS[b["photo"]] if SF.PHOTOS else None), **card)
             elif b["kind"] == "receipt": SF.dev_receipt(layer, min(1, (t - b["t0"]) / max(1.5, (b["t1"] - b["t0"]) * 0.8)))
             elif b["kind"] == "underline":
@@ -667,7 +705,7 @@ def stage_render(a):
     enc.stdin.close(); enc.wait()
     # ---- audio: base_cut audio + 3s silence, loudnorm, mux
     run([FFMPEG, "-y", "-loglevel", "error", "-i", str(OUT / "video_only.mp4"), "-i", str(OUT / "base_cut.mp4"),
-         "-filter_complex", f"[1:a]apad=pad_dur=3,atrim=0:{total + 3:.3f},afade=t=out:st={total - 0.3:.3f}:d=0.3,loudnorm=I=-16:TP=-1.5:LRA=11[a]",
+         "-filter_complex", f"[1:a]apad=pad_dur=3,atrim=0:{total + end_frames / FPS:.3f},afade=t=out:st={total - 0.3:.3f}:d=0.3,loudnorm=I=-16:TP=-1.5:LRA=11[a]",
          "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-shortest", str(OUT / "TR_V1_Receipt_9x16.mp4")])
     print("wrote", OUT / "TR_V1_Receipt_9x16.mp4")
 
@@ -762,6 +800,8 @@ if __name__ == "__main__":
     ap.add_argument("--photos"); ap.add_argument("--stage", default="all"); ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--out"); ap.add_argument("--folder", help="the takes folder; the hook and body takes are picked by listening to them")
     ap.add_argument("--single", help="one-file ad: the take (by file name, searched in the folder) that carries Daughter Hook 1 and the short CTA")
+    ap.add_argument("--drop", help='editor\'s cuts in the cut\'s timeline, e.g. "15.7-16.7,40.2-41.0"')
+    ap.add_argument("--speed", type=float, default=1.0, help="overall playback speed, e.g. 1.15")
     a = ap.parse_args()
     import shutil, tempfile
     if a.single:

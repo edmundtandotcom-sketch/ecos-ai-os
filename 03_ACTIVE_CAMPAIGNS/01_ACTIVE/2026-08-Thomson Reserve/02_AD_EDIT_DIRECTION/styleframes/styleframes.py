@@ -603,21 +603,15 @@ def dev_endcard(t=1.0):
     shadow_text(layer, (W // 2, int(H * 0.46)), "Would I buy", f, IVORY + (255,), anchor="mm")
     shadow_text(layer, (W // 2, int(H * 0.52)), "Thomson Reserve", f, IVORY + (255,), anchor="mm")
     shadow_text(layer, (W // 2, int(H * 0.58)), "for my daughter?", f, GOLD + (255,), anchor="mm")
-    # countdown chip
-    s = "BEFORE THE PREVIEW · 17 OCT"; f = OSWALD(36, 600); tw = text_w(f, s)
-    rrect(layer, (W // 2 - tw // 2 - 30, int(H * 0.645) - 34, W // 2 + tw // 2 + 30, int(H * 0.645) + 34), 34, (0, 0, 0, 0), outline=IVORY + (170,), width=2)
-    d.text((W // 2, int(H * 0.645)), s, font=f, fill=IVORY + (255,), anchor="mm")
-    # CTA button
-    sc = overshoot(min(1, max(0, (t - 0.3) / 0.5)))
+    # CTA button (one line of support copy under it; nothing repeated)
+    sc = overshoot(min(1, max(0, (t - 0.2) / 0.45)))
     s = "SAVE MY SEAT  ›"; f = ARCHIVO(50); tw = text_w(f, s)
     bw, bh = (tw + 120) * sc, 120 * sc
-    cx, cy = W // 2, int(H * 0.74)
+    cx, cy = W // 2, int(H * 0.68)
     rrect(layer, (cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2), int(60 * sc), GOLD + (255,), shadow=16)
     if sc > 0.6:
         d.text((cx, cy), s, font=f, fill=INK + (255,), anchor="mm")
-    d.text((W // 2, int(H * 0.80)), "Click the link below · free · live Q&A", font=INTER(28, 500), fill=IVORY + (190,), anchor="mm")
-    # wordmark lockup
-    d.text((W // 2, int(H * 0.90)), "LIVE · 60 MIN · FREE", font=OSWALD(30, 600), fill=IVORY + (200,), anchor="mm")
+    d.text((W // 2, int(H * 0.745)), "Link below · before the 17 Oct preview", font=INTER(28, 500), fill=IVORY + (190,), anchor="mm")
     return compose(base, layer)
 
 def anatomy():
