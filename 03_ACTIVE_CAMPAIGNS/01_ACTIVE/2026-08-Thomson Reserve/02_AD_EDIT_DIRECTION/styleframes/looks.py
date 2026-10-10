@@ -98,6 +98,33 @@ ENDS = {
 }
 def pal(look): return PALETTES[look["palette"]]
 
+# ---------------------------------------------------------------- where each device lands in the script (first phrase found wins)
+HOOK_ANCHORS = {   # the proof moment of the hook; "__number__" = the first word with a $ in it, "__question__" = the closing question
+    "receipt": ["$1.15 million", "$375,000", "parc clematis", "__number__"], "card": ["parc clematis", "$375,000", "__number__"],
+    "flick": ["parc clematis", "$375,000", "daughter", "__number__"], "priceline": ["don't cross this", "at what price", "what price", "__number__"],
+    "ladder": ["$1.15 million", "$375,000", "__number__"], "slam": ["$375,000", "__number__"], "photo_full": ["parc clematis", "$375,000", "__number__"],
+    "notyet": ["not yet", "__question__"], "millions": ["$2 to $3 million", "$3 million", "$2 to $3", "__number__"],
+    "ballot": ["ballot", "__question__"], "two_three": ["2-bedder", "2-bedroom or 3-bedroom", "2-bedroom", "which unit", "__question__"],
+    "question": ["__question__"], "chart": ["only three units left", "three units left", "how crowded", "__number__"],
+    "showflat": ["showflat", "which unit", "__question__"],
+}
+SCENE_HOOK_DEVS = {"ladder", "slam", "photo_full", "notyet", "millions", "ballot", "two_three", "question", "chart", "showflat"}
+BODY_ANCHORS = {   # (phrases, until-phrase or None, hold seconds when no until)
+    "EXIT": {
+        "check_white": (["2-bedroom or 3-bedroom"], "wouldn't touch", 0), "check_dark": (["2-bedroom or 3-bedroom"], "wouldn't touch", 0),
+        "same_stack": (["exact same development", "1,268 units"], None, 3.2), "dotgrid": (["1,268 units", "1,268"], None, 2.8),
+        "two_three": (["2-bedroom or 3-bedroom", "2-bedroom"], None, 2.6), "interstitial": (["who's going to buy", "who's going to"], None, 2.8),
+        "priceline": (["what price", "which stacks"], None, 3.2),
+    },
+    "BALLOT": {
+        "ballot": (["first choice is gone", "number gets called"], "empty-handed", 0), "check_white": (["my maximum price"], "only ones left", 0),
+        "check_dark": (["my maximum price"], "only ones left", 0), "slam_80k": (["$80,000", "another $80,000"], None, 2.4),
+        "plan_abc": (["plan a", "my preferred stacks"], None, 3.2), "interstitial": (["before we enter", "decisions made"], None, 2.8),
+        "priceline": (["my maximum price"], None, 3.2),
+    },
+}
+SCENE_BODY_DEVS = {"check_dark", "same_stack", "dotgrid", "two_three", "interstitial", "ballot", "slam_80k", "plan_abc"}
+
 # ---------------------------------------------------------------- the 31 looks
 def L(caption, headline, hook_dev, body_dev, end, palette, size, border, cut, note=""):
     return dict(caption=caption, headline=headline, hook_dev=hook_dev, body_dev=body_dev, end=end, palette=palette, size=size, border=border, cut=cut, note=note)
@@ -482,27 +509,37 @@ def draw_border(layer, look, progress):
 
 # ---------------------------------------------------------------- cuts (a single mid-transition frame, for the sheets; the renderer animates the same idea)
 def cut_frame(a, b, look, k=0.5):
-    """The frame half-way through the cut from picture a to picture b in this look's cut style."""
-    st = look["cut"]; P = pal(look); acc = P["acc"]
+    """The frame at k (0..1) through the cut from picture a to picture b, in this look's cut style."""
+    import math
+    st = look["cut"]; P = pal(look); acc = P["acc"]; e = math.sin(math.pi * k)
     if st == "whip":
-        return SF.whip_blur(Image.blend(a, b, k), 150)
+        return SF.whip_blur(Image.blend(a, b, k), int(20 + 160 * e))
     if st == "flash":
-        return SF.flash(Image.blend(a, b, k), 0.75)
+        return SF.flash(Image.blend(a, b, k), 0.95 * e)
     if st == "dip":
-        return Image.blend(Image.new("RGB", (W, H), (0, 0, 0)), b, 0.25)
+        black = Image.new("RGB", (W, H), (0, 0, 0))
+        return Image.blend(a, black, min(1, k * 2)) if k < 0.5 else Image.blend(black, b, min(1, (k - 0.5) * 2))
     if st == "punch":
-        z = SF.zoom_img(a, 1.35, anchor=(0.5, 0.4)); return SF.whip_blur(z, 40)
+        if k < 0.5: return SF.whip_blur(SF.zoom_img(a, 1.0 + 0.8 * k, anchor=(0.5, 0.4)), int(10 + 80 * k))
+        return SF.zoom_img(b, 1.0 + 0.25 * (1 - k), anchor=(0.5, 0.5))
     if st == "slide":
-        out = a.copy(); dy = int(H * (1 - k)); out.paste(b, (0, dy)); ImageDraw.Draw(out).rectangle((0, dy - 10, W, dy), fill=acc); return out
+        out = a.copy(); dy = int(H * (1 - SF.ease_out(k))); out.paste(b, (0, dy))
+        if dy > 0: ImageDraw.Draw(out).rectangle((0, max(0, dy - 12), W, dy), fill=acc)
+        return out
     if st == "wipe":
-        m = Image.new("L", (W, H), 0); x = int(W * k * 1.4); ImageDraw.Draw(m).polygon([(0, 0), (x, 0), (x - int(W * 0.4), H), (0, H)], fill=255)
-        out = Image.composite(b, a, m); ImageDraw.Draw(out).line([(x, 0), (x - int(W * 0.4), H)], fill=acc, width=22); return out
+        m = Image.new("L", (W, H), 0); x = int(W * k * 1.45); ImageDraw.Draw(m).polygon([(0, 0), (x, 0), (x - int(W * 0.4), H), (0, H)], fill=255)
+        out = Image.composite(b, a, m)
+        if 0 < x < W * 1.4: ImageDraw.Draw(out).line([(x, 0), (x - int(W * 0.4), H)], fill=acc, width=22)
+        return out
     if st == "glitch":
         import numpy as np
-        arr = np.asarray(a).copy(); r = np.roll(arr[:, :, 0], 28, axis=1); bch = np.roll(arr[:, :, 2], -28, axis=1); arr[:, :, 0] = r; arr[:, :, 2] = bch
-        rows = np.random.RandomState(3).randint(0, H - 40, 9)
-        for y in rows: arr[y:y + 40] = np.roll(arr[y:y + 40], np.random.RandomState(y).randint(-120, 120), axis=1)
-        out = Image.fromarray(arr); return Image.blend(out, b, 0.3)
+        src = a if k < 0.5 else b; amt = int(40 * e)
+        arr = np.asarray(src).copy()
+        arr[:, :, 0] = np.roll(arr[:, :, 0], amt, axis=1); arr[:, :, 2] = np.roll(arr[:, :, 2], -amt, axis=1)
+        rs = np.random.RandomState(int(k * 97) + 3)
+        for y in rs.randint(0, H - 40, 9): arr[y:y + 40] = np.roll(arr[y:y + 40], rs.randint(-140, 140), axis=1)
+        return Image.fromarray(arr)
     if st == "spin":
-        out = a.rotate(18 * (1 - k), resample=Image.BICUBIC, expand=False); out = SF.zoom_img(out, 1.25, anchor=(0.5, 0.5)); return SF.whip_blur(Image.blend(out, b, k * 0.6), 60)
+        if k < 0.5: out = a.rotate(-24 * k * 2, resample=Image.BICUBIC); return SF.whip_blur(SF.zoom_img(out, 1.0 + 0.5 * k, anchor=(0.5, 0.5)), int(80 * k))
+        out = b.rotate(24 * (1 - k) * 2 * -1, resample=Image.BICUBIC); return SF.zoom_img(out, 1.0 + 0.5 * (1 - k), anchor=(0.5, 0.5))
     return b

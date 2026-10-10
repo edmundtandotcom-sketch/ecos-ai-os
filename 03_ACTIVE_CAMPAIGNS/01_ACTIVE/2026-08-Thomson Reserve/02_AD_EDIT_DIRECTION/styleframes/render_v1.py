@@ -38,6 +38,8 @@ def start_log(path):
     print(f"\n===== render_v1 run {datetime.datetime.now():%Y-%m-%d %H:%M} =====")
 import styleframes as SF                                   # devices, captions, palette
 from styleframes import W, H, INK, GOLD, RED, ORANGE, WHITE, IVORY
+import looks as LK                                          # one format per ad (looks.LOOKS); None = the approved base look
+LOOK = None
 
 FPS = 30
 OUT = HERE / "out" / "v1"
@@ -512,6 +514,7 @@ def stage_plan(a):
             h2 = F(until, hit[0]); t1 = (h2[1] if h2 else hit[1] + 2.0) + tail
         else: t1 = (hit[1] if dur is None else t0 + dur) + tail
         if kind == "eyebrow" and any(b["kind"] == "eyebrow" and b["t0"] < t1 and b["t1"] > t0 for b in beats): return   # one eyebrow at a time
+        if "t0_" in kw: t0, t1 = kw.pop("t0_"), kw.pop("t1_")
         beats.append(dict(kind=kind, t0=round(t0, 3), t1=round(t1, 3), anchor=ph, **kw))
     plan_beats(beat, F, total, hook_end)
     if SINGLE: beats[:] = [b for b in beats if b["kind"] != "split"]      # the split shifts the speaker; the framing stays as shot
@@ -529,6 +532,8 @@ def stage_plan(a):
     owns = [(b["t0"], b["t1"], (0.64 if SINGLE else 0.57) if b["kind"] == "receipt" else 0.42) for b in beats if b["kind"] in ("receipt", "pricegap")]
     if SINGLE:   # the checklist and the price gap sit under the chin (like the receipt); the caption goes just above them
         owns = [(b["t0"], b["t1"], 0.64) for b in beats if b["kind"] in ("receipt", "pricegap", "checklist")]
+    if LOOK:     # a scene takes the caption low in the frame; a card over the speaker takes it just under the chin
+        owns += [(b["t0"], b["t1"], 0.82 if b.get("scene") else 0.64) for b in beats if b["kind"] in ("proof", "bodydev")]
     cue_list = []
     for c in cues(words):
         s, e = c[0]["s"] - 0.08, c[-1]["e"] + 0.10
@@ -598,6 +603,7 @@ def stage_plan(a):
 def plan_beats(beat, F, total, hook_end):
     """Which devices go where, per hook and per body (see tr_scripts for the ids)."""
     END = "__end__"
+    if LOOK and HOOK_ID != "DH1": return plan_beats_look(beat, F, total, hook_end)
     # ---- hook
     if HOOK_ID == "DH1":
         beat("eyebrow", "my daughter", until="forward again", text=HOOK_HEADLINE)
@@ -648,6 +654,49 @@ def plan_beats(beat, F, total, hook_end):
     elif BODY_ID == "CTA":
         beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · 17 OCT", after=hook_end)
 
+def plan_beats_look(beat, F, total, hook_end):
+    """The look's devices: the headline treatment, one proof moment in the hook (a card over the speaker or a scene
+    that cuts away), the Thomson Reserve insert when it does not collide, one body device or scene, the webinar eyebrow."""
+    END = "__end__"; dev = LOOK["hook_dev"]; scene = dev in LK.SCENE_HOOK_DEVS
+    beat("headline", "__hook_start__", until="__hook_end__", text=HOOK_HEADLINE)
+    hw = script_words(SCRIPT_HOOK)
+    def resolve(ph):
+        if ph == "__number__":
+            for w in hw:
+                if "$" in w["w"]: return F(w["w"])
+            return None
+        if ph == "__question__": return F(" ".join(w["w"] for w in hw[-5:]))
+        return F(ph)
+    hit = None
+    for ph in LK.HOOK_ANCHORS[dev]:
+        hit = resolve(ph)
+        if hit: break
+    if hit:
+        t0 = max(0.0, hit[0] - 0.3)
+        t1 = min(hook_end + 0.3, (hit[1] + 1.8) if scene else (hit[1] + 2.6))
+        if dev == "question": t1 = hook_end + 0.3
+        beat("proof", "__hook_start__", dur=0.0, dev=dev, scene=scene, t0_=t0, t1_=t1)      # placed below with its own times
+    # the Thomson Reserve picture, unless the proof moment already owns that stretch
+    tr = F("thomson reserve")
+    if tr and not (hit and t0 - 0.2 < tr[0] < t1 + 0.2):
+        beat("insert", "thomson reserve", dur=1.3, lead=-0.1, src="deck_p06", cx=2250, scene=True)
+        beat("label", "thomson reserve", dur=1.3, lead=-0.1, text="THOMSON RESERVE", y=0.47)
+    beat("underline", "move her forward", dur=1.4, lead=0.2)
+    # ---- body
+    bdev = LOOK["body_dev"]; bscene = bdev in LK.SCENE_BODY_DEVS
+    phrases, until, hold = LK.BODY_ANCHORS[BODY_ID][bdev]
+    bh = None
+    for ph in phrases:
+        bh = F(ph, hook_end)
+        if bh: break
+    if bh:
+        b0 = max(hook_end, bh[0] - 0.3)
+        if until:
+            u = F(until, bh[0]); b1 = (u[1] if u else bh[1] + 3.0) + 0.4
+        else: b1 = bh[1] + hold
+        beat("bodydev", "__hook_start__", dur=0.0, dev=bdev, scene=bscene, t0_=b0, t1_=min(total, b1))
+    beat("eyebrow", "live 60-minute webinar", until=END, text="LIVE WEBINAR · 17 OCT", after=hook_end)
+
 def human_pass(plan):
     sh = plan["shots"]; d = [s["t1"] - s["t0"] for s in sh]
     cuts = len(sh) + len([b for b in plan["beats"] if b["kind"] in ("insert", "split", "vs", "dotgrid", "bars")]) * 2
@@ -691,8 +740,8 @@ class CaptionCache:
         if k not in self.c:
             tt = min(1, (t - cue["s"]) / (8 / FPS))
             L = SF.new_layer()
-            emo = None
-            SF.caption_anim(L, cue["words"], cue["accent"], cue["style"], tt, emo=emo, y_frac=y, size=88)
+            if LOOK: LK.draw_caption(L, cue["words"], cue["accent"], LOOK, tt, y=y)
+            else: SF.caption_anim(L, cue["words"], cue["accent"], cue["style"], tt, emo=None, y_frac=y, size=88)
             self.c[k] = L
             if len(self.c) > 60: self.c.pop(next(iter(self.c)))
         return self.c[k]
@@ -706,16 +755,20 @@ def stage_render(a):
                             "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-video_track_timescale", "90000",
                             str(OUT / "video_only.mp4")], stdin=subprocess.PIPE)
     whip_at = []  # (time, direction)
+    look_edges = sorted(set(round(x, 3) for b in beats if LOOK and b.get("scene") for x in (b["t0"], b["t1"]))) if LOOK else []
     for b in beats:
-        if b.get("whip"): whip_at += [b["t0"], b["t1"]]
-    for s in plan["seams"]: whip_at.append(s)
+        if b.get("whip") and not LOOK: whip_at += [b["t0"], b["t1"]]
+    for s in plan["seams"]:
+        if not LOOK: whip_at.append(s)
+    if LOOK: look_edges = sorted(set(look_edges + [round(plan["hook_end"], 3)]))   # the hook→body seam takes the look's cut too
     whip_at = sorted(set(round(x, 3) for x in whip_at))
     # never two whips within 6s → the later one becomes a plain cut
     kept = []
     for x in whip_at:
         if not kept or x - kept[-1] > 6.0: kept.append(x)
     whip_at = kept
-    flashes = [plan["seams"][0]] + [b["t0"] for b in beats if b["kind"] == "insert" and b.get("dip")]
+    flashes = ([plan["seams"][0]] if not LOOK else []) + [b["t0"] for b in beats if b["kind"] == "insert" and b.get("dip")]
+    end_dur = end_frames / FPS; cut_held = None; last_out = None
     r = subprocess.run([FFMPEG, "-i", str(OUT / "base_cut.mp4")], capture_output=True, text=True, encoding="utf-8", errors="replace")
     print("cut stream:", " | ".join(l.strip() for l in r.stderr.splitlines() if "Stream #0:0" in l or "rotat" in l.lower() or "displaymatrix" in l))
     print(f"rendering {n_frames + end_frames} frames …")
@@ -728,10 +781,15 @@ def stage_render(a):
         shot = next((s for s in shots if s["t0"] <= t < s["t1"]), shots[-1])
         # ---- picture
         active = [b for b in beats if b["t0"] <= t < b["t1"]]
-        full = next((b for b in active if b["kind"] in ("insert", "dotgrid", "bars", "vs")), None)
+        full = next((b for b in active if b["kind"] in ("insert", "dotgrid", "bars", "vs") or (b["kind"] in ("proof", "bodydev") and b.get("scene"))), None)
+        lookdev = next((b for b in active if b["kind"] in ("proof", "bodydev")), None)
         split = next((b for b in active if b["kind"] == "split"), None)
         hx, hy = (0, 0) if SINGLE else SF.handheld(t)
-        if full:
+        if lookdev:
+            kp = min(1.0, (t - lookdev["t0"]) / 1.3)
+            if lookdev["kind"] == "proof": base = LK.hook_scene(frame, LOOK, HOOK_ID, kp)[0]
+            else: base = LK.body_scene(frame, LOOK, BODY_ID, kp)[0]
+        elif full:
             k = (t - full["t0"]) / max(0.1, full["t1"] - full["t0"])
             z = (1.08 - 0.06 * k) if full.get("pull") else (1.0 + 0.06 * k)
             dark = {"dotgrid": 0.78, "bars": 0.62, "vs": 0.0}.get(full["kind"], 0.0)
@@ -757,7 +815,13 @@ def stage_render(a):
         # ---- devices
         for b in active:
             k = (t - b["t0"]) / max(0.1, b["t1"] - b["t0"])
-            if b["kind"] == "eyebrow": SF.eyebrow(layer, b["text"], slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
+            if b["kind"] in ("proof", "bodydev"): continue
+            if b["kind"] == "headline":
+                if full: continue                                   # the headline steps aside while a scene owns the frame
+                LK.draw_headline(layer, b["text"], LOOK, t=t - b["t0"], t_abs=t - b["t0"])
+            elif b["kind"] == "eyebrow":
+                if LOOK: P = LK.pal(LOOK); SF.eyebrow(layer, b["text"], bg=P["acc"], fg=P["on"], slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
+                else: SF.eyebrow(layer, b["text"], slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
             elif b["kind"] == "label": SF.eyebrow(layer, b["text"], y_frac=b["y"], size=58, bg=GOLD, fg=INK, slide=SF.ease_out(min(1, (t - b["t0"]) / 0.3)))
             elif b["kind"] == "photo_card" and not full:      # the card steps aside while the photo is full size
                 card = dict(x_frac=0.84, y_frac=0.28, w=260, rot=-6) if SINGLE else {}   # right of the face, below the eyebrow
@@ -793,8 +857,16 @@ def stage_render(a):
         if cue and not (full and full["kind"] == "dotgrid" and t < full["t0"] + 1.2):
             y = cue.get("y") or (0.80 if (full and full["kind"] == "dotgrid") else (0.74 if split else 0.70))
             layer.alpha_composite(cc.layer(cue, t, y))
+        if LOOK: LK.draw_border(layer, LOOK, t / (total + end_dur))
         out = SF.compose(base, layer)
         # ---- transitions
+        if LOOK:
+            edge = next((e for e in look_edges if abs(t - e) < 0.1), None)
+            if edge is not None:
+                if cut_held is None: cut_held = last_out or out
+                out = LK.cut_frame(cut_held, out, LOOK, min(1.0, max(0.0, (t - edge + 0.1) / 0.2)))
+            else: cut_held = None
+        last_out = out
         for wt in whip_at:
             if abs(t - wt) < 0.12:
                 out = SF.whip_blur(out, int(60 + 120 * (1 - abs(t - wt) / 0.12)))
@@ -804,7 +876,11 @@ def stage_render(a):
         enc.stdin.write(out.tobytes())
         if i % 300 == 0: print(f"  {t:6.1f}s / {total:.1f}s")
     for j in range(end_frames):
-        enc.stdin.write(SF.dev_endcard(j / (end_frames - 1)).tobytes())
+        k = j / (end_frames - 1)
+        if LOOK:
+            card = LK.endcard(LOOK, k); Lb = SF.new_layer(); LK.draw_border(Lb, LOOK, (total + k * end_dur) / (total + end_dur)); card = SF.compose(card, Lb)
+        else: card = SF.dev_endcard(k)
+        enc.stdin.write(card.tobytes())
     enc.stdin.close(); enc.wait()
     # ---- audio: base_cut audio + 3s silence, loudnorm, mux
     run([FFMPEG, "-y", "-loglevel", "error", "-i", str(OUT / "video_only.mp4"), "-i", str(OUT / "base_cut.mp4"),

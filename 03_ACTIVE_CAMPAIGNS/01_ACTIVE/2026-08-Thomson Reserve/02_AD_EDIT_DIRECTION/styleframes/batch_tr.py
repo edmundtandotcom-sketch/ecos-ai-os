@@ -13,7 +13,7 @@ Work files stay on the local disk (LOCALAPPDATA\\TR_render_v1\\<job id>)."""
 import sys, os, re, json, time, shutil, argparse, tempfile, traceback
 from pathlib import Path
 HERE = Path(__file__).resolve().parent; sys.path.insert(0, str(HERE))
-import styleframes as SF, render_v1 as RV, tr_scripts as TS
+import styleframes as SF, render_v1 as RV, tr_scripts as TS, looks as LK
 
 SPEED = 1.15            # approved on the one-file ad
 SMALL_MB, SMALL_SECS = 5.0, 60.0
@@ -63,6 +63,7 @@ def preview(src, dest):
 def render_job(j, takes, work, renders, photos, seed=7):
     RV.SINGLE = True; RV.PREFIX = j["id"]; RV.HOOK_ID = j["hook"]; RV.BODY_ID = j["body"]; RV.HOOK_HEADLINE = j["headline"]
     RV.SCRIPT_HOOK = j["hook_text"]; RV.SCRIPT_BODY = j["body_text"]; RV.ALIGN.clear()
+    RV.LOOK = LK.LOOKS.get(j["id"]); print("look:", LK.recipe(RV.LOOK) if RV.LOOK else "(base)")
     RV.OUT = work / j["id"]; RV.OUT.mkdir(parents=True, exist_ok=True)
     a = argparse.Namespace(hook=str(takes[j["hook_take"]]), body=str(takes[j["body_take"]]), seed=seed, photos=photos, drop=None, speed=SPEED, stage="all")
     for st in ("audio", "asr", "tighten", "plan", "render", "qc"):
