@@ -503,7 +503,7 @@ def stage_plan(a):
     hq = F(" ".join(w["w"] for w in script_words(SCRIPT_HOOK)[-5:]))   # the question that ends the hook
 
     # ---------- caption cues; suppressed where a copy-carrying device owns the frame or in a breath
-    owns = [(b["t0"], b["t1"], 0.57 if b["kind"] == "receipt" else 0.42) for b in beats if b["kind"] in ("receipt", "pricegap")]
+    owns = [(b["t0"], b["t1"], (0.64 if SINGLE else 0.57) if b["kind"] == "receipt" else 0.42) for b in beats if b["kind"] in ("receipt", "pricegap")]
     cue_list = []
     for c in cues(words):
         s, e = c[0]["s"] - 0.08, c[-1]["e"] + 0.10
@@ -677,7 +677,7 @@ def stage_render(a):
             elif b["kind"] == "photo_card" and not full:      # the card steps aside while the photo is full size
                 card = dict(x_frac=0.84, y_frac=0.28, w=260, rot=-6) if SINGLE else {}   # right of the face, below the eyebrow
                 SF.dev_photo_card(layer, min(1, (t - b["t0"]) / 0.4), photo=(SF.PHOTOS[b["photo"]] if SF.PHOTOS else None), **card)
-            elif b["kind"] == "receipt": SF.dev_receipt(layer, min(1, (t - b["t0"]) / max(1.5, (b["t1"] - b["t0"]) * 0.8)))
+            elif b["kind"] == "receipt": SF.dev_receipt(layer, min(1, (t - b["t0"]) / max(1.5, (b["t1"] - b["t0"]) * 0.8)), y=0.82 if SINGLE else 0.74)   # lower in one-file mode: the caption sits under the chin, the card under the caption
             elif b["kind"] == "underline":
                 f = SF.ANTON(88); tw = SF.text_w(f, "FORWARD")
                 SF.scribble_underline(layer, W // 2 - tw // 2 - 10, W // 2 + tw // 2 + 10, int(H * 0.70) + 64, min(1, (t - b["t0"]) / 0.35))
