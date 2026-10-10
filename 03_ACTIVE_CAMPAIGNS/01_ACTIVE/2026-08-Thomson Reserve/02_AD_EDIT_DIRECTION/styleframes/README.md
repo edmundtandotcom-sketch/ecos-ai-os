@@ -112,3 +112,7 @@ What the run does:
 The report at the end of the log flags any ad whose script was heard weakly (`! CHECK`), which usually means the take does not carry that script or the hook numbers are in a different order than the doc.
 
 `test_batch.py` proves the mechanics on synthetic takes (a three-hook take, two body takes, the combined DH1 take): each hook is cut from its own stretch, the body cut is reused, every ad is 1080 × 1920, the cloud copies are under 5 MB.
+
+### One format per ad — `looks.py` (added 2026-10-10)
+
+Every Longer Ad has its own look in `looks.LOOKS`: colour palette (14), caption style (8) and size (M/L/XL), headline treatment (6), proof device in the hook (14, ten of them full-frame scenes that cut away from the talking head), body device (10), cut style between scenes (8), progress border running around the frame (6) and end card (4). No two ads share a combination. `batch_tr.py` sets the look per job and `render_v1.py` draws from it; `preview_looks.py` renders a format sheet per ad from clean frames of the real take so the formats can be approved before any full render (`python preview_looks.py <plates folder> <photos folder> <out folder>`). `test_look.py <ad id>` renders one looked ad end to end on the synthetic takes.
