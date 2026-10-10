@@ -167,7 +167,8 @@ def stage_audio(a):
             cx = sw // 2; print("  ! no face found; centre column")
     except Exception as e:
         cx = sw // 2; print("  (no cv2:", e, ")")
-    if sw / sh > W / H + 0.01:      # landscape → 9:16 column around the face
+    if SINGLE: pass                 # one-file mode: the take's framing stays as shot, no crop
+    elif sw / sh > W / H + 0.01:    # landscape → 9:16 column around the face
         cw = int(sh * W / H); x0 = min(max(cx - cw // 2, 0), sw - cw); crop = dict(x=x0, y=0, w=cw, h=sh)
     elif sw / sh < W / H - 0.01:    # taller than 9:16 → trim height, keep the top third (face sits high)
         ch = int(sw * H / W); crop = dict(x=0, y=max(0, min(int(sh * 0.12), sh - ch)), w=sw, h=ch)
@@ -442,6 +443,7 @@ def stage_plan(a):
          ticks=["walk away at", "which stacks", "before and during", "own-stay"])
     if SINGLE:
         beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · BEFORE THE 17 OCT PREVIEW")
+        beats = [b for b in beats if b["kind"] != "split"]      # the split shifts the speaker; the take's framing stays as shot
     beats.sort(key=lambda b: b["t0"])
 
     # ---------- breaths: caption off for 0.4s before these lines
@@ -484,6 +486,7 @@ def stage_plan(a):
         z = ZOOM_LADDER[ladder_i % len(ZOOM_LADDER)]; ladder_i += 1; since_break += e - s
         if since_break > 20 and prev_z is not None: z = prev_z; since_break = 0
         move = "punch" if c["num"] else "push"
+        if SINGLE: z, move = 1.0, "none"                          # framing as shot: no zoom ladder, no moves
         shots.append(dict(t0=round(s, 3), t1=round(e, 3), zoom=z, move=move)); prev_z = z
     if shots: shots[0]["t0"] = 0.0; shots[-1]["t1"] = round(total, 3)
     # jitter rule: no two consecutive within ±15% → move the shared boundary (two passes)
@@ -499,7 +502,7 @@ def stage_plan(a):
     # the hold: one shot across the question, zoom 1.00, no ladder
     if hq:
         q0, q1 = hq[0] - 0.1, hook_end + 0.3
-        shots = [s for s in shots if s["t1"] <= q0 or s["t0"] >= q1] + [dict(t0=round(q0, 3), t1=round(q1, 3), zoom=1.0, move="push", hold=True)]
+        shots = [s for s in shots if s["t1"] <= q0 or s["t0"] >= q1] + [dict(t0=round(q0, 3), t1=round(q1, 3), zoom=1.0, move="none" if SINGLE else "push", hold=True)]
         shots.sort(key=lambda s: s["t0"])
     # contiguous, no gaps, no overlaps, nothing shorter than 0.15s: every frame has exactly one shot
     for i in range(1, len(shots)):
@@ -589,7 +592,7 @@ def stage_render(a):
         active = [b for b in beats if b["t0"] <= t < b["t1"]]
         full = next((b for b in active if b["kind"] in ("insert", "dotgrid", "bars", "vs")), None)
         split = next((b for b in active if b["kind"] == "split"), None)
-        hx, hy = SF.handheld(t)
+        hx, hy = (0, 0) if SINGLE else SF.handheld(t)
         if full:
             k = (t - full["t0"]) / max(0.1, full["t1"] - full["t0"])
             z = (1.08 - 0.06 * k) if full.get("pull") else (1.0 + 0.06 * k)
@@ -604,7 +607,7 @@ def stage_render(a):
         else:
             # speaker: zoom ladder + move, handheld
             k = min(1.0, max(0.0, (t - shot["t0"]) / max(0.1, shot["t1"] - shot["t0"])))
-            z = shot["zoom"] + (0.05 * k if shot["move"] == "push" else 0.13 * SF.ease_out(min(1, k * 3), 4))
+            z = shot["zoom"] + (0.0 if shot["move"] == "none" else 0.05 * k if shot["move"] == "push" else 0.13 * SF.ease_out(min(1, k * 3), 4))
             base = SF.zoom_img(frame, max(1.0, z), hx, hy)
             if split:
                 top = src_image(split["src"], cx=split.get("cx"), zoom=1.04 + 0.03 * (t - split["t0"]) / max(0.1, split["t1"] - split["t0"]))
