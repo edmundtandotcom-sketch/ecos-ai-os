@@ -82,7 +82,13 @@ Click the link below and join me live."""
 SCRIPT_CTA_SHORT = ("Thomson Reserve preview starts 17 October. And I'm running a LIVE 60-minute webinar before that. "
                     "If you want to find out my analysis if I will buy for her, join me in this webinar live.")
 PREFIX = "TR_V1"        # output file prefix; "TR_SHORT" in one-file mode
-SINGLE = False
+SINGLE = False          # keep the take's framing as shot (no crop / zoom / shake / split); on for every selfie-framed job
+HOOK_ID = "DH1"         # "DH1" (Daughter Hook 1) or 1..15 (the hook bank in tr_scripts)
+BODY_ID = "FULL"        # "FULL" | "EXIT" | "BALLOT" | "CTA"
+HOOK_HEADLINE = "WOULD I BUY THIS FOR MY DAUGHTER?"
+ASR_CACHE = {}          # clip path → recognised words (a take listened to once per batch)
+CUT_CACHE = {}          # (clip, script, crop) → (cut file, words, dur): a body take is cut once per batch
+ALIGN = {}              # "hook"/"body" → share of script words heard exactly, for the batch report
 
 # ------------------------------------------------------------------ tightening + captions
 MAX_GAP, PAD_IN, PAD_OUT = 0.38, 0.14, 0.24
@@ -285,16 +291,40 @@ def best_window(script, asr, pad=8):
 def stage_asr(a):
     cache = {}
     for name, text in (("hook", SCRIPT_HOOK), ("body", SCRIPT_BODY)):
-        clip = getattr(a, name)
+        clip = str(getattr(a, name))
         if clip in cache: asr = cache[clip]          # hook and body in one take → listen once
-        else: asr = cache[clip] = asr_words(OUT / f"{name}.wav")
+        elif clip in ASR_CACHE: asr = cache[clip] = ASR_CACHE[clip]   # listened to in an earlier job of this batch
+        else: asr = cache[clip] = ASR_CACHE[clip] = asr_words(OUT / f"{name}.wav")
         (OUT / f"asr_{name}.json").write_text(json.dumps(asr, indent=0))
         sw = script_words(text); j0, j1 = best_window(sw, asr)
         if (j0, j1) != (0, len(asr)): print(f"{name}: script found at ASR words {j0}–{j1} of {len(asr)} ({asr[j0]['s']:.1f}s → {asr[j1-1]['e']:.1f}s)")
         words, ratio = align(sw, asr[j0:j1])
         (OUT / f"words_{name}.json").write_text(json.dumps(words, indent=0))
+        ALIGN[name] = ratio
         print(f"{name}: {len(asr)} words heard → {len(words)} script words timed, {ratio*100:.0f}% exact matches")
         print("   heard:", " ".join(w["w"] for w in asr[:18]).lower(), "…")
+
+# ------------------------------------------------------------------ orientation
+_ORIENT = {}
+def orient_filter(clip):
+    """The transpose that puts this take upright when it is read with -noautorotate, found by comparing a
+    frame read raw against the same frame read through ffmpeg's simple (reliably autorotated) pipeline.
+    Some ffmpeg builds skip autorotation inside a complex filtergraph; this makes the cut independent of that."""
+    clip = str(clip)
+    if clip in _ORIENT: return _ORIENT[clip]
+    t = max(0.0, probe(clip)["dur"] * 0.3)
+    ref = OUT / "orient_ref.png"; raw = OUT / "orient_raw.png"
+    run([FFMPEG, "-y", "-loglevel", "error", "-ss", f"{t:.2f}", "-i", clip, "-frames:v", "1", "-vf", "scale=180:-2", str(ref)])
+    run([FFMPEG, "-y", "-loglevel", "error", "-noautorotate", "-ss", f"{t:.2f}", "-i", clip, "-frames:v", "1", str(raw)])
+    R = Image.open(ref).convert("L"); A = Image.open(raw).convert("L")
+    best = ("", 1e9)
+    for name, im in (("", A), ("transpose=1", A.transpose(Image.ROTATE_270)), ("transpose=2", A.transpose(Image.ROTATE_90)), ("hflip,vflip", A.transpose(Image.ROTATE_180))):
+        if im.size[0] * R.size[1] != im.size[1] * R.size[0]: continue        # aspect must match the reference
+        d = float(np.abs(np.asarray(im.resize(R.size), np.float32) - np.asarray(R, np.float32)).mean())
+        if d < best[1]: best = (name, d)
+    _ORIENT[clip] = best[0]
+    print(f"orientation of {Path(clip).name}: {'as stored' if not best[0] else 'needs ' + best[0]}")
+    return best[0]
 
 # ------------------------------------------------------------------ stage: tighten
 def silences(wav):
@@ -355,15 +385,26 @@ def stage_tighten(a):
         kept = sum(s1 - s0 for s0, s1 in segs)
         print(f"{name}: {len(segs)} segments, {meta[name]['dur']:.1f}s → {kept:.1f}s")
         words, dur = remap(words, segs)
+        own_take = meta["body"]["clip"] != meta["hook"]["clip"]
+        ckey = (meta[name]["clip"], SCRIPT_BODY if name == "body" else SCRIPT_HOOK, tuple(sorted(c.items())))
+        cached = CUT_CACHE.get(ckey) if (name == "body" and own_take) else None
+        if cached and Path(cached[0]).exists():
+            p, words, dur = cached[0], [dict(w) for w in cached[1]], cached[2]
+            print(f"body: cut reused from an earlier job of this batch ({Path(p).parent.name})")
+            for w in words: w["s"] = round(w["s"] + total, 3); w["e"] = round(w["e"] + total, 3); w["clip"] = name
+            all_words += words; total += dur; parts.append(Path(p)); continue
         # one re-encode per clip: trim+concat, crop column, 1080x1920, grade, 30fps, 48k stereo
         vf = "".join(f"[0:v]trim={s0:.3f}:{s1:.3f},setpts=PTS-STARTPTS[v{i}];[0:a]atrim={s0:.3f}:{s1:.3f},asetpts=PTS-STARTPTS[a{i}];" for i, (s0, s1) in enumerate(segs))
         vf += "".join(f"[v{i}][a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=1:a=1[vc][ac];"
-        vf += (f"[vc]crop={c['w']}:{c['h']}:{c['x']}:{c['y']},scale={W}:{H}:flags=lanczos,"
+        orient = orient_filter(meta[name]["clip"]); orient = orient + "," if orient else ""
+        vf += (f"[vc]{orient}crop={c['w']}:{c['h']}:{c['x']}:{c['y']},scale={W}:{H}:flags=lanczos,"
                f"eq=contrast=1.06:saturation=1.05,fps={FPS},setsar=1,format=yuv420p[vout];[ac]aresample=48000,aformat=channel_layouts=stereo[aout]")
         p = OUT / f"{name}_cut.mp4"
-        run([FFMPEG, "-y", "-loglevel", "error", "-i", meta[name]["clip"], "-filter_complex", vf, "-map", "[vout]", "-map", "[aout]",
+        run([FFMPEG, "-y", "-loglevel", "error", "-noautorotate", "-i", meta[name]["clip"], "-filter_complex", vf, "-map", "[vout]", "-map", "[aout]",
              "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-c:a", "aac", "-b:a", "256k", "-video_track_timescale", "90000", str(p)])
-        dur = probe(p)["dur"]
+        pm = probe(p); dur = pm["dur"]
+        if (pm["w"], pm["h"]) != (W, H): raise SystemExit(f"{name} cut came out {pm['w']}x{pm['h']}, expected {W}x{H}")
+        if name == "body" and own_take: CUT_CACHE[ckey] = (str(p), [dict(w) for w in words], dur)
         for w in words: w["s"] = round(w["s"] + total, 3); w["e"] = round(w["e"] + total, 3); w["clip"] = name
         all_words += words; total += dur; parts.append(p)
     # join hook + body: both parts were encoded with identical params, so the concat demuxer
@@ -458,40 +499,22 @@ def stage_plan(a):
 
     # ---------- beats (devices + inserts), phrase-anchored
     beats = []
+    hook_words = [w for w in words if w["clip"] == "hook"]
     def beat(kind, ph, dur=None, until=None, lead=0.0, tail=0.0, **kw):
-        hit = F(ph, kw.pop("after", 0.0))
+        after = kw.pop("after", 0.0)
+        if ph == "__hook_start__": hit = (hook_words[0]["s"], hook_words[0]["e"], 0) if hook_words else None
+        else: hit = F(ph, after)
         if not hit: return
         t0 = max(0.0, hit[0] + lead)
-        if until:
+        if until == "__hook_end__": t1 = hook_end + tail
+        elif until == "__end__": t1 = total + tail
+        elif until:
             h2 = F(until, hit[0]); t1 = (h2[1] if h2 else hit[1] + 2.0) + tail
         else: t1 = (hit[1] if dur is None else t0 + dur) + tail
+        if kind == "eyebrow" and any(b["kind"] == "eyebrow" and b["t0"] < t1 and b["t1"] > t0 for b in beats): return   # one eyebrow at a time
         beats.append(dict(kind=kind, t0=round(t0, 3), t1=round(t1, 3), anchor=ph, **kw))
-    # hook (the A11 grammar on real timing)
-    beat("eyebrow", "my daughter", until="forward again", text="WOULD I BUY THIS FOR MY DAUGHTER?")
-    beat("photo_card", "already benefited", until="forward again", tail=-1.0, photo=0)
-    beat("receipt", "bought at", until="1.525M", tail=0.9)
-    beat("insert", "now if thomson reserve", until="thomson reserve", tail=0.3, lead=-0.1, src="deck_p06", cx=2250, whip=True)
-    beat("underline", "forward again", dur=1.6, lead=0.25)
-    # body — the reduced device set of §4.0
-    beat("split", "preview starts 17 october", until="17 october", lead=-0.1, tail=0.2, src="deck_p16", whip=True)
-    beat("split", "there are 1,268 units", until="1,268 units", lead=-0.2, tail=0.2, src="deck_p17", whip=True)
-    beat("dotgrid", "1,066 of them", until="3 bedrooms", lead=-0.3, tail=0.5, src="deck_p17")
-    beat("split", "your direct neighbours", until="direct neighbours", lead=-0.1, tail=0.3, src="deck_p11", whip=True)
-    beat("bars", "thomson east coast mrt story", until="under 3% a year", lead=-0.4, tail=0.7, src="deck_p04",
-         eyebrow="YOU'RE BUYING AFTER THE MRT STORY", k_bar1="20.86%", k_bar2="5.87%", k_pill="under 3%", whip=True)
-    beat("pricegap", "$3.2 million", until="$500,000 above", lead=-0.3, tail=0.9, k_right="$3.2 million", k_left="$2.7m", k_gap="$500,000")
-    beat("vs", "three reasons", dur=3.0, lead=-0.2, whip=True)
-    beat("insert", "two minutes", until="sheltered", lead=-0.1, tail=0.2, src="deck_p06", cx=2250)
-    beat("insert", "central catchment", until="20km of trails", lead=-0.1, tail=0.2, src="deck_p12", cx=900, whip=True)
-    beat("insert", "a forever million dollar view", until="dollar view", lead=-0.2, tail=0.6, src="deck_p12", cx=900, pull=True, dip=True)
-    beat("checklist", "exact price i walk away", until="own-stay", lead=-0.2, tail=0.3,
-         items=["THE PRICE I WON'T CROSS", "STACKS TO PICK · TO AVOID", "PREP BEFORE BALLOT DAY", "2ND PROPERTY OR OWN-STAY"],
-         ticks=["walk away at", "which stacks", "before and during", "own-stay"])
-    if SINGLE:
-        beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · 17 OCT")
-        beat("insert", "parc clematis", dur=0.85, lead=-0.05, src="photo:0", anchor_x=0.5, dip=True)              # the photo full size, briefly
-        beat("label", "now if thomson reserve", until="thomson reserve", lead=-0.1, tail=0.3, text="THOMSON RESERVE", y=0.47)
-        beats = [b for b in beats if b["kind"] != "split"]      # the split shifts the speaker; the take's framing stays as shot
+    plan_beats(beat, F, total, hook_end)
+    if SINGLE: beats[:] = [b for b in beats if b["kind"] != "split"]      # the split shifts the speaker; the framing stays as shot
     beats.sort(key=lambda b: b["t0"])
 
     # ---------- breaths: caption off for 0.4s before these lines
@@ -569,6 +592,59 @@ def stage_plan(a):
     plan = dict(total=total, hook_end=hook_end, shots=shots, cues=cue_list, beats=beats, breaths=breaths, seams=seams, seed=a.seed)
     (OUT / "plan.json").write_text(json.dumps(plan, indent=1))
     human_pass(plan)
+
+def plan_beats(beat, F, total, hook_end):
+    """Which devices go where, per hook and per body (see tr_scripts for the ids)."""
+    END = "__end__"
+    # ---- hook
+    if HOOK_ID == "DH1":
+        beat("eyebrow", "my daughter", until="forward again", text=HOOK_HEADLINE)
+        beat("photo_card", "already benefited", until="forward again", tail=-1.0, photo=0)
+        beat("receipt", "bought at", until="1.525M", tail=0.9)
+        beat("insert", "now if thomson reserve", until="thomson reserve", tail=0.3, lead=-0.1, src="deck_p06", cx=2250, whip=True)
+        beat("underline", "forward again", dur=1.6, lead=0.25)
+        if SINGLE:
+            beat("insert", "parc clematis", dur=0.85, lead=-0.05, src="photo:0", anchor_x=0.5, dip=True)
+            beat("label", "now if thomson reserve", until="thomson reserve", lead=-0.1, tail=0.3, text="THOMSON RESERVE", y=0.47)
+    else:
+        beat("eyebrow", "__hook_start__", until="__hook_end__", text=HOOK_HEADLINE)
+        beat("photo_card", "parc clematis", until="__hook_end__", tail=-0.8, photo=0)
+        beat("receipt", "bought parc clematis", until="1.525 million", tail=0.9)                # hooks 2, 7, 15
+        beat("insert", "thomson reserve", dur=1.3, lead=-0.1, src="deck_p06", cx=2250, whip=True)
+        beat("label", "thomson reserve", dur=1.3, lead=-0.1, text="THOMSON RESERVE", y=0.47)
+        beat("underline", "move her forward", dur=1.4, lead=0.2)
+    # ---- body
+    if BODY_ID == "FULL":
+        beat("split", "preview starts 17 october", until="17 october", lead=-0.1, tail=0.2, src="deck_p16", whip=True)
+        beat("split", "there are 1,268 units", until="1,268 units", lead=-0.2, tail=0.2, src="deck_p17", whip=True)
+        beat("dotgrid", "1,066 of them", until="3 bedrooms", lead=-0.3, tail=0.5, src="deck_p17")
+        beat("split", "your direct neighbours", until="direct neighbours", lead=-0.1, tail=0.3, src="deck_p11", whip=True)
+        beat("bars", "thomson east coast mrt story", until="under 3% a year", lead=-0.4, tail=0.7, src="deck_p04",
+             eyebrow="YOU'RE BUYING AFTER THE MRT STORY", k_bar1="20.86%", k_bar2="5.87%", k_pill="under 3%", whip=True)
+        beat("pricegap", "$3.2 million", until="$500,000 above", lead=-0.3, tail=0.9, k_right="$3.2 million", k_left="$2.7m", k_gap="$500,000")
+        beat("vs", "three reasons", dur=3.0, lead=-0.2, whip=True)
+        beat("insert", "two minutes", until="sheltered", lead=-0.1, tail=0.2, src="deck_p06", cx=2250)
+        beat("insert", "central catchment", until="20km of trails", lead=-0.1, tail=0.2, src="deck_p12", cx=900, whip=True)
+        beat("insert", "a forever million dollar view", until="dollar view", lead=-0.2, tail=0.6, src="deck_p12", cx=900, pull=True, dip=True)
+        beat("checklist", "exact price i walk away", until="own-stay", lead=-0.2, tail=0.3,
+             items=[("THE PRICE I WON'T CROSS", "1f6ab"), ("STACKS TO PICK · TO AVOID", "1f4cd"), ("PREP BEFORE BALLOT DAY", "1f5f3"), ("2ND PROPERTY OR OWN-STAY", "1f3e2")],
+             ticks=["walk away at", "which stacks", "before and during", "own-stay"])
+        beat("eyebrow", "running a live webinar", until="click the link", tail=0.5, text="LIVE WEBINAR · 17 OCT", after=hook_end)
+    elif BODY_ID == "EXIT":
+        beat("insert", "there are 1,268 units", until="units here", lead=-0.1, tail=0.3, src="deck_p17", whip=True)
+        beat("label", "the exit is where", until="right unit", lead=-0.1, tail=0.2, text="THE EXIT", y=0.47)
+        beat("checklist", "2-bedroom or 3-bedroom", until="wouldn't touch", lead=-0.2, tail=0.4, y=0.40,
+             items=[("2-BED OR 3-BED?", "1f3e2"), ("WHICH STACKS EXIT STRONGER?", "1f4cd"), ("WHAT PRICE LEAVES UPSIDE?", "1f4b0"), ("UNITS I WOULDN'T TOUCH", "1f6ab")],
+             ticks=["2-bedroom or 3-bedroom", "which stacks", "what price", "wouldn't touch"])
+        beat("eyebrow", "live 60-minute webinar", until=END, text="LIVE WEBINAR · 17 OCT", after=hook_end)
+    elif BODY_ID == "BALLOT":
+        beat("checklist", "my maximum price", until="only ones left", lead=-0.2, tail=0.4, y=0.40,
+             items=[("MY MAXIMUM PRICE", "1f6ab"), ("MY PREFERRED STACKS", "1f4cd"), ("PLAN A, B AND C", "1f5f3"), ("UNITS I'D WALK AWAY FROM", "1f3e2")],
+             ticks=["maximum price", "preferred stacks", "plan a", "walk away"])
+        beat("label", "ballot day should be", until="under pressure", lead=-0.1, tail=0.2, text="BALLOT DAY", y=0.47)
+        beat("eyebrow", "live 60-minute webinar", until=END, text="LIVE WEBINAR · 17 OCT", after=hook_end)
+    elif BODY_ID == "CTA":
+        beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · 17 OCT", after=hook_end)
 
 def human_pass(plan):
     sh = plan["shots"]; d = [s["t1"] - s["t0"] for s in sh]
@@ -699,7 +775,7 @@ def stage_render(a):
             elif b["kind"] == "checklist":
                 ticks = [find_t(plan, p, b["t0"]) for p in b["ticks"]]
                 done = sum(1 for x in ticks if t >= x + 0.4)
-                SF.dev_checklist(layer, min(1, 0.25 + 0.25 * done + 0.2 * min(1, (t - b["t0"]) / 0.5)), y_top=0.46)
+                SF.dev_checklist(layer, min(1, 0.25 + 0.25 * done + 0.2 * min(1, (t - b["t0"]) / 0.5)), y_top=b.get("y", 0.46), items=[tuple(x) for x in b["items"]])
         # ---- captions
         cue = next((c for c in cues if c["s"] <= t < c["e"]), None)
         if cue and not (full and full["kind"] == "dotgrid" and t < full["t0"] + 1.2):
@@ -820,7 +896,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     import shutil, tempfile
     if a.single:
-        SINGLE = True; PREFIX = "TR_SHORT"; SCRIPT_BODY = SCRIPT_CTA_SHORT
+        SINGLE = True; PREFIX = "TR_SHORT"; SCRIPT_BODY = SCRIPT_CTA_SHORT; HOOK_ID = "DH1"; BODY_ID = "CTA"
     if a.folder:
         start_log(Path(a.folder) / f"{PREFIX}_render_log.txt")
         # work files stay on the local disk; only the finished ad goes back into the Drive folder

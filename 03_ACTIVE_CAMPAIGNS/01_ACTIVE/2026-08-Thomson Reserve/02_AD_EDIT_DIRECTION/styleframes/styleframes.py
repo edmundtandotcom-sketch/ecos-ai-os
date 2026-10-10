@@ -573,9 +573,10 @@ def dev_two_three(base_l, base_r, t=1.0):
     d.text((W // 2, int(H * 0.40)), "VS", font=vs, fill=WHITE + (255,), anchor="mm")
     return compose(out, layer)
 
-def dev_checklist(layer, t=1.0, y_top=0.49):
-    items = [("THE PRICE I WON'T CROSS", "1f6ab"), ("STACKS TO PICK · TO AVOID", "1f4cd"),
-             ("2-BED OR 3-BED", "1f3e2"), ("PREP BEFORE BALLOT DAY", "1f5f3")]
+CHECKLIST_DEFAULT = [("THE PRICE I WON'T CROSS", "1f6ab"), ("STACKS TO PICK · TO AVOID", "1f4cd"),
+                     ("2-BED OR 3-BED", "1f3e2"), ("PREP BEFORE BALLOT DAY", "1f5f3")]
+def dev_checklist(layer, t=1.0, y_top=0.49, items=None):
+    items = items or CHECKLIST_DEFAULT
     x0, x1 = 90, W - 90; y = int(H * y_top); d = ImageDraw.Draw(layer)
     for i, (s, e) in enumerate(items):
         ti = ease_out(min(1, max(0, t * (len(items) + 0.5) - i)))

@@ -83,3 +83,32 @@ python render_v1.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04
 > In the repo folder `03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-08-Thomson Reserve\02_AD_EDIT_DIRECTION\styleframes`: run `pip install pillow numpy opencv-python-headless imageio-ffmpeg sherpa-onnx pymupdf`; download `https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-zipformer-en-2023-06-26.tar.bz2` and extract it so that `..\asr\sherpa-onnx-zipformer-en-2023-06-26\tokens.txt` exists; run `python prep_assets.py`; then run `python render_v1.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04_Video Editor\Webinar Daughter Spin Off"`. Show me the human-pass report it prints, then open `TR_V1_Receipt_9x16.mp4` and `TR_V1_contact_sheet.jpg` from that folder.
 
 `test_v1.py` runs the whole chain on synthetic footage (stand-in plate + the model's sample speech) so the mechanics can be checked without the takes — that is how it was proven on 2026-10-08.
+
+## All the Longer-Ads variations in one run — `batch_tr.py` (added 2026-10-10)
+
+The "Daughter New Spinoff Ads" doc gives 1 + 15 × 2 = **31 ads** from the `Longer Ads` takes. One run renders them all:
+
+```
+RUN_ALL.bat          (double-click; or in PowerShell  .\run_all.ps1)
+```
+
+| Job id | Hook | Body | Takes |
+|---|---|---|---|
+| `TR_FULL_DH1` | Daughter Hook 1 | Body 1 (long) | `Daughter Hook 1-New` on its own |
+| `TR_H01_EXIT` … `TR_H15_EXIT` | hook 1–15 | Body-Exit-Short | the hook from `Hook 1-5` / `6-10` / `11-15` + `Body-Exit-Short` |
+| `TR_H01_BALLOT` … `TR_H15_BALLOT` | hook 1–15 | Body-Ballot-Short | … + `Body-Ballot-Short` |
+
+The scripts and the hook headlines live in `tr_scripts.py`; the devices per hook and per body (eyebrow, photo card, receipt, Thomson Reserve insert + label, checklist, webinar eyebrow) in `plan_beats()` inside `render_v1.py`. Every ad keeps the take's portrait framing as shot (one-file mode), plays at 1.15×, carries captions throughout and ends on the 2.2 s end card.
+
+What the run does:
+
+- finds each take by its file name inside the folder and its subfolders (`tr_scripts.TAKES`); a take that holds five hooks is listened to once and each hook is cut from its own stretch of it (the script is located inside the recognised words first, then aligned);
+- cuts each body take once and reuses the cut for all 15 hooks;
+- reads every take with `-noautorotate` and works out the upright orientation itself, then checks the cut is 1080 × 1920 before going on, so a sideways cut cannot get through;
+- writes `<folder>\Longer Ads\RENDERS\<job>_1080x1920.mp4` (the master), `<job>_contact_sheet.jpg` and `<job>_preview_small.mp4` (≤ 5 MB, for review from the cloud session), plus `batch_log.txt` and `batch_report.json`;
+- writes 540p copies of every take, split into ≤ 60 s parts of ≤ 5 MB, under `<folder>\Longer Ads\_cloud\`, so the cloud session can re-cut or review any take;
+- skips ads that are already in `RENDERS` (so a second run only renders what is missing); `--only H03,FULL` renders a subset, `--force` re-renders.
+
+The report at the end of the log flags any ad whose script was heard weakly (`! CHECK`), which usually means the take does not carry that script or the hook numbers are in a different order than the doc.
+
+`test_batch.py` proves the mechanics on synthetic takes (a three-hook take, two body takes, the combined DH1 take): each hook is cut from its own stretch, the body cut is reused, every ad is 1080 × 1920, the cloud copies are under 5 MB.
