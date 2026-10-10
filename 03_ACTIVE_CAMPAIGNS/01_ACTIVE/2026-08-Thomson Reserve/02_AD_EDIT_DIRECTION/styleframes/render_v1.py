@@ -78,6 +78,12 @@ And whether this works as a second property at all, or only as an own-stay.
 If Thomson Reserve is on your list, come and pressure-test it with me before preview — not after.
 Click the link below and join me live."""
 
+# the short call to action recorded after the hook in the selfie take (one-file ad)
+SCRIPT_CTA_SHORT = ("Thomson Reserve preview starts 17 October. And I'm running a LIVE 60-minute webinar before that. "
+                    "If you want to find out my analysis if I will buy for her, join me in this webinar live.")
+PREFIX = "TR_V1"        # output file prefix; "TR_SHORT" in one-file mode
+SINGLE = False
+
 # ------------------------------------------------------------------ tightening + captions
 MAX_GAP, PAD_IN, PAD_OUT = 0.38, 0.14, 0.24
 SILENCE_DB, SILENCE_MIN = -35, 0.30
@@ -326,10 +332,14 @@ def remap(words, segs):
 
 def stage_tighten(a):
     meta = json.loads((OUT / "meta.json").read_text()); c = meta["crop"]
-    total = 0.0; all_words = []; parts = []
+    total = 0.0; all_words = []; parts = []; hook_src_end = 0.0
     for name in ("hook", "body"):
         words = json.loads((OUT / f"words_{name}.json").read_text())
         segs = keep_segments(words, silences(OUT / f"{name}.wav"), meta[name]["dur"])
+        if name == "body" and meta["body"]["clip"] == meta["hook"]["clip"]:
+            # one take for both: the body starts where the hook's picture ended, so nothing is said twice
+            segs = [(max(s0, hook_src_end), s1) for s0, s1 in segs if s1 > hook_src_end + 0.2]
+        if name == "hook": hook_src_end = segs[-1][1]
         kept = sum(s1 - s0 for s0, s1 in segs)
         print(f"{name}: {len(segs)} segments, {meta[name]['dur']:.1f}s → {kept:.1f}s")
         words, dur = remap(words, segs)
@@ -430,6 +440,8 @@ def stage_plan(a):
     beat("checklist", "exact price i walk away", until="own-stay", lead=-0.2, tail=0.3,
          items=["THE PRICE I WON'T CROSS", "STACKS TO PICK · TO AVOID", "PREP BEFORE BALLOT DAY", "2ND PROPERTY OR OWN-STAY"],
          ticks=["walk away at", "which stacks", "before and during", "own-stay"])
+    if SINGLE:
+        beat("eyebrow", "live 60-minute webinar", until="webinar live", lead=-0.2, tail=0.4, text="LIVE WEBINAR · BEFORE THE 17 OCT PREVIEW")
     beats.sort(key=lambda b: b["t0"])
 
     # ---------- breaths: caption off for 0.4s before these lines
@@ -699,7 +711,7 @@ def find_videos(folder):
     for p in sorted(Path(folder).rglob("*")):
         if p.is_dir() or p.suffix.lower() not in (".mp4", ".mov", ".m4v", ".mkv"): continue
         if any(part.startswith(("_", ".")) for part in p.relative_to(folder).parts[:-1]): continue
-        if p.name.startswith("TR_V1"): continue
+        if p.name.startswith("TR_"): continue
         out.append(p)
     return out
 
@@ -744,10 +756,13 @@ if __name__ == "__main__":
     ap.add_argument("--hook", required=False); ap.add_argument("--body", required=False)
     ap.add_argument("--photos"); ap.add_argument("--stage", default="all"); ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--out"); ap.add_argument("--folder", help="the takes folder; the hook and body takes are picked by listening to them")
+    ap.add_argument("--single", help="one-file ad: the take (by file name, searched in the folder) that carries Daughter Hook 1 and the short CTA")
     a = ap.parse_args()
     import shutil, tempfile
+    if a.single:
+        SINGLE = True; PREFIX = "TR_SHORT"; SCRIPT_BODY = SCRIPT_CTA_SHORT
     if a.folder:
-        start_log(Path(a.folder) / "TR_V1_render_log.txt")
+        start_log(Path(a.folder) / f"{PREFIX}_render_log.txt")
         # work files stay on the local disk; only the finished ad goes back into the Drive folder
         base = Path(os.environ.get("LOCALAPPDATA") or tempfile.gettempdir())
         OUT = base / "TR_render_v1"
@@ -766,13 +781,19 @@ if __name__ == "__main__":
         print("photo card uses the first photo by filename:", names[0] if names else "?", "(rename with 01_, 02_ … to choose)")
     ensure_assets(); ensure_model()
     stages = ["audio", "asr", "tighten", "plan", "render", "qc"] if a.stage == "all" else a.stage.split(",")
+    if a.single:
+        want = Path(a.single).stem.lower()
+        hits = [p for p in (find_videos(a.folder) if a.folder else [Path(a.single)]) if p.stem.lower() == want or want in p.stem.lower()]
+        if not hits: raise SystemExit(f"no video called '{a.single}' in {a.folder}")
+        a.hook = a.body = str(hits[0]); print("one-file ad from:", hits[0].name)
     if a.folder and not (a.hook and a.body):
         print("\n== PICK TAKES =="); a.hook, a.body = pick_takes(a.folder)
+    if a.folder:
         # small copies of the chosen takes (each under 9 MB) go next to them, so the cloud session can pull
         # them through the Drive connector and render or review the cut without the PC
         for name, clip in (("hook", a.hook), ("body", a.body)):
             if clip == a.hook and name == "body": continue
-            small = Path(a.folder) / f"TR_V1_take_{name}_small.mp4"
+            small = Path(a.folder) / f"{PREFIX}_take_{name}_small.mp4"
             if small.exists() and small.stat().st_size > 1000: continue
             d = probe(clip)["dur"]; vb = max(100, int(5.0 * 8 * 1024 * 1024 / max(1, d) / 1000) - 48)
             run([FFMPEG, "-y", "-loglevel", "error", "-i", str(clip), "-vf", "scale=540:-2", "-c:v", "libx264", "-preset", "fast",
@@ -787,12 +808,12 @@ if __name__ == "__main__":
     except Exception:
         import traceback; print("\nCRASHED:"); traceback.print_exc(); raise
     if a.folder and (OUT / "TR_V1_Receipt_9x16.mp4").exists() and ("render" in stages or "qc" in stages):
-        dest = Path(a.folder) / "TR_V1_Receipt_9x16.mp4"; shutil.copy(OUT / "TR_V1_Receipt_9x16.mp4", dest)
-        shutil.copy(OUT / "qc" / "contact_sheet.jpg", Path(a.folder) / "TR_V1_contact_sheet.jpg")
+        dest = Path(a.folder) / f"{PREFIX}_Receipt_9x16.mp4"; shutil.copy(OUT / "TR_V1_Receipt_9x16.mp4", dest)
+        shutil.copy(OUT / "qc" / "contact_sheet.jpg", Path(a.folder) / f"{PREFIX}_contact_sheet.jpg")
         # a small preview (under 9 MB) so the cut can be reviewed from the cloud session through the Drive connector
         dur = probe(dest)["dur"]; vb = max(100, int(5.0 * 8 * 1024 * 1024 / max(1, dur) / 1000) - 48)
         run([FFMPEG, "-y", "-loglevel", "error", "-i", str(dest), "-vf", "scale=540:-2", "-c:v", "libx264", "-preset", "fast",
              "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "48k", "-ac", "1",
-             "-movflags", "+faststart", str(Path(a.folder) / "TR_V1_preview_small.mp4")])
+             "-movflags", "+faststart", str(Path(a.folder) / f"{PREFIX}_preview_small.mp4")])
         print("\nFINAL →", dest)
-        print("preview →", Path(a.folder) / "TR_V1_preview_small.mp4")
+        print("preview →", Path(a.folder) / f"{PREFIX}_preview_small.mp4")
