@@ -7,8 +7,8 @@
 The jobs:  TR_FULL_DH1            Daughter Hook 1-New on its own (hook + Body 1 in one take)
            TR_H01_EXIT … H15_EXIT   each hook from the Hook 1-5 / 6-10 / 11-15 takes + Body-Exit-Short
            TR_H01_BALLOT … H15_BALLOT                           … + Body-Ballot-Short
-Finished ads, a contact sheet and a small preview per ad go to  <folder>\\Longer Ads\\RENDERS\\ ;
-small split copies of every take go to  <folder>\\Longer Ads\\_cloud\\  so the cut can be checked from the cloud session.
+Finished ads, a contact sheet and a small preview per ad go to  <folder>\\RENDERS\\ ;
+small split copies of every take go to  <folder>\\_cloud\\  so the cut can be checked from the cloud session.
 Work files stay on the local disk (LOCALAPPDATA\\TR_render_v1\\<job id>)."""
 import sys, os, re, json, time, shutil, argparse, tempfile, traceback
 from pathlib import Path
@@ -82,7 +82,7 @@ def main(argv=None):
     ap.add_argument("--photos"); ap.add_argument("--work"); ap.add_argument("--no-cloud", action="store_true")
     a = ap.parse_args(argv)
     folder = Path(a.folder)
-    renders = folder / "Longer Ads" / "RENDERS" if (folder / "Longer Ads").is_dir() else folder / "RENDERS"
+    renders = folder / "RENDERS"                     # all finished ads in one folder at the top of the Daughter Spin Off folder
     renders.mkdir(parents=True, exist_ok=True)
     RV.start_log(renders / "batch_log.txt")
     work = Path(a.work) if a.work else Path(os.environ.get("LOCALAPPDATA") or tempfile.gettempdir()) / "TR_render_v1"
@@ -96,7 +96,7 @@ def main(argv=None):
     print("\n== TAKES ==")
     for tid, frag in TS.TAKES.items():
         print(f"  {tid:12s} {frag:28s} → {takes[tid].relative_to(folder) if tid in takes else '(not found)'}")
-    if not a.no_cloud: print("\n== CLOUD COPIES =="); small_copies({k: v for k, v in takes.items() if k != "SELFIE_DH1"}, renders.parent / "_cloud")
+    if not a.no_cloud: print("\n== CLOUD COPIES =="); small_copies({k: v for k, v in takes.items() if k != "SELFIE_DH1"}, folder / "_cloud")
     wanted = jobs()
     if a.only:
         frags = [f.strip().upper() for f in a.only.split(",") if f.strip()]

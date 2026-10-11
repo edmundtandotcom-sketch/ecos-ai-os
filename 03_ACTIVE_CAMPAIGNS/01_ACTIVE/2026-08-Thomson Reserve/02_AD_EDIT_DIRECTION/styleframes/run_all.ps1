@@ -26,5 +26,5 @@ if ($missing.Count -gt 0) {
 }
 python -m pip install --quiet pillow numpy opencv-python-headless imageio-ffmpeg sherpa-onnx pymupdf
 python batch_tr.py --folder $folder
-$renders = Join-Path $folder "Longer Ads\RENDERS"
+$renders = Join-Path $folder "RENDERS"
 if (Test-Path $renders) { Invoke-Item $renders }
