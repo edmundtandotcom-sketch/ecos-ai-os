@@ -8,7 +8,7 @@ the files land in the Drive folder, Drive desktop syncs them. Nothing for Edmund
 
 ```
 cd "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\01_ACTIVE\2026-08-Thomson Reserve\02_AD_EDIT_DIRECTION\styleframes"
-python -m pip install --quiet numpy pillow imageio-ffmpeg sherpa-onnx opencv-python-headless      # same as run_all.ps1
+python -m pip install --quiet pillow numpy opencv-python-headless imageio-ffmpeg sherpa-onnx pymupdf   # same line as run_all.ps1
 python batch_tr.py --folder "H:\Shared drives\00_E.C.O.S\03_ACTIVE_CAMPAIGNS\04_Video Editor\Webinar Daughter Spin Off"
 ```
 
