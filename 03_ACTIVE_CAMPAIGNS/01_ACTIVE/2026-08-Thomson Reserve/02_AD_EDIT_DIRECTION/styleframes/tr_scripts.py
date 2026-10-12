@@ -119,12 +119,30 @@ BODY_BALLOT_SHORT = ("Thomson Reserve preview starts 17 October. And if my daugh
 CTA_SHORT = ("Thomson Reserve preview starts 17 October. And I'm running a LIVE 60-minute webinar before that. "
              "If you want to find out my analysis if I will buy for her, join me in this webinar live.")
 
-BODIES = {"FULL": BODY_1_LONG, "EXIT": BODY_EXIT_SHORT, "BALLOT": BODY_BALLOT_SHORT, "CTA": CTA_SHORT}
+# the two "super short selfie" versions (one take each: Selfie Body1 / Selfie Body2)
+SUPER_SHORT_1 = ("Thomson Reserve preview starts 17 October. And yes — I'm seriously considering this as my daughter's next property. "
+                 "So before we ballot, I'm doing a LIVE 60-minute webinar to show you exactly how I'm analysing it. No fluff. "
+                 "I'll show you the price I WON'T cross. The stacks I'd pick — and the ones I'd avoid. 2-bedroom or 3-bedroom. "
+                 "How I'm preparing BEFORE ballot day. And most importantly… whether I'd actually put my own daughter's money into Thomson Reserve. "
+                 "Because if I'm not comfortable buying it for her… I'll tell you why. "
+                 "If Thomson Reserve is on your list, don't wait until ballot day to figure this out. Click the link and join me live.")
+SUPER_SHORT_2 = ("Thomson Reserve is previewing on 17 October. And before my daughter puts her name into the ballot… I want my homework DONE. "
+                 "So I'm running a LIVE 60-minute webinar to show you exactly what I'm looking at. What price is too expensive? "
+                 "Which stacks would I actually choose? 2-bedroom or 3-bedroom? What happens if our first-choice units are gone? "
+                 "And the big one… would I actually tell my own daughter to BUY Thomson Reserve? Or walk away? "
+                 "That's what I'm going to break down live. So if you're thinking about Thomson Reserve too… "
+                 "click the link, register, and come prepare with me BEFORE the preview.")
+
+BODIES = {"FULL": BODY_1_LONG, "EXIT": BODY_EXIT_SHORT, "BALLOT": BODY_BALLOT_SHORT, "CTA": CTA_SHORT, "SS1": SUPER_SHORT_1, "SS2": SUPER_SHORT_2}
 
 # where each take lives (file-name fragments, matched case-insensitively inside the takes folder and its subfolders)
 TAKES = {
     "DH1_NEW": "Daughter Hook 1-New", "EXIT": "Body-Exit-Short", "BALLOT": "Body-Ballot-Short",
     "HOOKS_1_5": "Hook 1-5", "HOOKS_6_10": "Hook 6-10", "HOOKS_11_15": "Hook 11-15",
     "SELFIE_DH1": "Selfie Daughter Hook 1",
+    "SELFIE_1_2": "Selfie Hook 1-2", "SELFIE_3_5": "Selfie Hook 3-5", "SELFIE_6_10": "Selfie Hook 6-10", "SELFIE_11_15": "Selfie Hook 11-15",
+    "SELFIE_SS1": "Selfie Body1", "SELFIE_SS2": "Selfie Body2",
 }
 def hook_take(k): return "HOOKS_1_5" if k <= 5 else "HOOKS_6_10" if k <= 10 else "HOOKS_11_15"
+def selfie_take(k): return "SELFIE_1_2" if k <= 2 else "SELFIE_3_5" if k <= 5 else "SELFIE_6_10" if k <= 10 else "SELFIE_11_15"
+SELFIE_TAKES = ("SELFIE_DH1", "SELFIE_1_2", "SELFIE_3_5", "SELFIE_6_10", "SELFIE_11_15", "SELFIE_SS1", "SELFIE_SS2")

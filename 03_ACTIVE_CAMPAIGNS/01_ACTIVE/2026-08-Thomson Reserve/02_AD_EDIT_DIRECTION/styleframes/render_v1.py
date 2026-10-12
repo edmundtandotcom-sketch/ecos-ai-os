@@ -300,14 +300,19 @@ def best_window(script, asr, pad=8):
     return max(0, j0 - pad), min(n, j0 + L + pad)
 
 def stage_asr(a):
-    cache = {}
+    cache = {}; hook_j1 = 0
     for name, text in (("hook", SCRIPT_HOOK), ("body", SCRIPT_BODY)):
         clip = str(getattr(a, name))
         if clip in cache: asr = cache[clip]          # hook and body in one take → listen once
         elif clip in ASR_CACHE: asr = cache[clip] = ASR_CACHE[clip]   # listened to in an earlier job of this batch
         else: asr = cache[clip] = ASR_CACHE[clip] = asr_words(OUT / f"{name}.wav")
         (OUT / f"asr_{name}.json").write_text(json.dumps(asr, indent=0))
-        sw = script_words(text); j0, j1 = best_window(sw, asr)
+        sw = script_words(text)
+        # one take carrying several hooks, each followed by the same call to action: the body is the first
+        # occurrence AFTER this hook, never the one behind an earlier hook
+        off = hook_j1 if (name == "body" and str(a.body) == str(a.hook)) else 0
+        j0, j1 = best_window(sw, asr[off:]); j0 += off; j1 += off
+        if name == "hook": hook_j1 = max(0, j1 - 8)
         if (j0, j1) != (0, len(asr)): print(f"{name}: script found at ASR words {j0}–{j1} of {len(asr)} ({asr[j0]['s']:.1f}s → {asr[j1-1]['e']:.1f}s)")
         words, ratio = align(sw, asr[j0:j1])
         (OUT / f"words_{name}.json").write_text(json.dumps(words, indent=0))
@@ -692,6 +697,8 @@ def plan_beats_look(beat, F, total, hook_end):
         beat("label", "thomson reserve", dur=1.3, lead=-0.1, text="THOMSON RESERVE", y=0.47)
     beat("underline", "move her forward", dur=1.4, lead=0.2)
     # ---- body
+    if BODY_ID not in LK.BODY_ANCHORS:                      # the short call to action (selfie ads): the webinar eyebrow only
+        beat("eyebrow", "live 60-minute webinar", until=END, text="LIVE WEBINAR · 17 OCT", after=hook_end); return
     bdev = LOOK["body_dev"]; bscene = bdev in LK.SCENE_BODY_DEVS
     phrases, until, hold = LK.BODY_ANCHORS[BODY_ID][bdev]
     bh = None

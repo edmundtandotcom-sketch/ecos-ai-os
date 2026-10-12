@@ -1,10 +1,12 @@
 """Every Longer-Ads variation from the 'Daughter New Spinoff Ads' doc, rendered in one run.
 
-    python batch_tr.py --folder "<takes folder>"            all 31 ads (skips the ones already rendered)
+    python batch_tr.py --folder "<takes folder>"            all 49 ads (skips the ones already rendered)
     python batch_tr.py --folder ... --only H03,H07_EXIT     a few, by id fragment
     python batch_tr.py --folder ... --force                 re-render even if the ad exists
 
-The jobs:  TR_FULL_DH1            Daughter Hook 1-New on its own (hook + Body 1 in one take)
+The jobs:  TR_S_DH1, TR_S01 … S15   the selfie ads: Daughter Hook 1 / Hook k + the short call to action, one take each
+           TR_SS1, TR_SS2          the two super-short selfie versions
+           TR_FULL_DH1            Daughter Hook 1-New on its own (hook + Body 1 in one take)
            TR_H01_EXIT … H15_EXIT   each hook from the Hook 1-5 / 6-10 / 11-15 takes + Body-Exit-Short
            TR_H01_BALLOT … H15_BALLOT                           … + Body-Ballot-Short
 Finished ads, a contact sheet and a small preview per ad go to  <folder>\\RENDERS\\ ;
@@ -19,13 +21,32 @@ SPEED = 1.15            # approved on the one-file ad
 SMALL_MB, SMALL_SECS = 5.0, 60.0
 
 def jobs():
-    out = [dict(id="TR_FULL_DH1", hook="DH1", body="FULL", hook_take="DH1_NEW", body_take="DH1_NEW",
-                headline="WOULD I BUY THIS FOR MY DAUGHTER?", hook_text=TS.DAUGHTER_HOOK_1, body_text=TS.BODIES["FULL"])]
+    """The selfie set first (the one-file ads: each selfie hook + the short call to action in the same take, and the
+    two super-short selfie versions), then the Longer Ads set (hook takes × the Exit / Ballot bodies)."""
+    out = [dict(id="TR_S_DH1", hook="DH1", body="CTA", hook_take="SELFIE_DH1", body_take="SELFIE_DH1",
+                headline="WOULD I BUY THIS FOR MY DAUGHTER?", hook_text=TS.DAUGHTER_HOOK_1, body_text=TS.BODIES["CTA"])]
+    for k in sorted(TS.HOOKS):
+        out.append(dict(id=f"TR_S{k:02d}", hook=k, body="CTA", hook_take=TS.selfie_take(k), body_take=TS.selfie_take(k),
+                        headline=TS.HOOKS[k][0], hook_text=TS.HOOKS[k][1], body_text=TS.BODIES["CTA"]))
+    for n, hl in ((1, "WOULD I BUY THOMSON RESERVE FOR MY DAUGHTER?"), (2, "BUY, WAIT OR WALK AWAY?")):
+        text = TS.BODIES[f"SS{n}"]; first, rest = text.split(". ", 1)
+        out.append(dict(id=f"TR_SS{n}", hook="SS", body=f"SS{n}", hook_take=f"SELFIE_SS{n}", body_take=f"SELFIE_SS{n}",
+                        headline=hl, hook_text=first + ".", body_text=rest))
+    out.append(dict(id="TR_FULL_DH1", hook="DH1", body="FULL", hook_take="DH1_NEW", body_take="DH1_NEW",
+                    headline="WOULD I BUY THIS FOR MY DAUGHTER?", hook_text=TS.DAUGHTER_HOOK_1, body_text=TS.BODIES["FULL"]))
     for k in sorted(TS.HOOKS):
         for b in ("EXIT", "BALLOT"):
             out.append(dict(id=f"TR_H{k:02d}_{b}", hook=k, body=b, hook_take=TS.hook_take(k), body_take=b,
                             headline=TS.HOOKS[k][0], hook_text=TS.HOOKS[k][1], body_text=TS.BODIES[b]))
     return out
+
+def look_for(jid):
+    """One look per ad. The selfie hook ads borrow the look of their hook's Exit (odd hooks) or Ballot (even hooks) ad,
+    so every selfie ad still differs from the next; the Daughter Hook 1 selfie and the super-short ones keep the approved base look."""
+    if jid in LK.LOOKS: return LK.LOOKS[jid]
+    m = re.match(r"TR_S(\d+)$", jid)
+    if m: k = int(m.group(1)); return LK.LOOKS.get(f"TR_H{k:02d}_{'EXIT' if k % 2 else 'BALLOT'}")
+    return None
 
 def _key(s): return re.sub(r"[^a-z0-9]+", "", s.lower())
 
@@ -63,7 +84,7 @@ def preview(src, dest):
 def render_job(j, takes, work, renders, photos, seed=7):
     RV.SINGLE = True; RV.PREFIX = j["id"]; RV.HOOK_ID = j["hook"]; RV.BODY_ID = j["body"]; RV.HOOK_HEADLINE = j["headline"]
     RV.SCRIPT_HOOK = j["hook_text"]; RV.SCRIPT_BODY = j["body_text"]; RV.ALIGN.clear()
-    RV.LOOK = LK.LOOKS.get(j["id"]); print("look:", LK.recipe(RV.LOOK) if RV.LOOK else "(base)")
+    RV.LOOK = look_for(j["id"]); print("look:", LK.recipe(RV.LOOK) if RV.LOOK else "(base, as approved)")
     RV.OUT = work / j["id"]; RV.OUT.mkdir(parents=True, exist_ok=True)
     a = argparse.Namespace(hook=str(takes[j["hook_take"]]), body=str(takes[j["body_take"]]), seed=seed, photos=photos, drop=None, speed=SPEED, stage="all")
     for st in ("audio", "asr", "tighten", "plan", "render", "qc"):
@@ -96,7 +117,7 @@ def main(argv=None):
     print("\n== TAKES ==")
     for tid, frag in TS.TAKES.items():
         print(f"  {tid:12s} {frag:28s} → {takes[tid].relative_to(folder) if tid in takes else '(not found)'}")
-    if not a.no_cloud: print("\n== CLOUD COPIES =="); small_copies({k: v for k, v in takes.items() if k != "SELFIE_DH1"}, folder / "_cloud")
+    if not a.no_cloud: print("\n== CLOUD COPIES =="); small_copies(takes, folder / "_cloud")
     wanted = jobs()
     if a.only:
         frags = [f.strip().upper() for f in a.only.split(",") if f.strip()]
