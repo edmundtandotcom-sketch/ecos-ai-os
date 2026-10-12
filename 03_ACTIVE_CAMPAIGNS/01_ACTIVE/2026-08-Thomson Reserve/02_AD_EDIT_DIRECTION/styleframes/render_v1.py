@@ -312,9 +312,10 @@ def stage_asr(a):
         # occurrence AFTER this hook, never the one behind an earlier hook
         off = hook_j1 if (name == "body" and str(a.body) == str(a.hook)) else 0
         j0, j1 = best_window(sw, asr[off:]); j0 += off; j1 += off
-        if name == "hook": hook_j1 = max(0, j1 - 8)
         if (j0, j1) != (0, len(asr)): print(f"{name}: script found at ASR words {j0}–{j1} of {len(asr)} ({asr[j0]['s']:.1f}s → {asr[j1-1]['e']:.1f}s)")
         words, ratio = align(sw, asr[j0:j1])
+        if name == "hook":   # where the hook's last word lands: the body may only start after it
+            hook_j1 = next((i for i, w in enumerate(asr) if w["s"] >= words[-1]["e"] - 0.3), len(asr))
         (OUT / f"words_{name}.json").write_text(json.dumps(words, indent=0))
         ALIGN[name] = ratio
         print(f"{name}: {len(asr)} words heard → {len(words)} script words timed, {ratio*100:.0f}% exact matches")
