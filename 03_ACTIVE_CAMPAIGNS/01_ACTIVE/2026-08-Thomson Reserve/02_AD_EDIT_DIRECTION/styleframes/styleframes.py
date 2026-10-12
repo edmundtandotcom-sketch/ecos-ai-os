@@ -131,28 +131,32 @@ def zoom_img(im, z, dx=0, dy=0, anchor=(0.5, 0.38)):
 
 _broll_cache = {}
 def broll(name, cx=None, cy_top=330, darken=0.0, zoom=1.0):
-    """9:16 crop from a deck/ebook page render. cx = source centre x."""
-    key = (name, cx, cy_top, darken, zoom)
+    """9:16 crop from a deck/ebook page render. cx = source centre x.
+    Only the plain crop is cached: zoom and darken change every frame during a scene, and caching those
+    grew the render to 10 GB over one long ad."""
+    key = (name, cx, cy_top)
     if key in _broll_cache:
-        return _broll_cache[key].copy()
-    src = Image.open(ASSETS / f"{name}.png").convert("RGB")
-    sw, sh = src.size
-    if sw > sh:   # landscape deck page: avoid the logo strip at the top
-        ch = sh - cy_top; cw = int(ch * W / H)
-        cx = sw // 2 if cx is None else cx
-        x0 = min(max(cx - cw // 2, 0), sw - cw)
-        im = src.crop((x0, cy_top, x0 + cw, sh))
+        im = _broll_cache[key]
     else:
-        cw = sw; ch = int(sw * H / W)
-        y0 = min(max((sh - ch) // 2 if cx is None else cx, 0), sh - ch)
-        im = src.crop((0, y0, cw, y0 + ch))
-    im = im.resize((W, H), Image.LANCZOS)
+        src = Image.open(ASSETS / f"{name}.png").convert("RGB")
+        sw, sh = src.size
+        if sw > sh:   # landscape deck page: avoid the logo strip at the top
+            ch = sh - cy_top; cw = int(ch * W / H)
+            cx = sw // 2 if cx is None else cx
+            x0 = min(max(cx - cw // 2, 0), sw - cw)
+            im = src.crop((x0, cy_top, x0 + cw, sh))
+        else:
+            cw = sw; ch = int(sw * H / W)
+            y0 = min(max((sh - ch) // 2 if cx is None else cx, 0), sh - ch)
+            im = src.crop((0, y0, cw, y0 + ch))
+        im = im.resize((W, H), Image.LANCZOS)
+        _broll_cache[key] = im
+    im = im.copy()
     if zoom != 1.0:
         im = zoom_img(im, zoom, anchor=(0.5, 0.5))
     if darken:
         im = Image.blend(im, Image.new("RGB", (W, H), (8, 12, 18)), darken)
-    _broll_cache[key] = im
-    return im.copy()
+    return im
 
 def grade(im):
     """Clean+bright commercial: tiny S-curve, warmth, micro contrast."""
