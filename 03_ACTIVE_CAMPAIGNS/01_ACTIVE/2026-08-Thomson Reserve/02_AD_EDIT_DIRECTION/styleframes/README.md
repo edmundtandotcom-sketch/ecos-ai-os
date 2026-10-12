@@ -105,13 +105,23 @@ What the run does:
 - finds each take by its file name inside the folder and its subfolders (`tr_scripts.TAKES`); a take that holds five hooks is listened to once and each hook is cut from its own stretch of it (the script is located inside the recognised words first, then aligned);
 - cuts each body take once and reuses the cut for all 15 hooks;
 - reads every take with `-noautorotate` and works out the upright orientation itself, then checks the cut is 1080 × 1920 before going on, so a sideways cut cannot get through;
-- writes `<folder>\Longer Ads\RENDERS\<job>_1080x1920.mp4` (the master), `<job>_contact_sheet.jpg` and `<job>_preview_small.mp4` (≤ 5 MB, for review from the cloud session), plus `batch_log.txt` and `batch_report.json`;
+- writes `<folder>\RENDERS\<job>_1080x1920.mp4` (the master), `<job>_contact_sheet.jpg` and `<job>_preview_small.mp4` (≤ 5 MB, for review from the cloud session), plus `batch_log.txt` and `batch_report.json`;
 - writes 540p copies of every take, split into ≤ 60 s parts of ≤ 5 MB, under `<folder>\Longer Ads\_cloud\`, so the cloud session can re-cut or review any take;
 - skips ads that are already in `RENDERS` (so a second run only renders what is missing); `--only H03,FULL` renders a subset, `--force` re-renders.
 
 The report at the end of the log flags any ad whose script was heard weakly (`! CHECK`), which usually means the take does not carry that script or the hook numbers are in a different order than the doc.
 
 `test_batch.py` proves the mechanics on synthetic takes (a three-hook take, two body takes, the combined DH1 take): each hook is cut from its own stretch, the body cut is reused, every ad is 1080 × 1920, the cloud copies are under 5 MB.
+
+### The selfie set and the two fixes (2026-10-12)
+
+The batch now renders **49 ads**: the selfie set first, then the 31 Longer Ads. The selfie set is `TR_S_DH1` (Daughter Hook 1 + the short call to action, the approved one-file ad), `TR_S01 … TR_S15` (each selfie hook + the same call to action, cut from the `Selfie Hook 1-2 / 3-5 / 6-10 / 11-15` takes, where every hook is followed by its own call to action) and `TR_SS1`, `TR_SS2` (the two super-short selfie versions from `Selfie Body1 / Body2`). A selfie hook ad borrows the look of its hook's Exit (odd hooks) or Ballot (even hooks) ad; under a look, a call-to-action body gets the webinar eyebrow only. When the hook and the body sit in one take, the body is searched **after the hook's last spoken word**, so a multi-hook take never picks the call to action behind an earlier hook (verified on a doubled take: hook, CTA, hook, CTA).
+
+Two defects found by the first real run on 11 Oct, both fixed:
+- every cut came out "1920x1080": newer ffmpeg builds copy the phone's rotation tag onto the cut when a take is read with `-noautorotate`. Takes are now read with `-display_rotation 0` (ffmpeg 6+, clears the tag; `-noautorotate` on older builds), and the 1080 × 1920 check names the tag if it ever recurs;
+- `styleframes.broll` cached every zoom/darken variant, one per frame during a scene, and grew a long render to 10 GB; only the plain crop is cached now.
+
+The cloud can render from the ≤ 5 MB copies the batch leaves in `_cloud` (540p; captions, cards and scenes stay full resolution). The selfie takes have no small copies until the batch has run once on the PC.
 
 ### One format per ad — `looks.py` (added 2026-10-10)
 
