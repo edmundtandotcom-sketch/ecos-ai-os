@@ -46,6 +46,14 @@ OUT = HERE / "out" / "v1"
 ASR_DIR = HERE.parent / "asr" / "sherpa-onnx-zipformer-en-2023-06-26"
 FFMPEG = SF.ffmpeg_bin()
 
+def _raw_opts():
+    """Input options that read a take's pixels exactly as stored. ffmpeg 6+ : -display_rotation 0 also clears the
+    phone's rotation tag, which newer builds otherwise copy onto the cut (the cut then reports itself sideways, as
+    the Oct-11 batch did). Older builds: -noautorotate (they do not copy the tag through a filtergraph)."""
+    r = subprocess.run([FFMPEG, "-hide_banner", "-h", "full"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    return ["-display_rotation", "0"] if "-display_rotation" in (r.stdout or "") else ["-noautorotate"]
+RAW = _raw_opts()
+
 # ------------------------------------------------------------------ the script (what he was asked to say)
 SCRIPT_HOOK = ("My daughter already benefited from Parc Clematis — bought at $1.15M, sold at $1.525M. "
                "Now if Thomson Reserve is going to be her next property, I'm asking one thing: "
@@ -113,9 +121,10 @@ def probe(path):
     dur = int(d.group(1)) * 3600 + int(d.group(2)) * 60 + float(d.group(3))
     # rotation metadata (phones)
     rot = re.search(r"rotate\s*:\s*(-?\d+)", r.stderr) or re.search(r"displaymatrix:.*?(-?\d+\.\d+) degrees", r.stderr)
-    if w and rot and abs(int(float(rot.group(1)))) % 180 == 90:
+    deg = int(float(rot.group(1))) if rot else 0
+    if w and abs(deg) % 180 == 90:
         w, h = h, w
-    return dict(w=w, h=h, dur=dur, fps=float(fps.group(1)) if fps else 30.0)
+    return dict(w=w, h=h, dur=dur, fps=float(fps.group(1)) if fps else 30.0, rot=deg)
 
 def norm(s):
     s = s.lower().replace("’", "'")
@@ -309,7 +318,7 @@ def stage_asr(a):
 # ------------------------------------------------------------------ orientation
 _ORIENT = {}
 def orient_filter(clip):
-    """The transpose that puts this take upright when it is read with -noautorotate, found by comparing a
+    """The transpose that puts this take upright when it is read raw (RAW opts), found by comparing a
     frame read raw against the same frame read through ffmpeg's simple (reliably autorotated) pipeline.
     Some ffmpeg builds skip autorotation inside a complex filtergraph; this makes the cut independent of that."""
     clip = str(clip)
@@ -317,7 +326,7 @@ def orient_filter(clip):
     t = max(0.0, probe(clip)["dur"] * 0.3)
     ref = OUT / "orient_ref.png"; raw = OUT / "orient_raw.png"
     run([FFMPEG, "-y", "-loglevel", "error", "-ss", f"{t:.2f}", "-i", clip, "-frames:v", "1", "-vf", "scale=180:-2", str(ref)])
-    run([FFMPEG, "-y", "-loglevel", "error", "-noautorotate", "-ss", f"{t:.2f}", "-i", clip, "-frames:v", "1", str(raw)])
+    run([FFMPEG, "-y", "-loglevel", "error", *RAW, "-ss", f"{t:.2f}", "-i", clip, "-frames:v", "1", str(raw)])
     R = Image.open(ref).convert("L"); A = Image.open(raw).convert("L")
     best = ("", 1e9)
     for name, im in (("", A), ("transpose=1", A.transpose(Image.ROTATE_270)), ("transpose=2", A.transpose(Image.ROTATE_90)), ("hflip,vflip", A.transpose(Image.ROTATE_180))):
@@ -402,10 +411,10 @@ def stage_tighten(a):
         vf += (f"[vc]{orient}crop={c['w']}:{c['h']}:{c['x']}:{c['y']},scale={W}:{H}:flags=lanczos,"
                f"eq=contrast=1.06:saturation=1.05,fps={FPS},setsar=1,format=yuv420p[vout];[ac]aresample=48000,aformat=channel_layouts=stereo[aout]")
         p = OUT / f"{name}_cut.mp4"
-        run([FFMPEG, "-y", "-loglevel", "error", "-noautorotate", "-i", meta[name]["clip"], "-filter_complex", vf, "-map", "[vout]", "-map", "[aout]",
+        run([FFMPEG, "-y", "-loglevel", "error", *RAW, "-i", meta[name]["clip"], "-filter_complex", vf, "-map", "[vout]", "-map", "[aout]",
              "-c:v", "libx264", "-preset", "fast", "-crf", "16", "-c:a", "aac", "-b:a", "256k", "-video_track_timescale", "90000", str(p)])
         pm = probe(p); dur = pm["dur"]
-        if (pm["w"], pm["h"]) != (W, H): raise SystemExit(f"{name} cut came out {pm['w']}x{pm['h']}, expected {W}x{H}")
+        if (pm["w"], pm["h"]) != (W, H): raise SystemExit(f"{name} cut came out {pm['w']}x{pm['h']} (rotation tag {pm['rot']}°), expected {W}x{H} — the source's rotation tag was carried onto the cut")
         if name == "body" and own_take: CUT_CACHE[ckey] = (str(p), [dict(w) for w in words], dur)
         for w in words: w["s"] = round(w["s"] + total, 3); w["e"] = round(w["e"] + total, 3); w["clip"] = name
         all_words += words; total += dur; parts.append(p)
@@ -710,9 +719,8 @@ def human_pass(plan):
 
 # ------------------------------------------------------------------ stage: render
 def read_frames(path):
-    """Frames of the cut as 1080x1920 RGB. -noautorotate: the cut's pixels are already upright; an older
-    ffmpeg keeps the phone's rotation flag on it and would rotate again. The scale pins the size."""
-    p = subprocess.Popen([FFMPEG, "-loglevel", "error", "-noautorotate", "-i", str(path), "-vf", f"scale={W}:{H}:flags=bicubic,format=rgb24",
+    """Frames of the cut as 1080x1920 RGB, read raw: the cut's pixels are already upright. The scale pins the size."""
+    p = subprocess.Popen([FFMPEG, "-loglevel", "error", *RAW, "-i", str(path), "-vf", f"scale={W}:{H}:flags=bicubic,format=rgb24",
                           "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE, bufsize=W*H*3*4)
     n = W * H * 3
     while True:

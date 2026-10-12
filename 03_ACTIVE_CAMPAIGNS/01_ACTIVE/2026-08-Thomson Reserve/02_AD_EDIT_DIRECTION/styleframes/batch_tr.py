@@ -49,7 +49,7 @@ def small_copies(takes, cloud):
         for i in range(n):
             dest = cloud / (re.sub(r"[^A-Za-z0-9]+", "_", clip.stem).strip("_") + (f"_part{i+1:02d}of{n:02d}" if n > 1 else "") + "_small.mp4")
             if dest.exists() and dest.stat().st_size > 1000: continue
-            RV.run([RV.FFMPEG, "-y", "-loglevel", "error", "-noautorotate", "-ss", f"{i*part_len:.2f}", "-t", f"{part_len:.2f}", "-i", str(clip),
+            RV.run([RV.FFMPEG, "-y", "-loglevel", "error", *RV.RAW, "-ss", f"{i*part_len:.2f}", "-t", f"{part_len:.2f}", "-i", str(clip),
                     "-vf", f"{orient}scale=540:-2", "-c:v", "libx264", "-preset", "fast", "-b:v", f"{vb}k", "-maxrate", f"{vb}k", "-bufsize", f"{2*vb}k",
                     "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "48k", "-ac", "1", "-movflags", "+faststart", str(dest)])
             print(f"  cloud copy → {dest.name} ({dest.stat().st_size/1e6:.1f} MB)")
