@@ -1,8 +1,8 @@
 # _INDEX — 00_COMMAND_CENTER
-Version: v1.4
+Version: v1.5
 Status: APPROVED MASTER
-Date: 2026-08-13
-Supersedes: v1.3 (2026-08-07) — terminology fix: Market Maker Method reference replaced with Agent Edition™ per Decision 127.
+Date: 2026-11-17
+Supersedes: v1.4 (2026-08-13) — adds `15_CONVERSATION_HANDOFFS/`, which carries working context out of desktop-only session transcripts so cloud and other-machine sessions start informed.
 Sources: AI OS CLAUDE.md v4.7; root CLAUDE.md v4.6; Decision Memory v3.31 through Decision 126; current folder inventory; completed Asset Library guides.
 
 ## Purpose
@@ -40,6 +40,7 @@ Load the other files only when the task requires them.
 | `12_ECOS_INBOX/` | LIVE INBOX | Unprocessed voice or quick-capture inputs; process to zero |
 | `13_INTERACTIVE_BUILD_STANDARDS.md` | APPROVED MASTER | Locked criteria for any quiz, diagnostic or gamified funnel build — sales-instrument framing, result-reveal requirements, interactivity bar, mandatory real-screenshot QA. Load via `/build-interactive`. |
 | `14_BRAIN_PORTABILITY.md` | APPROVED MASTER | The brain = this repo + its GitHub remote; new-machine setup, 3-level recovery (GitHub → bundle → validate), large-assets-never-in-repo rule, read-only ChatGPT GitHub-connector access |
+| `15_CONVERSATION_HANDOFFS/` | LIVE | Working context distilled from Claude Code session transcripts, which live only on the desktop. One file per conversation: decisions made, where the work stands, what is open. No raw PII. Companion to `14_BRAIN_PORTABILITY.md`. |
 | `_INDEX.md` | APPROVED MASTER | This file |
 
 ## What does not belong here
@@ -58,6 +59,7 @@ Load the other files only when the task requires them.
 - Client and contact data → restricted `00_E.C.O.S_CLIENTS_PRIVATE`
 - Software code/runtime → local runtime and private Git; recovery packages may live in `_BACKUPS`
 - Completed Command Center records → `00_AI_OPERATING_SYSTEM\99_ARCHIVE`
+- Conversation context needed on another machine → `15_CONVERSATION_HANDOFFS/` (never raw transcripts, never PII)
 
 ## Archived during the 2026-07-18 cleanup
 
